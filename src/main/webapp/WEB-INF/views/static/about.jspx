@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:spring="http://www.springframework.org/tags"
+          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
+          version="2.0">
+
+    <div class="row">
+        <div class="small-12 columns text-justify">
+
+            <h3 class="subheader text-center">
+                <spring:message code="about-name" />
+            </h3>
+
+            <p>
+                <spring:message code="about-platform" />
+            </p>
+
+            <p>
+                <spring:message code="about-usage" />
+            </p>
+
+            <p>
+                <spring:message code="about-license" />
+            </p>
+
+            <p>
+                <spring:message code="about-evil" />
+            </p>
+
+            <tags:sign-in-buttons />
+
+        </div>
+    </div>
+
+</jsp:root>

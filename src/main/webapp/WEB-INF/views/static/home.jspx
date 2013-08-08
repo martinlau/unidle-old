@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:spring="http://www.springframework.org/tags"
+          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
+          version="2.0">
+
+    <div class="row">
+        <div class="small-12 columns text-justify">
+
+            <h3 class="subheader text-center">
+                <spring:message code="home-name" />
+            </h3>
+
+            <p>
+                <!-- TODO Populate from DB -->
+                Every day in Sydney 500,000 intelligent people spend more than 30 minutes on public transport
+                (<span data-tooltip="" class="has-tip" title="2013 Australian Census data">source</span>).
+            </p>
+
+            <p>
+                <!-- TODO Populate from DB -->
+                That&apos;s almost 30 years spent checking facebook, reading the news or staring out the window.
+            </p>
+
+            <p class="text-center">
+                <spring:url value="/about" var="about" />
+                <a href="${about}">
+                    <spring:message code="thats-where-we-come-in" />
+                </a>
+            </p>
+
+            <tags:sign-in-buttons/>
+
+        </div>
+    </div>
+
+</jsp:root>

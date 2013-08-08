@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groups xmlns="http://www.isdc.ro/wro"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
+
+    <group name="jquery">
+        <js>webjar:/jquery/2.0.3/jquery.js</js>
+    </group>
+
+    <group name="modernizr">
+        <js>webjar:/modernizr/2.6.2/modernizr.js</js>
+    </group>
+
+    <group name="font-awesome">
+        <css>webjar:/font-awesome/3.2.1/css/font-awesome.css</css>
+    </group>
+
+    <group name="foundation">
+        <!-- This is a mirror of the foundation.scss setup -->
+        <css>webjar:/foundation/4.3.1/scss/normalize.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/_variables.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_global.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_grid.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_visibility.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_block-grid.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_type.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_buttons.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_forms.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_button-groups.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_dropdown-buttons.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_split-buttons.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_flex-video.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_section.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_top-bar.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_orbit.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_reveal.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_joyride.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_clearing.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_alert-boxes.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_breadcrumbs.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_custom-forms.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_keystrokes.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_labels.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_inline-lists.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_pagination.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_panels.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_pricing-tables.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_progress-bars.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_side-nav.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_sub-nav.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_switch.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_magellan.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_tables.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_thumbs.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_tooltips.scss</css>
+        <css>webjar:/foundation/4.3.1/scss/foundation/components/_dropdown.scss</css>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.alerts.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.clearing.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.cookie.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.dropdown.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.forms.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.joyride.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.magellan.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.orbit.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.reveal.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.section.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.tooltips.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.topbar.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.interchange.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.placeholder.js</js>
+        <js>webjar:/foundation/4.3.1/js/foundation/foundation.abide.js</js>
+    </group>
+
+</groups>

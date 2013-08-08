@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:spring="http://www.springframework.org/tags"
+          xmlns:tiles="http://tiles.apache.org/tags-tiles"
+          version="2.0">
+
+    <jsp:output omit-xml-declaration="true" />
+    <jsp:output doctype-root-element="html" doctype-system="about:legacy-compat" />
+
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
+
+    <jsp:text><![CDATA[
+        <!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+        <!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
+    ]]></jsp:text>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+
+        <tiles:importAttribute name="title" toName="titleCode" />
+        <spring:message var="title" code="${titleCode}" />
+
+        <title>${title}</title>
+
+        <spring:url value="/resources/foundation.css" var="foundation_css" />
+        <link rel="stylesheet" href="${foundation_css}" />
+
+        <spring:url value="/resources/font-awesome.css" var="font_awesome_css" />
+        <link rel="stylesheet" href="${font_awesome_css}" />
+
+        <spring:url value="/resources/modernizr.js" var="modernizr_js" />
+        <script src="${modernizr_js}"><!-- // no collapse --></script>
+
+    </head>
+
+    <body>
+
+        <tiles:insertAttribute name="content" />
+
+        <spring:url value="/resources/jquery.js" var="jquery_js" />
+        <script src="${jquery_js}"><!-- // no collapse --></script>
+
+        <spring:url value="/resources/foundation.js" var="foundation_js" />
+        <script src="${foundation_js}"><!-- // no collapse --></script>
+
+        <script>
+            $(document).foundation();
+        </script>
+
+    </body>
+
+    <jsp:text><![CDATA[
+        </html>
+    ]]></jsp:text>
+
+</jsp:root>
