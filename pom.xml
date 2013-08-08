@@ -5,8 +5,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.unidle</groupId>
-    <artifactId>unidle</artifactId>
+    <groupId>org.un-idle</groupId>
+    <artifactId>un-idle</artifactId>
     <packaging>war</packaging>
     <version>0.1-SNAPSHOT</version>
 
