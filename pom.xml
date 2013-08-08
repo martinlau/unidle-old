@@ -139,7 +139,7 @@
                             <goal>exec-war</goal>
                         </goals>
                         <configuration>
-                            <path>/unidle</path>
+                            <path>/</path>
                             <attachArtifact>false</attachArtifact>
                         </configuration>
                     </execution>
