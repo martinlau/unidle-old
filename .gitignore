@@ -1,5 +1,6 @@
 *.iml
 .classpath
+.extract/
 .idea/
 .project
 .settings/
