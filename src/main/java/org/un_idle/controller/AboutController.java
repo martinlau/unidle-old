@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/about")
-public class StaticController {
+public class AboutController {
 
     @RequestMapping
     public String about() {
