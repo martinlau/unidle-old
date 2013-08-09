@@ -1,11 +1,32 @@
 package org.un_idle.config;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+import ro.isdc.wro.extensions.processor.css.RubySassCssProcessor;
+import ro.isdc.wro.http.ConfigurableWroFilter;
+import ro.isdc.wro.http.WroFilter;
+import ro.isdc.wro.manager.factory.ConfigurableWroManagerFactory;
+import ro.isdc.wro.manager.factory.WroManagerFactory;
+import ro.isdc.wro.model.resource.processor.factory.ConfigurableProcessorsFactory;
+import ro.isdc.wro.model.resource.processor.factory.ProcessorsFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import java.util.EnumSet;
+import java.util.Properties;
 
 import static javax.servlet.SessionTrackingMode.COOKIE;
 
@@ -40,4 +61,97 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
+
+    @Configuration
+    public static class MessagesConfiguration {
+
+        @Bean
+        public LocaleResolver localeResolver() {
+            final AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+
+            return localeResolver;
+        }
+
+        @Bean
+        public MessageSource messageSource() {
+            final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+
+            messageSource.setDefaultEncoding("UTF-8");
+            messageSource.setBasename("messages.un-idle");
+
+            return messageSource;
+        }
+
+    }
+
+    @ComponentScan("org.un_idle.controller")
+    @Configuration
+    @EnableWebMvc
+    public static class MvcConfiguration extends WebMvcConfigurerAdapter {
+
+        @Override
+        public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+            registry.addResourceHandler("/font/*")
+                    .addResourceLocations("classpath:/META-INF/resources/webjars/font-awesome/3.2.1/font/");
+        }
+
+    }
+
+    @Configuration
+    public static class TilesConfiguration {
+
+        @Bean
+        public TilesConfigurer tilesConfigurer() {
+            final TilesConfigurer tilesConfigurer = new TilesConfigurer();
+
+            return tilesConfigurer;
+        }
+
+        @Bean
+        public ViewResolver viewResolver() {
+            final TilesViewResolver viewResolver = new TilesViewResolver();
+
+            return viewResolver;
+        }
+
+    }
+
+    @Configuration
+    public static class WroConfiguration {
+
+        @Bean
+        public WroFilter wroFilter() {
+            final ConfigurableWroFilter wroFilter = new ConfigurableWroFilter();
+
+            wroFilter.setWroManagerFactory(wroManagerFactory());
+            wroFilter.setCacheUpdatePeriod(5L);
+            wroFilter.setDebug(false);
+            wroFilter.setEncoding("UTF-8");
+
+            return wroFilter;
+        }
+
+        @Bean
+        public WroManagerFactory wroManagerFactory() {
+            final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
+
+            wroManagerFactory.setProcessorsFactory(processorsFactory());
+
+            return wroManagerFactory;
+        }
+
+        @Bean
+        public ProcessorsFactory processorsFactory() {
+            final ConfigurableProcessorsFactory processorsFactory = new ConfigurableProcessorsFactory();
+
+            final Properties properties = new Properties();
+            properties.put("postProcessors", RubySassCssProcessor.ALIAS);
+
+            processorsFactory.setProperties(properties);
+
+            return processorsFactory;
+        }
+
+    }
+
 }
