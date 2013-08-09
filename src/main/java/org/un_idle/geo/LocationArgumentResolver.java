@@ -26,7 +26,8 @@ public class LocationArgumentResolver implements WebArgumentResolver {
     }
 
     @Override
-    public Object resolveArgument(final MethodParameter methodParameter, final NativeWebRequest nativeWebRequest) throws Exception {
+    public Object resolveArgument(final MethodParameter methodParameter,
+                                  final NativeWebRequest nativeWebRequest) throws Exception {
 
         if (methodParameter.getParameterType() != Location.class) {
             return UNRESOLVED;
@@ -36,10 +37,14 @@ public class LocationArgumentResolver implements WebArgumentResolver {
         final InetAddress inetAddress = InetAddress.getByName(servletRequest.getRemoteAddr());
         final Omni omni = geoIp2Provider.omni(inetAddress);
 
-        return new Location(omni.getCity().getName(),
-                            omni.getMostSpecificSubdivision().getName(),
-                            omni.getCountry().getName(),
-                            omni.getContinent().getName());
+        return new Location(omni.getCity()
+                                .getName(),
+                            omni.getMostSpecificSubdivision()
+                                .getName(),
+                            omni.getCountry()
+                                .getName(),
+                            omni.getContinent()
+                                .getName());
     }
 
 }

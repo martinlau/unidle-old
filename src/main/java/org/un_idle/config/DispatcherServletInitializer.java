@@ -39,9 +39,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{TilesConfiguration.class,
-                              MessagesConfiguration.class,
-                              WroConfiguration.class};
+        return new Class<?>[]{ContextConfiguration.class};
     }
 
     @Override
@@ -58,8 +56,11 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
         final DelegatingFilterProxy wroFilter = servletContext.createFilter(DelegatingFilterProxy.class);
         wroFilter.setTargetFilterLifecycle(true);
 
-        servletContext.addFilter("wroFilter", wroFilter)
-                      .addMappingForUrlPatterns(null, false, "/resources/*");
+        servletContext.addFilter("wroFilter",
+                                 wroFilter)
+                      .addMappingForUrlPatterns(null,
+                                                false,
+                                                "/resources/*");
     }
 
     @Override
@@ -68,11 +69,18 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     }
 
     @Configuration
-    public static class MessagesConfiguration {
+    public static class ContextConfiguration {
 
         @Bean
         public LocaleResolver localeResolver() {
             return new AcceptHeaderLocaleResolver();
+        }
+
+        @Bean
+        public WebArgumentResolver locationArgumentResolver() throws IOException {
+            final Resource resource = new ClassPathResource("/maxmind/GeoLite2-City.mmdb");
+
+            return new LocationArgumentResolver(resource);
         }
 
         @Bean
@@ -99,18 +107,6 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
         }
 
         @Bean
-        public WebArgumentResolver locationArgumentResolver() throws IOException {
-            final Resource resource = new ClassPathResource("/maxmind/GeoLite2-City.mmdb");
-
-            return new LocationArgumentResolver(resource);
-        }
-
-    }
-
-    @Configuration
-    public static class TilesConfiguration {
-
-        @Bean
         public TilesConfigurer tilesConfigurer() {
             return new TilesConfigurer();
         }
@@ -119,11 +115,6 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
         public ViewResolver viewResolver() {
             return new TilesViewResolver();
         }
-
-    }
-
-    @Configuration
-    public static class WroConfiguration {
 
         @Bean
         public WroFilter wroFilter() {
@@ -151,7 +142,8 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
             final ConfigurableProcessorsFactory processorsFactory = new ConfigurableProcessorsFactory();
 
             final Properties properties = new Properties();
-            properties.put("postProcessors", RubySassCssProcessor.ALIAS);
+            properties.put("postProcessors",
+                           RubySassCssProcessor.ALIAS);
 
             processorsFactory.setProperties(properties);
 
