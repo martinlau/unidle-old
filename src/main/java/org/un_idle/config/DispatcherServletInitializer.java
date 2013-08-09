@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -15,6 +18,7 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+import org.un_idle.geo.LocationArgumentResolver;
 import ro.isdc.wro.extensions.processor.css.RubySassCssProcessor;
 import ro.isdc.wro.http.ConfigurableWroFilter;
 import ro.isdc.wro.http.WroFilter;
@@ -25,6 +29,7 @@ import ro.isdc.wro.model.resource.processor.factory.ProcessorsFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import java.io.IOException;
 import java.util.EnumSet;
 import java.util.Properties;
 
@@ -67,9 +72,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
         @Bean
         public LocaleResolver localeResolver() {
-            final AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
-
-            return localeResolver;
+            return new AcceptHeaderLocaleResolver();
         }
 
         @Bean
@@ -95,6 +98,13 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
                     .addResourceLocations("classpath:/META-INF/resources/webjars/font-awesome/3.2.1/font/");
         }
 
+        @Bean
+        public WebArgumentResolver locationArgumentResolver() throws IOException {
+            final Resource resource = new ClassPathResource("/maxmind/GeoLite2-City.mmdb");
+
+            return new LocationArgumentResolver(resource);
+        }
+
     }
 
     @Configuration
@@ -102,16 +112,12 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
         @Bean
         public TilesConfigurer tilesConfigurer() {
-            final TilesConfigurer tilesConfigurer = new TilesConfigurer();
-
-            return tilesConfigurer;
+            return new TilesConfigurer();
         }
 
         @Bean
         public ViewResolver viewResolver() {
-            final TilesViewResolver viewResolver = new TilesViewResolver();
-
-            return viewResolver;
+            return new TilesViewResolver();
         }
 
     }
