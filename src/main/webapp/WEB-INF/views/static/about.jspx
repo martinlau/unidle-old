@@ -18,8 +18,8 @@
 
             <p>
                 <spring:message code="about.content.usage" />
-                <jsp:text> </jsp:text>
-                <spring:url var="business" value="/business"/>
+                <jsp:text></jsp:text>
+                <spring:url var="business" value="/business" />
                 <a href="${business}">
                     <spring:message code="about.content.business" />
                 </a>
@@ -27,6 +27,14 @@
 
             <p>
                 <spring:message code="about.content.license" />
+            </p>
+
+            <p>
+                <spring:message code="about.content.open" />
+                <spring:url var="opensource" value="/open" />
+                <a href="${opensource}">
+                    <spring:message code="about.content.open.link" />
+                </a>
             </p>
 
             <p>
