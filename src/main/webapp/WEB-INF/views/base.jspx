@@ -19,10 +19,9 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
 
-        <tiles:importAttribute name="title" toName="titleCode" />
-        <spring:message var="title" code="${titleCode}" />
-
-        <title>${title}</title>
+        <title>
+            <spring:message code="base.title" />
+        </title>
 
         <spring:url value="/resources/foundation.css" var="foundation_css" />
         <link rel="stylesheet" href="${foundation_css}" />

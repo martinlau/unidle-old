@@ -9,7 +9,7 @@
         <div class="small-12 columns text-justify">
 
             <h3 class="subheader text-center">
-                <spring:message code="home-name" />
+                <spring:message code="home.header" />
             </h3>
 
             <p>
@@ -23,7 +23,7 @@
             <p class="text-center">
                 <spring:url value="/about" var="about" />
                 <a href="${about}">
-                    <spring:message code="thats-where-we-come-in" />
+                    <spring:message code="common.content.about" />
                 </a>
             </p>
 

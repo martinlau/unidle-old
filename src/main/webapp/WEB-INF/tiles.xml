@@ -4,7 +4,6 @@
 <tiles-definitions>
 
     <definition name=".base" template="/WEB-INF/views/base.jspx">
-        <put-attribute name="title" type="string" value="title"/>
         <put-attribute name="content" type="template"/>
     </definition>
 

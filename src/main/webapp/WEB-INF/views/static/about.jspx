@@ -9,23 +9,28 @@
         <div class="small-12 columns text-justify">
 
             <h3 class="subheader text-center">
-                <spring:message code="about-name" />
+                <spring:message code="about.header" />
             </h3>
 
             <p>
-                <spring:message code="about-platform" />
+                <spring:message code="about.content.platform" />
             </p>
 
             <p>
-                <spring:message code="about-usage" />
+                <spring:message code="about.content.usage" />
+                <jsp:text> </jsp:text>
+                <spring:url var="business" value="/business"/>
+                <a href="${business}">
+                    <spring:message code="about.content.business" />
+                </a>
             </p>
 
             <p>
-                <spring:message code="about-license" />
+                <spring:message code="about.content.license" />
             </p>
 
             <p>
-                <spring:message code="about-evil" />
+                <spring:message code="about.content.not-evil" />
             </p>
 
             <tags:sign-in-buttons />

@@ -26,9 +26,9 @@
     </div>
 
     <p class="text-center">
-        <spring:message code="sign-up-tip" var="sign_up_tip" />
+        <spring:message code="common.content.sign-in.tip" var="sign_up_tip" />
         <span data-tooltip="" class="has-tip" title="${sign_up_tip}">
-            <spring:message code="sign-in-or-sign-up" />
+            <spring:message code="common.content.sign-in" />
         </span>
     </p>
 
