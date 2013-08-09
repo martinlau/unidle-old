@@ -232,15 +232,15 @@ common: &default_settings
 
 development:
   <<: *default_settings
-  app_name: My Application (Development)
+  app_name: un-idle (development)
 
 test:
   <<: *default_settings
-  app_name: My Application (Test)
+  app_name: un-idle (test)
 
 production:
   <<: *default_settings
 
 staging:
   <<: *default_settings
-  app_name: My Application (Staging)
+  app_name: un-idle (staging)
