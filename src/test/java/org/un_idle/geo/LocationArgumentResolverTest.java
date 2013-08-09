@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-@ContextConfiguration(classes = DispatcherServletInitializer.MvcConfiguration.class)
+@ContextConfiguration(classes = DispatcherServletInitializer.ContextConfiguration.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 public class LocationArgumentResolverTest {
