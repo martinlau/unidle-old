@@ -4,16 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/about")
 public class StaticController {
 
-    @RequestMapping("/about")
+    @RequestMapping
     public String about() {
         return ".static.about";
-    }
-
-    @RequestMapping("/")
-    public String home() {
-        return ".static.home";
     }
 
 }

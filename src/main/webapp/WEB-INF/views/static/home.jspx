@@ -13,14 +13,11 @@
             </h3>
 
             <p>
-                <!-- TODO Populate from DB -->
-                Every day in Sydney 500,000 intelligent people spend more than 30 minutes on public transport
-                (<span data-tooltip="" class="has-tip" title="2013 Australian Census data">source</span>).
+                ${localFact} (<span data-tooltip="" class="has-tip" title="${localSource}">source</span>).
             </p>
 
             <p>
-                <!-- TODO Populate from DB -->
-                That&apos;s almost 30 years spent checking facebook, reading the news or staring out the window.
+                ${localSummary}
             </p>
 
             <p class="text-center">
