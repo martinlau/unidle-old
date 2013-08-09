@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/unidle-0.1-SNAPSHOT-war-exec.jar -httpPort $PORT
+web: java $JAVA_OPTS -jar target/un-idle-0.1-SNAPSHOT-war-exec.jar -httpPort $PORT
