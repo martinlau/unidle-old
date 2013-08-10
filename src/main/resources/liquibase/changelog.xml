@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="001-LocationFact"
+               author="Martin Lau [m@hum.ph]">
+
+        <createTable tableName="LOCATION_FACT">
+            <column name="ID"
+                    type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="CITY"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONTINENT"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COUNTRY"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FACT"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SOURCE"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SUBDIVISION"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SUMMARY"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION"
+                    type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="LOCATION_FACT"
+                     indexName="IDX_LOCATION_FACT_CITY">
+            <column name="CITY"/>
+        </createIndex>
+
+        <createIndex tableName="LOCATION_FACT"
+                     indexName="IDX_LOCATION_FACT_COUNTRY">
+            <column name="COUNTRY"/>
+        </createIndex>
+
+        <createIndex tableName="LOCATION_FACT"
+                     indexName="IDX_LOCATION_FACT_CONTINENT">
+            <column name="CONTINENT"/>
+        </createIndex>
+
+        <createIndex tableName="LOCATION_FACT"
+                     indexName="IDX_LOCATION_FACT_SUBDIVISION">
+            <column name="SUBDIVISION"/>
+        </createIndex>
+
+        <loadData tableName="LOCATION_FACT"
+                  file="/liquibase/data/location-facts.csv"/>
+
+    </changeSet>
+
+</databaseChangeLog>

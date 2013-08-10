@@ -13,13 +13,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.ServletWebRequest;
-import org.un_idle.config.DispatcherServletInitializer;
 
 import java.lang.reflect.Method;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-@ContextConfiguration(classes = DispatcherServletInitializer.ContextConfiguration.class)
+@ContextConfiguration(classes = org.un_idle.config.RootContextConfiguration.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 public class LocationArgumentResolverTest {
