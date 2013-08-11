@@ -3,14 +3,13 @@ package org.un_idle.config;
 import com.jolbox.bonecp.BoneCPDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaDialect;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.un_idle.geo.LocationArgumentResolver;
+import org.un_idle.service.LocationService;
 import ro.isdc.wro.extensions.processor.css.RubySassCssProcessor;
 import ro.isdc.wro.http.ConfigurableWroFilter;
 import ro.isdc.wro.http.WroFilter;
@@ -48,6 +48,9 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class RootContextConfiguration {
 
+    @Autowired
+    private LocationService locationService;
+
     @Bean
     public FactoryBean<EntityManager> entityManager() {
         final EntityManagerFactory entityManagerFactory = entityManagerFactory().getObject();
@@ -56,16 +59,6 @@ public class RootContextConfiguration {
         entityManagerBean.setEntityManagerFactory(entityManagerFactory);
 
         return entityManagerBean;
-    }
-
-    @Bean
-    public SpringLiquibase springLiquibase() {
-        final SpringLiquibase springLiquibase = new SpringLiquibase();
-
-        springLiquibase.setDataSource(dataSource());
-        springLiquibase.setChangeLog("classpath:liquibase/changelog.xml");
-
-        return springLiquibase;
     }
 
     @Bean
@@ -95,6 +88,20 @@ public class RootContextConfiguration {
         return entityManagerFactoryBean;
     }
 
+    @Bean
+    public JpaDialect jpaDialect() {
+        return new HibernateJpaDialect();
+    }
+
+    @Bean
+    public JpaVendorAdapter jpaVendorAdapter() {
+        final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+
+        jpaVendorAdapter.setDatabase(Database.H2);
+
+        return jpaVendorAdapter;
+    }
+
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         BoneCPDataSource dataSource = new BoneCPDataSource();
@@ -108,29 +115,13 @@ public class RootContextConfiguration {
     }
 
     @Bean
-    public JpaVendorAdapter jpaVendorAdapter() {
-        final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-
-        jpaVendorAdapter.setDatabase(Database.H2);
-
-        return jpaVendorAdapter;
-    }
-
-    @Bean
-    public JpaDialect jpaDialect() {
-        return new HibernateJpaDialect();
-    }
-
-    @Bean
     public LocaleResolver localeResolver() {
         return new AcceptHeaderLocaleResolver();
     }
 
     @Bean
     public WebArgumentResolver locationArgumentResolver() throws IOException {
-        final Resource resource = new ClassPathResource("/maxmind/GeoLite2-City.mmdb");
-
-        return new LocationArgumentResolver(resource);
+        return new LocationArgumentResolver(locationService);
     }
 
     @Bean
@@ -141,6 +132,16 @@ public class RootContextConfiguration {
         messageSource.setBasename("messages.un-idle");
 
         return messageSource;
+    }
+
+    @Bean
+    public SpringLiquibase springLiquibase() {
+        final SpringLiquibase springLiquibase = new SpringLiquibase();
+
+        springLiquibase.setDataSource(dataSource());
+        springLiquibase.setChangeLog("classpath:liquibase/changelog.xml");
+
+        return springLiquibase;
     }
 
     @Bean
