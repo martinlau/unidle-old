@@ -4,6 +4,6 @@ import org.un_idle.geo.Location;
 
 public interface LocationService {
 
-    Location forAddress(String address) throws Exception;
+    Location locateAddress(String address) throws Exception;
 
 }

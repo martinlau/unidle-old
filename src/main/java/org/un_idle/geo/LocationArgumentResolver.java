@@ -29,7 +29,7 @@ public class LocationArgumentResolver implements WebArgumentResolver {
                                : nativeWebRequest.getNativeRequest(ServletRequest.class)
                                                  .getRemoteAddr();
 
-        return locationService.forAddress(address);
+        return locationService.locateAddress(address);
     }
 
 }

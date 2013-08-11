@@ -33,7 +33,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Location forAddress(final String address) throws Exception {
+    public Location locateAddress(final String address) throws Exception {
         final InetAddress inetAddress = InetAddress.getByName(address);
         final Omni omni = geoIp2Provider.omni(inetAddress);
 
