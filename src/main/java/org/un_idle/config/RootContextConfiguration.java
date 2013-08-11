@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
-import org.un_idle.geo.LocationArgumentResolver;
+import org.un_idle.service.LocationArgumentResolver;
 import org.un_idle.service.LocationService;
 import ro.isdc.wro.extensions.processor.css.RubySassCssProcessor;
 import ro.isdc.wro.http.ConfigurableWroFilter;
@@ -117,11 +117,6 @@ public class RootContextConfiguration {
     @Bean
     public LocaleResolver localeResolver() {
         return new AcceptHeaderLocaleResolver();
-    }
-
-    @Bean
-    public WebArgumentResolver locationArgumentResolver() throws IOException {
-        return new LocationArgumentResolver(locationService);
     }
 
     @Bean

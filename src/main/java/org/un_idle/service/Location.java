@@ -1,4 +1,4 @@
-package org.un_idle.geo;
+package org.un_idle.service;
 
 import java.io.Serializable;
 

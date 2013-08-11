@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.un_idle.domain.LocationFact;
-import org.un_idle.geo.Location;
+import org.un_idle.service.Location;
 import org.un_idle.service.LocationFactService;
 
 @Controller

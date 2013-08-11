@@ -2,13 +2,10 @@ package org.un_idle.service;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.GeoIp2Provider;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.Omni;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.un_idle.geo.Location;
 
 import java.io.File;
 import java.io.IOException;

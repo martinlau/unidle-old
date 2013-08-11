@@ -1,17 +1,20 @@
-package org.un_idle.geo;
+package org.un_idle.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.un_idle.service.LocationService;
 
 import javax.servlet.ServletRequest;
 
+@Component
 public class LocationArgumentResolver implements WebArgumentResolver {
 
     private final LocationService locationService;
 
+    @Autowired
     public LocationArgumentResolver(final LocationService locationService) {
         this.locationService = locationService;
     }

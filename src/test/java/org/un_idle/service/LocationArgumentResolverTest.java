@@ -1,4 +1,4 @@
-package org.un_idle.geo;
+package org.un_idle.service;
 
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.junit.Before;
@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.ServletWebRequest;
+import org.un_idle.service.Location;
 
 import java.lang.reflect.Method;
 
