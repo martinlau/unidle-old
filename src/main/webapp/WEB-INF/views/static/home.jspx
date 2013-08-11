@@ -13,11 +13,12 @@
             </h3>
 
             <p>
-                ${localFact} (<span data-tooltip="" class="has-tip" title="${localSource}">source</span>).
+                ${locationFact.fact}
+                (<span data-tooltip="" class="has-tip" title="${locationFact.source}">source</span>).
             </p>
 
             <p>
-                ${localSummary}
+                ${locationFact.summary}
             </p>
 
             <p class="text-center">
