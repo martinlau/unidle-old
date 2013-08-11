@@ -43,78 +43,6 @@ public class LocationArgumentResolverTest {
     }
 
     @Test
-    public void testResolveArgumentForAdelaideAustralia() throws Exception {
-        mockRequest.setRemoteAddr("203.6.146.5");
-
-        final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
-
-        assertThat(result.getCity()).isEqualTo("Adelaide");
-        assertThat(result.getSubdivision()).isEqualTo("South Australia");
-        assertThat(result.getCountry()).isEqualTo("Australia");
-        assertThat(result.getContinent()).isEqualTo("Oceania");
-    }
-
-    @Test
-    public void testResolveArgumentForBrisbaneAustralia() throws Exception {
-        mockRequest.setRemoteAddr("132.234.251.230");
-
-        final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
-
-        assertThat(result.getCity()).isEqualTo("Brisbane");
-        assertThat(result.getSubdivision()).isEqualTo("Queensland");
-        assertThat(result.getCountry()).isEqualTo("Australia");
-        assertThat(result.getContinent()).isEqualTo("Oceania");
-    }
-
-    @Test
-    public void testResolveArgumentForCanberraAustralia() throws Exception {
-        mockRequest.setRemoteAddr("203.6.77.2");
-
-        final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
-
-        assertThat(result.getCity()).isEqualTo("Canberra");
-        assertThat(result.getSubdivision()).isEqualTo("Australian Capital Territory");
-        assertThat(result.getCountry()).isEqualTo("Australia");
-        assertThat(result.getContinent()).isEqualTo("Oceania");
-    }
-
-    @Test
-    public void testResolveArgumentForDarwinAustralia() throws Exception {
-        mockRequest.setRemoteAddr("138.80.0.10");
-
-        final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
-
-        assertThat(result.getCity()).isEqualTo("Darwin");
-        assertThat(result.getSubdivision()).isEqualTo("Northern Territory");
-        assertThat(result.getCountry()).isEqualTo("Australia");
-        assertThat(result.getContinent()).isEqualTo("Oceania");
-    }
-
-    @Test
-    public void testResolveArgumentForHobartAustralia() throws Exception {
-        mockRequest.setRemoteAddr("147.41.128.8");
-
-        final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
-
-        assertThat(result.getCity()).isEqualTo("Hobart");
-        assertThat(result.getSubdivision()).isEqualTo("Tasmania");
-        assertThat(result.getCountry()).isEqualTo("Australia");
-        assertThat(result.getContinent()).isEqualTo("Oceania");
-    }
-
-    @Test
-    public void testResolveArgumentForMelbourneAustralia() throws Exception {
-        mockRequest.setRemoteAddr("140.159.2.36");
-
-        final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
-
-        assertThat(result.getCity()).isEqualTo("Melbourne");
-        assertThat(result.getSubdivision()).isEqualTo("Victoria");
-        assertThat(result.getCountry()).isEqualTo("Australia");
-        assertThat(result.getContinent()).isEqualTo("Oceania");
-    }
-
-    @Test
     public void testResolveArgumentForNonLocationArgument() throws Exception {
         final Object result = subject.resolveArgument(stringMethodParameter, null);
 
@@ -122,19 +50,7 @@ public class LocationArgumentResolverTest {
     }
 
     @Test
-    public void testResolveArgumentForPerthAustralia() throws Exception {
-        mockRequest.setRemoteAddr("165.118.1.50");
-
-        final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
-
-        assertThat(result.getCity()).isEqualTo("Perth");
-        assertThat(result.getSubdivision()).isEqualTo("Western Australia");
-        assertThat(result.getCountry()).isEqualTo("Australia");
-        assertThat(result.getContinent()).isEqualTo("Oceania");
-    }
-
-    @Test
-    public void testResolveArgumentForSydneyAustralia() throws Exception {
+    public void testResolveArgument() throws Exception {
         mockRequest.setRemoteAddr("203.27.21.6");
 
         final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
