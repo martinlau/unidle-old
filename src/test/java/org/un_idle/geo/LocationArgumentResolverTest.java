@@ -145,6 +145,19 @@ public class LocationArgumentResolverTest {
         assertThat(result.getContinent()).isEqualTo("Oceania");
     }
 
+    @Test
+    public void testResolveArgumentWithAddressOverride() throws Exception {
+        mockRequest.setRemoteAddr("203.27.21.6"); // Sydney
+        mockRequest.addParameter("address", "140.159.2.36"); // Melbourne
+
+        final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
+
+        assertThat(result.getCity()).isEqualTo("Melbourne");
+        assertThat(result.getSubdivision()).isEqualTo("Victoria");
+        assertThat(result.getCountry()).isEqualTo("Australia");
+        assertThat(result.getContinent()).isEqualTo("Oceania");
+    }
+
     public static final class TestClass {
 
         @SuppressWarnings("unused")

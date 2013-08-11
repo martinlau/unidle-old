@@ -1,6 +1,7 @@
 package org.un_idle.geo;
 
 import org.springframework.core.MethodParameter;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.un_idle.service.LocationService;
@@ -23,9 +24,12 @@ public class LocationArgumentResolver implements WebArgumentResolver {
             return UNRESOLVED;
         }
 
-        final ServletRequest servletRequest = nativeWebRequest.getNativeRequest(ServletRequest.class);
+        final String address = StringUtils.hasText(nativeWebRequest.getParameter("address"))
+                               ? nativeWebRequest.getParameter("address")
+                               : nativeWebRequest.getNativeRequest(ServletRequest.class)
+                                                 .getRemoteAddr();
 
-        return locationService.forAddress(servletRequest.getRemoteAddr());
+        return locationService.forAddress(address);
     }
 
 }
