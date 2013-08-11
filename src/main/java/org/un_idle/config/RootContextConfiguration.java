@@ -11,9 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.jpa.JpaDialect;
 import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.SharedEntityManagerBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -21,10 +19,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
-import org.un_idle.service.LocationArgumentResolver;
 import org.un_idle.service.LocationService;
 import ro.isdc.wro.extensions.processor.css.RubySassCssProcessor;
 import ro.isdc.wro.http.ConfigurableWroFilter;
@@ -32,12 +28,10 @@ import ro.isdc.wro.http.WroFilter;
 import ro.isdc.wro.manager.factory.ConfigurableWroManagerFactory;
 import ro.isdc.wro.manager.factory.WroManagerFactory;
 import ro.isdc.wro.model.resource.processor.factory.ConfigurableProcessorsFactory;
-import ro.isdc.wro.model.resource.processor.factory.ProcessorsFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -47,9 +41,6 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "org.un_idle.repository")
 @EnableTransactionManagement
 public class RootContextConfiguration {
-
-    @Autowired
-    private LocationService locationService;
 
     @Bean
     public FactoryBean<EntityManager> entityManager() {
@@ -80,26 +71,16 @@ public class RootContextConfiguration {
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
         entityManagerFactoryBean.setDataSource(dataSource());
-        entityManagerFactoryBean.setJpaDialect(jpaDialect());
-        entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
-        entityManagerFactoryBean.setPackagesToScan("org.un_idle.domain");
-        entityManagerFactoryBean.setJpaPropertyMap(jpaProperties);
-
-        return entityManagerFactoryBean;
-    }
-
-    @Bean
-    public JpaDialect jpaDialect() {
-        return new HibernateJpaDialect();
-    }
-
-    @Bean
-    public JpaVendorAdapter jpaVendorAdapter() {
+        entityManagerFactoryBean.setJpaDialect(new HibernateJpaDialect());
         final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
 
         jpaVendorAdapter.setDatabase(Database.H2);
 
-        return jpaVendorAdapter;
+        entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
+        entityManagerFactoryBean.setPackagesToScan("org.un_idle.domain");
+        entityManagerFactoryBean.setJpaPropertyMap(jpaProperties);
+
+        return entityManagerFactoryBean;
     }
 
     @Bean(destroyMethod = "close")
@@ -149,7 +130,7 @@ public class RootContextConfiguration {
         return transactionManager;
     }
 
-    @Bean
+    @Bean(destroyMethod = "destroy")
     public WroFilter wroFilter() {
         final ConfigurableWroFilter wroFilter = new ConfigurableWroFilter();
 
@@ -161,17 +142,8 @@ public class RootContextConfiguration {
         return wroFilter;
     }
 
-    @Bean
+    @Bean(destroyMethod = "destroy")
     public WroManagerFactory wroManagerFactory() {
-        final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
-
-        wroManagerFactory.setProcessorsFactory(processorsFactory());
-
-        return wroManagerFactory;
-    }
-
-    @Bean
-    public ProcessorsFactory processorsFactory() {
         final Properties properties = new Properties();
 
         properties.put("postProcessors",
@@ -181,7 +153,11 @@ public class RootContextConfiguration {
 
         processorsFactory.setProperties(properties);
 
-        return processorsFactory;
+        final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
+
+        wroManagerFactory.setProcessorsFactory(processorsFactory);
+
+        return wroManagerFactory;
     }
 
 }
