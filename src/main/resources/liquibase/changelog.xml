@@ -97,7 +97,7 @@
         </createIndex>
 
         <loadData tableName="LOCATION_FACT"
-                  file="/liquibase/data/location-facts.csv"/>
+                  file="liquibase/data/location-facts.csv"/>
 
     </changeSet>
 
