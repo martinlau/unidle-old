@@ -46,4 +46,12 @@ public class Location implements Serializable {
         return subdivision;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Location(city='%s', continent='%s', country='%s', subdivision='%s')",
+                             city,
+                             continent,
+                             country,
+                             subdivision);
+    }
 }

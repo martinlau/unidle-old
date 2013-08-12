@@ -1,17 +1,18 @@
-id,continent,country,subdivision,city,fact,summary,source,version
-1,"","","","","","","",1
-2,"Africa","","","","","","",1
-3,"Asia","","","","","","",1
-4,"Europe","","","","","","",1
-5,"North America","","","","","","",1
-6,"Oceania","","","","","","",1
-7,"South America","","","","","","",1
-8,"Oceania","Australia","","","","","",1
-9,"Oceania","Australia","Australian Capital Territory","","","","",1
-10,"Oceania","Australia","New South Wales","","Every day in Sydney over 800,000 people spend over 75 minutes on public transport","That's over 100 years spent checking facebook, reading the paper or looking out the window","Bureau of Transport Statistics, Transport for NSW",1
-11,"Oceania","Australia","Northern Territory","","","","",1
-12,"Oceania","Australia","Queensland","","","","",1
-13,"Oceania","Australia","South Australia","","","","",1
-14,"Oceania","Australia","Tasmania","","","","",1
-15,"Oceania","Australia","Victoria","","","","",1
-16,"Oceania","Australia","Western Australia","","","","",1
+id,version,continent,country,subdivision,city,fact,summary,source
+1,1,"","","","","A random Global fact","A random Global summary","A random Global source"
+2,1,"Africa","","","","","",""
+3,1,"Asia","","","","","",""
+4,1,"Europe","","","","","",""
+5,1,"North America","","","","","",""
+6,1,"Oceania","","","","A random Oceania fact","A random Oceania summary","A random Oceania source"
+7,1,"Oceania","Australia","","","A random Australia fact","A random Australia summary","A random Australia source"
+8,1,"Oceania","Australia","Australian Capital Territory","","","",""
+9,1,"Oceania","Australia","New South Wales","","A random New South Wales fact","A random New South Wales summary","A random New South Wales source"
+10,1,"Oceania","Australia","New South Wales","Sydney","Every day in Sydney over 800,000 people spend an average of 75 minutes on public transport","That's over 100 years spent checking facebook, reading the paper or staring out the window","Bureau of Transport Statistics, Transport for NSW"
+11,1,"Oceania","Australia","Northern Territory","","","",""
+12,1,"Oceania","Australia","Queensland","","","",""
+13,1,"Oceania","Australia","South Australia","","","",""
+14,1,"Oceania","Australia","Tasmania","","","",""
+15,1,"Oceania","Australia","Victoria","","","",""
+16,1,"Oceania","Australia","Western Australia","","","",""
+17,1,"South America","","","","","",""

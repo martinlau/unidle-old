@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import static java.lang.String.format;
+
 @Entity
 @Table(name = "LOCATION_FACT")
 public class LocationFact extends AbstractPersistable<Long> {
@@ -99,4 +101,16 @@ public class LocationFact extends AbstractPersistable<Long> {
         this.version = version;
     }
 
+    @Override
+    public String toString() {
+        return format("LocationFact(city='%s', continent='%s', country='%s', fact='%s', source='%s', subdivision='%s', summary='%s', version=%d)",
+                      city,
+                      continent,
+                      country,
+                      fact,
+                      source,
+                      subdivision,
+                      summary,
+                      version);
+    }
 }
