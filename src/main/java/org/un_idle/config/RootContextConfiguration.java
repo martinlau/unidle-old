@@ -3,14 +3,15 @@ package org.un_idle.config;
 import com.jolbox.bonecp.BoneCPDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -22,12 +23,22 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import ro.isdc.wro.config.jmx.ConfigConstants;
+import ro.isdc.wro.extensions.locator.WebjarUriLocator;
 import ro.isdc.wro.extensions.processor.css.RubySassCssProcessor;
 import ro.isdc.wro.http.ConfigurableWroFilter;
 import ro.isdc.wro.http.WroFilter;
 import ro.isdc.wro.manager.factory.ConfigurableWroManagerFactory;
 import ro.isdc.wro.manager.factory.WroManagerFactory;
+import ro.isdc.wro.model.resource.locator.ClasspathUriLocator;
+import ro.isdc.wro.model.resource.locator.ServletContextUriLocator;
+import ro.isdc.wro.model.resource.locator.UrlUriLocator;
+import ro.isdc.wro.model.resource.locator.factory.ConfigurableLocatorFactory;
 import ro.isdc.wro.model.resource.processor.factory.ConfigurableProcessorsFactory;
+import ro.isdc.wro.model.resource.support.hash.ConfigurableHashStrategy;
+import ro.isdc.wro.model.resource.support.hash.SHA1HashStrategy;
+import ro.isdc.wro.model.resource.support.naming.ConfigurableNamingStrategy;
+import ro.isdc.wro.model.resource.support.naming.TimestampNamingStrategy;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -36,16 +47,88 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import static com.google.api.client.util.Joiner.on;
+import static java.util.Arrays.asList;
+
 @ComponentScan("org.un_idle.service")
 @Configuration
 @EnableJpaRepositories(basePackages = "org.un_idle.repository")
 @EnableTransactionManagement
+@PropertySource("classpath:un-idle.properties")
 public class RootContextConfiguration {
 
+    @Value("${un-idle.wro.cacheUpdatePeriod}")
+    private Long cacheUpdatePeriod;
+
+    @Value("${un-idle.dataSource.driverClass}")
+    private String dataSourceDriverClass;
+
+    @Value("${un-idle.dataSource.password}")
+    private String dataSourcePassword;
+
+    @Value("${un-idle.dataSource.url}")
+    private String dataSourceUrl;
+
+    @Value("${un-idle.dataSource.username}")
+    private String dataSourceUsername;
+
+    @Value("${un-idle.hibernate.ehcache.configurationResourceName}")
+    private String hibernateEhcacheConfigurationResourceName;
+
+    @Value("${un-idle.hibernate.ehcache.regionFactoryClass}")
+    private String hibernateEhcacheRegionFactoryClass;
+
+    @Value("${un-idle.hibernate.hbm2ddl}")
+    private String hibernateHbm2ddl;
+
+    @Value("${un-idle.hibernate.useQueryCache}")
+    private String hibernateUseQueryCache;
+
+    @Value("${un-idle.hibernate.useSecondLevelCache}")
+    private String hibernateUseSecondLevelCache;
+
+    @Value("${un-idle.jpaVendor.database}")
+    private Database jpaVendorDatabase;
+
+    @Value("${un-idle.wro.cacheGzippedContent}")
+    private boolean wroCacheGzippedContent;
+
+    @Value("${un-idle.wro.debug}")
+    private boolean wroDebug;
+
+    @Value("${un-idle.wro.disableCache}")
+    private boolean wroDisableCache;
+
+    @Value("${un-idle.wro.encoding}")
+    private String wroEncoding;
+
+    @Value("${un-idle.wro.gzipResources}")
+    private boolean wroGzipResources;
+
+    @Value("${un-idle.wro.ignoreEmptyGroup}")
+    private boolean wroIgnoreEmptyGroup;
+
+    @Value("${un-idle.wro.ignoreFailingProcessor}")
+    private boolean wroIgnoreFailingProcessor;
+
+    @Value("${un-idle.wro.ignoreMissingResources}")
+    private boolean wroIgnoreMissingResources;
+
+    @Value("${un-idle.wro.jmxEnabled}")
+    private boolean wroJmxEnabled;
+
+    @Value("${un-idle.wro.modelUpdatePeriod}")
+    private long wroModelUpdatePeriod;
+
+    @Value("${un-idle.wro.parallelPreprocessing}")
+    private boolean wroParallelPreprocessing;
+
+    @Value("${un-idle.wro.resourceWatcherUpdatePeriod}")
+    private long wroResourceWatcherUpdatePeriod;
+
     @Bean
-    public Resource geoLite2Database() {
-        // TODO Get from environment
-        return new ClassPathResource("/maxmind/GeoLite2-City.mmdb");
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 
     @Bean
@@ -64,14 +147,14 @@ public class RootContextConfiguration {
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
         final Map<String, Object> jpaProperties = new LinkedHashMap<>();
-        jpaProperties.put("net.sf.ehcache.configurationResourceName", "/ehcache/ehcache.xml");
-        jpaProperties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory");
-        jpaProperties.put("hibernate.cache.use_query_cache", "true");
-        jpaProperties.put("hibernate.cache.use_second_level_cache", "true");
-        jpaProperties.put("hibernate.hbm2ddl.auto", "validate");
+        jpaProperties.put("net.sf.ehcache.configurationResourceName", hibernateEhcacheConfigurationResourceName);
+        jpaProperties.put("hibernate.cache.region.factory_class", hibernateEhcacheRegionFactoryClass);
+        jpaProperties.put("hibernate.cache.use_query_cache", hibernateUseQueryCache);
+        jpaProperties.put("hibernate.cache.use_second_level_cache", hibernateUseSecondLevelCache);
+        jpaProperties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddl);
 
         final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setDatabase(Database.H2);
+        jpaVendorAdapter.setDatabase(jpaVendorDatabase);
 
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setJpaDialect(new HibernateJpaDialect());
@@ -86,11 +169,10 @@ public class RootContextConfiguration {
     public DataSource dataSource() {
         BoneCPDataSource dataSource = new BoneCPDataSource();
 
-        // TODO Move to environment
-        dataSource.setDriverClass("org.h2.Driver");
-        dataSource.setJdbcUrl("jdbc:h2:mem:un-idle;MVCC=TRUE");
-        dataSource.setPassword("un-idle");
-        dataSource.setUsername("un-idle");
+        dataSource.setDriverClass(dataSourceDriverClass);
+        dataSource.setJdbcUrl(dataSourceUrl);
+        dataSource.setPassword(dataSourceUsername);
+        dataSource.setUsername(dataSourcePassword);
 
         return dataSource;
     }
@@ -135,8 +217,6 @@ public class RootContextConfiguration {
         final ConfigurableWroFilter wroFilter = new ConfigurableWroFilter();
 
         wroFilter.setWroManagerFactory(wroManagerFactory());
-        wroFilter.setDebug(false);
-        wroFilter.setEncoding("UTF-8");
 
         return wroFilter;
     }
@@ -145,21 +225,33 @@ public class RootContextConfiguration {
     public WroManagerFactory wroManagerFactory() {
         final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
 
-        wroManagerFactory.setProcessorsFactory(configurableProcessorsFactory());
+        final Properties properties = new Properties();
+
+        properties.put(ConfigurableProcessorsFactory.PARAM_POST_PROCESSORS, RubySassCssProcessor.ALIAS);
+        properties.put(ConfigurableLocatorFactory.PARAM_URI_LOCATORS, on(',').join(asList(WebjarUriLocator.ALIAS,
+                                                                                          ServletContextUriLocator.ALIAS_SERVLET_CONTEXT_FIRST,
+                                                                                          UrlUriLocator.ALIAS,
+                                                                                          ClasspathUriLocator.ALIAS)));
+        properties.put(ConfigurableNamingStrategy.KEY, TimestampNamingStrategy.ALIAS);
+        properties.put(ConfigurableHashStrategy.KEY, SHA1HashStrategy.ALIAS);
+
+        properties.put(ConfigConstants.cacheGzippedContent, wroCacheGzippedContent);
+        properties.put(ConfigConstants.cacheUpdatePeriod.name(), cacheUpdatePeriod);
+        properties.put(ConfigConstants.debug.name(), wroDebug);
+        properties.put(ConfigConstants.disableCache.name(), wroDisableCache);
+        properties.put(ConfigConstants.encoding.name(), wroEncoding);
+        properties.put(ConfigConstants.gzipResources.name(), wroGzipResources);
+        properties.put(ConfigConstants.ignoreEmptyGroup.name(), wroIgnoreEmptyGroup);
+        properties.put(ConfigConstants.ignoreFailingProcessor.name(), wroIgnoreFailingProcessor);
+        properties.put(ConfigConstants.ignoreMissingResources.name(), wroIgnoreMissingResources);
+        properties.put(ConfigConstants.jmxEnabled.name(), wroJmxEnabled);
+        properties.put(ConfigConstants.modelUpdatePeriod.name(), wroModelUpdatePeriod);
+        properties.put(ConfigConstants.parallelPreprocessing.name(), wroParallelPreprocessing);
+        properties.put(ConfigConstants.resourceWatcherUpdatePeriod.name(), wroResourceWatcherUpdatePeriod);
+
+        wroManagerFactory.setConfigProperties(properties);
 
         return wroManagerFactory;
-    }
-
-    @Bean
-    public ConfigurableProcessorsFactory configurableProcessorsFactory() {
-        final ConfigurableProcessorsFactory processorsFactory = new ConfigurableProcessorsFactory();
-
-        final Properties properties = new Properties();
-        properties.put("postProcessors", RubySassCssProcessor.ALIAS);
-
-        processorsFactory.setProperties(properties);
-
-        return processorsFactory;
     }
 
 }

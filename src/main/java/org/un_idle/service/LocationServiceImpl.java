@@ -4,10 +4,8 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.GeoIp2Provider;
 import com.maxmind.geoip2.model.Omni;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.expression.spel.ast.QualifiedIdentifier;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -21,7 +19,7 @@ public class LocationServiceImpl implements LocationService {
     private final GeoIp2Provider geoIp2Provider;
 
     @Autowired
-    public LocationServiceImpl(@Qualifier("geoLite2Database") final Resource database) throws IOException {
+    public LocationServiceImpl(@Value("${un-idle.maxmind.database}") final Resource database) throws IOException {
         this(database.getFile());
     }
 
