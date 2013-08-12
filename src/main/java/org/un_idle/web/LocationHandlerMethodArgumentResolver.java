@@ -37,8 +37,9 @@ public class LocationHandlerMethodArgumentResolver implements HandlerMethodArgum
 
         final String address = hasText(nativeWebRequest.getParameter("address"))
                                ? nativeWebRequest.getParameter("address")
-                               : nativeWebRequest.getNativeRequest(ServletRequest.class)
-                                                 .getRemoteAddr();
+                               : hasText(nativeWebRequest.getHeader("X-Forwarded-For"))
+                                 ? nativeWebRequest.getHeader("X-Forwarded-For")
+                                 : nativeWebRequest.getNativeRequest(ServletRequest.class).getRemoteAddr();
 
         return locationService.locateAddress(address);
     }

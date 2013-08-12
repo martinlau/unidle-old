@@ -78,6 +78,20 @@ public class LocationHandlerMethodArgumentResolverTest {
     }
 
     @Test
+    public void testResolveArgumentWithHeaderOverride() throws Exception {
+        mockRequest.setRemoteAddr("140.159.2.36"); // Melbourne
+        mockRequest.addHeader("X-Forwarded-For", "203.27.21.6"); // Sydney
+
+        final Location result = (Location) subject.resolveArgument(null, null, new ServletWebRequest(mockRequest), null);
+
+        assertThat(result)
+                .satisfies(hasCity("Sydney"))
+                .satisfies(hasSubdivision("New South Wales"))
+                .satisfies(hasCountry("Australia"))
+                .satisfies(hasContinent("Oceania"));
+    }
+
+    @Test
     public void testSupportsParameterForLocationArgument() throws Exception {
         final boolean result = subject.supportsParameter(locationMethodParameter);
 
