@@ -15,18 +15,18 @@ public interface LocationFactRepository extends JpaRepository<LocationFact, Long
                          @Param("country") final String country,
                          @Param("continent") final String continent);
 
-    @Query("SELECT lf FROM LocationFact lf WHERE lf.subdivision = :subdivision AND lf.country = :country AND lf.continent = :continent")
+    @Query("SELECT lf FROM LocationFact lf WHERE lf.city = '' AND lf.subdivision = :subdivision AND lf.country = :country AND lf.continent = :continent")
     @Transactional(readOnly = true)
     LocationFact findOne(@Param("subdivision") final String subdivision,
                          @Param("country") final String country,
                          @Param("continent") final String continent);
 
-    @Query("SELECT lf FROM LocationFact lf WHERE lf.country = :country AND lf.continent = :continent")
+    @Query("SELECT lf FROM LocationFact lf WHERE lf.city = '' AND lf.subdivision = '' AND lf.country = :country AND lf.continent = :continent")
     @Transactional(readOnly = true)
     LocationFact findOne(@Param("country") final String country,
                          @Param("continent") final String continent);
 
-    @Query("SELECT lf FROM LocationFact lf WHERE lf.continent = :continent")
+    @Query("SELECT lf FROM LocationFact lf WHERE lf.city = '' AND lf.subdivision = '' AND lf.country = '' AND lf.continent = :continent")
     @Transactional(readOnly = true)
     LocationFact findOne(@Param("continent") final String continent);
 
