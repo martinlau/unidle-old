@@ -1,5 +1,6 @@
 package org.un_idle.config;
 
+import com.google.common.base.Joiner;
 import com.jolbox.bonecp.BoneCPDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.FactoryBean;
@@ -46,9 +47,6 @@ import javax.sql.DataSource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
-
-import static com.google.api.client.util.Joiner.on;
-import static java.util.Arrays.asList;
 
 @ComponentScan("org.un_idle.service")
 @Configuration
@@ -228,10 +226,10 @@ public class RootContextConfiguration {
         final Properties properties = new Properties();
 
         properties.put(ConfigurableProcessorsFactory.PARAM_POST_PROCESSORS, RubySassCssProcessor.ALIAS);
-        properties.put(ConfigurableLocatorFactory.PARAM_URI_LOCATORS, on(',').join(asList(WebjarUriLocator.ALIAS,
+        properties.put(ConfigurableLocatorFactory.PARAM_URI_LOCATORS, Joiner.on(',').join(WebjarUriLocator.ALIAS,
                                                                                           ServletContextUriLocator.ALIAS_SERVLET_CONTEXT_FIRST,
                                                                                           UrlUriLocator.ALIAS,
-                                                                                          ClasspathUriLocator.ALIAS)));
+                                                                                          ClasspathUriLocator.ALIAS));
         properties.put(ConfigurableNamingStrategy.KEY, TimestampNamingStrategy.ALIAS);
         properties.put(ConfigurableHashStrategy.KEY, SHA1HashStrategy.ALIAS);
 
