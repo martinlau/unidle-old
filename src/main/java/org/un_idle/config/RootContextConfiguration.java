@@ -45,8 +45,8 @@ public class RootContextConfiguration {
     @Bean
     public FactoryBean<EntityManager> entityManager() {
         final EntityManagerFactory entityManagerFactory = entityManagerFactory().getObject();
-        final SharedEntityManagerBean entityManagerBean = new SharedEntityManagerBean();
 
+        final SharedEntityManagerBean entityManagerBean = new SharedEntityManagerBean();
         entityManagerBean.setEntityManagerFactory(entityManagerFactory);
 
         return entityManagerBean;
@@ -55,27 +55,20 @@ public class RootContextConfiguration {
     @Bean
     @DependsOn("springLiquibase")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        final Map<String, Object> jpaProperties = new LinkedHashMap<>();
-
-        jpaProperties.put("net.sf.ehcache.configurationResourceName",
-                          "/ehcache/ehcache.xml");
-        jpaProperties.put("hibernate.cache.region.factory_class",
-                          "org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory");
-        jpaProperties.put("hibernate.cache.use_query_cache",
-                          "true");
-        jpaProperties.put("hibernate.cache.use_second_level_cache",
-                          "true");
-        jpaProperties.put("hibernate.hbm2ddl.auto",
-                          "validate");
-
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+
+        final Map<String, Object> jpaProperties = new LinkedHashMap<>();
+        jpaProperties.put("net.sf.ehcache.configurationResourceName", "/ehcache/ehcache.xml");
+        jpaProperties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory");
+        jpaProperties.put("hibernate.cache.use_query_cache", "true");
+        jpaProperties.put("hibernate.cache.use_second_level_cache", "true");
+        jpaProperties.put("hibernate.hbm2ddl.auto", "validate");
+
+        final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+        jpaVendorAdapter.setDatabase(Database.H2);
 
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setJpaDialect(new HibernateJpaDialect());
-        final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-
-        jpaVendorAdapter.setDatabase(Database.H2);
-
         entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         entityManagerFactoryBean.setPackagesToScan("org.un_idle.domain");
         entityManagerFactoryBean.setJpaPropertyMap(jpaProperties);
@@ -144,20 +137,23 @@ public class RootContextConfiguration {
 
     @Bean(destroyMethod = "destroy")
     public WroManagerFactory wroManagerFactory() {
-        final Properties properties = new Properties();
+        final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
 
-        properties.put("postProcessors",
-                       RubySassCssProcessor.ALIAS);
+        wroManagerFactory.setProcessorsFactory(configurableProcessorsFactory());
 
+        return wroManagerFactory;
+    }
+
+    @Bean
+    public ConfigurableProcessorsFactory configurableProcessorsFactory() {
         final ConfigurableProcessorsFactory processorsFactory = new ConfigurableProcessorsFactory();
+
+        final Properties properties = new Properties();
+        properties.put("postProcessors", RubySassCssProcessor.ALIAS);
 
         processorsFactory.setProperties(properties);
 
-        final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
-
-        wroManagerFactory.setProcessorsFactory(processorsFactory);
-
-        return wroManagerFactory;
+        return processorsFactory;
     }
 
 }

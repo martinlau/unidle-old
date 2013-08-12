@@ -8,50 +8,26 @@ import org.un_idle.domain.LocationFact;
 
 public interface LocationFactRepository extends JpaRepository<LocationFact, Long> {
 
-    @Query("SELECT lf " +
-           "FROM LocationFact lf " +
-           "WHERE lf.city = :city " +
-           "AND lf.subdivision = :subdivision " +
-           "AND lf.country = :country " +
-           "AND lf.continent = :continent")
+    @Query("SELECT lf FROM LocationFact lf WHERE lf.city = :city AND lf.subdivision = :subdivision AND lf.country = :country AND lf.continent = :continent")
     @Transactional(readOnly = true)
-    LocationFact findOne(@Param("city")
-                         String city,
-                         @Param("subdivision")
-                         String subdivision,
-                         @Param("country")
-                         String country,
-                         @Param("continent")
-                         String continent);
+    LocationFact findOne(@Param("city") final String city,
+                         @Param("subdivision") final String subdivision,
+                         @Param("country") final String country,
+                         @Param("continent") final String continent);
 
-    @Query("SELECT lf " +
-           "FROM LocationFact lf " +
-           "WHERE lf.subdivision = :subdivision " +
-           "AND lf.country = :country " +
-           "AND lf.continent = :continent")
+    @Query("SELECT lf FROM LocationFact lf WHERE lf.subdivision = :subdivision AND lf.country = :country AND lf.continent = :continent")
     @Transactional(readOnly = true)
-    LocationFact findOne(@Param("subdivision")
-                         String subdivision,
-                         @Param("country")
-                         String country,
-                         @Param("continent")
-                         String continent);
+    LocationFact findOne(@Param("subdivision") final String subdivision,
+                         @Param("country") final String country,
+                         @Param("continent") final String continent);
 
-    @Query("SELECT lf " +
-           "FROM LocationFact lf " +
-           "WHERE lf.country = :country " +
-           "AND lf.continent = :continent")
+    @Query("SELECT lf FROM LocationFact lf WHERE lf.country = :country AND lf.continent = :continent")
     @Transactional(readOnly = true)
-    LocationFact findOne(@Param("country")
-                         String country,
-                         @Param("continent")
-                         String continent);
+    LocationFact findOne(@Param("country") final String country,
+                         @Param("continent") final String continent);
 
-    @Query("SELECT lf " +
-           "FROM LocationFact lf " +
-           "WHERE lf.continent = :continent")
+    @Query("SELECT lf FROM LocationFact lf WHERE lf.continent = :continent")
     @Transactional(readOnly = true)
-    LocationFact findOne(@Param("continent")
-                         String continent);
+    LocationFact findOne(@Param("continent") final String continent);
 
 }

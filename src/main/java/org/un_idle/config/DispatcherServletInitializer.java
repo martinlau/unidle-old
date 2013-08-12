@@ -30,11 +30,8 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
         final DelegatingFilterProxy wroFilter = servletContext.createFilter(DelegatingFilterProxy.class);
         wroFilter.setTargetFilterLifecycle(true);
 
-        servletContext.addFilter("wroFilter",
-                                 wroFilter)
-                      .addMappingForUrlPatterns(null,
-                                                false,
-                                                "/resources/*");
+        servletContext.addFilter("wroFilter", wroFilter)
+                      .addMappingForUrlPatterns(null, false, "/resources/*");
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class OpenController {
 
     @RequestMapping
-    public String openSource() {
+    public String open() {
         return ".static.open";
     }
 

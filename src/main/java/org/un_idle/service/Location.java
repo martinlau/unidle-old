@@ -14,10 +14,7 @@ public class Location implements Serializable {
 
     @SuppressWarnings("unused")
     public Location() {
-        this("",
-             "",
-             "",
-             "");
+        this("", "", "", "");
     }
 
     public Location(final String city,

@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
+
+import static java.net.InetAddress.getByName;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -31,17 +32,12 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location locateAddress(final String address) throws Exception {
-        final InetAddress inetAddress = InetAddress.getByName(address);
-        final Omni omni = geoIp2Provider.omni(inetAddress);
+        final Omni omni = geoIp2Provider.omni(getByName(address));
 
-        return new Location(omni.getCity()
-                                .getName(),
-                            omni.getMostSpecificSubdivision()
-                                .getName(),
-                            omni.getCountry()
-                                .getName(),
-                            omni.getContinent()
-                                .getName());
+        return new Location(omni.getCity().getName(),
+                            omni.getMostSpecificSubdivision().getName(),
+                            omni.getCountry().getName(),
+                            omni.getContinent().getName());
     }
 
 }

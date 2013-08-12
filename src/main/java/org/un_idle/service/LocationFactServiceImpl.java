@@ -23,29 +23,22 @@ public class LocationFactServiceImpl implements LocationFactService {
                                      final String country,
                                      final String continent) {
 
-        LocationFact locationFact = locationFactRepository.findOne(city,
-                                                                   subdivision,
-                                                                   country,
-                                                                   continent);
+        LocationFact locationFact = locationFactRepository.findOne(city, subdivision, country, continent);
         if (locationFact != null) {
             return locationFact;
         }
 
-        locationFact = locationFactRepository.findOne(subdivision,
-                                                      country,
-                                                      continent);
+        locationFact = locationFactRepository.findOne(subdivision, country, continent);
         if (locationFact != null) {
             return locationFact;
         }
 
-        locationFact = locationFactRepository.findOne(country,
-                                                      continent);
+        locationFact = locationFactRepository.findOne(country, continent);
         if (locationFact != null) {
             return locationFact;
         }
 
         return locationFactRepository.findOne(continent);
-
     }
 
 }

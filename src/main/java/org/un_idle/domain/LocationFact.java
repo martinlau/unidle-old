@@ -113,4 +113,5 @@ public class LocationFact extends AbstractPersistable<Long> {
                       summary,
                       version);
     }
+
 }
