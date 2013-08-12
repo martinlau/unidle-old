@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.MethodParameter;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -25,6 +26,7 @@ import static org.un_idle.test.Conditions.hasContinent;
 import static org.un_idle.test.Conditions.hasCountry;
 import static org.un_idle.test.Conditions.hasSubdivision;
 
+@ActiveProfiles("unit-test")
 @ContextConfiguration(classes = {RootContextConfiguration.class,
                                  MvcConfiguration.class})
 @RunWith(SpringJUnit4ClassRunner.class)

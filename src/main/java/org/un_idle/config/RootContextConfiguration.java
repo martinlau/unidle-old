@@ -4,12 +4,14 @@ import com.google.common.base.Joiner;
 import com.jolbox.bonecp.BoneCPDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -44,9 +46,12 @@ import ro.isdc.wro.model.resource.support.naming.TimestampNamingStrategy;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.net.URI;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import static java.lang.String.format;
 
 @ComponentScan("org.un_idle.service")
 @Configuration
@@ -58,17 +63,8 @@ public class RootContextConfiguration {
     @Value("${un-idle.wro.cacheUpdatePeriod}")
     private Long cacheUpdatePeriod;
 
-    @Value("${un-idle.dataSource.driverClass}")
-    private String dataSourceDriverClass;
-
-    @Value("${un-idle.dataSource.password}")
-    private String dataSourcePassword;
-
-    @Value("${un-idle.dataSource.url}")
-    private String dataSourceUrl;
-
-    @Value("${un-idle.dataSource.username}")
-    private String dataSourceUsername;
+    @Autowired
+    private DataSource dataSource;
 
     @Value("${un-idle.hibernate.ehcache.configurationResourceName}")
     private String hibernateEhcacheConfigurationResourceName;
@@ -154,25 +150,13 @@ public class RootContextConfiguration {
         final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setDatabase(jpaVendorDatabase);
 
-        entityManagerFactoryBean.setDataSource(dataSource());
+        entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setJpaDialect(new HibernateJpaDialect());
         entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         entityManagerFactoryBean.setPackagesToScan("org.un_idle.domain");
         entityManagerFactoryBean.setJpaPropertyMap(jpaProperties);
 
         return entityManagerFactoryBean;
-    }
-
-    @Bean(destroyMethod = "close")
-    public DataSource dataSource() {
-        BoneCPDataSource dataSource = new BoneCPDataSource();
-
-        dataSource.setDriverClass(dataSourceDriverClass);
-        dataSource.setJdbcUrl(dataSourceUrl);
-        dataSource.setPassword(dataSourceUsername);
-        dataSource.setUsername(dataSourcePassword);
-
-        return dataSource;
     }
 
     @Bean
@@ -194,7 +178,7 @@ public class RootContextConfiguration {
     public SpringLiquibase springLiquibase() {
         final SpringLiquibase springLiquibase = new SpringLiquibase();
 
-        springLiquibase.setDataSource(dataSource());
+        springLiquibase.setDataSource(dataSource);
         springLiquibase.setChangeLog("classpath:liquibase/changelog.xml");
 
         return springLiquibase;
@@ -204,7 +188,7 @@ public class RootContextConfiguration {
     public PlatformTransactionManager transactionManager() {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
 
-        transactionManager.setDataSource(dataSource());
+        transactionManager.setDataSource(dataSource);
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 
         return transactionManager;
@@ -250,6 +234,60 @@ public class RootContextConfiguration {
         wroManagerFactory.setConfigProperties(properties);
 
         return wroManagerFactory;
+    }
+
+    @Configuration
+    @Profile("heroku")
+    public static class HerokuDatabaseConfiguration {
+
+        @Value("${DATABASE_URL}")
+        public URI databaseUri;
+
+        @Bean(destroyMethod = "close")
+        public DataSource dataSource() {
+            BoneCPDataSource dataSource = new BoneCPDataSource();
+
+            dataSource.setDriverClass("org.postgresql.Driver");
+            dataSource.setJdbcUrl(format("jdbc:postgresql://%s:%d%s",
+                                         databaseUri.getHost(),
+                                         databaseUri.getPort(),
+                                         databaseUri.getPath()));
+            dataSource.setPassword(databaseUri.getUserInfo().split(":")[0]);
+            dataSource.setUsername(databaseUri.getUserInfo().split(":")[1]);
+
+            return dataSource;
+        }
+
+    }
+
+    @Configuration
+    @Profile("unit-test")
+    public static class LocalDatabaseConfiguration {
+
+        @Value("${un-idle.dataSource.driverClass}")
+        private String dataSourceDriverClass;
+
+        @Value("${un-idle.dataSource.password}")
+        private String dataSourcePassword;
+
+        @Value("${un-idle.dataSource.url}")
+        private String dataSourceUrl;
+
+        @Value("${un-idle.dataSource.username}")
+        private String dataSourceUsername;
+
+        @Bean(destroyMethod = "close")
+        public DataSource dataSource() {
+            BoneCPDataSource dataSource = new BoneCPDataSource();
+
+            dataSource.setDriverClass(dataSourceDriverClass);
+            dataSource.setJdbcUrl(dataSourceUrl);
+            dataSource.setPassword(dataSourceUsername);
+            dataSource.setUsername(dataSourcePassword);
+
+            return dataSource;
+        }
+
     }
 
 }
