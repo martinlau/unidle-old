@@ -222,6 +222,14 @@
                 <version>0.4.0</version>
                 <exclusions>
                     <exclusion>
+                        <groupId>com.google.http-client</groupId>
+                        <artifactId>google-http-client</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.google.http-client</groupId>
+                        <artifactId>google-http-client-jackson2</artifactId>
+                    </exclusion>
+                    <exclusion>
                         <groupId>commons-logging</groupId>
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
@@ -316,6 +324,12 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
                 <version>3.0.2</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.yaml</groupId>
+                        <artifactId>snakeyaml</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>
