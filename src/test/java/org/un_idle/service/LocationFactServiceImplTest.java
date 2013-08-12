@@ -9,9 +9,17 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.un_idle.domain.LocationFact;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.un_idle.test.Conditions.hasFact;
+import static org.un_idle.domain.TimeUnit.DAY;
+import static org.un_idle.domain.TimeUnit.MINUTE;
+import static org.un_idle.domain.TimeUnit.YEAR;
 import static org.un_idle.test.Conditions.hasSource;
-import static org.un_idle.test.Conditions.hasSummary;
+import static org.un_idle.test.Conditions.hasSummaryDuration;
+import static org.un_idle.test.Conditions.hasSummaryDurationTimeUnit;
+import static org.un_idle.test.Conditions.hasTaskCode;
+import static org.un_idle.test.Conditions.hasTaskDuration;
+import static org.un_idle.test.Conditions.hasTaskDurationTimeUnit;
+import static org.un_idle.test.Conditions.hasTaskPeople;
+import static org.un_idle.test.Conditions.hasTaskTimeUnit;
 
 @ContextConfiguration(classes = org.un_idle.config.RootContextConfiguration.class)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,49 +34,78 @@ public class LocationFactServiceImplTest {
         final LocationFact result = subject.findBestFact("Sydney", "New South Wales", "Australia", "Oceania");
 
         assertThat(result)
-                .satisfies(hasFact("Every day in Sydney over 800,000 people spend an average of 75 minutes on public transport"))
-                .satisfies(hasSource("Bureau of Transport Statistics, Transport for NSW"))
-                .satisfies(hasSummary("That's over 100 years spent checking facebook, reading the paper or staring out the window"));
+                .satisfies(hasTaskTimeUnit(DAY))
+                .satisfies(hasTaskPeople(800000))
+                .satisfies(hasTaskDuration(75))
+                .satisfies(hasTaskDurationTimeUnit(MINUTE))
+                .satisfies(hasTaskCode("common.task.public-transport"))
+                .satisfies(hasSummaryDuration(100))
+                .satisfies(hasSummaryDurationTimeUnit(YEAR))
+                .satisfies(hasSource("Bureau of Transport Statistics, Transport for NSW"));
     }
 
     @Test
     public void testFindBestFactWithContinent() throws Exception {
         final LocationFact result = subject.findBestFact("", "", "", "Oceania");
 
+
         assertThat(result)
-                .satisfies(hasFact("A random Oceania fact"))
-                .satisfies(hasSource("A random Oceania source"))
-                .satisfies(hasSummary("A random Oceania summary"));
+                .satisfies(hasTaskTimeUnit(DAY))
+                .satisfies(hasTaskPeople(800000))
+                .satisfies(hasTaskDuration(75))
+                .satisfies(hasTaskDurationTimeUnit(MINUTE))
+                .satisfies(hasTaskCode("common.task.public-transport"))
+                .satisfies(hasSummaryDuration(100))
+                .satisfies(hasSummaryDurationTimeUnit(YEAR))
+                .satisfies(hasSource("Bureau of Transport Statistics, Transport for NSW"));
     }
 
     @Test
     public void testFindBestFactWithCountry() throws Exception {
         final LocationFact result = subject.findBestFact("", "", "Australia", "Oceania");
 
+
         assertThat(result)
-                .satisfies(hasFact("A random Australia fact"))
-                .satisfies(hasSource("A random Australia source"))
-                .satisfies(hasSummary("A random Australia summary"));
+                .satisfies(hasTaskTimeUnit(DAY))
+                .satisfies(hasTaskPeople(800000))
+                .satisfies(hasTaskDuration(75))
+                .satisfies(hasTaskDurationTimeUnit(MINUTE))
+                .satisfies(hasTaskCode("common.task.public-transport"))
+                .satisfies(hasSummaryDuration(100))
+                .satisfies(hasSummaryDurationTimeUnit(YEAR))
+                .satisfies(hasSource("Bureau of Transport Statistics, Transport for NSW"));
     }
 
     @Test
     public void testFindBestFactWithNothing() throws Exception {
         final LocationFact result = subject.findBestFact("", "", "", "");
 
+
         assertThat(result)
-                .satisfies(hasFact("A random Global fact"))
-                .satisfies(hasSource("A random Global source"))
-                .satisfies(hasSummary("A random Global summary"));
+                .satisfies(hasTaskTimeUnit(DAY))
+                .satisfies(hasTaskPeople(800000))
+                .satisfies(hasTaskDuration(75))
+                .satisfies(hasTaskDurationTimeUnit(MINUTE))
+                .satisfies(hasTaskCode("common.task.public-transport"))
+                .satisfies(hasSummaryDuration(100))
+                .satisfies(hasSummaryDurationTimeUnit(YEAR))
+                .satisfies(hasSource("Bureau of Transport Statistics, Transport for NSW"));
     }
 
     @Test
     public void testFindBestFactWithSubdivision() throws Exception {
         final LocationFact result = subject.findBestFact("", "New South Wales", "Australia", "Oceania");
 
+
         assertThat(result)
-                .satisfies(hasFact("A random New South Wales fact"))
-                .satisfies(hasSource("A random New South Wales source"))
-                .satisfies(hasSummary("A random New South Wales summary"));
+                .satisfies(hasTaskTimeUnit(DAY))
+                .satisfies(hasTaskPeople(800000))
+                .satisfies(hasTaskDuration(75))
+                .satisfies(hasTaskDurationTimeUnit(MINUTE))
+                .satisfies(hasTaskCode("common.task.public-transport"))
+                .satisfies(hasSummaryDuration(100))
+                .satisfies(hasSummaryDurationTimeUnit(YEAR))
+                .satisfies(hasSource("Bureau of Transport Statistics, Transport for NSW"));
     }
 
 }

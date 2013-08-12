@@ -12,8 +12,8 @@
                     type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="CITY"
-                    type="VARCHAR">
+            <column name="VERSION"
+                    type="INTEGER">
                 <constraints nullable="false"/>
             </column>
             <column name="CONTINENT"
@@ -24,7 +24,39 @@
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="FACT"
+            <column name="SUBDIVISION"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CITY"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_TIME_UNIT"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_PEOPLE"
+                    type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_DURATION"
+                    type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_DURATION_TIME_UNIT"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_CODE"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SUMMARY_DURATION"
+                    type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SUMMARY_DURATION_TIME_UNIT"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
@@ -32,19 +64,17 @@
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="SUBDIVISION"
-                    type="VARCHAR">
-                <constraints nullable="false"/>
-            </column>
-            <column name="SUMMARY"
-                    type="VARCHAR">
-                <constraints nullable="false"/>
-            </column>
-            <column name="VERSION"
-                    type="INTEGER">
-                <constraints nullable="false"/>
-            </column>
+
         </createTable>
+
+        <createIndex tableName="LOCATION_FACT"
+                     indexName="IDX_LOCATION_FACT_CITY_SUBDIVISION_COUNTRY_CONTINENT"
+                     unique="true">
+            <column name="CITY"/>
+            <column name="SUBDIVISION"/>
+            <column name="COUNTRY"/>
+            <column name="CONTINENT"/>
+        </createIndex>
 
         <createIndex tableName="LOCATION_FACT"
                      indexName="IDX_LOCATION_FACT_CITY">

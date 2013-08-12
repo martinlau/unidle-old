@@ -3,13 +3,14 @@ package org.un_idle.config;
 import com.jolbox.bonecp.BoneCPDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -21,7 +22,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
-import org.un_idle.service.LocationService;
 import ro.isdc.wro.extensions.processor.css.RubySassCssProcessor;
 import ro.isdc.wro.http.ConfigurableWroFilter;
 import ro.isdc.wro.http.WroFilter;
@@ -41,6 +41,12 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "org.un_idle.repository")
 @EnableTransactionManagement
 public class RootContextConfiguration {
+
+    @Bean
+    public Resource geoLite2Database() {
+        // TODO Get from environment
+        return new ClassPathResource("/maxmind/GeoLite2-City.mmdb");
+    }
 
     @Bean
     public FactoryBean<EntityManager> entityManager() {
@@ -80,6 +86,7 @@ public class RootContextConfiguration {
     public DataSource dataSource() {
         BoneCPDataSource dataSource = new BoneCPDataSource();
 
+        // TODO Move to environment
         dataSource.setDriverClass("org.h2.Driver");
         dataSource.setJdbcUrl("jdbc:h2:mem:un-idle;MVCC=TRUE");
         dataSource.setPassword("un-idle");
@@ -98,7 +105,7 @@ public class RootContextConfiguration {
         final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 
         messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setBasename("messages.un-idle");
+        messageSource.setBasename("messages/un-idle");
 
         return messageSource;
     }
@@ -123,19 +130,18 @@ public class RootContextConfiguration {
         return transactionManager;
     }
 
-    @Bean(destroyMethod = "destroy")
+    @Bean
     public WroFilter wroFilter() {
         final ConfigurableWroFilter wroFilter = new ConfigurableWroFilter();
 
         wroFilter.setWroManagerFactory(wroManagerFactory());
-        wroFilter.setCacheUpdatePeriod(5L);
         wroFilter.setDebug(false);
         wroFilter.setEncoding("UTF-8");
 
         return wroFilter;
     }
 
-    @Bean(destroyMethod = "destroy")
+    @Bean
     public WroManagerFactory wroManagerFactory() {
         final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
 

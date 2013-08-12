@@ -2,6 +2,7 @@ package org.un_idle.test;
 
 import org.fest.assertions.Condition;
 import org.un_idle.domain.LocationFact;
+import org.un_idle.domain.TimeUnit;
 import org.un_idle.service.Location;
 
 import static java.lang.String.format;
@@ -35,15 +36,6 @@ public class Conditions {
         };
     }
 
-    public static Condition<Object> hasFact(final String fact) {
-        return new Condition<Object>(format("has fact: %s", fact)) {
-            @Override
-            public boolean matches(final Object value) {
-                return fact.equals(((LocationFact) value).getFact());
-            }
-        };
-    }
-
     public static Condition<Object> hasSource(final String source) {
         return new Condition<Object>(format("has source: %s", source)) {
             @Override
@@ -62,11 +54,65 @@ public class Conditions {
         };
     }
 
-    public static Condition<Object> hasSummary(final String summary) {
-        return new Condition<Object>(format("has summary: %s", summary)) {
+    public static Condition<Object> hasSummaryDuration(final Integer summaryDuration) {
+        return new Condition<Object>(format("has summary duration: %s", summaryDuration)) {
             @Override
             public boolean matches(final Object value) {
-                return summary.equals(((LocationFact) value).getSummary());
+                return summaryDuration.equals(((LocationFact) value).getSummaryDuration());
+            }
+        };
+    }
+
+    public static Condition<Object> hasSummaryDurationTimeUnit(final TimeUnit summaryDurationTimeUnit) {
+        return new Condition<Object>(format("has summary duration time unit: %s", summaryDurationTimeUnit)) {
+            @Override
+            public boolean matches(final Object value) {
+                return summaryDurationTimeUnit.equals(((LocationFact) value).getSummaryDurationTimeUnit());
+            }
+        };
+    }
+
+    public static Condition<Object> hasTaskCode(final String taskCode) {
+        return new Condition<Object>(format("has task code: %s", taskCode)) {
+            @Override
+            public boolean matches(final Object value) {
+                return taskCode.equals(((LocationFact) value).getTaskCode());
+            }
+        };
+    }
+
+    public static Condition<Object> hasTaskDuration(final Integer taskDuration) {
+        return new Condition<Object>(format("has task duration: %s", taskDuration)) {
+            @Override
+            public boolean matches(final Object value) {
+                return taskDuration.equals(((LocationFact) value).getTaskDuration());
+            }
+        };
+    }
+
+    public static Condition<Object> hasTaskDurationTimeUnit(final TimeUnit taskDurationTimeUnit) {
+        return new Condition<Object>(format("has task duration time unit: %s", taskDurationTimeUnit)) {
+            @Override
+            public boolean matches(final Object value) {
+                return taskDurationTimeUnit.equals(((LocationFact) value).getTaskDurationTimeUnit());
+            }
+        };
+    }
+
+    public static Condition<Object> hasTaskPeople(final Integer taskPeople) {
+        return new Condition<Object>(format("has task people: %s", taskPeople)) {
+            @Override
+            public boolean matches(final Object value) {
+                return taskPeople.equals(((LocationFact) value).getTaskPeople());
+            }
+        };
+    }
+
+    public static Condition<Object> hasTaskTimeUnit(final TimeUnit taskTimeUnit) {
+        return new Condition<Object>(format("has task time unit: %s", taskTimeUnit)) {
+            @Override
+            public boolean matches(final Object value) {
+                return taskTimeUnit.equals(((LocationFact) value).getTaskTimeUnit());
             }
         };
     }

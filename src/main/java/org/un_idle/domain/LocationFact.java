@@ -2,38 +2,77 @@ package org.un_idle.domain;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
 import static java.lang.String.format;
+import static javax.persistence.EnumType.STRING;
+import static org.springframework.util.StringUtils.hasText;
+import static org.un_idle.domain.TimeUnit.UNKNOWN;
 
+@AttributeOverride(column = @Column(name = "ID",
+                                    nullable = false),
+                   name = "id")
 @Entity
 @Table(name = "LOCATION_FACT")
 public class LocationFact extends AbstractPersistable<Long> {
 
-    @Column(nullable = false)
-    private String city;
+    @Column(name = "CITY",
+            nullable = false)
+    private String city = "";
 
-    @Column(nullable = false)
-    private String continent;
+    @Column(name = "CONTINENT",
+            nullable = false)
+    private String continent = "";
 
-    @Column(nullable = false)
-    private String country;
+    @Column(name = "COUNTRY",
+            nullable = false)
+    private String country = "";
 
-    @Column(nullable = false)
-    private String fact;
+    @Column(name = "SOURCE",
+            nullable = false)
+    private String source = "";
 
-    @Column(nullable = false)
-    private String source;
+    @Column(name = "SUBDIVISION",
+            nullable = false)
+    private String subdivision = "";
 
-    @Column(nullable = false)
-    private String subdivision;
+    @Column(name = "SUMMARY_DURATION",
+            nullable = false)
+    private Integer summaryDuration = 0;
 
-    @Column(nullable = false)
-    private String summary;
+    @Column(name = "SUMMARY_DURATION_TIME_UNIT",
+            nullable = false)
+    @Enumerated(STRING)
+    private TimeUnit summaryDurationTimeUnit = UNKNOWN;
 
+    @Column(name = "TASK_CODE",
+            nullable = false)
+    private String taskCode = "";
+
+    @Column(name = "TASK_DURATION",
+            nullable = false)
+    private Integer taskDuration = 0;
+
+    @Column(name = "TASK_DURATION_TIME_UNIT",
+            nullable = false)
+    @Enumerated(STRING)
+    private TimeUnit taskDurationTimeUnit = UNKNOWN;
+
+    @Column(name = "TASK_PEOPLE",
+            nullable = false)
+    private Integer taskPeople = 0;
+
+    @Column(name = "TASK_TIME_UNIT",
+            nullable = false)
+    @Enumerated(STRING)
+    private TimeUnit taskTimeUnit = UNKNOWN;
+
+    @Column(name = "VERSION")
     @Version
     private Integer version;
 
@@ -61,12 +100,12 @@ public class LocationFact extends AbstractPersistable<Long> {
         this.country = country;
     }
 
-    public String getFact() {
-        return fact;
-    }
-
-    public void setFact(final String fact) {
-        this.fact = fact;
+    public String getLocation() {
+        return hasText(city) ? city
+                             : hasText(subdivision) ? subdivision
+                                                    : hasText(country) ? country
+                                                                       : hasText(continent) ? continent
+                                                                                            : null;
     }
 
     public String getSource() {
@@ -85,12 +124,60 @@ public class LocationFact extends AbstractPersistable<Long> {
         this.subdivision = subdivision;
     }
 
-    public String getSummary() {
-        return summary;
+    public Integer getSummaryDuration() {
+        return summaryDuration;
     }
 
-    public void setSummary(final String summary) {
-        this.summary = summary;
+    public void setSummaryDuration(final Integer summaryDuration) {
+        this.summaryDuration = summaryDuration;
+    }
+
+    public TimeUnit getSummaryDurationTimeUnit() {
+        return summaryDurationTimeUnit;
+    }
+
+    public void setSummaryDurationTimeUnit(final TimeUnit summaryDurationTimeUnit) {
+        this.summaryDurationTimeUnit = summaryDurationTimeUnit;
+    }
+
+    public String getTaskCode() {
+        return taskCode;
+    }
+
+    public void setTaskCode(final String taskCode) {
+        this.taskCode = taskCode;
+    }
+
+    public Integer getTaskDuration() {
+        return taskDuration;
+    }
+
+    public void setTaskDuration(final Integer taskDuration) {
+        this.taskDuration = taskDuration;
+    }
+
+    public TimeUnit getTaskDurationTimeUnit() {
+        return taskDurationTimeUnit;
+    }
+
+    public void setTaskDurationTimeUnit(final TimeUnit taskDurationTimeUnit) {
+        this.taskDurationTimeUnit = taskDurationTimeUnit;
+    }
+
+    public Integer getTaskPeople() {
+        return taskPeople;
+    }
+
+    public void setTaskPeople(final Integer taskPeople) {
+        this.taskPeople = taskPeople;
+    }
+
+    public TimeUnit getTaskTimeUnit() {
+        return taskTimeUnit;
+    }
+
+    public void setTaskTimeUnit(final TimeUnit taskTimeUnit) {
+        this.taskTimeUnit = taskTimeUnit;
     }
 
     public Integer getVersion() {
@@ -103,15 +190,21 @@ public class LocationFact extends AbstractPersistable<Long> {
 
     @Override
     public String toString() {
-        return format("LocationFact(city='%s', continent='%s', country='%s', fact='%s', source='%s', subdivision='%s', summary='%s', version=%d)",
-                      city,
-                      continent,
-                      country,
-                      fact,
-                      source,
-                      subdivision,
-                      summary,
-                      version);
+        return format(
+                "LocationFact(city='%s', continent='%s', country='%s', source='%s', subdivision='%s', summaryDuration=%d, summaryDurationTimeUnit=%s, taskCode='%s', taskDuration=%d, taskDurationTimeUnit=%s, taskPeople=%d, taskTimeUnit=%s, version=%d)",
+                city,
+                continent,
+                country,
+                source,
+                subdivision,
+                summaryDuration,
+                summaryDurationTimeUnit,
+                taskCode,
+                taskDuration,
+                taskDurationTimeUnit,
+                taskPeople,
+                taskTimeUnit,
+                version);
     }
 
 }
