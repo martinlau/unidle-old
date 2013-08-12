@@ -1,6 +1,10 @@
 package org.un_idle.test;
 
 import org.fest.assertions.Condition;
+import org.un_idle.domain.HasCity;
+import org.un_idle.domain.HasContinent;
+import org.un_idle.domain.HasCountry;
+import org.un_idle.domain.HasSubdivision;
 import org.un_idle.domain.LocationFact;
 import org.un_idle.domain.TimeUnit;
 import org.un_idle.service.Location;
@@ -13,7 +17,7 @@ public class Conditions {
         return new Condition<Object>(format("has city: %s", city)) {
             @Override
             public boolean matches(final Object value) {
-                return city.equals(((Location) value).getCity());
+                return city.equals(((HasCity) value).getCity());
             }
         };
     }
@@ -22,7 +26,7 @@ public class Conditions {
         return new Condition<Object>(format("has continent: %s", continent)) {
             @Override
             public boolean matches(final Object value) {
-                return continent.equals(((Location) value).getContinent());
+                return continent.equals(((HasContinent) value).getContinent());
             }
         };
     }
@@ -31,7 +35,7 @@ public class Conditions {
         return new Condition<Object>(format("has country: %s", country)) {
             @Override
             public boolean matches(final Object value) {
-                return country.equals(((Location) value).getCountry());
+                return country.equals(((HasCountry) value).getCountry());
             }
         };
     }
@@ -49,7 +53,7 @@ public class Conditions {
         return new Condition<Object>(format("has subdivision: %s", subdivision)) {
             @Override
             public boolean matches(final Object value) {
-                return subdivision.equals(((Location) value).getSubdivision());
+                return subdivision.equals(((HasSubdivision) value).getSubdivision());
             }
         };
     }

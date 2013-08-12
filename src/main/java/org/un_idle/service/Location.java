@@ -1,8 +1,17 @@
 package org.un_idle.service;
 
+import org.un_idle.domain.HasCity;
+import org.un_idle.domain.HasContinent;
+import org.un_idle.domain.HasCountry;
+import org.un_idle.domain.HasSubdivision;
+
 import java.io.Serializable;
 
-public class Location implements Serializable {
+public class Location implements Serializable,
+                                 HasCity,
+                                 HasSubdivision,
+                                 HasCountry,
+                                 HasContinent {
 
     private final String city;
 
@@ -27,18 +36,22 @@ public class Location implements Serializable {
         this.continent = continent;
     }
 
+    @Override
     public String getCity() {
         return city;
     }
 
+    @Override
     public String getContinent() {
         return continent;
     }
 
+    @Override
     public String getCountry() {
         return country;
     }
 
+    @Override
     public String getSubdivision() {
         return subdivision;
     }
@@ -51,4 +64,5 @@ public class Location implements Serializable {
                              country,
                              subdivision);
     }
+
 }

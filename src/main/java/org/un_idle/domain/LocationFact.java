@@ -19,7 +19,10 @@ import static org.un_idle.domain.TimeUnit.UNKNOWN;
                    name = "id")
 @Entity
 @Table(name = "LOCATION_FACT")
-public class LocationFact extends AbstractPersistable<Long> {
+public class LocationFact extends AbstractPersistable<Long> implements HasCity,
+                                                                       HasSubdivision,
+                                                                       HasCountry,
+                                                                       HasContinent {
 
     @Column(name = "CITY",
             nullable = false)
@@ -76,6 +79,7 @@ public class LocationFact extends AbstractPersistable<Long> {
     @Version
     private Integer version;
 
+    @Override
     public String getCity() {
         return city;
     }
@@ -84,6 +88,7 @@ public class LocationFact extends AbstractPersistable<Long> {
         this.city = city;
     }
 
+    @Override
     public String getContinent() {
         return continent;
     }
@@ -92,6 +97,7 @@ public class LocationFact extends AbstractPersistable<Long> {
         this.continent = continent;
     }
 
+    @Override
     public String getCountry() {
         return country;
     }
@@ -116,6 +122,7 @@ public class LocationFact extends AbstractPersistable<Long> {
         this.source = source;
     }
 
+    @Override
     public String getSubdivision() {
         return subdivision;
     }
