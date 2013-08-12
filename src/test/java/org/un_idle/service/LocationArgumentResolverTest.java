@@ -13,11 +13,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.bind.support.WebArgumentResolver;
 import org.springframework.web.context.request.ServletWebRequest;
-import org.un_idle.service.Location;
 
 import java.lang.reflect.Method;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.un_idle.test.Conditions.hasCity;
+import static org.un_idle.test.Conditions.hasContinent;
+import static org.un_idle.test.Conditions.hasCountry;
+import static org.un_idle.test.Conditions.hasSubdivision;
 
 @ContextConfiguration(classes = org.un_idle.config.RootContextConfiguration.class)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,6 +47,19 @@ public class LocationArgumentResolverTest {
     }
 
     @Test
+    public void testResolveArgument() throws Exception {
+        mockRequest.setRemoteAddr("203.27.21.6");
+
+        final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
+
+        assertThat(result)
+                .satisfies(hasCity("Sydney"))
+                .satisfies(hasSubdivision("New South Wales"))
+                .satisfies(hasCountry("Australia"))
+                .satisfies(hasContinent("Oceania"));
+    }
+
+    @Test
     public void testResolveArgumentForNonLocationArgument() throws Exception {
         final Object result = subject.resolveArgument(stringMethodParameter, null);
 
@@ -51,28 +67,17 @@ public class LocationArgumentResolverTest {
     }
 
     @Test
-    public void testResolveArgument() throws Exception {
-        mockRequest.setRemoteAddr("203.27.21.6");
-
-        final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
-
-        assertThat(result.getCity()).isEqualTo("Sydney");
-        assertThat(result.getSubdivision()).isEqualTo("New South Wales");
-        assertThat(result.getCountry()).isEqualTo("Australia");
-        assertThat(result.getContinent()).isEqualTo("Oceania");
-    }
-
-    @Test
     public void testResolveArgumentWithAddressOverride() throws Exception {
-        mockRequest.setRemoteAddr("203.27.21.6"); // Sydney
-        mockRequest.addParameter("address", "140.159.2.36"); // Melbourne
+        mockRequest.setRemoteAddr("140.159.2.36"); // Melbourne
+        mockRequest.addParameter("address", "203.27.21.6"); // Sydney
 
         final Location result = (Location) subject.resolveArgument(locationMethodParameter, new ServletWebRequest(mockRequest));
 
-        assertThat(result.getCity()).isEqualTo("Melbourne");
-        assertThat(result.getSubdivision()).isEqualTo("Victoria");
-        assertThat(result.getCountry()).isEqualTo("Australia");
-        assertThat(result.getContinent()).isEqualTo("Oceania");
+        assertThat(result)
+                .satisfies(hasCity("Sydney"))
+                .satisfies(hasSubdivision("New South Wales"))
+                .satisfies(hasCountry("Australia"))
+                .satisfies(hasContinent("Oceania"));
     }
 
     public static final class TestClass {

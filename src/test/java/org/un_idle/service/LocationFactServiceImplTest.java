@@ -23,10 +23,7 @@ public class LocationFactServiceImplTest {
 
     @Test
     public void testFindBestFactWithCity() throws Exception {
-        final LocationFact result = subject.findBestFact("Sydney",
-                                                         "New South Wales",
-                                                         "Australia",
-                                                         "Oceania");
+        final LocationFact result = subject.findBestFact("Sydney", "New South Wales", "Australia", "Oceania");
 
         assertThat(result)
                 .satisfies(hasFact("Every day in Sydney over 800,000 people spend an average of 75 minutes on public transport"))
@@ -36,10 +33,7 @@ public class LocationFactServiceImplTest {
 
     @Test
     public void testFindBestFactWithContinent() throws Exception {
-        final LocationFact result = subject.findBestFact("",
-                                                         "",
-                                                         "",
-                                                         "Oceania");
+        final LocationFact result = subject.findBestFact("", "", "", "Oceania");
 
         assertThat(result)
                 .satisfies(hasFact("A random Oceania fact"))
@@ -49,10 +43,7 @@ public class LocationFactServiceImplTest {
 
     @Test
     public void testFindBestFactWithCountry() throws Exception {
-        final LocationFact result = subject.findBestFact("",
-                                                         "",
-                                                         "Australia",
-                                                         "Oceania");
+        final LocationFact result = subject.findBestFact("", "", "Australia", "Oceania");
 
         assertThat(result)
                 .satisfies(hasFact("A random Australia fact"))
@@ -62,10 +53,7 @@ public class LocationFactServiceImplTest {
 
     @Test
     public void testFindBestFactWithNothing() throws Exception {
-        final LocationFact result = subject.findBestFact("",
-                                                         "",
-                                                         "",
-                                                         "");
+        final LocationFact result = subject.findBestFact("", "", "", "");
 
         assertThat(result)
                 .satisfies(hasFact("A random Global fact"))
@@ -75,10 +63,7 @@ public class LocationFactServiceImplTest {
 
     @Test
     public void testFindBestFactWithSubdivision() throws Exception {
-        final LocationFact result = subject.findBestFact("",
-                                                         "New South Wales",
-                                                         "Australia",
-                                                         "Oceania");
+        final LocationFact result = subject.findBestFact("", "New South Wales", "Australia", "Oceania");
 
         assertThat(result)
                 .satisfies(hasFact("A random New South Wales fact"))
