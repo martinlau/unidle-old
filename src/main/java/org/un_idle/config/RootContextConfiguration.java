@@ -252,8 +252,8 @@ public class RootContextConfiguration {
                                          databaseUri.getHost(),
                                          databaseUri.getPort(),
                                          databaseUri.getPath()));
-            dataSource.setPassword(databaseUri.getUserInfo().split(":")[0]);
-            dataSource.setUsername(databaseUri.getUserInfo().split(":")[1]);
+            dataSource.setUsername(databaseUri.getUserInfo().split(":")[0]);
+            dataSource.setPassword(databaseUri.getUserInfo().split(":")[1]);
 
             return dataSource;
         }
