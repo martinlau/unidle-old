@@ -12,8 +12,7 @@
 
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <!-- TODO Set to true when there's actual code using these dependencies -->
-        <failOnWarning>false</failOnWarning>
+        <failOnWarning>true</failOnWarning>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.testSource>1.7</maven.compiler.testSource>
@@ -49,6 +48,26 @@
                         <goals>
                             <goal>analyze-only</goal>
                         </goals>
+                        <configuration>
+                            <usedDependencies>
+                                <usedDependency>ch.qos.logback:logback-classic</usedDependency>
+                                <usedDependency>com.h2database:h2</usedDependency>
+                                <usedDependency>com.newrelic.agent.java:newrelic-agent</usedDependency>
+                                <usedDependency>javax.servlet.jsp:javax.servlet.jsp-api</usedDependency>
+                                <usedDependency>javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api</usedDependency>
+                                <usedDependency>org.apache.tiles:tiles-jsp</usedDependency>
+                                <usedDependency>org.hamcrest:hamcrest-library</usedDependency>
+                                <usedDependency>org.hibernate:hibernate-ehcache</usedDependency>
+                                <usedDependency>org.hibernate:hibernate-entitymanager</usedDependency>
+                                <usedDependency>org.slf4j:jcl-over-slf4j</usedDependency>
+                                <usedDependency>org.slf4j:slf4j-api</usedDependency>
+                                <usedDependency>org.webjars:font-awesome</usedDependency>
+                                <usedDependency>org.webjars:foundation</usedDependency>
+                                <usedDependency>org.webjars:jquery</usedDependency>
+                                <usedDependency>org.webjars:modernizr</usedDependency>
+                                <usedDependency>ro.isdc.wro4j:wro4j-extensions</usedDependency>
+                            </usedDependencies>
+                        </configuration>
                     </execution>
                     <execution>
                         <goals>
