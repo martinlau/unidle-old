@@ -179,6 +179,7 @@ public class RootContextConfiguration {
         final SpringLiquibase springLiquibase = new SpringLiquibase();
 
         springLiquibase.setDataSource(dataSource);
+        springLiquibase.setDefaultSchema("public");
         springLiquibase.setChangeLog("classpath:liquibase/changelog.xml");
 
         return springLiquibase;
