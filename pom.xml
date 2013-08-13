@@ -92,12 +92,12 @@
                         </bannedDependencies>
                         <dependencyConvergence/>
                         <!--<requireJavaVersion>-->
-                            <!--<version>[1.7.0-06,)</version>-->
-                            <!--<message>Use JDK 1.7.0-06 or above to build</message>-->
+                        <!--<version>[1.7.0-06,)</version>-->
+                        <!--<message>Use JDK 1.7.0-06 or above to build</message>-->
                         <!--</requireJavaVersion>-->
                         <!--<requireMavenVersion>-->
-                            <!--<version>[3.0.3,)</version>-->
-                            <!--<message>Use Maven 3.0.3 or above to build</message>-->
+                        <!--<version>[3.0.3,)</version>-->
+                        <!--<message>Use Maven 3.0.3 or above to build</message>-->
                         <!--</requireMavenVersion>-->
                         <requirePluginVersions>
                             <message>Define plugin versions via &lt;pluginManagement&gt; to explicitly define versions</message>
@@ -683,6 +683,18 @@
             <build>
                 <finalName>unidle</finalName>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>2.5</version>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>webapps</directory>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
