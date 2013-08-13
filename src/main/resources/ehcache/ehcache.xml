@@ -18,7 +18,7 @@
                   timeToIdleSeconds="120"
                   timeToLiveSeconds="120"/>
 
-    <cache name="org.un_idle.domain.LocationFact"
+    <cache name="org.unidle.domain.LocationFact"
            diskPersistent="false"
            eternal="false"
            maxElementsInMemory="16384"
