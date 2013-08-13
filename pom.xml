@@ -91,14 +91,14 @@
                             <message>Use slf4j and jcl-over-slf4j and log4j-over-slf4j instead</message>
                         </bannedDependencies>
                         <dependencyConvergence/>
-                        <requireJavaVersion>
-                            <version>[1.7.0-06,)</version>
-                            <message>Use JDK 1.7.0-06 or above to build</message>
-                        </requireJavaVersion>
-                        <requireMavenVersion>
-                            <version>[3.0.3,)</version>
-                            <message>Use Maven 3.0.3 or above to build</message>
-                        </requireMavenVersion>
+                        <!--<requireJavaVersion>-->
+                            <!--<version>[1.7.0-06,)</version>-->
+                            <!--<message>Use JDK 1.7.0-06 or above to build</message>-->
+                        <!--</requireJavaVersion>-->
+                        <!--<requireMavenVersion>-->
+                            <!--<version>[3.0.3,)</version>-->
+                            <!--<message>Use Maven 3.0.3 or above to build</message>-->
+                        <!--</requireMavenVersion>-->
                         <requirePluginVersions>
                             <message>Define plugin versions via &lt;pluginManagement&gt; to explicitly define versions</message>
                             <phases>clean,compile,test,install,site,deploy</phases>
