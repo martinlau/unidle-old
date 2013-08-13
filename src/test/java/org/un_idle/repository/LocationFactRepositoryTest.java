@@ -16,7 +16,6 @@ import static org.un_idle.test.Conditions.hasContinent;
 import static org.un_idle.test.Conditions.hasCountry;
 import static org.un_idle.test.Conditions.hasSubdivision;
 
-@ActiveProfiles("unit-test")
 @ContextConfiguration(classes = RootContextConfiguration.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional

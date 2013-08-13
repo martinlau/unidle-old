@@ -261,7 +261,7 @@ public class RootContextConfiguration {
     }
 
     @Configuration
-    @Profile("unit-test")
+    @Profile("default")
     public static class LocalDatabaseConfiguration {
 
         @Value("${un-idle.dataSource.driverClass}")

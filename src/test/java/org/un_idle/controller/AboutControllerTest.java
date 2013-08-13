@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,9 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-@ActiveProfiles("unit-test")
-@ContextConfiguration(classes = {RootContextConfiguration.class,
-                                 MvcConfiguration.class})
+@ContextHierarchy({@ContextConfiguration(classes = RootContextConfiguration.class),
+                   @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 public class AboutControllerTest {

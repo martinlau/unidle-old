@@ -7,7 +7,6 @@ import org.un_idle.domain.HasCountry;
 import org.un_idle.domain.HasSubdivision;
 import org.un_idle.domain.LocationFact;
 import org.un_idle.domain.TimeUnit;
-import org.un_idle.service.Location;
 
 import static java.lang.String.format;
 

@@ -171,6 +171,14 @@
                             <attachArtifact>false</attachArtifact>
                         </configuration>
                     </execution>
+                    <execution>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <useTestClasspath>true</useTestClasspath>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
