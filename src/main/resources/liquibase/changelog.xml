@@ -96,6 +96,11 @@
             <column name="SUBDIVISION"/>
         </createIndex>
 
+        </changeSet>
+
+    <changeSet id="002-LocationFact-Data"
+               author="Martin Lau [m@hum.ph]">
+
         <loadData tableName="LOCATION_FACT"
                   file="liquibase/data/location-facts.csv"/>
 
