@@ -60,6 +60,10 @@ import static java.lang.String.format;
 @PropertySource("classpath:un-idle.properties")
 public class RootContextConfiguration {
 
+    static {
+        System.setProperty("liquibase.defaultlogger.level", "debug");
+    }
+
     @Value("${un-idle.wro.cacheUpdatePeriod}")
     private Long cacheUpdatePeriod;
 
