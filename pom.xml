@@ -52,7 +52,6 @@
                             <usedDependencies>
                                 <usedDependency>ch.qos.logback:logback-classic</usedDependency>
                                 <usedDependency>com.h2database:h2</usedDependency>
-                                <usedDependency>com.newrelic.agent.java:newrelic-agent</usedDependency>
                                 <usedDependency>javax.servlet.jsp:javax.servlet.jsp-api</usedDependency>
                                 <usedDependency>javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api</usedDependency>
                                 <usedDependency>org.apache.tiles:tiles-jsp</usedDependency>
@@ -68,14 +67,6 @@
                                 <usedDependency>org.webjars:modernizr</usedDependency>
                                 <usedDependency>ro.isdc.wro4j:wro4j-extensions</usedDependency>
                             </usedDependencies>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <includeArtifactIds>newrelic-agent</includeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>
@@ -161,17 +152,6 @@
                 <version>2.1</version>
                 <executions>
                     <execution>
-                        <id>exec-war</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec-war</goal>
-                        </goals>
-                        <configuration>
-                            <path>/</path>
-                            <attachArtifact>false</attachArtifact>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -242,11 +222,6 @@
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>com.newrelic.agent.java</groupId>
-                <artifactId>newrelic-agent</artifactId>
-                <version>2.21.1</version>
             </dependency>
             <dependency>
                 <groupId>commons-beanutils</groupId>
@@ -563,11 +538,6 @@
             <artifactId>geoip2</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.newrelic.agent.java</groupId>
-            <artifactId>newrelic-agent</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
@@ -706,5 +676,26 @@
             <artifactId>wro4j-extensions</artifactId>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>openshift</id>
+            <build>
+                <finalName>unidle</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.4</version>
+                        <configuration>
+                            <outputDirectory>webapps</outputDirectory>
+                            <warName>ROOT</warName>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 
 </project>
