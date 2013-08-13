@@ -140,7 +140,7 @@ public class RootContextConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
-        final Map<String, Object> jpaProperties = new LinkedHashMap<>();
+        final Map<String, Object> jpaProperties = new LinkedHashMap<String, Object>();
         jpaProperties.put("net.sf.ehcache.configurationResourceName", hibernateEhcacheConfigurationResourceName);
         jpaProperties.put("hibernate.cache.region.factory_class", hibernateEhcacheRegionFactoryClass);
         jpaProperties.put("hibernate.cache.use_query_cache", hibernateUseQueryCache);
