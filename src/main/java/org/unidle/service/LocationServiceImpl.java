@@ -28,8 +28,8 @@ public class LocationServiceImpl implements LocationService {
     private final Set<String> internalIps;
 
     @Autowired
-    public LocationServiceImpl(@Value("${unidle_maxmind_database}") final Resource database,
-                               @Value("#{'${unidle_internal_ips}'.split(',')}") final Set<String> internalIps) throws IOException {
+    public LocationServiceImpl(@Value("${unidle.maxmind.database}") final Resource database,
+                               @Value("#{'${unidle.internal.ips}'.split(',')}") final Set<String> internalIps) throws IOException {
         this(database.getFile(), internalIps);
     }
 
