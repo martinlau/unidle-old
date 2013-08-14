@@ -4,7 +4,6 @@ import com.google.common.base.Joiner;
 import com.jolbox.bonecp.BoneCPDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -37,10 +36,6 @@ import ro.isdc.wro.model.resource.locator.ServletContextUriLocator;
 import ro.isdc.wro.model.resource.locator.UrlUriLocator;
 import ro.isdc.wro.model.resource.locator.factory.ConfigurableLocatorFactory;
 import ro.isdc.wro.model.resource.processor.factory.ConfigurableProcessorsFactory;
-import ro.isdc.wro.model.resource.support.hash.ConfigurableHashStrategy;
-import ro.isdc.wro.model.resource.support.hash.SHA1HashStrategy;
-import ro.isdc.wro.model.resource.support.naming.ConfigurableNamingStrategy;
-import ro.isdc.wro.model.resource.support.naming.TimestampNamingStrategy;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -55,9 +50,6 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource("classpath:unidle.properties")
 public class RootContextConfiguration {
-
-    @Value("${unidle.wro.cacheUpdatePeriod}")
-    private Long cacheUpdatePeriod;
 
     @Value("${unidle.dataSource.driverClass}")
     private String dataSourceDriverClass;
@@ -91,6 +83,9 @@ public class RootContextConfiguration {
 
     @Value("${unidle.wro.cacheGzippedContent}")
     private boolean wroCacheGzippedContent;
+
+    @Value("${unidle.wro.cacheUpdatePeriod}")
+    private Long wroCacheUpdatePeriod;
 
     @Value("${unidle.wro.debug}")
     private boolean wroDebug;
@@ -130,18 +125,6 @@ public class RootContextConfiguration {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Bean(destroyMethod = "close")
-    public DataSource dataSource() {
-        BoneCPDataSource dataSource = new BoneCPDataSource();
-
-        dataSource.setDriverClass(dataSourceDriverClass);
-        dataSource.setJdbcUrl(dataSourceUrl);
-        dataSource.setPassword(dataSourceUsername);
-        dataSource.setUsername(dataSourcePassword);
-
-        return dataSource;
-    }
-
     @Bean
     public FactoryBean<EntityManager> entityManager() {
         final EntityManagerFactory entityManagerFactory = entityManagerFactory().getObject();
@@ -174,6 +157,18 @@ public class RootContextConfiguration {
         entityManagerFactoryBean.setJpaPropertyMap(jpaProperties);
 
         return entityManagerFactoryBean;
+    }
+
+    @Bean(destroyMethod = "close")
+    public DataSource dataSource() {
+        BoneCPDataSource dataSource = new BoneCPDataSource();
+
+        dataSource.setDriverClass(dataSourceDriverClass);
+        dataSource.setJdbcUrl(dataSourceUrl);
+        dataSource.setPassword(dataSourceUsername);
+        dataSource.setUsername(dataSourcePassword);
+
+        return dataSource;
     }
 
     @Bean
@@ -229,14 +224,12 @@ public class RootContextConfiguration {
 
         properties.put(ConfigurableProcessorsFactory.PARAM_POST_PROCESSORS, RubySassCssProcessor.ALIAS);
         properties.put(ConfigurableLocatorFactory.PARAM_URI_LOCATORS, Joiner.on(',').join(WebjarUriLocator.ALIAS,
-                                                                                          ServletContextUriLocator.ALIAS_SERVLET_CONTEXT_FIRST,
+                                                                                          ServletContextUriLocator.ALIAS,
                                                                                           UrlUriLocator.ALIAS,
                                                                                           ClasspathUriLocator.ALIAS));
-        properties.put(ConfigurableNamingStrategy.KEY, TimestampNamingStrategy.ALIAS);
-        properties.put(ConfigurableHashStrategy.KEY, SHA1HashStrategy.ALIAS);
 
         properties.put(ConfigConstants.cacheGzippedContent, wroCacheGzippedContent);
-        properties.put(ConfigConstants.cacheUpdatePeriod.name(), cacheUpdatePeriod);
+        properties.put(ConfigConstants.cacheUpdatePeriod.name(), wroCacheUpdatePeriod);
         properties.put(ConfigConstants.debug.name(), wroDebug);
         properties.put(ConfigConstants.disableCache.name(), wroDisableCache);
         properties.put(ConfigConstants.encoding.name(), wroEncoding);
