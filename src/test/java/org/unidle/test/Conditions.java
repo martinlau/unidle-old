@@ -8,6 +8,8 @@ import org.unidle.domain.HasSubdivision;
 import org.unidle.domain.LocationFact;
 import org.unidle.domain.TimeUnit;
 
+import java.util.Map;
+
 import static java.lang.String.format;
 
 public class Conditions {
@@ -35,6 +37,15 @@ public class Conditions {
             @Override
             public boolean matches(final Object value) {
                 return country.equals(((HasCountry) value).getCountry());
+            }
+        };
+    }
+
+    public static Condition<Map<?, ?>> containsKey(final Object key) {
+        return new Condition<Map<?, ?>>(format("contains key: %s", key)) {
+            @Override
+            public boolean matches(final Map<?, ?> value) {
+                return value.containsKey(key);
             }
         };
     }

@@ -23,13 +23,13 @@
             <spring:message code="base.title" />
         </title>
 
-        <spring:url value="/resources/foundation.css" var="foundation_css" />
+        <spring:url value="/resources/foundation.css?t=${buildTimestamp}" var="foundation_css" />
         <link rel="stylesheet" href="${foundation_css}" />
 
-        <spring:url value="/resources/font-awesome.css" var="font_awesome_css" />
+        <spring:url value="/resources/font-awesome.css?t=${buildTimestamp}" var="font_awesome_css" />
         <link rel="stylesheet" href="${font_awesome_css}" />
 
-        <spring:url value="/resources/modernizr.js" var="modernizr_js" />
+        <spring:url value="/resources/modernizr.js?t=${buildTimestamp}" var="modernizr_js" />
         <script src="${modernizr_js}"><!-- // no collapse --></script>
 
     </head>
@@ -38,10 +38,10 @@
 
         <tiles:insertAttribute name="content" />
 
-        <spring:url value="/resources/jquery.js" var="jquery_js" />
+        <spring:url value="/resources/jquery.js?t=${buildTimestamp}" var="jquery_js" />
         <script src="${jquery_js}"><!-- // no collapse --></script>
 
-        <spring:url value="/resources/foundation.js" var="foundation_js" />
+        <spring:url value="/resources/foundation.js?t=${buildTimestamp}" var="foundation_js" />
         <script src="${foundation_js}"><!-- // no collapse --></script>
 
         <script>
