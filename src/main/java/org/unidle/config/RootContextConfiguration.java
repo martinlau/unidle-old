@@ -1,6 +1,5 @@
 package org.unidle.config;
 
-import com.google.common.base.Joiner;
 import com.jolbox.bonecp.BoneCPDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.FactoryBean;
@@ -33,15 +32,10 @@ import org.unidle.cache.SpringCacheCacheStrategy;
 import ro.isdc.wro.cache.CacheKey;
 import ro.isdc.wro.cache.CacheValue;
 import ro.isdc.wro.config.jmx.ConfigConstants;
-import ro.isdc.wro.extensions.locator.WebjarUriLocator;
-import ro.isdc.wro.extensions.processor.css.RubySassCssProcessor;
 import ro.isdc.wro.http.ConfigurableWroFilter;
 import ro.isdc.wro.http.WroFilter;
 import ro.isdc.wro.manager.factory.ConfigurableWroManagerFactory;
 import ro.isdc.wro.manager.factory.WroManagerFactory;
-import ro.isdc.wro.model.resource.locator.ClasspathUriLocator;
-import ro.isdc.wro.model.resource.locator.ServletContextUriLocator;
-import ro.isdc.wro.model.resource.locator.UrlUriLocator;
 import ro.isdc.wro.model.resource.locator.factory.ConfigurableLocatorFactory;
 import ro.isdc.wro.model.resource.processor.factory.ConfigurableProcessorsFactory;
 
@@ -130,8 +124,14 @@ public class RootContextConfiguration {
     @Value("${unidle.wro.parallelPreprocessing}")
     private boolean wroParallelPreprocessing;
 
+    @Value("${unidle.wro.postProcessors}")
+    private String wroPostProcessors;
+
     @Value("${unidle.wro.resourceWatcherUpdatePeriod}")
     private long wroResourceWatcherUpdatePeriod;
+
+    @Value("${unidle.wro.uriLocators}")
+    private String wroUriLocators;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
@@ -247,11 +247,8 @@ public class RootContextConfiguration {
 
         final Properties properties = new Properties();
 
-        properties.put(ConfigurableProcessorsFactory.PARAM_POST_PROCESSORS, RubySassCssProcessor.ALIAS);
-        properties.put(ConfigurableLocatorFactory.PARAM_URI_LOCATORS, Joiner.on(',').join(WebjarUriLocator.ALIAS,
-                                                                                          ServletContextUriLocator.ALIAS,
-                                                                                          UrlUriLocator.ALIAS,
-                                                                                          ClasspathUriLocator.ALIAS));
+        properties.put(ConfigurableProcessorsFactory.PARAM_POST_PROCESSORS, wroPostProcessors);
+        properties.put(ConfigurableLocatorFactory.PARAM_URI_LOCATORS, wroUriLocators);
 
         properties.put(ConfigConstants.cacheGzippedContent, wroCacheGzippedContent);
         properties.put(ConfigConstants.cacheUpdatePeriod.name(), wroCacheUpdatePeriod);
