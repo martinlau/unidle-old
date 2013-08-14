@@ -1,3 +1,4 @@
+
 export CATALINA_OPTS="${CATALINA_OPTS} \
                       -Dunidle.dataSource.driverClass=org.postgresql.Driver \
                       -Dunidle.dataSource.password=${OPENSHIFT_POSTGRESQL_DB_PASSWORD} \
