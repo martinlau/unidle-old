@@ -9,6 +9,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.unidle.config.RootContextConfiguration;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.unidle.service.Location.DEFAULT;
 import static org.unidle.test.Conditions.hasCity;
 import static org.unidle.test.Conditions.hasContinent;
 import static org.unidle.test.Conditions.hasCountry;
@@ -111,10 +112,23 @@ public class LocationServiceImplTest {
     }
 
     @Test
+    public void testLocateAddressForInternalAddress() throws Exception {
+        final Location result = locationService.locateAddress("127.3.2.1");
+
+        assertThat(result)
+                .isSameAs(DEFAULT)
+                .satisfies(hasCity(""))
+                .satisfies(hasSubdivision(""))
+                .satisfies(hasCountry(""))
+                .satisfies(hasContinent(""));
+    }
+
+    @Test
     public void testLocateAddressForUnknownAddress() throws Exception {
         final Location result = locationService.locateAddress("127.0.0.1");
 
         assertThat(result)
+                .isSameAs(DEFAULT)
                 .satisfies(hasCity(""))
                 .satisfies(hasSubdivision(""))
                 .satisfies(hasCountry(""))

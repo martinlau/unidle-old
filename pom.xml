@@ -60,7 +60,6 @@
                                 <usedDependency>org.hibernate:hibernate-entitymanager</usedDependency>
                                 <usedDependency>org.postgresql:postgresql</usedDependency>
                                 <usedDependency>org.slf4j:jcl-over-slf4j</usedDependency>
-                                <usedDependency>org.slf4j:slf4j-api</usedDependency>
                                 <usedDependency>org.webjars:font-awesome</usedDependency>
                                 <usedDependency>org.webjars:foundation</usedDependency>
                                 <usedDependency>org.webjars:jquery</usedDependency>

@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 import static java.net.InetAddress.getByName;
+import static org.unidle.service.Location.DEFAULT;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -23,17 +25,27 @@ public class LocationServiceImpl implements LocationService {
 
     private final GeoIp2Provider geoIp2Provider;
 
+    private final Set<String> internalIps;
+
     @Autowired
-    public LocationServiceImpl(@Value("${unidle.maxmind.database}") final Resource database) throws IOException {
-        this(database.getFile());
+    public LocationServiceImpl(@Value("${unidle.maxmind.database}") final Resource database,
+                               @Value("#{'${unidle.internal.ips}'.split(',')}") final Set<String> internalIps) throws IOException {
+        this(database.getFile(), internalIps);
     }
 
-    public LocationServiceImpl(final File database) throws IOException {
+    public LocationServiceImpl(final File database,
+                               final Set<String> internalIps) throws IOException {
         this.geoIp2Provider = new DatabaseReader(database);
+        this.internalIps = internalIps;
     }
 
     @Override
     public Location locateAddress(final String address) throws Exception {
+
+        if (internalIps.contains(address)) {
+            return DEFAULT;
+        }
+
         try {
             final Omni omni = geoIp2Provider.omni(getByName(address));
 
@@ -46,7 +58,7 @@ public class LocationServiceImpl implements LocationService {
             LOGGER.warn("Unknown location: {}", address);
         }
 
-        return new Location();
+        return DEFAULT;
     }
 
 }

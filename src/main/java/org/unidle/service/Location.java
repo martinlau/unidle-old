@@ -21,10 +21,10 @@ public class Location implements Serializable,
 
     private final String subdivision;
 
-    @SuppressWarnings("unused")
-    public Location() {
-        this("", "", "", "");
-    }
+    public static final Location DEFAULT = new Location("",
+                                                        "",
+                                                        "",
+                                                        "");
 
     public Location(final String city,
                     final String subdivision,
