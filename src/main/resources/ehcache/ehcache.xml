@@ -18,6 +18,14 @@
                   timeToIdleSeconds="120"
                   timeToLiveSeconds="120"/>
 
+    <cache name="WRO"
+           diskPersistent="false"
+           eternal="true"
+           maxElementsInMemory="2048"
+           maxElementsOnDisk="2048"
+           memoryStoreEvictionPolicy="LRU"
+           overflowToDisk="true"/>
+
     <cache name="org.unidle.service.LocationService"
             diskPersistent="false"
             eternal="false"

@@ -5,6 +5,7 @@ import com.jolbox.bonecp.BoneCPDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
@@ -27,6 +28,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.unidle.cache.SpringCacheCacheStrategy;
+import ro.isdc.wro.cache.CacheKey;
+import ro.isdc.wro.cache.CacheValue;
 import ro.isdc.wro.config.jmx.ConfigConstants;
 import ro.isdc.wro.extensions.locator.WebjarUriLocator;
 import ro.isdc.wro.extensions.processor.css.RubySassCssProcessor;
@@ -88,6 +92,9 @@ public class RootContextConfiguration {
     @Value("${unidle.wro.cacheGzippedContent}")
     private boolean wroCacheGzippedContent;
 
+    @Value("${unidle.wro.cacheName}")
+    private String wroCacheName;
+
     @Value("${unidle.wro.cacheUpdatePeriod}")
     private Long wroCacheUpdatePeriod;
 
@@ -127,17 +134,6 @@ public class RootContextConfiguration {
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
-    }
-
-    @Bean
-    public CacheManager cacheManager() {
-        final net.sf.ehcache.CacheManager ehCacheManager = net.sf.ehcache.CacheManager.create(ehcacheConfigurationResourceName);
-
-        final EhCacheCacheManager cacheManager = new EhCacheCacheManager();
-
-        cacheManager.setCacheManager(ehCacheManager);
-
-        return cacheManager;
     }
 
     @Bean
@@ -235,6 +231,8 @@ public class RootContextConfiguration {
     public WroManagerFactory wroManagerFactory() {
         final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
 
+        wroManagerFactory.setCacheStrategy(cacheStrategy());
+
         final Properties properties = new Properties();
 
         properties.put(ConfigurableProcessorsFactory.PARAM_POST_PROCESSORS, RubySassCssProcessor.ALIAS);
@@ -260,6 +258,24 @@ public class RootContextConfiguration {
         wroManagerFactory.setConfigProperties(properties);
 
         return wroManagerFactory;
+    }
+
+    @Bean
+    public SpringCacheCacheStrategy<CacheKey, CacheValue> cacheStrategy() {
+        final Cache cache = cacheManager().getCache(wroCacheName);
+
+        return new SpringCacheCacheStrategy<>(cache);
+    }
+
+    @Bean
+    public CacheManager cacheManager() {
+        final net.sf.ehcache.CacheManager ehCacheManager = net.sf.ehcache.CacheManager.create(ehcacheConfigurationResourceName);
+
+        final EhCacheCacheManager cacheManager = new EhCacheCacheManager();
+
+        cacheManager.setCacheManager(ehCacheManager);
+
+        return cacheManager;
     }
 
 }
