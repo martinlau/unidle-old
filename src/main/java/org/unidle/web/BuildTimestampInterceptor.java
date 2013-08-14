@@ -1,7 +1,5 @@
 package org.unidle.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -10,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class BuildTimestampInterceptor extends HandlerInterceptorAdapter {
 
-    private static final String TIMESTAMP = "buildTimestamp";
+    public static final String BUILD_TIMESTAMP = "buildTimestamp";
 
     private final String timestamp;
 
@@ -23,7 +21,7 @@ public class BuildTimestampInterceptor extends HandlerInterceptorAdapter {
                            final HttpServletResponse response,
                            final Object handler,
                            final ModelAndView modelAndView) throws Exception {
-        modelAndView.addObject(TIMESTAMP, timestamp);
+        modelAndView.addObject(BUILD_TIMESTAMP, timestamp);
     }
 
 }

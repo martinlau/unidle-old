@@ -16,6 +16,7 @@ import org.unidle.config.RootContextConfiguration;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.unidle.test.Conditions.containsKey;
+import static org.unidle.web.BuildTimestampInterceptor.BUILD_TIMESTAMP;
 
 @ContextHierarchy({@ContextConfiguration(classes = RootContextConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
@@ -40,7 +41,7 @@ public class BuildTimestampInterceptorTest {
         subject.postHandle(null, null, null, modelAndView);
 
         assertThat(modelAndView.getModel())
-                .satisfies(containsKey(("buildTimestamp")));
+                .satisfies(containsKey((BUILD_TIMESTAMP)));
     }
 
 }
