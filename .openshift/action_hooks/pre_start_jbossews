@@ -1,8 +1,8 @@
 export CATALINA_OPTS="${CATALINA_OPTS} \
                       -Dunidle.dataSource.driverClass=org.postgresql.Driver \
-                      -Dunidle.dataSource.password=$OPENSHIFT_POSTGRESQL_DB_PASSWORD \
-                      -Dunidle.dataSource.url=jdbc:postgresql://$OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL_DB_PORT/unidle \
-                      -Dunidle.dataSource.username=$OPENSHIFT_POSTGRESQL_DB_USERNAME \
+                      -Dunidle.dataSource.password=${OPENSHIFT_POSTGRESQL_DB_PASSWORD} \
+                      -Dunidle.dataSource.url=jdbc:postgresql://${OPENSHIFT_POSTGRESQL_DB_HOST}:${OPENSHIFT_POSTGRESQL_DB_PORT}/${PGDATABASE} \
+                      -Dunidle.dataSource.username=${OPENSHIFT_POSTGRESQL_DB_USERNAME} \
                       -Dunidle_jpaVendor_database=POSTGRESQL \
                       -Dunidle.internal.ips=127.3.2.1,127.3.2.2,127.3.2.3 \
                       -Dunidle.wro.cacheUpdatePeriod=0 \

@@ -165,8 +165,8 @@ public class RootContextConfiguration {
 
         dataSource.setDriverClass(dataSourceDriverClass);
         dataSource.setJdbcUrl(dataSourceUrl);
-        dataSource.setPassword(dataSourceUsername);
-        dataSource.setUsername(dataSourcePassword);
+        dataSource.setUsername(dataSourceUsername);
+        dataSource.setPassword(dataSourcePassword);
 
         return dataSource;
     }
