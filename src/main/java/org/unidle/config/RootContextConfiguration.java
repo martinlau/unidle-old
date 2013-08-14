@@ -26,6 +26,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.unidle.cache.SpringCacheCacheStrategy;
@@ -143,6 +144,7 @@ public class RootContextConfiguration {
         final EntityManagerFactory entityManagerFactory = entityManagerFactory().getObject();
 
         final SharedEntityManagerBean entityManagerBean = new SharedEntityManagerBean();
+
         entityManagerBean.setEntityManagerFactory(entityManagerFactory);
 
         return entityManagerBean;
@@ -151,17 +153,20 @@ public class RootContextConfiguration {
     @Bean
     @DependsOn("springLiquibase")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+
+        final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+
+        jpaVendorAdapter.setDatabase(jpaVendorDatabase);
 
         final Map<String, Object> jpaProperties = new LinkedHashMap<String, Object>();
+
         jpaProperties.put("net.sf.ehcache.configurationResourceName", ehcacheConfigurationResourceName);
         jpaProperties.put("hibernate.cache.region.factory_class", hibernateEhcacheRegionFactoryClass);
         jpaProperties.put("hibernate.cache.use_query_cache", hibernateUseQueryCache);
         jpaProperties.put("hibernate.cache.use_second_level_cache", hibernateUseSecondLevelCache);
         jpaProperties.put("hibernate.hbm2ddl.auto", hibernateHbm2ddl);
 
-        final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setDatabase(jpaVendorDatabase);
+        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setJpaDialect(new HibernateJpaDialect());
@@ -174,7 +179,7 @@ public class RootContextConfiguration {
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
-        BoneCPDataSource dataSource = new BoneCPDataSource();
+        final BoneCPDataSource dataSource = new BoneCPDataSource();
 
         dataSource.setDriverClass(dataSourceDriverClass);
         dataSource.setJdbcUrl(dataSourceUrl);
@@ -200,11 +205,10 @@ public class RootContextConfiguration {
     }
 
     @Bean
-    public SpringLiquibase springLiquibase() throws ClassNotFoundException {
-        final SpringLiquibase springLiquibase = new SpringLiquibase();
+    public SpringLiquibase springLiquibase() {
 
         @SuppressWarnings("unchecked")
-        final Class<Driver> driverClass = (Class<Driver>) Class.forName(dataSourceDriverClass);
+        final Class<Driver> driverClass = (Class<Driver>) ClassUtils.resolveClassName(dataSourceDriverClass, ClassUtils.getDefaultClassLoader());
 
         final SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
 
@@ -212,6 +216,8 @@ public class RootContextConfiguration {
         dataSource.setPassword(dataSourcePassword);
         dataSource.setUrl(dataSourceUrl);
         dataSource.setUsername(dataSourceUsername);
+
+        final SpringLiquibase springLiquibase = new SpringLiquibase();
 
         springLiquibase.setDataSource(dataSource);
         springLiquibase.setChangeLog("classpath:liquibase/changelog.xml");
@@ -240,9 +246,6 @@ public class RootContextConfiguration {
 
     @Bean
     public WroManagerFactory wroManagerFactory() {
-        final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
-
-        wroManagerFactory.setCacheStrategy(cacheStrategy());
 
         final Properties properties = new Properties();
 
@@ -263,6 +266,9 @@ public class RootContextConfiguration {
         properties.put(ConfigConstants.parallelPreprocessing.name(), wroParallelPreprocessing);
         properties.put(ConfigConstants.resourceWatcherUpdatePeriod.name(), wroResourceWatcherUpdatePeriod);
 
+        final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
+
+        wroManagerFactory.setCacheStrategy(cacheStrategy());
         wroManagerFactory.setConfigProperties(properties);
 
         return wroManagerFactory;
