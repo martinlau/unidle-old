@@ -2,6 +2,7 @@ package org.unidle.service;
 
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.GeoIp2Provider;
+import com.maxmind.geoip2.exception.AddressNotFoundException;
 import com.maxmind.geoip2.model.Omni;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,12 +30,19 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location locateAddress(final String address) throws Exception {
-        final Omni omni = geoIp2Provider.omni(getByName(address));
+        try {
+            final Omni omni = geoIp2Provider.omni(getByName(address));
 
-        return new Location(omni.getCity().getName(),
-                            omni.getMostSpecificSubdivision().getName(),
-                            omni.getCountry().getName(),
-                            omni.getContinent().getName());
+            return new Location(omni.getCity().getName(),
+                                omni.getMostSpecificSubdivision().getName(),
+                                omni.getCountry().getName(),
+                                omni.getContinent().getName());
+        }
+        catch (AddressNotFoundException e) {
+            // Ignore
+        }
+
+        return new Location();
     }
 
 }

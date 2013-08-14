@@ -23,7 +23,7 @@ public class LocationServiceImplTest {
     private LocationService locationService;
 
     @Test
-    public void testResolveArgumentForAdelaideAustralia() throws Exception {
+    public void testLocateAddressForAdelaideAustralia() throws Exception {
         final Location result = locationService.locateAddress("203.6.146.5");
 
         assertThat(result)
@@ -34,7 +34,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void testResolveArgumentForBrisbaneAustralia() throws Exception {
+    public void testLocateAddressForBrisbaneAustralia() throws Exception {
         final Location result = locationService.locateAddress("132.234.251.230");
 
         assertThat(result)
@@ -45,7 +45,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void testResolveArgumentForCanberraAustralia() throws Exception {
+    public void testLocateAddressForCanberraAustralia() throws Exception {
         final Location result = locationService.locateAddress("203.6.77.2");
 
         assertThat(result)
@@ -56,7 +56,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void testResolveArgumentForDarwinAustralia() throws Exception {
+    public void testLocateAddressForDarwinAustralia() throws Exception {
         final Location result = locationService.locateAddress("138.80.0.10");
 
         assertThat(result)
@@ -67,7 +67,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void testResolveArgumentForHobartAustralia() throws Exception {
+    public void testLocateAddressForHobartAustralia() throws Exception {
         final Location result = locationService.locateAddress("147.41.128.8");
 
         assertThat(result)
@@ -78,7 +78,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void testResolveArgumentForMelbourneAustralia() throws Exception {
+    public void testLocateAddressForMelbourneAustralia() throws Exception {
         final Location result = locationService.locateAddress("140.159.2.36");
 
         assertThat(result)
@@ -89,7 +89,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void testResolveArgumentForPerthAustralia() throws Exception {
+    public void testLocateAddressForPerthAustralia() throws Exception {
         final Location result = locationService.locateAddress("165.118.1.50");
 
         assertThat(result)
@@ -100,7 +100,7 @@ public class LocationServiceImplTest {
     }
 
     @Test
-    public void testResolveArgumentForSydneyAustralia() throws Exception {
+    public void testLocateAddressForSydneyAustralia() throws Exception {
         final Location result = locationService.locateAddress("203.27.21.6");
 
         assertThat(result)
@@ -108,6 +108,17 @@ public class LocationServiceImplTest {
                 .satisfies(hasSubdivision("New South Wales"))
                 .satisfies(hasCountry("Australia"))
                 .satisfies(hasContinent("Oceania"));
+    }
+
+    @Test
+    public void testLocateAddressForUnknownAddress() throws Exception {
+        final Location result = locationService.locateAddress("127.0.0.1");
+
+        assertThat(result)
+                .satisfies(hasCity(""))
+                .satisfies(hasSubdivision(""))
+                .satisfies(hasCountry(""))
+                .satisfies(hasContinent(""));
     }
 
 }
