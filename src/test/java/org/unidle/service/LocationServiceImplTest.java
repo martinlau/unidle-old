@@ -112,6 +112,17 @@ public class LocationServiceImplTest {
     }
 
     @Test
+    public void testLocateAddressForCommaSeparatedList() throws Exception {
+        final Location result = locationService.locateAddress("203.27.21.6, 165.118.1.50");
+
+        assertThat(result)
+                .satisfies(hasCity("Sydney"))
+                .satisfies(hasSubdivision("New South Wales"))
+                .satisfies(hasCountry("Australia"))
+                .satisfies(hasContinent("Oceania"));
+    }
+
+    @Test
     public void testLocateAddressForInternalAddress() throws Exception {
         final Location result = locationService.locateAddress("127.3.2.1");
 

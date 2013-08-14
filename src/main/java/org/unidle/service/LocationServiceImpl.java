@@ -3,6 +3,7 @@ package org.unidle.service;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.GeoIp2Provider;
 import com.maxmind.geoip2.exception.AddressNotFoundException;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.Omni;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +15,12 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.Set;
 
 import static java.net.InetAddress.getByName;
+import static org.springframework.util.StringUtils.commaDelimitedListToStringArray;
+import static org.springframework.util.StringUtils.hasText;
 import static org.unidle.service.Location.DEFAULT;
 
 @Service
@@ -42,22 +46,31 @@ public class LocationServiceImpl implements LocationService {
 
     @Cacheable("org.unidle.service.LocationService")
     @Override
-    public Location locateAddress(final String address) throws Exception {
+    public Location locateAddress(final String address) {
 
-        if (internalIps.contains(address)) {
+        if (!hasText(address)) {
+            return DEFAULT;
+        }
+
+        final String firstAddress = commaDelimitedListToStringArray(address)[0];
+
+        if (internalIps.contains(firstAddress)) {
             return DEFAULT;
         }
 
         try {
-            final Omni omni = geoIp2Provider.omni(getByName(address));
+            final Omni omni = geoIp2Provider.omni(getByName(firstAddress));
 
             return new Location(omni.getCity().getName(),
                                 omni.getMostSpecificSubdivision().getName(),
                                 omni.getCountry().getName(),
                                 omni.getContinent().getName());
         }
-        catch (AddressNotFoundException e) {
+        catch (UnknownHostException | AddressNotFoundException e) {
             LOGGER.warn("Unknown location: {}", address);
+        }
+        catch (GeoIp2Exception | IOException e) {
+            LOGGER.error("Error looking up address: {}", address, e);
         }
 
         return DEFAULT;
