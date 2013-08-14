@@ -5,6 +5,9 @@ import com.jolbox.bonecp.BoneCPDataSource;
 import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -46,6 +49,7 @@ import java.util.Properties;
 
 @ComponentScan("org.unidle.service")
 @Configuration
+@EnableCaching
 @EnableJpaRepositories(basePackages = "org.unidle.repository")
 @EnableTransactionManagement
 @PropertySource("classpath:unidle.properties")
@@ -63,8 +67,8 @@ public class RootContextConfiguration {
     @Value("${unidle.dataSource.username}")
     private String dataSourceUsername;
 
-    @Value("${unidle.hibernate.ehcache.configurationResourceName}")
-    private String hibernateEhcacheConfigurationResourceName;
+    @Value("${unidle.ehcache.configurationResourceName}")
+    private String ehcacheConfigurationResourceName;
 
     @Value("${unidle.hibernate.ehcache.regionFactoryClass}")
     private String hibernateEhcacheRegionFactoryClass;
@@ -126,6 +130,17 @@ public class RootContextConfiguration {
     }
 
     @Bean
+    public CacheManager cacheManager() {
+        final net.sf.ehcache.CacheManager ehCacheManager = net.sf.ehcache.CacheManager.create(ehcacheConfigurationResourceName);
+
+        final EhCacheCacheManager cacheManager = new EhCacheCacheManager();
+
+        cacheManager.setCacheManager(ehCacheManager);
+
+        return cacheManager;
+    }
+
+    @Bean
     public FactoryBean<EntityManager> entityManager() {
         final EntityManagerFactory entityManagerFactory = entityManagerFactory().getObject();
 
@@ -141,7 +156,7 @@ public class RootContextConfiguration {
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 
         final Map<String, Object> jpaProperties = new LinkedHashMap<String, Object>();
-        jpaProperties.put("net.sf.ehcache.configurationResourceName", hibernateEhcacheConfigurationResourceName);
+        jpaProperties.put("net.sf.ehcache.configurationResourceName", ehcacheConfigurationResourceName);
         jpaProperties.put("hibernate.cache.region.factory_class", hibernateEhcacheRegionFactoryClass);
         jpaProperties.put("hibernate.cache.use_query_cache", hibernateUseQueryCache);
         jpaProperties.put("hibernate.cache.use_second_level_cache", hibernateUseSecondLevelCache);

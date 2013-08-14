@@ -26,16 +26,16 @@ import java.util.List;
 @EnableWebMvc
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
-
     @Value("${unidle.build.timestamp}")
     private String buildTimestamp;
 
     @Autowired
     private LocationService locationService;
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 
     @Override
     public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> argumentResolvers) {
