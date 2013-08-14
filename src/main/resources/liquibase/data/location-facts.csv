@@ -1,4 +1,4 @@
-id,version,continent,country,subdivision,city,task_time_unit,task_people,task_duration,task_duration_time_unit,task_code,summary_duration,summary_duration_time_unit,source
+id,revision,continent,country,subdivision,city,task_time_unit,task_people,task_duration,task_duration_time_unit,task_code,summary_duration,summary_duration_time_unit,source
 1,1,"","","","","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
 2,1,"Oceania","","","","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
 3,1,"Oceania","Australia","","","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"

@@ -12,7 +12,7 @@
                     type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="VERSION"
+            <column name="REVISION"
                     type="INTEGER">
                 <constraints nullable="false"/>
             </column>

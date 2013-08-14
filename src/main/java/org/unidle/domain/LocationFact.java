@@ -75,9 +75,9 @@ public class LocationFact extends AbstractPersistable<Long> implements HasCity,
     @Enumerated(STRING)
     private TimeUnit taskTimeUnit = UNKNOWN;
 
-    @Column(name = "VERSION")
+    @Column(name = "REVISION")
     @Version
-    private Integer version;
+    private Integer revision;
 
     @Override
     public String getCity() {
@@ -187,18 +187,18 @@ public class LocationFact extends AbstractPersistable<Long> implements HasCity,
         this.taskTimeUnit = taskTimeUnit;
     }
 
-    public Integer getVersion() {
-        return version;
+    public Integer getRevision() {
+        return revision;
     }
 
-    public void setVersion(final Integer version) {
-        this.version = version;
+    public void setRevision(final Integer revision) {
+        this.revision = revision;
     }
 
     @Override
     public String toString() {
         return format(
-                "LocationFact(city='%s', continent='%s', country='%s', source='%s', subdivision='%s', summaryDuration=%d, summaryDurationTimeUnit=%s, taskCode='%s', taskDuration=%d, taskDurationTimeUnit=%s, taskPeople=%d, taskTimeUnit=%s, version=%d)",
+                "LocationFact(city='%s', continent='%s', country='%s', source='%s', subdivision='%s', summaryDuration=%d, summaryDurationTimeUnit=%s, taskCode='%s', taskDuration=%d, taskDurationTimeUnit=%s, taskPeople=%d, taskTimeUnit=%s, revision=%d)",
                 city,
                 continent,
                 country,
@@ -211,7 +211,7 @@ public class LocationFact extends AbstractPersistable<Long> implements HasCity,
                 taskDurationTimeUnit,
                 taskPeople,
                 taskTimeUnit,
-                version);
+                revision);
     }
 
 }
