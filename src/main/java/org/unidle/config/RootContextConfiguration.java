@@ -18,6 +18,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.SharedEntityManagerBean;
@@ -47,6 +48,7 @@ import ro.isdc.wro.model.resource.processor.factory.ConfigurableProcessorsFactor
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.sql.Driver;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -198,10 +200,20 @@ public class RootContextConfiguration {
     }
 
     @Bean
-    public SpringLiquibase springLiquibase() {
+    public SpringLiquibase springLiquibase() throws ClassNotFoundException {
         final SpringLiquibase springLiquibase = new SpringLiquibase();
 
-        springLiquibase.setDataSource(dataSource());
+        @SuppressWarnings("unchecked")
+        final Class<Driver> driverClass = (Class<Driver>) Class.forName(dataSourceDriverClass);
+
+        final SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+
+        dataSource.setDriverClass(driverClass);
+        dataSource.setPassword(dataSourcePassword);
+        dataSource.setUrl(dataSourceUrl);
+        dataSource.setUsername(dataSourceUsername);
+
+        springLiquibase.setDataSource(dataSource);
         springLiquibase.setDefaultSchema("public");
         springLiquibase.setChangeLog("classpath:liquibase/changelog.xml");
 
