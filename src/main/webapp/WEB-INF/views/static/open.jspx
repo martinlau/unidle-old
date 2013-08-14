@@ -20,61 +20,6 @@
                 <spring:message code="open.content.github" />
             </p>
 
-            <ul class="icons-ul">
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://maven.apache.org">Apache Maven</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://logback.qos.ch">Logback</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://junit.org">JUnit</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://tiles.apache.org">Apache Tiles</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://fest.easytesting.org">Fest Assert</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://slf4j.org">SLF4J</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://hamcrest.org">Hamcrest</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://springsource.org/spring-framework">Spring Framework</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://webjars.org">WebJars</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://foundation.zurb.com">Zurb Foundation</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://jquery.com">JQuery</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://modernizr.com">Modernizr</a>
-                </li>
-                <li>
-                    <i class="icon-li icon-caret-right"><!-- no collapse --></i>
-                    <a href="http://wro4j.googlecode.com">WRO4J</a>
-                </li>
-            </ul>
-
             <tags:sign-in-buttons />
 
         </div>
