@@ -43,7 +43,7 @@ public class LocationServiceImpl implements LocationService {
                                 omni.getContinent().getName());
         }
         catch (AddressNotFoundException e) {
-            LOGGER.warn("Unknown location: {}", address, e);
+            LOGGER.warn("Unknown location: {}", address);
         }
 
         return new Location();
