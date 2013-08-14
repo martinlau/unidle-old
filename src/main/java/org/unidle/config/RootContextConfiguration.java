@@ -51,73 +51,73 @@ import java.util.Properties;
 @PropertySource("classpath:unidle.properties")
 public class RootContextConfiguration {
 
-    @Value("${unidle.dataSource.driverClass}")
+    @Value("${unidle_dataSource_driverClass}")
     private String dataSourceDriverClass;
 
-    @Value("${unidle.dataSource.password}")
+    @Value("${unidle_dataSource_password}")
     private String dataSourcePassword;
 
-    @Value("${unidle.dataSource.url}")
+    @Value("${unidle_dataSource_url}")
     private String dataSourceUrl;
 
-    @Value("${unidle.dataSource.username}")
+    @Value("${unidle_dataSource_username}")
     private String dataSourceUsername;
 
-    @Value("${unidle.hibernate.ehcache.configurationResourceName}")
+    @Value("${unidle_hibernate_ehcache_configurationResourceName}")
     private String hibernateEhcacheConfigurationResourceName;
 
-    @Value("${unidle.hibernate.ehcache.regionFactoryClass}")
+    @Value("${unidle_hibernate_ehcache_regionFactoryClass}")
     private String hibernateEhcacheRegionFactoryClass;
 
-    @Value("${unidle.hibernate.hbm2ddl}")
+    @Value("${unidle_hibernate_hbm2ddl}")
     private String hibernateHbm2ddl;
 
-    @Value("${unidle.hibernate.useQueryCache}")
+    @Value("${unidle_hibernate_useQueryCache}")
     private String hibernateUseQueryCache;
 
-    @Value("${unidle.hibernate.useSecondLevelCache}")
+    @Value("${unidle_hibernate_useSecondLevelCache}")
     private String hibernateUseSecondLevelCache;
 
-    @Value("${unidle.jpaVendor.database}")
+    @Value("${unidle_jpaVendor_database}")
     private Database jpaVendorDatabase;
 
-    @Value("${unidle.wro.cacheGzippedContent}")
+    @Value("${unidle_wro_cacheGzippedContent}")
     private boolean wroCacheGzippedContent;
 
-    @Value("${unidle.wro.cacheUpdatePeriod}")
+    @Value("${unidle_wro_cacheUpdatePeriod}")
     private Long wroCacheUpdatePeriod;
 
-    @Value("${unidle.wro.debug}")
+    @Value("${unidle_wro_debug}")
     private boolean wroDebug;
 
-    @Value("${unidle.wro.disableCache}")
+    @Value("${unidle_wro_disableCache}")
     private boolean wroDisableCache;
 
-    @Value("${unidle.wro.encoding}")
+    @Value("${unidle_wro_encoding}")
     private String wroEncoding;
 
-    @Value("${unidle.wro.gzipResources}")
+    @Value("${unidle_wro_gzipResources}")
     private boolean wroGzipResources;
 
-    @Value("${unidle.wro.ignoreEmptyGroup}")
+    @Value("${unidle_wro_ignoreEmptyGroup}")
     private boolean wroIgnoreEmptyGroup;
 
-    @Value("${unidle.wro.ignoreFailingProcessor}")
+    @Value("${unidle_wro_ignoreFailingProcessor}")
     private boolean wroIgnoreFailingProcessor;
 
-    @Value("${unidle.wro.ignoreMissingResources}")
+    @Value("${unidle_wro_ignoreMissingResources}")
     private boolean wroIgnoreMissingResources;
 
-    @Value("${unidle.wro.jmxEnabled}")
+    @Value("${unidle_wro_jmxEnabled}")
     private boolean wroJmxEnabled;
 
-    @Value("${unidle.wro.modelUpdatePeriod}")
+    @Value("${unidle_wro_modelUpdatePeriod}")
     private long wroModelUpdatePeriod;
 
-    @Value("${unidle.wro.parallelPreprocessing}")
+    @Value("${unidle_wro_parallelPreprocessing}")
     private boolean wroParallelPreprocessing;
 
-    @Value("${unidle.wro.resourceWatcherUpdatePeriod}")
+    @Value("${unidle_wro_resourceWatcherUpdatePeriod}")
     private long wroResourceWatcherUpdatePeriod;
 
     @Bean

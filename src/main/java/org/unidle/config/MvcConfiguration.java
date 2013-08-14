@@ -31,7 +31,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Value("${unidle.build.timestamp}")
+    @Value("${unidle_build_timestamp}")
     private String buildTimestamp;
 
     @Autowired
