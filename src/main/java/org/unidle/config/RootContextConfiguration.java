@@ -48,6 +48,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import static java.lang.Boolean.FALSE;
+
 @ComponentScan("org.unidle.service")
 @Configuration
 @EnableCaching
@@ -181,6 +183,7 @@ public class RootContextConfiguration {
     public DataSource dataSource() {
         final BoneCPDataSource dataSource = new BoneCPDataSource();
 
+        dataSource.setDefaultReadOnly(FALSE);
         dataSource.setDriverClass(dataSourceDriverClass);
         dataSource.setJdbcUrl(dataSourceUrl);
         dataSource.setUsername(dataSourceUsername);
