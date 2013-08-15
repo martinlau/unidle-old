@@ -1,5 +1,7 @@
 package org.unidle.web;
 
+import org.springframework.util.ClassUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -21,7 +23,11 @@ public class BuildTimestampInterceptor extends HandlerInterceptorAdapter {
                            final HttpServletResponse response,
                            final Object handler,
                            final ModelAndView modelAndView) throws Exception {
-        modelAndView.addObject(BUILD_TIMESTAMP, timestamp);
+
+        if (StringUtils.startsWithIgnoreCase(ClassUtils.getPackageName(handler.getClass()), "org.unidle")) {
+            modelAndView.addObject(BUILD_TIMESTAMP, timestamp);
+        }
+
     }
 
 }
