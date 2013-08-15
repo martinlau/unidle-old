@@ -296,6 +296,7 @@ public class RootContextConfiguration {
         properties.put(ConfigConstants.modelUpdatePeriod.name(), wroModelUpdatePeriod);
         properties.put(ConfigConstants.parallelPreprocessing.name(), wroParallelPreprocessing);
         properties.put(ConfigConstants.resourceWatcherUpdatePeriod.name(), wroResourceWatcherUpdatePeriod);
+
         return properties;
     }
 
