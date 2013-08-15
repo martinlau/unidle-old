@@ -18,7 +18,9 @@
 
             <p>
                 <spring:message code="about.content.usage" />
-                <jsp:text></jsp:text>
+            </p>
+
+            <p class="text-center">
                 <spring:url var="business" value="/business" />
                 <a href="${business}">
                     <spring:message code="about.content.business" />
@@ -31,6 +33,9 @@
 
             <p>
                 <spring:message code="about.content.open" />
+            </p>
+
+            <p class="text-center">
                 <spring:url var="opensource" value="/open" />
                 <a href="${opensource}">
                     <spring:message code="about.content.open.link" />
