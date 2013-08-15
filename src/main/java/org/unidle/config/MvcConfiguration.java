@@ -1,5 +1,8 @@
 package org.unidle.config;
 
+import de.bripkens.gravatar.DefaultImage;
+import de.bripkens.gravatar.Gravatar;
+import de.bripkens.gravatar.Rating;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +31,18 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Value("${unidle.build.timestamp}")
     private String buildTimestamp;
+
+    @Value("${unidle.gravatar.https}")
+    private boolean gravatarHttps;
+
+    @Value("${unidle.gravatar.rating}")
+    private Rating gravatarRating;
+
+    @Value("${unidle.gravatar.size}")
+    private int gravatarSize;
+
+    @Value("${unidle.gravatar.defaultImage}")
+    private DefaultImage gravatarStandardDefaultImages;
 
     @Autowired
     private LocationService locationService;
@@ -71,13 +86,30 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public Gravatar gravatar() {
+        final Gravatar gravatar = new Gravatar();
+
+        gravatar.setRating(gravatarRating);
+        gravatar.setSize(gravatarSize);
+        gravatar.setHttps(gravatarHttps);
+        gravatar.setStandardDefaultImage(gravatarStandardDefaultImages);
+
+        return gravatar;
+    }
+
+    @Bean
     public TilesConfigurer tilesConfigurer() {
         return new TilesConfigurer();
     }
 
     @Bean
     public ViewResolver viewResolver() {
-        return new TilesViewResolver();
+        final TilesViewResolver viewResolver = new TilesViewResolver();
+
+        viewResolver.setExposePathVariables(Boolean.FALSE);
+
+        return viewResolver;
     }
+
 
 }
