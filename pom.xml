@@ -163,6 +163,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <path>/</path>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.zeroturnaround</groupId>
