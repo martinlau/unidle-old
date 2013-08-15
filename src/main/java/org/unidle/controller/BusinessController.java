@@ -4,11 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/business")
 public class BusinessController {
 
-    @RequestMapping
-    public String about() {
+    @RequestMapping("/business")
+    public String business() {
         return ".static.business";
     }
 

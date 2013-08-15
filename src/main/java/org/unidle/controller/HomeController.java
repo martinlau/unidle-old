@@ -9,7 +9,6 @@ import org.unidle.service.Location;
 import org.unidle.service.LocationFactService;
 
 @Controller
-@RequestMapping("/")
 public class HomeController {
 
     private final LocationFactService locationFactService;
@@ -19,7 +18,7 @@ public class HomeController {
         this.locationFactService = locationFactService;
     }
 
-    @RequestMapping
+    @RequestMapping("/")
     public String home() {
         return ".static.home";
     }
