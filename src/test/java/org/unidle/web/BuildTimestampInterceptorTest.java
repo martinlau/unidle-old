@@ -36,12 +36,20 @@ public class BuildTimestampInterceptorTest {
     }
 
     @Test
-    public void testPostHandle() throws Exception {
+    public void testPostHandleWithValidPackage() throws Exception {
 
-        subject.postHandle(null, null, null, modelAndView);
+        subject.postHandle(null, null, this, modelAndView);
 
         assertThat(modelAndView.getModel())
                 .satisfies(containsKey((BUILD_TIMESTAMP)));
+    }
+
+    @Test
+    public void testPostHandleWithInvalidPackage() throws Exception {
+
+        subject.postHandle(null, null, new Object(), modelAndView);
+
+        assertThat(modelAndView.getModel()).isEmpty();
     }
 
 }
