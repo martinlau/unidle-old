@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -85,6 +85,18 @@ public class RootContextConfiguration {
 
     @Value("${unidle.jpaVendor.database}")
     private Database jpaVendorDatabase;
+
+    @Value("${unidle.liquibase.changelog}")
+    private String liquibaseChangelog;
+
+    @Value("${unidle.messageSource.baseName}")
+    private String messageSourceBaseName;
+
+    @Value("${unidle.messageSource.cacheSeconds}")
+    private int messageSourceCacheSeconds;
+
+    @Value("${unidle.messageSource.encoding}")
+    private String messageSourceEncoding;
 
     @Value("${unidle.wro.cacheGzippedContent}")
     private boolean wroCacheGzippedContent;
@@ -196,10 +208,11 @@ public class RootContextConfiguration {
 
     @Bean
     public MessageSource messageSource() {
-        final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 
-        messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setBasename("messages/unidle");
+        messageSource.setDefaultEncoding(messageSourceEncoding);
+        messageSource.setBasename(messageSourceBaseName);
+        messageSource.setCacheSeconds(messageSourceCacheSeconds);
 
         return messageSource;
     }
@@ -220,7 +233,7 @@ public class RootContextConfiguration {
         final SpringLiquibase springLiquibase = new SpringLiquibase();
 
         springLiquibase.setDataSource(dataSource);
-        springLiquibase.setChangeLog("classpath:liquibase/changelog.xml");
+        springLiquibase.setChangeLog(liquibaseChangelog);
 
         return springLiquibase;
     }
