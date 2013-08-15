@@ -188,7 +188,6 @@ public class RootContextConfiguration {
         dataSource.setJdbcUrl(dataSourceUrl);
         dataSource.setUsername(dataSourceUsername);
         dataSource.setPassword(dataSourcePassword);
-        dataSource.setResetConnectionOnClose(false);
 
         return dataSource;
     }
