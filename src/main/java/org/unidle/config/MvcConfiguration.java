@@ -42,25 +42,29 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         argumentResolvers.add(locationHandlerMethodArgumentResolver());
     }
 
+    @Bean
+    public LocationHandlerMethodArgumentResolver locationHandlerMethodArgumentResolver() {
+        return new LocationHandlerMethodArgumentResolver(locationService);
+    }
+
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(buildTimestampInterceptor());
     }
 
-    @Bean
-    public HandlerInterceptor buildTimestampInterceptor() {
-        return new BuildTimestampInterceptor(buildTimestamp);
-    }
-
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/font/*")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/font-awesome/3.2.1/font/");
+                .addResourceLocations("classpath:/META-INF/resources/webjars/font-awesome/3.2.1/font/")
+                .setCachePeriod(Integer.MAX_VALUE);
+        registry.addResourceHandler("/favicon.ico")
+                .addResourceLocations("/facicon.ico")
+                .setCachePeriod(Integer.MAX_VALUE);
     }
 
     @Bean
-    public LocationHandlerMethodArgumentResolver locationHandlerMethodArgumentResolver() {
-        return new LocationHandlerMethodArgumentResolver(locationService);
+    public HandlerInterceptor buildTimestampInterceptor() {
+        return new BuildTimestampInterceptor(buildTimestamp);
     }
 
     @Bean
