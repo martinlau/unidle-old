@@ -184,12 +184,11 @@ public class RootContextConfiguration {
     public DataSource dataSource() {
         final BoneCPDataSource dataSource = new BoneCPDataSource();
 
-        dataSource.setDefaultReadOnly(TRUE);
+        dataSource.setDefaultAutoCommit(FALSE);
         dataSource.setDriverClass(dataSourceDriverClass);
         dataSource.setJdbcUrl(dataSourceUrl);
         dataSource.setUsername(dataSourceUsername);
         dataSource.setPassword(dataSourcePassword);
-
         return dataSource;
     }
 
