@@ -57,8 +57,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/font/*")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/font-awesome/3.2.1/font/")
                 .setCachePeriod(Integer.MAX_VALUE);
-        registry.addResourceHandler("/favicon.ico")
-                .addResourceLocations("/facicon.ico")
+        registry.addResourceHandler("/images/*")
+                .addResourceLocations("/WEB-INF/images/")
                 .setCachePeriod(Integer.MAX_VALUE);
     }
 

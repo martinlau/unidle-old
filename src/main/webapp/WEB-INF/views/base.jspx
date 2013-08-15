@@ -23,6 +23,9 @@
             <spring:message code="base.title" />
         </title>
 
+        <spring:url value="/images/favicon.ico?t=${buildTimestamp}" var="favicon_ico" />
+        <link rel="shortcut icon" href="${favicon_ico}" />
+
         <spring:url value="/resources/foundation.css?t=${buildTimestamp}" var="foundation_css" />
         <link rel="stylesheet" href="${foundation_css}" />
 
