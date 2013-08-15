@@ -1,7 +1,7 @@
 package org.unidle.config;
 
-import com.jolbox.bonecp.BoneCPDataSource;
 import liquibase.integration.spring.SpringLiquibase;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
@@ -47,9 +47,6 @@ import java.sql.Driver;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
-
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 @ComponentScan("org.unidle.service")
 @Configuration
@@ -182,10 +179,10 @@ public class RootContextConfiguration {
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
-        final BoneCPDataSource dataSource = new BoneCPDataSource();
+        final BasicDataSource dataSource = new BasicDataSource();
 
-        dataSource.setDriverClass(dataSourceDriverClass);
-        dataSource.setJdbcUrl(dataSourceUrl);
+        dataSource.setDriverClassName(dataSourceDriverClass);
+        dataSource.setUrl(dataSourceUrl);
         dataSource.setUsername(dataSourceUsername);
         dataSource.setPassword(dataSourcePassword);
 
@@ -262,6 +259,24 @@ public class RootContextConfiguration {
     }
 
     @Bean
+    public SpringCacheCacheStrategy<CacheKey, CacheValue> cacheStrategy() {
+        final Cache cache = cacheManager().getCache(wroCacheName);
+
+        return new SpringCacheCacheStrategy<>(cache);
+    }
+
+    @Bean
+    public CacheManager cacheManager() {
+        final net.sf.ehcache.CacheManager ehCacheManager = net.sf.ehcache.CacheManager.create(ehcacheConfigurationResourceName);
+
+        final EhCacheCacheManager cacheManager = new EhCacheCacheManager();
+
+        cacheManager.setCacheManager(ehCacheManager);
+
+        return cacheManager;
+    }
+
+    @Bean
     public Properties wroProperties() {
         final Properties properties = new Properties();
 
@@ -282,24 +297,6 @@ public class RootContextConfiguration {
         properties.put(ConfigConstants.parallelPreprocessing.name(), wroParallelPreprocessing);
         properties.put(ConfigConstants.resourceWatcherUpdatePeriod.name(), wroResourceWatcherUpdatePeriod);
         return properties;
-    }
-
-    @Bean
-    public SpringCacheCacheStrategy<CacheKey, CacheValue> cacheStrategy() {
-        final Cache cache = cacheManager().getCache(wroCacheName);
-
-        return new SpringCacheCacheStrategy<>(cache);
-    }
-
-    @Bean
-    public CacheManager cacheManager() {
-        final net.sf.ehcache.CacheManager ehCacheManager = net.sf.ehcache.CacheManager.create(ehcacheConfigurationResourceName);
-
-        final EhCacheCacheManager cacheManager = new EhCacheCacheManager();
-
-        cacheManager.setCacheManager(ehCacheManager);
-
-        return cacheManager;
     }
 
 }
