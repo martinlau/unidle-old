@@ -240,6 +240,7 @@ public class RootContextConfiguration {
         final ConfigurableWroFilter wroFilter = new ConfigurableWroFilter();
 
         wroFilter.setWroManagerFactory(wroManagerFactory());
+        wroFilter.setProperties(wroProperties());
 
         return wroFilter;
     }
@@ -247,6 +248,18 @@ public class RootContextConfiguration {
     @Bean
     public WroManagerFactory wroManagerFactory() {
 
+        final Properties properties = wroProperties();
+
+        final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
+
+        wroManagerFactory.setCacheStrategy(cacheStrategy());
+        wroManagerFactory.setConfigProperties(properties);
+
+        return wroManagerFactory;
+    }
+
+    @Bean
+    public Properties wroProperties() {
         final Properties properties = new Properties();
 
         properties.put(ConfigurableProcessorsFactory.PARAM_POST_PROCESSORS, wroPostProcessors);
@@ -265,13 +278,7 @@ public class RootContextConfiguration {
         properties.put(ConfigConstants.modelUpdatePeriod.name(), wroModelUpdatePeriod);
         properties.put(ConfigConstants.parallelPreprocessing.name(), wroParallelPreprocessing);
         properties.put(ConfigConstants.resourceWatcherUpdatePeriod.name(), wroResourceWatcherUpdatePeriod);
-
-        final ConfigurableWroManagerFactory wroManagerFactory = new ConfigurableWroManagerFactory();
-
-        wroManagerFactory.setCacheStrategy(cacheStrategy());
-        wroManagerFactory.setConfigProperties(properties);
-
-        return wroManagerFactory;
+        return properties;
     }
 
     @Bean
