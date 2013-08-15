@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
+          version="2.0">
+
+    <div class="row">
+        <div class="small-12 columns text-justify">
+
+            <h3 class="subheader text-center">
+                ${user.name}
+            </h3>
+
+            <p class="text-center">
+                <img src="${gravatar.getUrl(user.email)}" alt="${user.name}" />
+            </p>
+
+            <c:if test="${not empty user.twitter or not empty user.facebook}">
+                <div class="row text-center">
+                    <c:choose>
+                        <c:when test="${not empty user.twitter and not empty user.facebook}">
+                            <div class="small-6 columns">
+                                <p>
+                                    <a href="http://twitter.com/${user.twitter}">
+                                        <i class="icon-large icon-twitter"><!-- no collapse --></i>
+                                        ${user.twitter}
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="small-6 columns">
+                                <p>
+                                    <a href="http://facebook.com/${user.facebook}">
+                                        <i class="icon-large icon-facebook"><!-- no collapse --></i>
+                                        ${user.facebook}
+                                    </a>
+                                </p>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="small-12 columns">
+                                <c:if test="${not empty user.twitter}">
+                                    <p>
+                                        <a href="http://twitter.com/${user.twitter}">
+                                            <i class="icon-large icon-twitter"><!-- no collapse --></i>
+                                            ${user.twitter}
+                                        </a>
+                                    </p>
+                                </c:if>
+                                <c:if test="${not empty user.facebook}">
+                                    <p>
+                                        <a href="http://facebook.com/${user.facebook}">
+                                            <i class="icon-large icon-facebook"><!-- no collapse --></i>
+                                            ${user.facebook}
+                                        </a>
+                                    </p>
+                                </c:if>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </c:if>
+
+            <div class="section-container accordion" data-section="accordion">
+
+                <section>
+                    <p class="title" data-section-title="">
+                        <a href="#activity">Activity</a>
+                    </p>
+
+                    <div class="content" data-section-content="">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi blanditiis illo in mollitia provident ratione sunt voluptate. Asperiores ea eaque illo, laboriosam maiores maxime nobis officiis pariatur quidem repellat unde!</p>
+                    </div>
+                </section>
+
+                <section>
+                    <p class="title" data-section-title="">
+                        <a href="#questions">Questions</a>
+                    </p>
+
+                    <div class="content" data-section-content="">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi blanditiis illo in mollitia provident ratione sunt voluptate. Asperiores ea eaque illo, laboriosam maiores maxime nobis officiis pariatur quidem repellat unde!</p>
+                    </div>
+                </section>
+
+                <section>
+                    <p class="title" data-section-title="">
+                        <a href="#responses">Responses</a>
+                    </p>
+
+                    <div class="content" data-section-content="">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi blanditiis illo in mollitia provident ratione sunt voluptate. Asperiores ea eaque illo, laboriosam maiores maxime nobis officiis pariatur quidem repellat unde!</p>
+                    </div>
+                </section>
+
+            </div>
+
+            <tags:sign-in-buttons />
+
+        </div>
+    </div>
+
+</jsp:root>
