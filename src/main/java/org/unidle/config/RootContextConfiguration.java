@@ -49,6 +49,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 @ComponentScan("org.unidle.service")
 @Configuration
@@ -183,7 +184,7 @@ public class RootContextConfiguration {
     public DataSource dataSource() {
         final BoneCPDataSource dataSource = new BoneCPDataSource();
 
-        dataSource.setDefaultReadOnly(FALSE);
+        dataSource.setDefaultReadOnly(TRUE);
         dataSource.setDriverClass(dataSourceDriverClass);
         dataSource.setJdbcUrl(dataSourceUrl);
         dataSource.setUsername(dataSourceUsername);
