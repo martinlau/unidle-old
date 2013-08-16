@@ -1,4 +1,4 @@
-package org.unidle.domain;
+package org.unidle.geo;
 
 public interface HasContinent {
 
