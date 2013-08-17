@@ -23,7 +23,7 @@
             <spring:message code="base.title" />
         </title>
 
-        <spring:url value="/images/favicon.ico?t=${buildTimestamp}" var="favicon_ico" />
+        <spring:url value="/image/favicon.ico?t=${buildTimestamp}" var="favicon_ico" />
         <link rel="shortcut icon" href="${favicon_ico}" />
 
         <spring:url value="/resources/foundation.css?t=${buildTimestamp}" var="foundation_css" />
@@ -34,18 +34,21 @@
 
         <spring:url value="/resources/modernizr.js?t=${buildTimestamp}" var="modernizr_js" />
         <script src="${modernizr_js}"><!-- // no collapse --></script>
-
     </head>
 
     <body>
 
         <tiles:insertAttribute name="content" />
 
+        <!-- TODO include Zepto -->
         <spring:url value="/resources/jquery.js?t=${buildTimestamp}" var="jquery_js" />
         <script src="${jquery_js}"><!-- // no collapse --></script>
 
         <spring:url value="/resources/foundation.js?t=${buildTimestamp}" var="foundation_js" />
         <script src="${foundation_js}"><!-- // no collapse --></script>
+
+        <spring:url value="/script/common.js?t=${buildTimestamp}" var="common_js" />
+        <script src="${common_js}"><!-- // no collapse --></script>
 
         <script>
             $(document).foundation();
