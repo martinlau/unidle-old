@@ -1,7 +1,7 @@
 package org.unidle.test;
 
 import org.fest.assertions.Condition;
-import org.unidle.domain.TimeUnit;
+import org.unidle.domain.LocationFact.TimeUnit;
 import org.unidle.domain.User;
 
 import java.util.Map;

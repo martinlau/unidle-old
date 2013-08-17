@@ -8,13 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Version;
-
 import java.io.Serializable;
 
 import static java.lang.String.format;
 import static javax.persistence.EnumType.STRING;
 import static org.springframework.util.StringUtils.hasText;
-import static org.unidle.domain.TimeUnit.UNKNOWN;
+import static org.unidle.domain.LocationFact.TimeUnit.UNKNOWN;
 
 @AttributeOverride(column = @Column(name = "ID",
                                     nullable = false),
@@ -209,4 +208,33 @@ public class LocationFact extends AbstractPersistable<Long> implements Serializa
                 taskTimeUnit);
     }
 
+    public static enum TimeUnit {
+
+        SECOND("common.period.second"),
+
+        MINUTE("common.period.minute"),
+
+        HOUR("common.period.hour"),
+
+        DAY("common.period.day"),
+
+        WEEK("common.period.week"),
+
+        MONTH("common.period.month"),
+
+        YEAR("common.period.year"),
+
+        UNKNOWN("common.period.unknown");
+
+        private final String messageKey;
+
+        TimeUnit(final String messageKey) {
+            this.messageKey = messageKey;
+        }
+
+        public String getMessageKey() {
+            return messageKey;
+        }
+
+    }
 }

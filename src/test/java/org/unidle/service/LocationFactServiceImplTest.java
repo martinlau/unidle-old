@@ -10,9 +10,9 @@ import org.unidle.config.RootContextConfiguration;
 import org.unidle.domain.LocationFact;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.unidle.domain.TimeUnit.DAY;
-import static org.unidle.domain.TimeUnit.MINUTE;
-import static org.unidle.domain.TimeUnit.YEAR;
+import static org.unidle.domain.LocationFact.TimeUnit.DAY;
+import static org.unidle.domain.LocationFact.TimeUnit.MINUTE;
+import static org.unidle.domain.LocationFact.TimeUnit.YEAR;
 import static org.unidle.test.Conditions.hasSource;
 import static org.unidle.test.Conditions.hasSummaryDuration;
 import static org.unidle.test.Conditions.hasSummaryDurationTimeUnit;
