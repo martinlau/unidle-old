@@ -4,10 +4,10 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="001-LOCATION_FACT_ID_SEQ"
+    <changeSet id="001-LOCATION_FACT_ID_seq"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="LOCATION_FACT_ID_SEQ"
+        <createSequence sequenceName="LOCATION_FACT_ID_seq"
                         startValue="1"
                         incrementBy="1"/>
 
@@ -117,10 +117,10 @@
 
     </changeSet>
 
-    <changeSet id="004-USER_ID_SEQ"
+    <changeSet id="004-USER_ID_seq"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="USER_ID_SEQ"
+        <createSequence sequenceName="USER_ID_seq"
                         startValue="1"
                         incrementBy="1"/>
 
@@ -154,10 +154,10 @@
 
     </changeSet>
 
-    <changeSet id="006-USER_CONNECTION_SEQ"
+    <changeSet id="006-USER_CONNECTION_seq"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="USER_CONNECTION_ID_SEQ"
+        <createSequence sequenceName="USER_CONNECTION_ID_seq"
                         startValue="1"
                         incrementBy="1"/>
 
