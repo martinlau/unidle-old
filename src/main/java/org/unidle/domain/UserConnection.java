@@ -13,7 +13,7 @@ import javax.persistence.Version;
 import static java.lang.String.format;
 
 @Entity
-@Table(name = "USER_CONNECTION",
+@Table(name = "USER_CONNECTIONS",
        uniqueConstraints = @UniqueConstraint(columnNames = {"USER_ID",
                                                             "PROVIDER_ID",
                                                             "PROVIDER_USER_ID"}))

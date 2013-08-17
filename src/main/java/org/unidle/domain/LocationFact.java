@@ -20,7 +20,7 @@ import static org.unidle.domain.TimeUnit.UNKNOWN;
                                     nullable = false),
                    name = "id")
 @Entity
-@Table(name = "LOCATION_FACT")
+@Table(name = "LOCATION_FACTS")
 public class LocationFact extends AbstractPersistable<Long> implements Serializable {
 
     @Column(name = "CITY",

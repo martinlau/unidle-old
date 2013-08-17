@@ -10,7 +10,7 @@ import javax.persistence.Version;
 import static java.lang.String.format;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "USERS")
 public class User extends AbstractPersistable<Long> {
 
     @Column(name = "EMAIL")

@@ -4,19 +4,19 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="001-LOCATION_FACT_ID_seq"
+    <changeSet id="001-LOCATION_FACTS_ID_seq"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="LOCATION_FACT_ID_seq"
+        <createSequence sequenceName="LOCATION_FACTS_ID_seq"
                         startValue="1"
                         incrementBy="1"/>
 
     </changeSet>
 
-    <changeSet id="002-LOCATION_FACT"
+    <changeSet id="002-LOCATION_FACTS"
                author="Martin Lau [m@hum.ph]">
 
-        <createTable tableName="LOCATION_FACT">
+        <createTable tableName="LOCATION_FACTS">
             <column name="ID"
                     type="BIGINT"
                     autoIncrement="true"
@@ -78,8 +78,8 @@
 
         </createTable>
 
-        <createIndex tableName="LOCATION_FACT"
-                     indexName="IDX_LOCATION_FACT_CITY_SUBDIVISION_COUNTRY_CONTINENT"
+        <createIndex tableName="LOCATION_FACTS"
+                     indexName="IDX_LOCATION_FACTS_CITY_SUBDIVISION_COUNTRY_CONTINENT"
                      unique="true">
             <column name="CITY"/>
             <column name="SUBDIVISION"/>
@@ -87,32 +87,32 @@
             <column name="CONTINENT"/>
         </createIndex>
 
-        <createIndex tableName="LOCATION_FACT"
-                     indexName="IDX_LOCATION_FACT_CITY">
+        <createIndex tableName="LOCATION_FACTS"
+                     indexName="IDX_LOCATION_FACTS_CITY">
             <column name="CITY"/>
         </createIndex>
 
-        <createIndex tableName="LOCATION_FACT"
-                     indexName="IDX_LOCATION_FACT_COUNTRY">
+        <createIndex tableName="LOCATION_FACTS"
+                     indexName="IDX_LOCATION_FACTS_COUNTRY">
             <column name="COUNTRY"/>
         </createIndex>
 
-        <createIndex tableName="LOCATION_FACT"
-                     indexName="IDX_LOCATION_FACT_CONTINENT">
+        <createIndex tableName="LOCATION_FACTS"
+                     indexName="IDX_LOCATION_FACTS_CONTINENT">
             <column name="CONTINENT"/>
         </createIndex>
 
-        <createIndex tableName="LOCATION_FACT"
-                     indexName="IDX_LOCATION_FACT_SUBDIVISION">
+        <createIndex tableName="LOCATION_FACTS"
+                     indexName="IDX_LOCATION_FACTS_SUBDIVISION">
             <column name="SUBDIVISION"/>
         </createIndex>
 
     </changeSet>
 
-    <changeSet id="003-LOCATION_FACT-Data"
+    <changeSet id="003-LOCATION_FACTS-Data"
                author="Martin Lau [m@hum.ph]">
 
-        <loadData tableName="LOCATION_FACT"
+        <loadData tableName="LOCATION_FACTS"
                   file="liquibase/data/location-facts.csv"/>
 
     </changeSet>
@@ -126,10 +126,10 @@
 
     </changeSet>
 
-    <changeSet id="005-USER"
+    <changeSet id="005-USERS"
                author="Martin Lau [m@hum.ph]">
 
-        <createTable tableName="USER">
+        <createTable tableName="USERS">
             <column name="ID"
                     type="BIGINT"
                     autoIncrement="true"
@@ -154,19 +154,19 @@
 
     </changeSet>
 
-    <changeSet id="006-USER_CONNECTION_seq"
+    <changeSet id="006-USER_CONNECTIONS_seq"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="USER_CONNECTION_ID_seq"
+        <createSequence sequenceName="USER_CONNECTIONS_ID_seq"
                         startValue="1"
                         incrementBy="1"/>
 
     </changeSet>
 
-    <changeSet id="007-USER_CONNECTION"
+    <changeSet id="007-USER_CONNECTIONS"
                author="Martin Lau [m@hum.ph]">
 
-        <createTable tableName="USER_CONNECTION">
+        <createTable tableName="USER_CONNECTIONS">
             <column name="ID"
                     type="BIGINT"
                     autoIncrement="true"
@@ -207,22 +207,22 @@
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="USER_ID"
-                                 baseTableName="USER_CONNECTION"
-                                 constraintName="FK_USER_CONNECTION_USER_ID"
+                                 baseTableName="USER_CONNECTIONS"
+                                 constraintName="FK_USER_CONNECTIONS_USER_ID"
                                  deleteCascade="true"
                                  referencedColumnNames="ID"
-                                 referencedTableName="USER"/>
+                                 referencedTableName="USERS"/>
 
-        <createIndex tableName="USER_CONNECTION"
-                     indexName="IDX_USER_CONNECTION_USER_ID_PROVIDER_ID_PROVIDER_USER_ID"
+        <createIndex tableName="USER_CONNECTIONS"
+                     indexName="IDX_USER_CONNECTIONS_USER_ID_PROVIDER_ID_PROVIDER_USER_ID"
                      unique="true">
             <column name="USER_ID"/>
             <column name="PROVIDER_ID"/>
             <column name="PROVIDER_USER_ID"/>
         </createIndex>
 
-        <createIndex tableName="USER_CONNECTION"
-                     indexName="IDX_USER_CONNECTION_USER_ID_PROVIDER_ID_RANK"
+        <createIndex tableName="USER_CONNECTIONS"
+                     indexName="IDX_USER_CONNECTIONS_USER_ID_PROVIDER_ID_RANK"
                      unique="true">
             <column name="USER_ID"/>
             <column name="PROVIDER_ID"/>
