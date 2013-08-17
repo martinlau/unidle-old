@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.unidle.config.RootContextConfiguration;
 import org.unidle.config.SocialConfiguration;
+import org.unidle.repository.UserRepository;
 import org.unidle.social.test.ConnectionStub;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -26,6 +27,9 @@ public class ConnectionSignUpImplTest {
     @Autowired
     private ConnectionSignUp connectionSignUp;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Test
     public void testExecute() throws Exception {
         final UserProfile userProfile = new UserProfileBuilder().setEmail("email@example.com")
@@ -38,7 +42,11 @@ public class ConnectionSignUpImplTest {
 
         final String result = connectionSignUp.execute(connection);
 
-        assertThat(result).isEqualTo("1");
+        final String id = userRepository.findAll()
+                                      .get(0)
+                                      .getId()
+                                      .toString();
+        assertThat(result).isEqualTo(id);
     }
 
 }
