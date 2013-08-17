@@ -7,12 +7,16 @@
         <resetJUL>true</resetJUL>
     </contextListener>
 
-    <appender name="console"
-              class="ch.qos.logback.core.ConsoleAppender">
+    <appender class="ch.qos.logback.core.ConsoleAppender"
+              name="console">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
+
+    <logger name="org.hibernate.SQL"/>
+
+    <logger name="org.hibernate.type"/>
 
     <root level="info">
         <appender-ref ref="console"/>
