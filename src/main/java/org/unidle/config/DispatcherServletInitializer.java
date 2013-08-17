@@ -18,7 +18,8 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{MvcConfiguration.class};
+        return new Class<?>[]{MvcConfiguration.class,
+                              SocialConfiguration.class};
     }
 
     @Override
