@@ -7,6 +7,10 @@
     <changeSet id="001-LocationFact"
                author="Martin Lau [m@hum.ph]">
 
+        <createSequence sequenceName="LOCATION_FACT_SEQ"
+                        startValue="1"
+                        incrementBy="1"/>
+
         <createTable tableName="LOCATION_FACT">
             <column name="ID"
                     type="BIGINT"
@@ -111,6 +115,10 @@
     <changeSet id="004-User"
                author="Martin Lau [m@hum.ph]">
 
+        <createSequence sequenceName="USER_SEQ"
+                        startValue="1"
+                        incrementBy="1"/>
+
         <createTable tableName="USER">
             <column name="ID"
                     type="BIGINT"
@@ -138,6 +146,10 @@
 
     <changeSet id="005-UserConnection"
                author="Martin Lau [m@hum.ph]">
+
+        <createSequence sequenceName="USER_CONNECTION_SEQ"
+                        startValue="1"
+                        incrementBy="1"/>
 
         <createTable tableName="USER_CONNECTION">
             <column name="ID"
