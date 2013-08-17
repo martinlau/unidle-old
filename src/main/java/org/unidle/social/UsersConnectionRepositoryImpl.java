@@ -1,6 +1,5 @@
 package org.unidle.social;
 
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
@@ -11,14 +10,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.unidle.repository.UserConnectionRepository;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static com.google.common.base.Functions.toStringFunction;
-import static com.google.common.collect.Collections2.transform;
 import static com.google.common.collect.Lists.transform;
+import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 
@@ -72,9 +69,9 @@ public class UsersConnectionRepositoryImpl implements UsersConnectionRepository 
     public Set<String> findUserIdsConnectedTo(final String providerId,
                                               final Set<String> providerUserIds) {
 
-        final Set<Long> userIds = userConnectionRepository.findUserIdsConnectedTo(providerId,
-                                                                                  providerUserIds);
-        return new HashSet<>(transform(userIds, toStringFunction()));
+        final List<Long> userIds = userConnectionRepository.findUserIdsConnectedTo(providerId,
+                                                                                   providerUserIds);
+        return newHashSet(transform(userIds, toStringFunction()));
     }
 
     @Override

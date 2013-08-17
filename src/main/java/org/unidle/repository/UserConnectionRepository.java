@@ -49,7 +49,7 @@ public interface UserConnectionRepository extends JpaRepository<UserConnection, 
                  @Param("providerId") final String providerId);
 
     @Query("SELECT uc.user.id FROM UserConnection uc WHERE uc.providerId = :providerId AND uc.providerUserId IN :providerUserIds")
-    Set<Long> findUserIdsConnectedTo(@Param("providerId") final String providerId,
+    List<Long> findUserIdsConnectedTo(@Param("providerId") final String providerId,
                                      @Param("providerUserIds") final Set<String> providerUserIds);
 
     @Query("SELECT uc.user.id FROM UserConnection uc WHERE uc.providerId = :providerId AND uc.providerUserId = :providerUserId")
