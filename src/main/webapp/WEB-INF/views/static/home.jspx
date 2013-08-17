@@ -6,7 +6,7 @@
           version="2.0">
 
     <div class="row">
-        <div class="small-12 columns text-justify">
+        <div class="small-12 columns">
 
             <h3 class="subheader text-center">
                 <spring:message code="home.header" />
@@ -31,7 +31,7 @@
                 <spring:message code="home.summary" arguments="${locationFact.summaryDuration}|${summaryDurationUnit}" argumentSeparator="|" />
             </p>
 
-            <p class="text-center">
+            <p>
                 <spring:url value="/about" var="about" />
                 <a href="${about}">
                     <spring:message code="common.content.about" />
