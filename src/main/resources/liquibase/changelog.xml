@@ -4,12 +4,17 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="001-LocationFact"
+    <changeSet id="001-LOCATION_FACT_ID_SEQ"
                author="Martin Lau [m@hum.ph]">
 
         <createSequence sequenceName="LOCATION_FACT_ID_SEQ"
                         startValue="1"
                         incrementBy="1"/>
+
+    </changeSet>
+
+    <changeSet id="002-LOCATION_FACT"
+               author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="LOCATION_FACT">
             <column name="ID"
@@ -104,7 +109,7 @@
 
     </changeSet>
 
-    <changeSet id="002-LocationFact-Data"
+    <changeSet id="003-LOCATION_FACT-Data"
                author="Martin Lau [m@hum.ph]">
 
         <loadData tableName="LOCATION_FACT"
@@ -112,12 +117,17 @@
 
     </changeSet>
 
-    <changeSet id="004-User"
+    <changeSet id="004-USER_ID_SEQ"
                author="Martin Lau [m@hum.ph]">
 
         <createSequence sequenceName="USER_ID_SEQ"
                         startValue="1"
                         incrementBy="1"/>
+
+    </changeSet>
+
+    <changeSet id="005-USER"
+               author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="USER">
             <column name="ID"
@@ -144,12 +154,17 @@
 
     </changeSet>
 
-    <changeSet id="005-UserConnection"
+    <changeSet id="006-USER_CONNECTION_SEQ"
                author="Martin Lau [m@hum.ph]">
 
         <createSequence sequenceName="USER_CONNECTION_ID_SEQ"
                         startValue="1"
                         incrementBy="1"/>
+
+    </changeSet>
+
+    <changeSet id="007-USER_CONNECTION"
+               author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="USER_CONNECTION">
             <column name="ID"
