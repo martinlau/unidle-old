@@ -7,7 +7,7 @@
     <changeSet id="001-LocationFact"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="LOCATION_FACT_SEQ"
+        <createSequence sequenceName="LOCATION_FACT_ID_SEQ"
                         startValue="1"
                         incrementBy="1"/>
 
@@ -115,7 +115,7 @@
     <changeSet id="004-User"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="USER_SEQ"
+        <createSequence sequenceName="USER_ID_SEQ"
                         startValue="1"
                         incrementBy="1"/>
 
@@ -147,7 +147,7 @@
     <changeSet id="005-UserConnection"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="USER_CONNECTION_SEQ"
+        <createSequence sequenceName="USER_CONNECTION_ID_SEQ"
                         startValue="1"
                         incrementBy="1"/>
 
