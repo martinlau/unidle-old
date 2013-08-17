@@ -852,12 +852,6 @@
     <profiles>
         <profile>
             <id>openshift</id>
-            <properties>
-                <unidle.facebook.clientId>openshift</unidle.facebook.clientId>
-                <unidle.facebook.secret>openshift</unidle.facebook.secret>
-                <unidle.twitter.consumerKey>openshift</unidle.twitter.consumerKey>
-                <unidle.twitter.consumerSecret>openshift</unidle.twitter.consumerSecret>
-            </properties>
             <build>
                 <finalName>unidle</finalName>
                 <plugins>

@@ -9,7 +9,13 @@
   <profiles>
     <profile>
       <id>nexus</id>
-      <repositories>
+        <properties>
+          <unidle.facebook.clientId>openshift</unidle.facebook.clientId>
+          <unidle.facebook.secret>openshift</unidle.facebook.secret>
+          <unidle.twitter.consumerKey>openshift</unidle.twitter.consumerKey>
+          <unidle.twitter.consumerSecret>openshift</unidle.twitter.consumerSecret>
+        </properties>
+        <repositories>
         <repository>
           <id>eap</id>
           <url>http://maven.repository.redhat.com/techpreview/all</url>
