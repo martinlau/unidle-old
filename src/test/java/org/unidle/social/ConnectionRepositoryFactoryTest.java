@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -38,7 +39,7 @@ public class ConnectionRepositoryFactoryTest {
 
     @Test
     public void testGetConnectionRepository() throws Exception {
-        final ConnectionRepositoryImpl result = subject.getConnectionRepository(userId);
+        final ConnectionRepository result = subject.getConnectionRepository(userId);
 
         assertThat(result).isNotNull();
     }
