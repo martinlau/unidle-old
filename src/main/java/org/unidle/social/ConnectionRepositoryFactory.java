@@ -3,6 +3,7 @@ package org.unidle.social;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.connect.ConnectionFactoryLocator;
+import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.stereotype.Component;
 import org.unidle.domain.User;
 import org.unidle.repository.UserConnectionRepository;
@@ -31,7 +32,7 @@ public class ConnectionRepositoryFactory {
         this.userRepository = userRepository;
     }
 
-    public ConnectionRepositoryImpl getConnectionRepository(final String userId) {
+    public ConnectionRepository getConnectionRepository(final String userId) {
         final User user = userRepository.findOne(Long.valueOf(userId));
 
         return new ConnectionRepositoryImpl(connectionFactoryLocator,
