@@ -3,33 +3,34 @@
           xmlns:spring="http://www.springframework.org/tags"
           version="2.0">
 
-    <div class="row">
-        <div class="small-centered small-9 columns">
-            <div class="row">
-                <div class="small-4 columns">
-                    <a href="#" class="button expand" title="Twitter">
-                        <i class="icon-large icon-twitter"><!-- no collapse --></i>
-                    </a>
-                </div>
-                <div class="small-4 columns">
-                    <a href="#" class="button expand" title="Facebook">
-                        <i class="icon-large icon-facebook"><!-- no collapse --></i>
-                    </a>
-                </div>
-                <div class="small-4 columns">
-                    <a href="#" class="button expand" title="Linked In">
-                        <i class="icon-large icon-linkedin"><!-- no collapse --></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <p class="text-center">
         <spring:message code="common.content.sign-in.tip" var="sign_up_tip" />
         <span data-tooltip="" class="has-tip" title="${sign_up_tip}">
             <spring:message code="common.content.sign-in" />
         </span>
     </p>
+
+    <div class="row">
+        <div class="small-centered small-9 columns">
+            <div class="row">
+                <div class="small-6 columns">
+                    <spring:url value="/signin/twitter" var="twitter" />
+                    <form id="twitter" method="post" action="${twitter}">
+                        <a href="#" class="button expand form-submit" data-form-id="twitter" title="Twitter">
+                            <i class="icon-large icon-twitter"><!-- no collapse --></i>
+                        </a>
+                    </form>
+                </div>
+                <div class="small-6 columns">
+                    <spring:url value="/signin/facebook" var="facebook" />
+                    <form id="facebook" method="post" action="${facebook}">
+                        <a href="#" class="button expand form-submit" data-form-id="facebook" title="Facebook">
+                            <i class="icon-large icon-facebook"><!-- no collapse --></i>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </jsp:root>
