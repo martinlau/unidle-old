@@ -1,9 +1,9 @@
 package org.unidle.service;
 
-import org.unidle.domain.HasCity;
-import org.unidle.domain.HasContinent;
-import org.unidle.domain.HasCountry;
-import org.unidle.domain.HasSubdivision;
+import org.unidle.geo.HasCity;
+import org.unidle.geo.HasContinent;
+import org.unidle.geo.HasCountry;
+import org.unidle.geo.HasSubdivision;
 
 import java.io.Serializable;
 
