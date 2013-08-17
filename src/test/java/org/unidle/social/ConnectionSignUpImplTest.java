@@ -16,7 +16,6 @@ import org.unidle.config.SocialConfiguration;
 import org.unidle.social.test.ConnectionStub;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.junit.Assert.fail;
 
 @ContextHierarchy({@ContextConfiguration(classes = RootContextConfiguration.class),
                    @ContextConfiguration(classes = SocialConfiguration.class)})
