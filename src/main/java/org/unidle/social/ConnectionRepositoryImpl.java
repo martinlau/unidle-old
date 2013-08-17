@@ -166,6 +166,10 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
         final ConnectionData connectionData = Functions.toConnectionData(textEncryptor)
                                                        .apply(userConnection);
 
+        if (connectionData == null) {
+            return null;
+        }
+
         return (Connection<A>) connectionFactoryLocator.getConnectionFactory(userConnection.getProviderId())
                                                        .createConnection(connectionData);
     }

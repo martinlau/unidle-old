@@ -37,17 +37,31 @@ public class Functions {
             @Override
             public ConnectionData apply(final UserConnection input) {
 
-                return input == null
-                       ? null
-                       : new ConnectionData(input.getProviderId(),
-                                            input.getProviderUserId(),
-                                            input.getDisplayName(),
-                                            input.getProfileUrl(),
-                                            input.getImageUrl(),
-                                            textEncryptor.encrypt(input.getAccessToken()),
-                                            textEncryptor.encrypt(input.getSecret()),
-                                            textEncryptor.encrypt(input.getRefreshToken()),
-                                            input.getExpireTime());
+                if (input == null) {
+                    return null;
+                }
+
+                final String accessToken = input.getAccessToken() == null
+                                           ? null
+                                           : textEncryptor.encrypt(input.getAccessToken());
+
+                final String secret = input.getSecret() == null
+                                      ? null
+                                      : textEncryptor.encrypt(input.getSecret());
+
+                final String refreshToken = input.getRefreshToken() == null
+                                            ? null
+                                            : textEncryptor.encrypt(input.getRefreshToken());
+
+                return new ConnectionData(input.getProviderId(),
+                                          input.getProviderUserId(),
+                                          input.getDisplayName(),
+                                          input.getProfileUrl(),
+                                          input.getImageUrl(),
+                                          accessToken,
+                                          secret,
+                                          refreshToken,
+                                          input.getExpireTime());
             }
         };
     }
