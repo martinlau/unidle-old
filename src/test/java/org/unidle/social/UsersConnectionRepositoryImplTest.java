@@ -96,7 +96,7 @@ public class UsersConnectionRepositoryImplTest {
 
         final List<String> result = subject.findUserIdsWithConnection(connection);
 
-        assertThat(result).containsOnly(user.getId().toString());
+        assertThat(result).containsExactly(user.getId().toString());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class UsersConnectionRepositoryImplTest {
 
         final List<String> result = subject.findUserIdsWithConnection(connection);
 
-        assertThat(result).containsOnly(String.valueOf(user.getId() + 1));
+        assertThat(result).containsExactly(String.valueOf(user.getId() + 1));
     }
 
 }
