@@ -22,7 +22,7 @@ import static org.fest.assertions.Assertions.assertThat;
 public class ConnectionRepositoryFactoryTest {
 
     @Autowired
-    private ConnectionRepositoryFactory connectionRepositoryFactory;
+    private ConnectionRepositoryFactory subject;
 
     private String userId;
 
@@ -38,7 +38,7 @@ public class ConnectionRepositoryFactoryTest {
 
     @Test
     public void testGetConnectionRepository() throws Exception {
-        final ConnectionRepositoryImpl result = connectionRepositoryFactory.getConnectionRepository(userId);
+        final ConnectionRepositoryImpl result = subject.getConnectionRepository(userId);
 
         assertThat(result).isNotNull();
     }

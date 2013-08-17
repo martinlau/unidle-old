@@ -9,7 +9,6 @@ import org.unidle.domain.UserConnection;
 import org.unidle.social.test.ConnectionFactoryLocatorStub;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.junit.Assert.fail;
 import static org.springframework.security.crypto.encrypt.Encryptors.noOpText;
 import static org.unidle.support.Functions.toConnection;
 import static org.unidle.support.Functions.toConnectionData;
@@ -32,7 +31,6 @@ public class FunctionsTest {
 
     @Test
     public void testToConnectionData() throws Exception {
-
         final UserConnection userConnection = new UserConnection();
 
         userConnection.setAccessToken("access token");
@@ -68,7 +66,6 @@ public class FunctionsTest {
 
     @Test
     public void testToConnectionWithConnectionFactoryLocator() throws Exception {
-
         final ConnectionFactoryLocator connectionFactoryLocator = new ConnectionFactoryLocatorStub();
 
         final ConnectionData connectionData = new ConnectionData("provider id",
@@ -99,7 +96,6 @@ public class FunctionsTest {
 
     @Test
     public void testToConnectionWithConnectionFactoryLocatorTextEncryptor() throws Exception {
-
         final ConnectionFactoryLocator connectionFactoryLocator = new ConnectionFactoryLocatorStub();
 
         final UserConnection userConnection = new UserConnection();
@@ -132,7 +128,6 @@ public class FunctionsTest {
 
     @Test
     public void testToConnectionWithConnectionFactoryLocatorWithNull() throws Exception {
-
         final Connection<?> result = toConnection(null).apply(null);
 
         assertThat(result).isNull();
@@ -140,7 +135,6 @@ public class FunctionsTest {
 
     @Test
     public void testToUserConnectionWithNull() throws Exception {
-
         final UserConnection result = toUserConnection(null,
                                                        noOpText(),
                                                        null,
@@ -151,7 +145,6 @@ public class FunctionsTest {
 
     @Test
     public void testToUserConnectionWithTextEncryptorIntegerUser() throws Exception {
-
         final User user = new User();
 
         final ConnectionData connectionData = new ConnectionData("provider id",
@@ -221,7 +214,6 @@ public class FunctionsTest {
 
     @Test
     public void testToUserConnectionWithUserConnectionTextEncryptorUser() throws Exception {
-
         final UserConnection userConnection = new UserConnection();
 
         final User user = new User();

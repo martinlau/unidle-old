@@ -21,11 +21,11 @@ import static org.unidle.test.Conditions.hasSubdivision;
 public class LocationServiceImplTest {
 
     @Autowired
-    private LocationService locationService;
+    private LocationService subject;
 
     @Test
     public void testLocateAddressForAdelaideAustralia() throws Exception {
-        final Location result = locationService.locateAddress("203.6.146.5");
+        final Location result = subject.locateAddress("203.6.146.5");
 
         assertThat(result)
                 .satisfies(hasCity("Adelaide"))
@@ -36,7 +36,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForBrisbaneAustralia() throws Exception {
-        final Location result = locationService.locateAddress("132.234.251.230");
+        final Location result = subject.locateAddress("132.234.251.230");
 
         assertThat(result)
                 .satisfies(hasCity("Brisbane"))
@@ -47,7 +47,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForCanberraAustralia() throws Exception {
-        final Location result = locationService.locateAddress("203.6.77.2");
+        final Location result = subject.locateAddress("203.6.77.2");
 
         assertThat(result)
                 .satisfies(hasCity("Canberra"))
@@ -58,7 +58,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForDarwinAustralia() throws Exception {
-        final Location result = locationService.locateAddress("138.80.0.10");
+        final Location result = subject.locateAddress("138.80.0.10");
 
         assertThat(result)
                 .satisfies(hasCity("Darwin"))
@@ -69,7 +69,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForHobartAustralia() throws Exception {
-        final Location result = locationService.locateAddress("147.41.128.8");
+        final Location result = subject.locateAddress("147.41.128.8");
 
         assertThat(result)
                 .satisfies(hasCity("Hobart"))
@@ -80,7 +80,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForMelbourneAustralia() throws Exception {
-        final Location result = locationService.locateAddress("140.159.2.36");
+        final Location result = subject.locateAddress("140.159.2.36");
 
         assertThat(result)
                 .satisfies(hasCity("Melbourne"))
@@ -91,7 +91,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForPerthAustralia() throws Exception {
-        final Location result = locationService.locateAddress("165.118.1.50");
+        final Location result = subject.locateAddress("165.118.1.50");
 
         assertThat(result)
                 .satisfies(hasCity("Perth"))
@@ -102,7 +102,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForSydneyAustralia() throws Exception {
-        final Location result = locationService.locateAddress("203.27.21.6");
+        final Location result = subject.locateAddress("203.27.21.6");
 
         assertThat(result)
                 .satisfies(hasCity("Sydney"))
@@ -113,7 +113,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForCommaSeparatedList() throws Exception {
-        final Location result = locationService.locateAddress("203.27.21.6, 165.118.1.50");
+        final Location result = subject.locateAddress("203.27.21.6, 165.118.1.50");
 
         assertThat(result)
                 .satisfies(hasCity("Sydney"))
@@ -124,7 +124,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForInternalAddress() throws Exception {
-        final Location result = locationService.locateAddress("127.3.2.1");
+        final Location result = subject.locateAddress("127.3.2.1");
 
         assertThat(result)
                 .isSameAs(DEFAULT)
@@ -136,7 +136,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForUnknownAddress() throws Exception {
-        final Location result = locationService.locateAddress("127.0.0.1");
+        final Location result = subject.locateAddress("127.0.0.1");
 
         assertThat(result)
                 .isSameAs(DEFAULT)

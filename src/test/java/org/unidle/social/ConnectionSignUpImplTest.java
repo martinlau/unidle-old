@@ -25,7 +25,7 @@ import static org.fest.assertions.Assertions.assertThat;
 public class ConnectionSignUpImplTest {
 
     @Autowired
-    private ConnectionSignUp connectionSignUp;
+    private ConnectionSignUp subject;
 
     @Autowired
     private UserRepository userRepository;
@@ -40,12 +40,12 @@ public class ConnectionSignUpImplTest {
                                                                 .build();
         final Connection<?> connection = new ConnectionStub(userProfile);
 
-        final String result = connectionSignUp.execute(connection);
+        final String result = subject.execute(connection);
 
         final String id = userRepository.findAll()
-                                      .get(0)
-                                      .getId()
-                                      .toString();
+                                        .get(0)
+                                        .getId()
+                                        .toString();
         assertThat(result).isEqualTo(id);
     }
 

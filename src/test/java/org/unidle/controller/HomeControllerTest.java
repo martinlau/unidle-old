@@ -26,19 +26,19 @@ import static org.unidle.test.RequestProcessors.remoteAddr;
 @WebAppConfiguration
 public class HomeControllerTest {
 
-    private MockMvc mockMvc;
+    private MockMvc subject;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
 
     @Before
     public void setUp() throws Exception {
-        mockMvc = webAppContextSetup(webApplicationContext).build();
+        subject = webAppContextSetup(webApplicationContext).build();
     }
 
     @Test
     public void testHome() throws Exception {
-        mockMvc.perform(get("/").with(remoteAddr("203.27.21.6")))
+        subject.perform(get("/").with(remoteAddr("203.27.21.6")))
                .andExpect(status().isOk())
                .andExpect(view().name(".static.home"))
                .andExpect(model().attributeExists("locationFact"));

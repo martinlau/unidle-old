@@ -40,7 +40,11 @@ public class SpringCacheCacheStrategyTest {
 
     @Test
     public void testGetWithEntry() throws Exception {
+        subject.put("key", "value");
 
+        final Object result = subject.get("key");
+
+        assertThat(result).isEqualTo("value");
     }
 
     @Test

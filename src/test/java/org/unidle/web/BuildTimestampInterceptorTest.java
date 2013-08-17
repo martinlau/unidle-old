@@ -37,7 +37,6 @@ public class BuildTimestampInterceptorTest {
 
     @Test
     public void testPostHandleWithInvalidPackage() throws Exception {
-
         subject.postHandle(null, null, new Object(), modelAndView);
 
         assertThat(modelAndView.getModel()).isEmpty();
@@ -45,7 +44,6 @@ public class BuildTimestampInterceptorTest {
 
     @Test
     public void testPostHandleWithValidPackage() throws Exception {
-
         subject.postHandle(null, null, this, modelAndView);
 
         assertThat(modelAndView.getModel())

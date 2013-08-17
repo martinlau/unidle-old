@@ -49,7 +49,6 @@ public class LocationFactServiceImplTest {
     public void testFindBestFactWithContinent() throws Exception {
         final LocationFact result = subject.findBestFact("", "", "", "Oceania");
 
-
         assertThat(result)
                 .satisfies(hasTaskTimeUnit(DAY))
                 .satisfies(hasTaskPeople(800000))
@@ -64,7 +63,6 @@ public class LocationFactServiceImplTest {
     @Test
     public void testFindBestFactWithCountry() throws Exception {
         final LocationFact result = subject.findBestFact("", "", "Australia", "Oceania");
-
 
         assertThat(result)
                 .satisfies(hasTaskTimeUnit(DAY))
@@ -81,7 +79,6 @@ public class LocationFactServiceImplTest {
     public void testFindBestFactWithNothing() throws Exception {
         final LocationFact result = subject.findBestFact("", "", "", "");
 
-
         assertThat(result)
                 .satisfies(hasTaskTimeUnit(DAY))
                 .satisfies(hasTaskPeople(800000))
@@ -96,7 +93,6 @@ public class LocationFactServiceImplTest {
     @Test
     public void testFindBestFactWithSubdivision() throws Exception {
         final LocationFact result = subject.findBestFact("", "New South Wales", "Australia", "Oceania");
-
 
         assertThat(result)
                 .satisfies(hasTaskTimeUnit(DAY))

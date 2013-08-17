@@ -24,19 +24,19 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @WebAppConfiguration
 public class BusinessControllerTest {
 
-    private MockMvc mockMvc;
+    private MockMvc subject;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
 
     @Before
     public void setUp() throws Exception {
-        mockMvc = webAppContextSetup(webApplicationContext).build();
+        subject = webAppContextSetup(webApplicationContext).build();
     }
 
     @Test
     public void testBusiness() throws Exception {
-        mockMvc.perform(get("/business"))
+        subject.perform(get("/business"))
                .andExpect(status().isOk())
                .andExpect(view().name(".static.business"));
     }

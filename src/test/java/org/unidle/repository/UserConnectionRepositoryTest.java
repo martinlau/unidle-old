@@ -45,7 +45,6 @@ public class UserConnectionRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-
         user1 = userRepository.save(new User());
 
         user2 = userRepository.save(new User());
@@ -89,7 +88,6 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testDeleteUserString() throws Exception {
-
         subject.delete(user1, "provider id 1");
 
         assertThat(subject.count()).isEqualTo(2);
@@ -97,7 +95,6 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testDeleteUserStringString() throws Exception {
-
         subject.delete(user1, "provider id 1", "provider user id 1");
 
         assertThat(subject.count()).isEqualTo(3);
@@ -105,7 +102,6 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testFindAllWithUser() throws Exception {
-
         final List<UserConnection> result = subject.findAll(user1);
 
         assertThat(result).hasSize(2);
@@ -113,7 +109,6 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testFindAllWithUserString() throws Exception {
-
         final List<UserConnection> result = subject.findAll(user1, "provider id 1");
 
         assertThat(result).hasSize(2);
@@ -121,7 +116,6 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testFindAllWithUserStringListOfStrings() throws Exception {
-
         final List<UserConnection> result = subject.findAll(user1,
                                                             "provider id 1",
                                                             asList("provider user id 1",
@@ -133,7 +127,6 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testFindOne() throws Exception {
-
         final UserConnection result = subject.findOne(user1, "provider id 1", "provider user id 1");
 
         assertThat(result)
@@ -144,7 +137,6 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testFindPrimaryConnection() throws Exception {
-
         final UserConnection result = subject.findPrimaryConnection(user1, "provider id 1");
 
         assertThat(result)
@@ -154,7 +146,6 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testFindRank() throws Exception {
-
         final Integer result = subject.findRank(user1, "provider id 1");
 
         assertThat(result).isEqualTo(3);
@@ -162,7 +153,6 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testFindUserIdsConnectedTo() throws Exception {
-
         final List<Long> result = subject.findUserIdsConnectedTo("provider id 1",
                                                                  newHashSet("provider user id 1",
                                                                             "provider user id 2",
@@ -176,7 +166,6 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testFindUserIdsWithConnection() throws Exception {
-
         final List<Long> result = subject.findUserIdsWithConnection("provider id 1",
                                                                     "provider user id 1");
 

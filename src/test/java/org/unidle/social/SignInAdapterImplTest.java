@@ -21,7 +21,7 @@ import static org.fest.assertions.Assertions.assertThat;
 public class SignInAdapterImplTest {
 
     @Autowired
-    private SignInAdapter signInAdapter;
+    private SignInAdapter subject;
 
     @Before
     public void setUp() throws Exception {
@@ -35,7 +35,7 @@ public class SignInAdapterImplTest {
 
     @Test
     public void testSignIn() throws Exception {
-        signInAdapter.signIn("userId", null, null);
+        subject.signIn("userId", null, null);
 
         final Object principal = SecurityContextHolder.getContext()
                                                       .getAuthentication()
