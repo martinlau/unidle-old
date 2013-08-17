@@ -45,14 +45,14 @@ public interface UserConnectionRepository extends JpaRepository<UserConnection, 
                                          @Param("providerId") final String providerId);
 
     @Query("SELECT COALESCE(max(uc.rank) + 1, 1) FROM UserConnection uc WHERE uc.user = :user AND uc.providerId = :providerId")
-    int findRank(@Param("user") final User user,
-                 @Param("providerId") final String providerId);
+    Integer findRank(@Param("user") final User user,
+                     @Param("providerId") final String providerId);
 
-    @Query("SELECT uc.user.id FROM UserConnection uc WHERE uc.providerId = :providerId AND uc.providerUserId IN :providerUserIds")
+    @Query("SELECT DISTINCT uc.user.id FROM UserConnection uc WHERE uc.providerId = :providerId AND uc.providerUserId IN :providerUserIds")
     List<Long> findUserIdsConnectedTo(@Param("providerId") final String providerId,
-                                     @Param("providerUserIds") final Set<String> providerUserIds);
+                                      @Param("providerUserIds") final Set<String> providerUserIds);
 
-    @Query("SELECT uc.user.id FROM UserConnection uc WHERE uc.providerId = :providerId AND uc.providerUserId = :providerUserId")
+    @Query("SELECT DISTINCT uc.user.id FROM UserConnection uc WHERE uc.providerId = :providerId AND uc.providerUserId = :providerUserId")
     List<Long> findUserIdsWithConnection(@Param("providerId") final String providerId,
                                          @Param("providerUserId") final String providerUserId);
 
