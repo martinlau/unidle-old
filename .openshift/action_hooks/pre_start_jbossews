@@ -1,4 +1,4 @@
-source ${OPENSHIFT_DATA_DIR}/.secure_env
+source "${OPENSHIFT_DATA_DIR}/.secure_env"
 
 export CATALINA_OPTS="${CATALINA_OPTS} \
                       -Dunidle.dataSource.driverClass=org.postgresql.Driver \
@@ -26,3 +26,5 @@ export CATALINA_OPTS="${CATALINA_OPTS} \
                       -Dunidle.wro.modelUpdatePeriod=0 \
                       -Dunidle.wro.resourceWatcherUpdatePeriod=0 \
                       "
+
+echo "CATALINA_OPTS = $CATALINA_OPTS"
