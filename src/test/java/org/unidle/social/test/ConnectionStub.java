@@ -11,7 +11,10 @@ public class ConnectionStub<A> extends AbstractConnection<A> {
     private final UserProfile userProfile;
 
     public ConnectionStub(final UserProfile userProfile) {
-        this(null, userProfile);
+        super(null);
+
+        this.connectionData = null;
+        this.userProfile = userProfile;
     }
 
     public ConnectionStub(final ConnectionData connectionData,
@@ -23,7 +26,10 @@ public class ConnectionStub<A> extends AbstractConnection<A> {
     }
 
     public ConnectionStub(final ConnectionData connectionData) {
-        this(connectionData, null);
+        super(connectionData, null);
+
+        this.connectionData = connectionData;
+        this.userProfile = null;
     }
 
     @Override
