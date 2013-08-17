@@ -1,10 +1,6 @@
 package org.unidle.domain;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
-import org.unidle.geo.HasCity;
-import org.unidle.geo.HasContinent;
-import org.unidle.geo.HasCountry;
-import org.unidle.geo.HasSubdivision;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -12,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Version;
+
+import java.io.Serializable;
 
 import static java.lang.String.format;
 import static javax.persistence.EnumType.STRING;
@@ -23,10 +21,7 @@ import static org.unidle.domain.TimeUnit.UNKNOWN;
                    name = "id")
 @Entity
 @Table(name = "LOCATION_FACT")
-public class LocationFact extends AbstractPersistable<Long> implements HasCity,
-                                                                       HasSubdivision,
-                                                                       HasCountry,
-                                                                       HasContinent {
+public class LocationFact extends AbstractPersistable<Long> implements Serializable {
 
     @Column(name = "CITY",
             nullable = false)
@@ -83,7 +78,6 @@ public class LocationFact extends AbstractPersistable<Long> implements HasCity,
     @Enumerated(STRING)
     private TimeUnit taskTimeUnit = UNKNOWN;
 
-    @Override
     public String getCity() {
         return city;
     }
@@ -92,7 +86,6 @@ public class LocationFact extends AbstractPersistable<Long> implements HasCity,
         this.city = city;
     }
 
-    @Override
     public String getContinent() {
         return continent;
     }
@@ -101,7 +94,6 @@ public class LocationFact extends AbstractPersistable<Long> implements HasCity,
         this.continent = continent;
     }
 
-    @Override
     public String getCountry() {
         return country;
     }
@@ -134,7 +126,6 @@ public class LocationFact extends AbstractPersistable<Long> implements HasCity,
         this.source = source;
     }
 
-    @Override
     public String getSubdivision() {
         return subdivision;
     }

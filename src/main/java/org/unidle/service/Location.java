@@ -1,17 +1,8 @@
 package org.unidle.service;
 
-import org.unidle.geo.HasCity;
-import org.unidle.geo.HasContinent;
-import org.unidle.geo.HasCountry;
-import org.unidle.geo.HasSubdivision;
-
 import java.io.Serializable;
 
-public class Location implements Serializable,
-                                 HasCity,
-                                 HasSubdivision,
-                                 HasCountry,
-                                 HasContinent {
+public class Location implements Serializable {
 
     private final String city;
 
@@ -36,22 +27,18 @@ public class Location implements Serializable,
         this.continent = continent;
     }
 
-    @Override
     public String getCity() {
         return city;
     }
 
-    @Override
     public String getContinent() {
         return continent;
     }
 
-    @Override
     public String getCountry() {
         return country;
     }
 
-    @Override
     public String getSubdivision() {
         return subdivision;
     }
