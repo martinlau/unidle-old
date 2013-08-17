@@ -4,7 +4,7 @@ import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.support.AbstractConnection;
 
-public class ConnectionStub extends AbstractConnection<Object> {
+public class ConnectionStub<A> extends AbstractConnection<A> {
 
     private final ConnectionData connectionData;
 
@@ -16,7 +16,8 @@ public class ConnectionStub extends AbstractConnection<Object> {
 
     public ConnectionStub(final ConnectionData connectionData,
                           final UserProfile userProfile) {
-        super(null);
+        super(connectionData, null);
+
         this.connectionData = connectionData;
         this.userProfile = userProfile;
     }
@@ -31,7 +32,7 @@ public class ConnectionStub extends AbstractConnection<Object> {
     }
 
     @Override
-    public Object getApi() {
+    public A getApi() {
         throw new UnsupportedOperationException();
     }
 
