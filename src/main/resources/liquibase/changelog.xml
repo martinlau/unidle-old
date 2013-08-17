@@ -117,10 +117,10 @@
 
     </changeSet>
 
-    <changeSet id="004-USER_ID_seq"
+    <changeSet id="004-USERS_ID_seq"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="USER_ID_seq"
+        <createSequence sequenceName="USERS_ID_seq"
                         startValue="1"
                         incrementBy="1"/>
 
