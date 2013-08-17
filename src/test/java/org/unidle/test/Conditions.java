@@ -1,10 +1,10 @@
 package org.unidle.test;
 
 import org.fest.assertions.Condition;
-import org.unidle.domain.HasCity;
-import org.unidle.domain.HasContinent;
-import org.unidle.domain.HasCountry;
-import org.unidle.domain.HasSubdivision;
+import org.unidle.geo.HasCity;
+import org.unidle.geo.HasContinent;
+import org.unidle.geo.HasCountry;
+import org.unidle.geo.HasSubdivision;
 import org.unidle.domain.LocationFact;
 import org.unidle.domain.TimeUnit;
 
