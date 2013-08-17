@@ -105,6 +105,22 @@
                             <message>Define plugin versions via &lt;pluginManagement&gt; to explicitly define versions</message>
                             <phases>clean,compile,test,install,site,deploy</phases>
                         </requirePluginVersions>
+                        <requireProperty>
+                            <property>unidle.facebook.clientId</property>
+                            <message>'unidle.facebook.clientId' must be defined in your settings.xml</message>
+                        </requireProperty>
+                        <requireProperty>
+                            <property>unidle.facebook.secret</property>
+                            <message>'unidle.facebook.secret' must be defined in your settings.xml</message>
+                        </requireProperty>
+                        <requireProperty>
+                            <property>unidle.twitter.consumerKey</property>
+                            <message>'unidle.twitter.consumerKey' must be defined in your settings.xml</message>
+                        </requireProperty>
+                        <requireProperty>
+                            <property>unidle.twitter.consumerSecret</property>
+                            <message>'unidle.twitter.consumerSecret' must be defined in your settings.xml</message>
+                        </requireProperty>
                         <requireReleaseDeps>
                             <message>Update all dependencies to release versions when releasing</message>
                             <onlyWhenRelease>true</onlyWhenRelease>
@@ -166,6 +182,12 @@
                 </executions>
                 <configuration>
                     <path>/</path>
+                    <systemProperties>
+                        <unidle.facebook.clientId>${unidle.facebook.clientId}</unidle.facebook.clientId>
+                        <unidle.facebook.secret>${unidle.facebook.secret}</unidle.facebook.secret>
+                        <unidle.twitter.consumerKey>${unidle.twitter.consumerKey}</unidle.twitter.consumerKey>
+                        <unidle.twitter.consumerSecret>${unidle.twitter.consumerSecret}</unidle.twitter.consumerSecret>
+                    </systemProperties>
                 </configuration>
             </plugin>
             <plugin>
