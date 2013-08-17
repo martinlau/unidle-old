@@ -4,19 +4,14 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="000-HibernateSequence"
-               author="Martin Lau [m@hum.ph]">
-
-        <createSequence sequenceName="HIBERNATE_SEQUENCE" />
-
-    </changeSet>
-
     <changeSet id="001-LocationFact"
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="LOCATION_FACT">
             <column name="ID"
-                    type="BIGINT">
+                    type="BIGINT"
+                    autoIncrement="true"
+                    startWith="1">
                 <constraints primaryKey="true"/>
             </column>
             <column name="REVISION"
@@ -103,13 +98,109 @@
             <column name="SUBDIVISION"/>
         </createIndex>
 
-        </changeSet>
+    </changeSet>
 
     <changeSet id="002-LocationFact-Data"
                author="Martin Lau [m@hum.ph]">
 
         <loadData tableName="LOCATION_FACT"
                   file="liquibase/data/location-facts.csv"/>
+
+    </changeSet>
+
+    <changeSet id="004-User"
+               author="Martin Lau [m@hum.ph]">
+
+        <createTable tableName="USER">
+            <column name="ID"
+                    type="BIGINT"
+                    autoIncrement="true"
+                    startWith="1">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="REVISION"
+                    type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL"
+                    type="VARCHAR"/>
+            <column name="FIRST_NAME"
+                    type="VARCHAR"/>
+            <column name="LAST_NAME"
+                    type="VARCHAR"/>
+            <column name="NAME"
+                    type="VARCHAR"/>
+            <column name="USERNAME"
+                    type="VARCHAR"/>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="005-UserConnection"
+               author="Martin Lau [m@hum.ph]">
+
+        <createTable tableName="USER_CONNECTION">
+            <column name="ID"
+                    type="BIGINT"
+                    autoIncrement="true"
+                    startWith="1">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="REVISION"
+                    type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_ID"
+                    type="BIGINT">
+            </column>
+            <column name="PROVIDER_ID"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PROVIDER_USER_ID"
+                    type="VARCHAR"/>
+            <column name="RANK"
+                    type="INTEGER"/>
+            <column name="DISPLAY_NAME"
+                    type="VARCHAR"/>
+            <column name="PROFILE_URL"
+                    type="VARCHAR"/>
+            <column name="IMAGE_URL"
+                    type="VARCHAR"/>
+            <column name="ACCESS_TOKEN"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SECRET"
+                    type="VARCHAR"/>
+            <column name="REFRESH_TOKEN"
+                    type="VARCHAR"/>
+            <column name="EXPIRE_TIME"
+                    type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="USER_ID"
+                                 baseTableName="USER_CONNECTION"
+                                 constraintName="FK_USER_CONNECTION_USER_ID"
+                                 deleteCascade="true"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="USER"/>
+
+        <createIndex tableName="USER_CONNECTION"
+                     indexName="IDX_USER_CONNECTION_USER_ID_PROVIDER_ID_PROVIDER_USER_ID"
+                     unique="true">
+            <column name="USER_ID"/>
+            <column name="PROVIDER_ID"/>
+            <column name="PROVIDER_USER_ID"/>
+        </createIndex>
+
+        <createIndex tableName="USER_CONNECTION"
+                     indexName="IDX_USER_CONNECTION_USER_ID_PROVIDER_ID_RANK"
+                     unique="true">
+            <column name="USER_ID"/>
+            <column name="PROVIDER_ID"/>
+            <column name="RANK"/>
+        </createIndex>
 
     </changeSet>
 
