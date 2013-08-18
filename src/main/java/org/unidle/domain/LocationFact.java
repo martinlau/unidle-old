@@ -15,64 +15,63 @@ import static javax.persistence.EnumType.STRING;
 import static org.springframework.util.StringUtils.hasText;
 import static org.unidle.domain.LocationFact.TimeUnit.UNKNOWN;
 
-@AttributeOverride(column = @Column(name = "ID",
-                                    nullable = false),
+@AttributeOverride(column = @Column(name = "id", nullable = false),
                    name = "id")
 @Entity
-@Table(name = "LOCATION_FACTS")
+@Table(name = "location_facts")
 public class LocationFact extends AbstractPersistable<Long> implements Serializable {
 
-    @Column(name = "CITY",
+    @Column(name = "city",
             nullable = false)
     private String city = "";
 
-    @Column(name = "CONTINENT",
+    @Column(name = "continent",
             nullable = false)
     private String continent = "";
 
-    @Column(name = "COUNTRY",
+    @Column(name = "country",
             nullable = false)
     private String country = "";
 
-    @Column(name = "REVISION")
+    @Column(name = "revision")
     @Version
     private Integer revision;
 
-    @Column(name = "SOURCE",
+    @Column(name = "source",
             nullable = false)
     private String source = "";
 
-    @Column(name = "SUBDIVISION",
+    @Column(name = "subdivision",
             nullable = false)
     private String subdivision = "";
 
-    @Column(name = "SUMMARY_DURATION",
+    @Column(name = "summary_duration",
             nullable = false)
     private Integer summaryDuration = 0;
 
-    @Column(name = "SUMMARY_DURATION_TIME_UNIT",
+    @Column(name = "summary_duration_time_unit",
             nullable = false)
     @Enumerated(STRING)
     private TimeUnit summaryDurationTimeUnit = UNKNOWN;
 
-    @Column(name = "TASK_CODE",
+    @Column(name = "task_code",
             nullable = false)
     private String taskCode = "";
 
-    @Column(name = "TASK_DURATION",
+    @Column(name = "task_duration",
             nullable = false)
     private Integer taskDuration = 0;
 
-    @Column(name = "TASK_DURATION_TIME_UNIT",
+    @Column(name = "task_duration_time_unit",
             nullable = false)
     @Enumerated(STRING)
     private TimeUnit taskDurationTimeUnit = UNKNOWN;
 
-    @Column(name = "TASK_PEOPLE",
+    @Column(name = "task_people",
             nullable = false)
     private Integer taskPeople = 0;
 
-    @Column(name = "TASK_TIME_UNIT",
+    @Column(name = "task_time_unit",
             nullable = false)
     @Enumerated(STRING)
     private TimeUnit taskTimeUnit = UNKNOWN;

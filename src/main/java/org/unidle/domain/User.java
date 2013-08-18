@@ -2,6 +2,7 @@ package org.unidle.domain;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -9,27 +10,29 @@ import javax.persistence.Version;
 
 import static java.lang.String.format;
 
+@AttributeOverride(column = @Column(name = "id", nullable = false),
+                   name = "id")
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class User extends AbstractPersistable<Long> {
 
-    @Column(name = "EMAIL")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "FIRST_NAME")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "LAST_NAME")
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "REVISION")
+    @Column(name = "revision")
     @Version
     private Integer revision;
 
-    @Column(name = "USERNAME")
+    @Column(name = "username")
     private String username;
 
     public String getEmail() {

@@ -2,6 +2,7 @@ package org.unidle.domain;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,50 +13,50 @@ import javax.persistence.Version;
 
 import static java.lang.String.format;
 
+@AttributeOverride(column = @Column(name = "id", nullable = false),
+                   name = "id")
 @Entity
-@Table(name = "USER_CONNECTIONS",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"USER_ID",
-                                                            "PROVIDER_ID",
-                                                            "PROVIDER_USER_ID"}))
+@Table(name = "user_connections",
+       uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "provider_id", "provider_user_id"}))
 public class UserConnection extends AbstractPersistable<Long> {
 
-    @Column(name = "ACCESS_TOKEN",
+    @Column(name = "access_token",
             nullable = false)
     private String accessToken;
 
-    @Column(name = "DISPLAY_NAME")
+    @Column(name = "display_name")
     private String displayName;
 
-    @Column(name = "EXPIRE_TIME")
+    @Column(name = "expire_time")
     private Long expireTime;
 
-    @Column(name = "IMAGE_URL")
+    @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name = "PROFILE_URL")
+    @Column(name = "profile_url")
     private String profileUrl;
 
-    @Column(name = "PROVIDER_ID",
+    @Column(name = "provider_id",
             nullable = false)
     private String providerId;
 
-    @Column(name = "PROVIDER_USER_ID")
+    @Column(name = "provider_user_id")
     private String providerUserId;
 
-    @Column(name = "RANK")
+    @Column(name = "rank")
     private Integer rank;
 
-    @Column(name = "REFRESH_TOKEN")
+    @Column(name = "refresh_token")
     private String refreshToken;
 
-    @Column(name = "REVISION")
+    @Column(name = "revision")
     @Version
     private Integer revision;
 
-    @Column(name = "SECRET")
+    @Column(name = "secret")
     private String secret;
 
-    @JoinColumn(name = "USER_ID",
+    @JoinColumn(name = "user_id",
                 nullable = false)
     @ManyToOne(optional = false)
     private User user;

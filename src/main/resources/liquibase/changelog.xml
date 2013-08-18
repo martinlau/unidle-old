@@ -4,236 +4,238 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="000-HIBERNATE_SEQUENCE"
+    <changeSet id="000-hibernate_sequence"
                author="Martin Lau [m@hum.ph]">
-        
-        <createSequence sequenceName="HIBERNATE_SEQUENCE" />
+
+        <createSequence sequenceName="hibernate_sequence"/>
 
     </changeSet>
-    
-    <changeSet id="001-LOCATION_FACTS_ID_seq"
+
+    <changeSet id="001-location_facts_id_seq"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="LOCATION_FACTS_ID_seq"
+        <createSequence sequenceName="location_facts_id_seq"
                         startValue="1"
                         incrementBy="1"/>
 
     </changeSet>
 
-    <changeSet id="002-LOCATION_FACTS"
+    <changeSet id="002-location_facts"
                author="Martin Lau [m@hum.ph]">
 
-        <createTable tableName="LOCATION_FACTS">
-            <column name="ID"
+        <createTable tableName="location_facts">
+            <column name="id"
                     type="BIGINT"
                     autoIncrement="true"
                     startWith="1">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="REVISION"
+            <column name="revision"
                     type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="CONTINENT"
+            <column name="continent"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="COUNTRY"
+            <column name="country"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="SUBDIVISION"
+            <column name="subdivision"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="CITY"
+            <column name="city"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="TASK_TIME_UNIT"
+            <column name="task_time_unit"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="TASK_PEOPLE"
+            <column name="task_people"
                     type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="TASK_DURATION"
+            <column name="task_duration"
                     type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="TASK_DURATION_TIME_UNIT"
+            <column name="task_duration_time_unit"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="TASK_CODE"
+            <column name="task_code"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="SUMMARY_DURATION"
+            <column name="summary_duration"
                     type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="SUMMARY_DURATION_TIME_UNIT"
+            <column name="summary_duration_time_unit"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="SOURCE"
+            <column name="source"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
 
         </createTable>
 
-        <createIndex tableName="LOCATION_FACTS"
-                     indexName="IDX_LOCATION_FACTS_CITY_SUBDIVISION_COUNTRY_CONTINENT"
+        <createIndex tableName="location_facts"
+                     indexName="idx_location_facts_city_subdivision_country_continent"
                      unique="true">
-            <column name="CITY"/>
-            <column name="SUBDIVISION"/>
-            <column name="COUNTRY"/>
-            <column name="CONTINENT"/>
+            <column name="city"/>
+            <column name="subdivision"/>
+            <column name="country"/>
+            <column name="continent"/>
         </createIndex>
 
-        <createIndex tableName="LOCATION_FACTS"
-                     indexName="IDX_LOCATION_FACTS_CITY">
-            <column name="CITY"/>
+        <createIndex tableName="location_facts"
+                     indexName="idx_location_facts_city">
+            <column name="city"/>
         </createIndex>
 
-        <createIndex tableName="LOCATION_FACTS"
-                     indexName="IDX_LOCATION_FACTS_COUNTRY">
-            <column name="COUNTRY"/>
+        <createIndex tableName="location_facts"
+                     indexName="idx_location_facts_country">
+            <column name="country"/>
         </createIndex>
 
-        <createIndex tableName="LOCATION_FACTS"
-                     indexName="IDX_LOCATION_FACTS_CONTINENT">
-            <column name="CONTINENT"/>
+        <createIndex tableName="location_facts"
+                     indexName="idx_location_facts_continent">
+            <column name="continent"/>
         </createIndex>
 
-        <createIndex tableName="LOCATION_FACTS"
-                     indexName="IDX_LOCATION_FACTS_SUBDIVISION">
-            <column name="SUBDIVISION"/>
+        <createIndex tableName="location_facts"
+                     indexName="idx_location_facts_subdivision">
+            <column name="subdivision"/>
         </createIndex>
 
     </changeSet>
 
-    <changeSet id="003-LOCATION_FACTS-Data"
+    <changeSet id="003-location_facts-data"
                author="Martin Lau [m@hum.ph]">
 
-        <loadData tableName="LOCATION_FACTS"
+        <loadData tableName="location_facts"
                   file="liquibase/data/location-facts.csv"/>
 
     </changeSet>
 
-    <changeSet id="004-USERS_ID_seq"
+    <changeSet id="004-users_id_seq"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="USERS_ID_seq"
+        <createSequence sequenceName="users_id_seq"
                         startValue="1"
                         incrementBy="1"/>
 
     </changeSet>
 
-    <changeSet id="005-USERS"
+    <changeSet id="005-users"
                author="Martin Lau [m@hum.ph]">
 
-        <createTable tableName="USERS">
-            <column name="ID"
+        <createTable tableName="users">
+            <column name="id"
                     type="BIGINT"
                     autoIncrement="true"
                     startWith="1">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="REVISION"
+            <column name="revision"
                     type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="EMAIL"
+            <column name="email"
+                    type="VARCHAR" >
+                <constraints unique="true"/>
+            </column>
+            <column name="first_name"
                     type="VARCHAR"/>
-            <column name="FIRST_NAME"
+            <column name="last_name"
                     type="VARCHAR"/>
-            <column name="LAST_NAME"
+            <column name="name"
                     type="VARCHAR"/>
-            <column name="NAME"
-                    type="VARCHAR"/>
-            <column name="USERNAME"
+            <column name="username"
                     type="VARCHAR"/>
         </createTable>
 
     </changeSet>
 
-    <changeSet id="006-USER_CONNECTIONS_seq"
+    <changeSet id="006-user_connections_seq"
                author="Martin Lau [m@hum.ph]">
 
-        <createSequence sequenceName="USER_CONNECTIONS_ID_seq"
+        <createSequence sequenceName="user_connections_id_seq"
                         startValue="1"
                         incrementBy="1"/>
 
     </changeSet>
 
-    <changeSet id="007-USER_CONNECTIONS"
+    <changeSet id="007-user_connections"
                author="Martin Lau [m@hum.ph]">
 
-        <createTable tableName="USER_CONNECTIONS">
-            <column name="ID"
+        <createTable tableName="user_connections">
+            <column name="id"
                     type="BIGINT"
                     autoIncrement="true"
                     startWith="1">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="REVISION"
+            <column name="revision"
                     type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="USER_ID"
+            <column name="user_id"
                     type="BIGINT">
             </column>
-            <column name="PROVIDER_ID"
+            <column name="provider_id"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="PROVIDER_USER_ID"
+            <column name="provider_user_id"
                     type="VARCHAR"/>
-            <column name="RANK"
+            <column name="rank"
                     type="INTEGER"/>
-            <column name="DISPLAY_NAME"
+            <column name="display_name"
                     type="VARCHAR"/>
-            <column name="PROFILE_URL"
+            <column name="profile_url"
                     type="VARCHAR"/>
-            <column name="IMAGE_URL"
+            <column name="image_url"
                     type="VARCHAR"/>
-            <column name="ACCESS_TOKEN"
+            <column name="access_token"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="SECRET"
+            <column name="secret"
                     type="VARCHAR"/>
-            <column name="REFRESH_TOKEN"
+            <column name="refresh_token"
                     type="VARCHAR"/>
-            <column name="EXPIRE_TIME"
+            <column name="expire_time"
                     type="BIGINT"/>
         </createTable>
 
-        <addForeignKeyConstraint baseColumnNames="USER_ID"
-                                 baseTableName="USER_CONNECTIONS"
-                                 constraintName="FK_USER_CONNECTIONS_USER_ID"
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_connections"
+                                 constraintName="fk_user_connections_user_id"
                                  deleteCascade="true"
-                                 referencedColumnNames="ID"
-                                 referencedTableName="USERS"/>
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
 
-        <createIndex tableName="USER_CONNECTIONS"
-                     indexName="IDX_USER_CONNECTIONS_USER_ID_PROVIDER_ID_PROVIDER_USER_ID"
+        <createIndex tableName="user_connections"
+                     indexName="idx_user_connections_user_id_provider_id_provider_user_id"
                      unique="true">
-            <column name="USER_ID"/>
-            <column name="PROVIDER_ID"/>
-            <column name="PROVIDER_USER_ID"/>
+            <column name="user_id"/>
+            <column name="provider_id"/>
+            <column name="provider_user_id"/>
         </createIndex>
 
-        <createIndex tableName="USER_CONNECTIONS"
-                     indexName="IDX_USER_CONNECTIONS_USER_ID_PROVIDER_ID_RANK"
+        <createIndex tableName="user_connections"
+                     indexName="idx_user_connections_user_id_provider_id_rank"
                      unique="true">
-            <column name="USER_ID"/>
-            <column name="PROVIDER_ID"/>
-            <column name="RANK"/>
+            <column name="user_id"/>
+            <column name="provider_id"/>
+            <column name="rank"/>
         </createIndex>
 
     </changeSet>
