@@ -10,12 +10,12 @@ import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.unidle.config.RootContextConfiguration;
+import org.unidle.config.RootConfiguration;
 import org.unidle.config.SocialConfiguration;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-@ContextHierarchy({@ContextConfiguration(classes = RootContextConfiguration.class),
+@ContextHierarchy({@ContextConfiguration(classes = RootConfiguration.class),
                    @ContextConfiguration(classes = SocialConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SignInAdapterImplTest {

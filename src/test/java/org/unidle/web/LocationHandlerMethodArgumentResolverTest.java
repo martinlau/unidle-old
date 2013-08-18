@@ -15,7 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.unidle.config.MvcConfiguration;
-import org.unidle.config.RootContextConfiguration;
+import org.unidle.config.RootConfiguration;
 import org.unidle.service.Location;
 
 import java.lang.reflect.Method;
@@ -26,7 +26,7 @@ import static org.unidle.test.Conditions.hasContinent;
 import static org.unidle.test.Conditions.hasCountry;
 import static org.unidle.test.Conditions.hasSubdivision;
 
-@ContextHierarchy({@ContextConfiguration(classes = RootContextConfiguration.class),
+@ContextHierarchy({@ContextConfiguration(classes = RootConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

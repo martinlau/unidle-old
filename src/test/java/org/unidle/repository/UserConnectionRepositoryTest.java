@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.unidle.config.RootContextConfiguration;
+import org.unidle.config.RootConfiguration;
 import org.unidle.domain.User;
 import org.unidle.domain.UserConnection;
 
@@ -20,7 +20,7 @@ import static org.unidle.test.Conditions.hasProviderId;
 import static org.unidle.test.Conditions.hasProviderUserId;
 import static org.unidle.test.Conditions.hasUser;
 
-@ContextConfiguration(classes = RootContextConfiguration.class)
+@ContextConfiguration(classes = RootConfiguration.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class UserConnectionRepositoryTest {

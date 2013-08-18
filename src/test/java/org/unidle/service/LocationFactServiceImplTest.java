@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.unidle.config.RootContextConfiguration;
+import org.unidle.config.RootConfiguration;
 import org.unidle.domain.LocationFact;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -22,7 +22,7 @@ import static org.unidle.test.Conditions.hasTaskDurationTimeUnit;
 import static org.unidle.test.Conditions.hasTaskPeople;
 import static org.unidle.test.Conditions.hasTaskTimeUnit;
 
-@ContextConfiguration(classes = RootContextConfiguration.class)
+@ContextConfiguration(classes = RootConfiguration.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 public class LocationFactServiceImplTest {

@@ -54,7 +54,7 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "org.unidle.repository")
 @EnableTransactionManagement
 @PropertySource("classpath:unidle.properties")
-public class RootContextConfiguration {
+public class RootConfiguration {
 
     @Value("${unidle.dataSource.driverClass}")
     private String dataSourceDriverClass;

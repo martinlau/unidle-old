@@ -9,14 +9,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.unidle.config.RootContextConfiguration;
+import org.unidle.config.RootConfiguration;
 import org.unidle.config.SocialConfiguration;
 import org.unidle.domain.User;
 import org.unidle.repository.UserRepository;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-@ContextHierarchy({@ContextConfiguration(classes = RootContextConfiguration.class),
+@ContextHierarchy({@ContextConfiguration(classes = RootConfiguration.class),
                    @ContextConfiguration(classes = SocialConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
