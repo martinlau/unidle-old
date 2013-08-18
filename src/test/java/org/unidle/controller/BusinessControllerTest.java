@@ -38,7 +38,7 @@ public class BusinessControllerTest {
     public void testBusiness() throws Exception {
         subject.perform(get("/business"))
                .andExpect(status().isOk())
-               .andExpect(view().name(".static.business"));
+               .andExpect(view().name(".business.index"));
     }
 
 }

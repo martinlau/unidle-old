@@ -20,7 +20,7 @@ public class HomeController {
 
     @RequestMapping("/")
     public String home() {
-        return ".static.home";
+        return ".home.index";
     }
 
     @ModelAttribute("locationFact")

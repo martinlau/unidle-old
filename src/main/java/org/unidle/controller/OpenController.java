@@ -8,7 +8,7 @@ public class OpenController {
 
     @RequestMapping("/open")
     public String open() {
-        return ".static.open";
+        return ".open.index";
     }
 
 }

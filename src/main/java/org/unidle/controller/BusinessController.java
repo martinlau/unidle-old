@@ -8,7 +8,7 @@ public class BusinessController {
 
     @RequestMapping("/business")
     public String business() {
-        return ".static.business";
+        return ".business.index";
     }
 
 }

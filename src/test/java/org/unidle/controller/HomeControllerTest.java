@@ -40,7 +40,7 @@ public class HomeControllerTest {
     public void testHome() throws Exception {
         subject.perform(get("/").with(remoteAddr("203.27.21.6")))
                .andExpect(status().isOk())
-               .andExpect(view().name(".static.home"))
+               .andExpect(view().name(".home.index"))
                .andExpect(model().attributeExists("locationFact"));
     }
 
