@@ -4,23 +4,14 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="000-hibernate_sequence"
+    <changeSet id="000 hibernate_sequence"
                author="Martin Lau [m@hum.ph]">
 
         <createSequence sequenceName="hibernate_sequence"/>
 
     </changeSet>
 
-    <!--<changeSet id="001-location_facts_id_seq"-->
-               <!--author="Martin Lau [m@hum.ph]">-->
-
-        <!--<createSequence sequenceName="location_facts_id_seq"-->
-                        <!--startValue="1"-->
-                        <!--incrementBy="1"/>-->
-
-    <!--</changeSet>-->
-
-    <changeSet id="002-location_facts"
+    <changeSet id="001 location_facts"
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="location_facts">
@@ -116,7 +107,7 @@
 
     </changeSet>
 
-    <changeSet id="003-location_facts-data"
+    <changeSet id="002 location_facts data"
                author="Martin Lau [m@hum.ph]">
 
         <loadData tableName="location_facts"
@@ -124,16 +115,7 @@
 
     </changeSet>
 
-    <!--<changeSet id="004-users_id_seq"-->
-               <!--author="Martin Lau [m@hum.ph]">-->
-
-        <!--<createSequence sequenceName="users_id_seq"-->
-                        <!--startValue="1"-->
-                        <!--incrementBy="1"/>-->
-
-    <!--</changeSet>-->
-
-    <changeSet id="005-users"
+    <changeSet id="003 users"
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="users">
@@ -163,16 +145,7 @@
 
     </changeSet>
 
-    <!--<changeSet id="006-user_connections_seq"-->
-               <!--author="Martin Lau [m@hum.ph]">-->
-
-        <!--<createSequence sequenceName="user_connections_id_seq"-->
-                        <!--startValue="1"-->
-                        <!--incrementBy="1"/>-->
-
-    <!--</changeSet>-->
-
-    <changeSet id="007-user_connections"
+    <changeSet id="004 user_connections"
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="user_connections">
