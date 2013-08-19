@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-public class BusinessControllerTest {
+public class CommercialControllerTest {
 
     private MockMvc subject;
 
@@ -35,10 +35,10 @@ public class BusinessControllerTest {
     }
 
     @Test
-    public void testBusiness() throws Exception {
-        subject.perform(get("/business"))
+    public void testCommercial() throws Exception {
+        subject.perform(get("/commercial"))
                .andExpect(status().isOk())
-               .andExpect(view().name(".business.index"));
+               .andExpect(view().name(".commercial.index"));
     }
 
 }

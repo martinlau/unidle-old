@@ -1,5 +1,7 @@
 package org.unidle.domain;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.AttributeOverride;
@@ -16,24 +18,25 @@ import static java.lang.String.format;
 @Table(name = "users")
 public class User extends AbstractPersistable<Long> {
 
-    @Column(name = "email")
+    @Column(name = "email",
+            nullable = false)
+    @Email
+    @NotEmpty
     private String email;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name",
+            nullable = false)
+    @NotEmpty
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name",
+            nullable = false)
+    @NotEmpty
     private String lastName;
-
-    @Column(name = "name")
-    private String name;
 
     @Column(name = "revision")
     @Version
     private Integer revision;
-
-    @Column(name = "username")
-    private String username;
 
     public String getEmail() {
         return email;
@@ -59,14 +62,6 @@ public class User extends AbstractPersistable<Long> {
         this.lastName = lastName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
     public Integer getRevision() {
         return revision;
     }
@@ -75,23 +70,13 @@ public class User extends AbstractPersistable<Long> {
         this.revision = revision;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(final String username) {
-        this.username = username;
-    }
-
     @Override
     public String toString() {
-        return format("User(email='%s', firstName='%s', lastName='%s', name='%s', revision=%d, username='%s')",
+        return format("User(email='%s', firstName='%s', lastName='%s', revision=%d)",
                       email,
                       firstName,
                       lastName,
-                      name,
-                      revision,
-                      username);
+                      revision);
     }
 
 }

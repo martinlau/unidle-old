@@ -2,14 +2,12 @@
     "use strict";
 
     var submitForm = function (e) {
+        var action = $(this).data('form-action'),
+            $form  = $(this).parent("form");
+
         e.preventDefault();
 
-        var formId = $(this).data('form-id');
-        if ('#' !== formId.charAt(0)) {
-            formId = '#' + formId;
-        }
-
-        $(formId).submit();
+        $form.attr('action', action).submit();
     };
 
     $('body').on('click', '.form-submit', submitForm);

@@ -5,42 +5,36 @@
           xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
           version="2.0">
 
-    <div class="row">
-        <div class="small-12 columns">
+    <h3 class="subheader text-center">
+        <spring:message code="home.header" />
+    </h3>
 
-            <h3 class="subheader text-center">
-                <spring:message code="home.header" />
-            </h3>
-
-            <p>
-                <spring:message code="${locationFact.taskTimeUnit.messageKey}" var="taskTimeUnit" />
-                <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}.plural" var="taskDurationTimeUnit" />
-                <spring:message code="${locationFact.taskCode}" var="taskCode" />
-                <spring:message code="home.fact" arguments="${taskTimeUnit}|
+    <p>
+        <spring:message code="${locationFact.taskTimeUnit.messageKey}" var="taskTimeUnit" />
+        <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}.plural" var="taskDurationTimeUnit" />
+        <spring:message code="${locationFact.taskCode}" var="taskCode" />
+        <spring:message code="home.fact" arguments="${taskTimeUnit}|
                                                             ${locationFact.location}|
                                                             ${locationFact.taskPeople}|
                                                             ${locationFact.taskDuration}|
                                                             ${taskDurationTimeUnit}|
-                                                            ${taskCode}" argumentSeparator="|"/>
+                                                            ${taskCode}" argumentSeparator="|" />
 
-               (<span data-tooltip="" class="has-tip" title="${locationFact.source}">source</span>).
-            </p>
+        (<span data-tooltip="" class="has-tip" title="${locationFact.source}">source</span>).
+    </p>
 
-            <p>
-                <spring:message code="${locationFact.summaryDurationTimeUnit.messageKey}.plural" var="summaryDurationUnit" />
-                <spring:message code="home.summary" arguments="${locationFact.summaryDuration}|${summaryDurationUnit}" argumentSeparator="|" />
-            </p>
+    <p>
+        <spring:message code="${locationFact.summaryDurationTimeUnit.messageKey}.plural" var="summaryDurationUnit" />
+        <spring:message code="home.summary" arguments="${locationFact.summaryDuration}|${summaryDurationUnit}" argumentSeparator="|" />
+    </p>
 
-            <p>
-                <spring:url value="/about" var="about" />
-                <a href="${about}">
-                    <spring:message code="common.content.about" />
-                </a>
-            </p>
+    <p>
+        <spring:url value="/about" var="about" />
+        <a href="${about}">
+            <spring:message code="common.content.about" />
+        </a>
+    </p>
 
-            <tags:sign-in-buttons/>
-
-        </div>
-    </div>
+    <tags:sign-in-buttons />
 
 </jsp:root>

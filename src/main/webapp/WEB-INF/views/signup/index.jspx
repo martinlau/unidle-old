@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:form="http://www.springframework.org/tags/form"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:spring="http://www.springframework.org/tags"
+          version="2.0">
+
+    <h3 class="subheader text-center">
+        <spring:message code="signup.header" />
+    </h3>
+
+    <p>
+        <spring:message code="signup.introduction" />
+    </p>
+
+    <form:form action="" modelAttribute="signupForm">
+
+        <p>
+            <form:label path="firstName" cssErrorClass="error">
+                <spring:message code="signup.form.firstName.label" />
+            </form:label>
+            <spring:message code="signup.form.firstName.placeholder" var="firstNamePlaceholder" />
+            <form:input type="text" path="firstName" placeholder="${firstNamePlaceholder}" cssErrorClass="error" />
+            <form:errors cssClass="error" element="small" path="firstName" />
+        </p>
+
+        <p>
+            <form:label path="lastName" cssErrorClass="error">
+                <spring:message code="signup.form.lastName.label" />
+            </form:label>
+            <spring:message code="signup.form.lastName.placeholder" var="lastNamePlaceholder" />
+            <form:input type="text" path="lastName" placeholder="${lastNamePlaceholder}" cssErrorClass="error" />
+            <form:errors cssClass="error" element="small" path="lastName" />
+        </p>
+
+        <p>
+            <form:label path="email" cssErrorClass="error">
+                <spring:message code="signup.form.email.label" />
+            </form:label>
+            <spring:message code="signup.form.email.placeholder" var="emailPlaceholder" />
+            <form:input type="email" path="email" placeholder="${emailPlaceholder}" cssErrorClass="error" />
+            <form:errors cssClass="error" element="small" path="email" />
+        </p>
+
+        <p>
+            <spring:url var="terms" value="/terms" />
+            <spring:message code="signup.form.acceptTerms.label" arguments="${terms}" />
+        </p>
+
+        <p class="text-center">
+            <form:button type="submit" class="button">
+                <spring:message code="singup.form.submit" />
+            </form:button>
+        </p>
+
+    </form:form>
+
+</jsp:root>

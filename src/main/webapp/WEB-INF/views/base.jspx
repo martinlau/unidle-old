@@ -38,7 +38,11 @@
 
     <body>
 
-        <tiles:insertAttribute name="content" />
+        <div class="row">
+            <div class="small-12 columns">
+                <tiles:insertAttribute name="content" />
+            </div>
+        </div>
 
         <!-- TODO include Zepto -->
         <spring:url value="/resources/jquery.js?t=${buildTimestamp}" var="jquery_js" />

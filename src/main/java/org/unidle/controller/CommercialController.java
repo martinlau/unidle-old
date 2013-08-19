@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class BusinessController {
+public class CommercialController {
 
-    @RequestMapping("/business")
-    public String business() {
-        return ".business.index";
+    @RequestMapping("/commercial")
+    public String commercial() {
+        return ".commercial.index";
     }
 
 }

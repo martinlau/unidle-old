@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.connect.UserProfile;
-import org.springframework.social.connect.UserProfileBuilder;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
@@ -48,11 +46,16 @@ public class UsersConnectionRepositoryImplTest {
 
     @Before
     public void setUp() throws Exception {
-        user = userRepository.save(new User());
+        user = new User();
+        user.setEmail("email@example.com");
+        user.setFirstName("first name");
+        user.setLastName("last name");
+
+        userRepository.save(user);
 
         final UserConnection userConnection = new UserConnection();
         userConnection.setAccessToken("access token");
-        userConnection.setUser(user);
+        userConnection.setUser(this.user);
         userConnection.setProviderId("twitter");
         userConnection.setProviderUserId("twitter_1");
 
@@ -97,30 +100,6 @@ public class UsersConnectionRepositoryImplTest {
         final List<String> result = subject.findUserIdsWithConnection(connection);
 
         assertThat(result).containsExactly(user.getId().toString());
-    }
-
-    @Test
-    public void testFindUserIdsWithConnectionWithConnectionSignup() throws Exception {
-        final UserProfile userProfile = new UserProfileBuilder().setEmail("email@example.com")
-                                                                .setFirstName("first name")
-                                                                .setLastName("last name")
-                                                                .setName("name")
-                                                                .setUsername("username")
-                                                                .build();
-        final ConnectionData connectionData = new ConnectionData("twitter",
-                                                                 "twitter_2",
-                                                                 null,
-                                                                 null,
-                                                                 null,
-                                                                 "access token",
-                                                                 null,
-                                                                 null,
-                                                                 null);
-        final Connection<?> connection = new ConnectionStub(connectionData, userProfile);
-
-        final List<String> result = subject.findUserIdsWithConnection(connection);
-
-        assertThat(result).containsExactly(String.valueOf(user.getId() + 1));
     }
 
 }

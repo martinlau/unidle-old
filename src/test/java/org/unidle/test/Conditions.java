@@ -38,6 +38,24 @@ public class Conditions {
         };
     }
 
+    public static Condition<Object> hasConnectionKeyProviderId(final String providerId) {
+        return new Condition<Object>(format("has connection key provider id: %s", providerId)) {
+            @Override
+            public boolean matches(final Object value) {
+                return providerId.equals(getField(getField(value, "key"), "providerId"));
+            }
+        };
+    }
+
+    public static Condition<Object> hasConnectionKeyProviderUserId(final String providerUserId) {
+        return new Condition<Object>(format("has connection key provider user id: %s", providerUserId)) {
+            @Override
+            public boolean matches(final Object value) {
+                return providerUserId.equals(getField(getField(value, "key"), "providerUserId"));
+            }
+        };
+    }
+
     public static Condition<Object> hasContinent(final String continent) {
         return new Condition<Object>(format("has continent: %s", continent)) {
             @Override
@@ -65,6 +83,15 @@ public class Conditions {
         };
     }
 
+    public static Condition<Object> hasEmail(final String email) {
+        return new Condition<Object>(format("has email: %s", email)) {
+            @Override
+            public boolean matches(final Object value) {
+                return email.equals(getField(value, "email"));
+            }
+        };
+    }
+
     public static Condition<Object> hasExpireTime(final Long expireTime) {
         return new Condition<Object>(format("has expire time: %s", expireTime)) {
             @Override
@@ -74,11 +101,29 @@ public class Conditions {
         };
     }
 
+    public static Condition<Object> hasFirstName(final String firstName) {
+        return new Condition<Object>(format("has first name: %s", firstName)) {
+            @Override
+            public boolean matches(final Object value) {
+                return firstName.equals(getField(value, "firstName"));
+            }
+        };
+    }
+
     public static Condition<Object> hasImageUrl(final String imageUrl) {
         return new Condition<Object>(format("has image url: %s", imageUrl)) {
             @Override
             public boolean matches(final Object value) {
                 return imageUrl.equals(getField(value, "imageUrl"));
+            }
+        };
+    }
+
+    public static Condition<Object> hasLastName(final String lastName) {
+        return new Condition<Object>(format("has last name: %s", lastName)) {
+            @Override
+            public boolean matches(final Object value) {
+                return lastName.equals(getField(value, "lastName"));
             }
         };
     }
@@ -110,20 +155,11 @@ public class Conditions {
         };
     }
 
-    public static Condition<Object> hasConnectionKeyProviderUserId(final String providerUserId) {
-        return new Condition<Object>(format("has connection key provider user id: %s", providerUserId)) {
+    public static Condition<Object> hasRank(final Integer rank) {
+        return new Condition<Object>(format("has rank: %d", rank)) {
             @Override
             public boolean matches(final Object value) {
-                return providerUserId.equals(getField(getField(value, "key"), "providerUserId"));
-            }
-        };
-    }
-
-    public static Condition<Object> hasConnectionKeyProviderId(final String providerId) {
-        return new Condition<Object>(format("has connection key provider id: %s", providerId)) {
-            @Override
-            public boolean matches(final Object value) {
-                return providerId.equals(getField(getField(value, "key"), "providerId"));
+                return rank.equals(getField(value, "rank"));
             }
         };
     }
@@ -232,15 +268,6 @@ public class Conditions {
             @Override
             public boolean matches(final Object value) {
                 return user.equals(getField(value, "user"));
-            }
-        };
-    }
-
-    public static Condition<Object> hasRank(final Integer rank) {
-        return new Condition<Object>(format("has rank: %d", rank)) {
-            @Override
-            public boolean matches(final Object value) {
-                return rank.equals(getField(value, "rank"));
             }
         };
     }

@@ -5,50 +5,44 @@
           xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
           version="2.0">
 
-    <div class="row">
-        <div class="small-12 columns">
+    <h3 class="subheader text-center">
+        <spring:message code="about.header" />
+    </h3>
 
-            <h3 class="subheader text-center">
-                <spring:message code="about.header" />
-            </h3>
+    <p>
+        <spring:message code="about.content.platform" />
+    </p>
 
-            <p>
-                <spring:message code="about.content.platform" />
-            </p>
+    <p>
+        <spring:message code="about.content.usage" />
+    </p>
 
-            <p>
-                <spring:message code="about.content.usage" />
-            </p>
+    <p>
+        <spring:url var="commercial" value="/commercial" />
+        <a href="${commercial}">
+            <spring:message code="about.content.commercial" />
+        </a>
+    </p>
 
-            <p>
-                <spring:url var="business" value="/business" />
-                <a href="${business}">
-                    <spring:message code="about.content.business" />
-                </a>
-            </p>
+    <p>
+        <spring:message code="about.content.license" />
+    </p>
 
-            <p>
-                <spring:message code="about.content.license" />
-            </p>
+    <p>
+        <spring:message code="about.content.open" />
+    </p>
 
-            <p>
-                <spring:message code="about.content.open" />
-            </p>
+    <p>
+        <spring:url var="open" value="/open" />
+        <a href="${open}">
+            <spring:message code="about.content.open.link" />
+        </a>
+    </p>
 
-            <p>
-                <spring:url var="opensource" value="/open" />
-                <a href="${opensource}">
-                    <spring:message code="about.content.open.link" />
-                </a>
-            </p>
+    <p>
+        <spring:message code="about.content.not-evil" />
+    </p>
 
-            <p>
-                <spring:message code="about.content.not-evil" />
-            </p>
-
-            <tags:sign-in-buttons />
-
-        </div>
-    </div>
+    <tags:sign-in-buttons />
 
 </jsp:root>

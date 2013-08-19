@@ -1,5 +1,6 @@
 package org.unidle.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.AttributeOverride;
@@ -10,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 
 import static java.lang.String.format;
 
@@ -22,6 +24,7 @@ public class UserConnection extends AbstractPersistable<Long> {
 
     @Column(name = "access_token",
             nullable = false)
+    @NotEmpty
     private String accessToken;
 
     @Column(name = "display_name")
@@ -38,6 +41,7 @@ public class UserConnection extends AbstractPersistable<Long> {
 
     @Column(name = "provider_id",
             nullable = false)
+    @NotEmpty
     private String providerId;
 
     @Column(name = "provider_user_id")
@@ -59,6 +63,7 @@ public class UserConnection extends AbstractPersistable<Long> {
     @JoinColumn(name = "user_id",
                 nullable = false)
     @ManyToOne(optional = false)
+    @NotNull
     private User user;
 
     public String getAccessToken() {

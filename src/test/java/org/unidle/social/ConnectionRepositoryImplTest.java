@@ -61,7 +61,12 @@ public class ConnectionRepositoryImplTest {
 
     @Before
     public void setUp() throws Exception {
-        user = userRepository.save(new User());
+        user = new User();
+        user.setEmail("email@example.com");
+        user.setFirstName("first name");
+        user.setLastName("last name");
+
+        userRepository.save(user);
 
         userConnection1 = new UserConnection();
         userConnection1.setAccessToken("access token 1");
@@ -69,6 +74,7 @@ public class ConnectionRepositoryImplTest {
         userConnection1.setProviderUserId("provider user id 1");
         userConnection1.setRank(1);
         userConnection1.setUser(user);
+
         userConnectionRepository.save(userConnection1);
 
         userConnection2 = new UserConnection();
@@ -77,6 +83,7 @@ public class ConnectionRepositoryImplTest {
         userConnection2.setProviderUserId("provider user id 2");
         userConnection2.setRank(2);
         userConnection2.setUser(user);
+
         userConnectionRepository.save(userConnection2);
 
         subject = connectionRepositoryFactory.getConnectionRepository(user.getId().toString());

@@ -6,15 +6,19 @@
           version="2.0">
 
     <h3 class="subheader text-center">
-        <spring:message code="open.header" />
+        <spring:message code="commercial.header" />
     </h3>
 
     <p>
-        <spring:message code="open.content.sponsor" />
+        <spring:message code="commercial.content.introduction" />
     </p>
 
     <p>
-        <spring:message code="open.content.github" />
+        <spring:message code="commercial.content.pricing" />
+    </p>
+
+    <p>
+        <spring:message code="commercial.content.contact" />
     </p>
 
     <tags:sign-in-buttons />

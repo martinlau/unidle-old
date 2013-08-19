@@ -1,5 +1,7 @@
 package org.unidle.config;
 
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -28,11 +30,19 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
         servletContext.setSessionTrackingModes(EnumSet.of(COOKIE));
 
+        servletContext.addFilter("openEntityManagerInView", OpenEntityManagerInViewFilter.class)
+                      .addMappingForUrlPatterns(null, false, "/*");
+
+        servletContext.addFilter("springSecurityFilterChain", SecurityContextPersistenceFilter.class)
+                      .addMappingForUrlPatterns(null, false, "/*");
+
         final DelegatingFilterProxy wroFilter = servletContext.createFilter(DelegatingFilterProxy.class);
         wroFilter.setTargetFilterLifecycle(true);
+        wroFilter.setBeanName("wroFilter    ");
 
         servletContext.addFilter("wroFilter", wroFilter)
                       .addMappingForUrlPatterns(null, false, "/resources/*");
+
     }
 
     @Override

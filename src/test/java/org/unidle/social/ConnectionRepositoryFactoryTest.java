@@ -32,7 +32,12 @@ public class ConnectionRepositoryFactoryTest {
 
     @Before
     public void setUp() throws Exception {
-        userId = userRepository.save(new User())
+        final User user = new User();
+        user.setEmail("email@example.com");
+        user.setFirstName("first name");
+        user.setLastName("last name");
+
+        userId = userRepository.save(user)
                                .getId()
                                .toString();
     }

@@ -27,6 +27,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.util.ClassUtils;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.unidle.cache.SpringCacheCacheStrategy;
@@ -43,6 +44,7 @@ import ro.isdc.wro.model.resource.processor.factory.ConfigurableProcessorsFactor
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import javax.validation.Validator;
 import java.sql.Driver;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -207,17 +209,6 @@ public class RootConfiguration {
     }
 
     @Bean
-    public MessageSource messageSource() {
-        final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-
-        messageSource.setDefaultEncoding(messageSourceEncoding);
-        messageSource.setBasename(messageSourceBaseName);
-        messageSource.setCacheSeconds(messageSourceCacheSeconds);
-
-        return messageSource;
-    }
-
-    @Bean
     public SpringLiquibase springLiquibase() {
 
         @SuppressWarnings("unchecked")
@@ -246,6 +237,26 @@ public class RootConfiguration {
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 
         return transactionManager;
+    }
+
+    @Bean
+    public Validator validator() {
+        final LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
+
+        localValidatorFactoryBean.setValidationMessageSource(messageSource());
+
+        return localValidatorFactoryBean;
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        final ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+
+        messageSource.setDefaultEncoding(messageSourceEncoding);
+        messageSource.setBasename(messageSourceBaseName);
+        messageSource.setCacheSeconds(messageSourceCacheSeconds);
+
+        return messageSource;
     }
 
     @Bean

@@ -3,34 +3,22 @@
           xmlns:spring="http://www.springframework.org/tags"
           version="2.0">
 
-    <p class="text-center">
-        <spring:message code="common.content.sign-in.tip" var="sign_up_tip" />
-        <span data-tooltip="" class="has-tip" title="${sign_up_tip}">
-            <spring:message code="common.content.sign-in" />
-        </span>
-    </p>
+    <form method="post" action="">
 
-    <div class="row">
-        <div class="small-centered small-9 columns">
-            <div class="row">
-                <div class="small-6 columns">
-                    <spring:url value="/signin/twitter" var="twitter" />
-                    <form id="twitter" method="post" action="${twitter}">
-                        <a href="#" class="button expand form-submit" data-form-id="twitter" title="Twitter">
-                            <i class="icon-large icon-twitter"><!-- no collapse --></i>
-                        </a>
-                    </form>
-                </div>
-                <div class="small-6 columns">
-                    <spring:url value="/signin/facebook" var="facebook" />
-                    <form id="facebook" method="post" action="${facebook}">
-                        <a href="#" class="button expand form-submit" data-form-id="facebook" title="Facebook">
-                            <i class="icon-large icon-facebook"><!-- no collapse --></i>
-                        </a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+        <spring:url value="/signin/facebook" var="facebook" />
+        <a href="#" class="button expand radius form-submit" data-form-action="${facebook}" title="Facebook">
+            <i class="icon-large icon-fixed-width icon-facebook"><!-- no collapse --></i>
+            &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+            <spring:message code="common.content.signin.facebook" />
+        </a>
+
+        <spring:url value="/signin/twitter" var="twitter" />
+        <a href="#" class="button expand radius form-submit" data-form-action="${twitter}" title="Twitter">
+            <i class="icon-large icon-fixed-width icon-twitter"><!-- no collapse --></i>
+            &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+            <spring:message code="common.content.signin.twitter" />
+        </a>
+
+    </form>
 
 </jsp:root>

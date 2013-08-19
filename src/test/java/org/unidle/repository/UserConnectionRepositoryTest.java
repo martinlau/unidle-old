@@ -45,16 +45,26 @@ public class UserConnectionRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        user1 = userRepository.save(new User());
+        user1 = new User();
+        user1.setEmail("email-1@example.com");
+        user1.setFirstName("first name 1");
+        user1.setLastName("last name 1");
 
-        user2 = userRepository.save(new User());
+        userRepository.save(user1);
+
+        user2 = new User();
+        user2.setEmail("email-2@example.com");
+        user2.setFirstName("first name 2");
+        user2.setLastName("last name 2");
+
+        user2 = userRepository.save(user2);
 
         userConnection1 = new UserConnection();
         userConnection1.setAccessToken("access token");
         userConnection1.setProviderId("provider id 1");
         userConnection1.setProviderUserId("provider user id 1");
         userConnection1.setRank(1);
-        userConnection1.setUser(user1);
+        userConnection1.setUser(this.user1);
 
         subject.save(userConnection1);
 
@@ -63,7 +73,7 @@ public class UserConnectionRepositoryTest {
         userConnection2.setProviderId("provider id 1");
         userConnection2.setProviderUserId("provider user id 2");
         userConnection2.setRank(2);
-        userConnection2.setUser(user1);
+        userConnection2.setUser(this.user1);
 
         subject.save(userConnection2);
 
