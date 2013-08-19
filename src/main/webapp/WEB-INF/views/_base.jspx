@@ -52,7 +52,6 @@
 
           ga('create', '${googleAnalyticsId}', 'unidle.org');
           ga('send', 'pageview');
-
         </script>
 
         <!-- TODO include Zepto -->

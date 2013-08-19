@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.unidle.config.MvcConfiguration;
@@ -36,11 +37,25 @@ public class GoogleAnalyticsIdInterceptorTest {
     }
 
     @Test
-    public void testPostHandle() throws Exception {
-        subject.postHandle(null, null, null, modelAndView);
+    public void testPostHandleWithHandlerMethodWithCorrectBean() throws Exception {
+        subject.postHandle(null, null, new HandlerMethod(this, "toString"), modelAndView);
 
         assertThat(modelAndView.getModel())
                 .satisfies(containsKey((GOOGLE_ANALYTICS_ID)));
+    }
+
+    @Test
+    public void testPostHandleWithHandlerMethodWithWrongBean() throws Exception {
+        subject.postHandle(null, null, new HandlerMethod(new Object(), "toString"), modelAndView);
+
+        assertThat(modelAndView.getModel()).isEmpty();
+    }
+
+    @Test
+    public void testPostHandleWithoutHandlerMethod() throws Exception {
+        subject.postHandle(null, null, null, modelAndView);
+
+        assertThat(modelAndView.getModel()).isEmpty();
     }
 
 }
