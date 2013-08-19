@@ -20,12 +20,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-public class SignupController {
+public class SignController {
 
     private final UserService userService;
 
     @Autowired
-    public SignupController(final UserService userService) {
+    public SignController(final UserService userService) {
         this.userService = userService;
     }
 
