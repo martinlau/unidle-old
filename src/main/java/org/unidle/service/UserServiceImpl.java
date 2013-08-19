@@ -1,6 +1,7 @@
 package org.unidle.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.unidle.domain.User;
@@ -28,6 +29,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @Cacheable(value = "org.unidle.service.UserService",
+               unless = "#result == false")
     @Override
     @Transactional(readOnly = true)
     public boolean exists(final String email) {

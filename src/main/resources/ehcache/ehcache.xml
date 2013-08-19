@@ -26,14 +26,32 @@
            memoryStoreEvictionPolicy="LRU"
            overflowToDisk="true"/>
 
+    <cache name="org.unidle.service.LocationFactService"
+           diskPersistent="false"
+           eternal="false"
+           maxElementsInMemory="2048"
+           memoryStoreEvictionPolicy="LRU"
+           overflowToDisk="false"
+           timeToIdleSeconds="240"
+           timeToLiveSeconds="480"/>
+
     <cache name="org.unidle.service.LocationService"
-            diskPersistent="false"
-            eternal="false"
-            maxElementsInMemory="2048"
-            memoryStoreEvictionPolicy="LRU"
-            overflowToDisk="false"
-            timeToIdleSeconds="240"
-            timeToLiveSeconds="480"/>
+           diskPersistent="false"
+           eternal="false"
+           maxElementsInMemory="2048"
+           memoryStoreEvictionPolicy="LRU"
+           overflowToDisk="false"
+           timeToIdleSeconds="240"
+           timeToLiveSeconds="480"/>
+
+    <cache name="org.unidle.service.UserService"
+           diskPersistent="false"
+           eternal="false"
+           maxElementsInMemory="2048"
+           memoryStoreEvictionPolicy="LRU"
+           overflowToDisk="false"
+           timeToIdleSeconds="240"
+           timeToLiveSeconds="480"/>
 
     <cache name="org.unidle.domain.LocationFact"
            diskPersistent="false"

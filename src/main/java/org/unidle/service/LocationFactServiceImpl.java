@@ -1,6 +1,7 @@
 package org.unidle.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.unidle.domain.LocationFact;
@@ -16,6 +17,7 @@ public class LocationFactServiceImpl implements LocationFactService {
         this.locationFactRepository = locationFactRepository;
     }
 
+    @Cacheable("org.unidle.service.LocationFactService")
     @Override
     @Transactional(readOnly = true)
     public LocationFact findBestFact(final String city,
