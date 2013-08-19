@@ -7,8 +7,12 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+
+import java.util.List;
+import java.util.Map;
 
 import static java.lang.String.format;
 
@@ -37,6 +41,9 @@ public class User extends AbstractPersistable<Long> {
     @Column(name = "revision")
     @Version
     private Integer revision;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserConnection> connections;
 
     public String getEmail() {
         return email;
