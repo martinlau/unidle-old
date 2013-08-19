@@ -16,13 +16,13 @@ import org.unidle.config.RootConfiguration;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.unidle.test.Conditions.containsKey;
-import static org.unidle.web.AnalyticsIdInterceptor.GOOGLE_ANALYTICS_ID;
+import static org.unidle.web.GoogleAnalyticsIdInterceptor.GOOGLE_ANALYTICS_ID;
 
 @ContextHierarchy({@ContextConfiguration(classes = RootConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-public class AnalyticsIdInterceptorTest {
+public class GoogleAnalyticsIdInterceptorTest {
 
     private ModelAndView modelAndView;
 

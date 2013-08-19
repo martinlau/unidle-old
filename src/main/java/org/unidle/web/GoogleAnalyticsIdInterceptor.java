@@ -8,13 +8,13 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AnalyticsIdInterceptor extends HandlerInterceptorAdapter {
+public class GoogleAnalyticsIdInterceptor extends HandlerInterceptorAdapter {
 
     public static final String GOOGLE_ANALYTICS_ID = "googleAnalyticsId";
 
     private final String googleAnalyticsId;
 
-    public AnalyticsIdInterceptor(final String googleAnalyticsId) {
+    public GoogleAnalyticsIdInterceptor(final String googleAnalyticsId) {
         this.googleAnalyticsId = googleAnalyticsId;
     }
 
