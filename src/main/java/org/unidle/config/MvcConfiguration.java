@@ -19,8 +19,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.unidle.service.LocationService;
+import org.unidle.web.AnalyticsIdInterceptor;
 import org.unidle.web.BuildTimestampInterceptor;
-import org.unidle.web.GoogleAnalyticsIdInterceptor;
 import org.unidle.web.LocationHandlerMethodArgumentResolver;
 
 import java.util.List;
@@ -77,7 +77,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
     public HandlerInterceptor googleAnalyticsIdInterceptor() {
-        return new GoogleAnalyticsIdInterceptor(googleAnalyticsId);
+        return new AnalyticsIdInterceptor(googleAnalyticsId);
     }
 
     @Override
