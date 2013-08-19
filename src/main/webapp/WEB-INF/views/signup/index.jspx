@@ -47,8 +47,8 @@
             <spring:message code="signup.form.acceptTerms.label" arguments="${terms}" />
         </p>
 
-        <p class="text-center">
-            <form:button type="submit" class="button">
+        <p>
+            <form:button type="submit" class="button expand radius">
                 <spring:message code="singup.form.submit" />
             </form:button>
         </p>
