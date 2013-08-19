@@ -1,13 +1,9 @@
 package org.unidle.domain;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
-import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import java.io.Serializable;
 
 import static java.lang.String.format;
@@ -15,11 +11,9 @@ import static javax.persistence.EnumType.STRING;
 import static org.springframework.util.StringUtils.hasText;
 import static org.unidle.domain.LocationFact.TimeUnit.UNKNOWN;
 
-@AttributeOverride(column = @Column(name = "id", nullable = false),
-                   name = "id")
 @Entity
 @Table(name = "location_facts")
-public class LocationFact extends AbstractPersistable<Long> implements Serializable {
+public class LocationFact extends BaseEntity implements Serializable {
 
     @Column(name = "city",
             nullable = false)
@@ -32,10 +26,6 @@ public class LocationFact extends AbstractPersistable<Long> implements Serializa
     @Column(name = "country",
             nullable = false)
     private String country = "";
-
-    @Column(name = "revision")
-    @Version
-    private Integer revision;
 
     @Column(name = "source",
             nullable = false)
@@ -106,14 +96,6 @@ public class LocationFact extends AbstractPersistable<Long> implements Serializa
                                                     : hasText(country) ? country
                                                                        : hasText(continent) ? continent
                                                                                             : null;
-    }
-
-    public Integer getRevision() {
-        return revision;
-    }
-
-    public void setRevision(final Integer revision) {
-        this.revision = revision;
     }
 
     public String getSource() {
@@ -191,11 +173,10 @@ public class LocationFact extends AbstractPersistable<Long> implements Serializa
     @Override
     public String toString() {
         return format(
-                "LocationFact(city='%s', continent='%s', country='%s', revision=%d, source='%s', subdivision='%s', summaryDuration=%d, summaryDurationTimeUnit=%s, taskCode='%s', taskDuration=%d, taskDurationTimeUnit=%s, taskPeople=%d, taskTimeUnit=%s)",
+                "LocationFact(city='%s', continent='%s', country='%s', source='%s', subdivision='%s', summaryDuration=%d, summaryDurationTimeUnit=%s, taskCode='%s', taskDuration=%d, taskDurationTimeUnit=%s, taskPeople=%d, taskTimeUnit=%s)",
                 city,
                 continent,
                 country,
-                revision,
                 source,
                 subdivision,
                 summaryDuration,

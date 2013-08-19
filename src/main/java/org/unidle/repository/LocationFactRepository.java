@@ -6,7 +6,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import org.unidle.domain.LocationFact;
 
-public interface LocationFactRepository extends JpaRepository<LocationFact, Long> {
+import java.util.UUID;
+
+public interface LocationFactRepository extends JpaRepository<LocationFact, UUID> {
 
     @Query("SELECT lf FROM LocationFact lf WHERE lf.city = :city AND lf.subdivision = :subdivision AND lf.country = :country AND lf.continent = :continent")
     @Transactional(readOnly = true)

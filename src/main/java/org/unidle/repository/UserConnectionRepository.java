@@ -9,8 +9,9 @@ import org.unidle.domain.UserConnection;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
-public interface UserConnectionRepository extends JpaRepository<UserConnection, Long> {
+public interface UserConnectionRepository extends JpaRepository<UserConnection, UUID> {
 
     @Query("DELETE FROM UserConnection uc WHERE uc.user = :user AND uc.providerId = :providerId AND uc.providerUserId = :providerUserId")
     @Modifying

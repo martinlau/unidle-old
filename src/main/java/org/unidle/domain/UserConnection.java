@@ -1,26 +1,21 @@
 package org.unidle.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import static java.lang.String.format;
 
-@AttributeOverride(column = @Column(name = "id", nullable = false),
-                   name = "id")
 @Entity
 @Table(name = "user_connections",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "provider_id", "provider_user_id"}))
-public class UserConnection extends AbstractPersistable<Long> {
+       uniqueConstraints = @UniqueConstraint(columnNames = {"user_uuid", "provider_id", "provider_user_id"}))
+public class UserConnection extends BaseEntity {
 
     @Column(name = "access_token",
             nullable = false)
@@ -53,14 +48,10 @@ public class UserConnection extends AbstractPersistable<Long> {
     @Column(name = "refresh_token")
     private String refreshToken;
 
-    @Column(name = "revision")
-    @Version
-    private Integer revision;
-
     @Column(name = "secret")
     private String secret;
 
-    @JoinColumn(name = "user_id",
+    @JoinColumn(name = "user_uuid",
                 nullable = false)
     @ManyToOne(optional = false)
     @NotNull
@@ -138,14 +129,6 @@ public class UserConnection extends AbstractPersistable<Long> {
         this.refreshToken = refreshToken;
     }
 
-    public Integer getRevision() {
-        return revision;
-    }
-
-    public void setRevision(final Integer revision) {
-        this.revision = revision;
-    }
-
     public String getSecret() {
         return secret;
     }
@@ -165,7 +148,7 @@ public class UserConnection extends AbstractPersistable<Long> {
     @Override
     public String toString() {
         return format(
-                "UserConnection(accessToken='%s', displayName='%s', expireTime=%d, imageUrl='%s', profileUrl='%s', providerId='%s', providerUserId='%s', rank=%d, refreshToken='%s', revision=%d, secret='%s', user=%s)",
+                "UserConnection(accessToken='%s', displayName='%s', expireTime=%d, imageUrl='%s', profileUrl='%s', providerId='%s', providerUserId='%s', rank=%d, refreshToken='%s', secret='%s', user=%s)",
                 accessToken,
                 displayName,
                 expireTime,
@@ -175,7 +158,6 @@ public class UserConnection extends AbstractPersistable<Long> {
                 providerUserId,
                 rank,
                 refreshToken,
-                revision,
                 secret,
                 user);
     }

@@ -15,10 +15,8 @@
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="location_facts">
-            <column name="id"
-                    type="BIGINT"
-                    autoIncrement="true"
-                    startWith="1">
+            <column name="uuid"
+                    type="VARCHAR">
                 <constraints primaryKey="true"/>
             </column>
             <column name="revision"
@@ -119,10 +117,8 @@
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="users">
-            <column name="id"
-                    type="BIGINT"
-                    autoIncrement="true"
-                    startWith="1">
+            <column name="uuid"
+                    type="VARCHAR">
                 <constraints primaryKey="true"/>
             </column>
             <column name="revision"
@@ -146,18 +142,16 @@
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="user_connections">
-            <column name="id"
-                    type="BIGINT"
-                    autoIncrement="true"
-                    startWith="1">
+            <column name="uuid"
+                    type="VARCHAR">
                 <constraints primaryKey="true"/>
             </column>
             <column name="revision"
                     type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="user_id"
-                    type="BIGINT">
+            <column name="user_uuid"
+                    type="VARCHAR">
             </column>
             <column name="provider_id"
                     type="VARCHAR">
@@ -185,25 +179,25 @@
                     type="BIGINT"/>
         </createTable>
 
-        <addForeignKeyConstraint baseColumnNames="user_id"
+        <addForeignKeyConstraint baseColumnNames="user_uuid"
                                  baseTableName="user_connections"
-                                 constraintName="fk_user_connections_user_id"
+                                 constraintName="fk_user_connections_user_uuid"
                                  deleteCascade="true"
-                                 referencedColumnNames="id"
+                                 referencedColumnNames="uuid"
                                  referencedTableName="users"/>
 
         <createIndex tableName="user_connections"
-                     indexName="idx_user_connections_user_id_provider_id_provider_user_id"
+                     indexName="idx_user_connections_user_uuid_provider_id_provider_user_id"
                      unique="true">
-            <column name="user_id"/>
+            <column name="user_uuid"/>
             <column name="provider_id"/>
             <column name="provider_user_id"/>
         </createIndex>
 
         <createIndex tableName="user_connections"
-                     indexName="idx_user_connections_user_id_provider_id_rank"
+                     indexName="idx_user_connections_user_uuid_provider_id_rank"
                      unique="true">
-            <column name="user_id"/>
+            <column name="user_uuid"/>
             <column name="provider_id"/>
             <column name="rank"/>
         </createIndex>

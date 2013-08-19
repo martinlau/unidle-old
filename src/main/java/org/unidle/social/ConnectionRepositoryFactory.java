@@ -9,6 +9,8 @@ import org.unidle.domain.User;
 import org.unidle.repository.UserConnectionRepository;
 import org.unidle.repository.UserRepository;
 
+import java.util.UUID;
+
 @Component
 public class ConnectionRepositoryFactory {
 
@@ -33,7 +35,7 @@ public class ConnectionRepositoryFactory {
     }
 
     public ConnectionRepository getConnectionRepository(final String userId) {
-        final User user = userRepository.findOne(Long.valueOf(userId));
+        final User user = userRepository.findOne(UUID.fromString(userId));
 
         return new ConnectionRepositoryImpl(connectionFactoryLocator,
                                             textEncryptor,

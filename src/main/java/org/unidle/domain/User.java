@@ -2,25 +2,21 @@ package org.unidle.domain;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
-
 import java.util.List;
-import java.util.Map;
 
 import static java.lang.String.format;
 
-@AttributeOverride(column = @Column(name = "id", nullable = false),
-                   name = "id")
 @Entity
 @Table(name = "users")
-public class User extends AbstractPersistable<Long> {
+public class User extends BaseEntity {
+
+    @OneToMany(mappedBy = "user")
+    private List<UserConnection> connections;
 
     @Column(name = "email",
             nullable = false)
@@ -37,13 +33,6 @@ public class User extends AbstractPersistable<Long> {
             nullable = false)
     @NotEmpty
     private String lastName;
-
-    @Column(name = "revision")
-    @Version
-    private Integer revision;
-
-    @OneToMany(mappedBy = "user")
-    private List<UserConnection> connections;
 
     public String getEmail() {
         return email;
@@ -69,21 +58,12 @@ public class User extends AbstractPersistable<Long> {
         this.lastName = lastName;
     }
 
-    public Integer getRevision() {
-        return revision;
-    }
-
-    public void setRevision(final Integer revision) {
-        this.revision = revision;
-    }
-
     @Override
     public String toString() {
-        return format("User(email='%s', firstName='%s', lastName='%s', revision=%d)",
+        return format("User(email='%s', firstName='%s', lastName='%s')",
                       email,
                       firstName,
-                      lastName,
-                      revision);
+                      lastName);
     }
 
 }

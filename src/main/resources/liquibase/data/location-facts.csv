@@ -1,6 +1,6 @@
-id,revision,continent,country,subdivision,city,task_time_unit,task_people,task_duration,task_duration_time_unit,task_code,summary_duration,summary_duration_time_unit,source
-1,1,"","","","","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
-2,1,"Oceania","","","","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
-3,1,"Oceania","Australia","","","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
-4,1,"Oceania","Australia","New South Wales","","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
-5,1,"Oceania","Australia","New South Wales","Sydney","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
+uuid,revision,continent,country,subdivision,city,task_time_unit,task_people,task_duration,task_duration_time_unit,task_code,summary_duration,summary_duration_time_unit,source
+"b0abed0e-c5b0-4023-ba59-fee2d5ee4c87",1,"","","","","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
+"7962a404-f3c4-45a3-9694-756dc1861f3d",1,"Oceania","","","","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
+"4dec5fdc-b680-4342-b6fe-80d6db5f2f4e",1,"Oceania","Australia","","","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
+"2ce5e0c3-e5b0-4fe8-93ee-8f813cb6ecfb",1,"Oceania","Australia","New South Wales","","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
+"1918d56f-1a40-4f94-9001-1f7948d42a30",1,"Oceania","Australia","New South Wales","Sydney","DAY",800000,75,"MINUTE","common.task.public-transport",100,"YEAR","Bureau of Transport Statistics, Transport for NSW"
