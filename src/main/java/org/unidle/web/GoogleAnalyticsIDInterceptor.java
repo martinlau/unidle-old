@@ -1,19 +1,21 @@
 package org.unidle.web;
 
+import org.springframework.util.ClassUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class BuildTimestampInterceptor extends HandlerInterceptorAdapter {
+public class GoogleAnalyticsIdInterceptor extends HandlerInterceptorAdapter {
 
-    public static final String BUILD_TIMESTAMP = "buildTimestamp";
+    public static final String GOOGLE_ANALYTICS_ID = "googleAnalyticsId";
 
-    private final String timestamp;
+    private final String googleAnalyticsId;
 
-    public BuildTimestampInterceptor(final String timestamp) {
-        this.timestamp = timestamp;
+    public GoogleAnalyticsIdInterceptor(final String googleAnalyticsId) {
+        this.googleAnalyticsId = googleAnalyticsId;
     }
 
     @Override
@@ -22,7 +24,7 @@ public class BuildTimestampInterceptor extends HandlerInterceptorAdapter {
                            final Object handler,
                            final ModelAndView modelAndView) throws Exception {
 
-        modelAndView.addObject(BUILD_TIMESTAMP, timestamp);
+            modelAndView.addObject(GOOGLE_ANALYTICS_ID, googleAnalyticsId);
 
     }
 

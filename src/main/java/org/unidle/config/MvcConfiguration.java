@@ -20,6 +20,7 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.unidle.service.LocationService;
 import org.unidle.web.BuildTimestampInterceptor;
+import org.unidle.web.GoogleAnalyticsIdInterceptor;
 import org.unidle.web.LocationHandlerMethodArgumentResolver;
 
 import java.util.List;
@@ -31,6 +32,9 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Value("${unidle.build.timestamp}")
     private String buildTimestamp;
+
+    @Value("${unidle.google.analyticsId}")
+    private String googleAnalyticsId;
 
     @Value("${unidle.gravatar.https}")
     private boolean gravatarHttps;
@@ -63,11 +67,17 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(buildTimestampInterceptor());
+        registry.addInterceptor(googleAnalyticsIdInterceptor());
     }
 
     @Bean
     public HandlerInterceptor buildTimestampInterceptor() {
         return new BuildTimestampInterceptor(buildTimestamp);
+    }
+
+    @Bean
+    public HandlerInterceptor googleAnalyticsIdInterceptor() {
+        return new GoogleAnalyticsIdInterceptor(googleAnalyticsId);
     }
 
     @Override

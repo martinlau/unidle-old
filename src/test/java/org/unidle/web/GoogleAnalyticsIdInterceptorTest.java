@@ -16,18 +16,18 @@ import org.unidle.config.RootConfiguration;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.unidle.test.Conditions.containsKey;
-import static org.unidle.web.BuildTimestampInterceptor.BUILD_TIMESTAMP;
+import static org.unidle.web.GoogleAnalyticsIdInterceptor.GOOGLE_ANALYTICS_ID;
 
 @ContextHierarchy({@ContextConfiguration(classes = RootConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-public class BuildTimestampInterceptorTest {
+public class GoogleAnalyticsIdInterceptorTest {
 
     private ModelAndView modelAndView;
 
     @Autowired
-    @Qualifier("buildTimestampInterceptor")
+    @Qualifier("googleAnalyticsIdInterceptor")
     private HandlerInterceptorAdapter subject;
 
     @Before
@@ -40,7 +40,7 @@ public class BuildTimestampInterceptorTest {
         subject.postHandle(null, null, null, modelAndView);
 
         assertThat(modelAndView.getModel())
-                .satisfies(containsKey((BUILD_TIMESTAMP)));
+                .satisfies(containsKey((GOOGLE_ANALYTICS_ID)));
     }
 
 }
