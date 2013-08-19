@@ -8,7 +8,7 @@ public class AboutController {
 
     @RequestMapping("/about")
     public String about() {
-        return ".about.index";
+        return ".about";
     }
 
 }

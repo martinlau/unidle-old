@@ -3,12 +3,12 @@
 
 <tiles-definitions>
 
-    <definition name=".base" template="/WEB-INF/views/base.jspx">
+    <definition name=".base" template="/WEB-INF/views/_base.jspx">
         <put-attribute name="content" type="template"/>
     </definition>
 
-    <definition name=".*.*" extends=".base">
-        <put-attribute name="content" type="template" value="/WEB-INF/views/{1}/{2}.jspx"/>
+    <definition name=".*" extends=".base">
+        <put-attribute name="content" type="template" value="/WEB-INF/views/{1}.jspx"/>
     </definition>
 
 </tiles-definitions>

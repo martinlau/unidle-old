@@ -38,7 +38,7 @@ public class TermsControllerTest {
     public void testTerms() throws Exception {
         subject.perform(get("/terms"))
                .andExpect(status().isOk())
-               .andExpect(view().name(".terms.index"));
+               .andExpect(view().name(".terms"));
     }
 
 }

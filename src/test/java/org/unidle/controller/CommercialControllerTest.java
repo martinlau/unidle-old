@@ -38,7 +38,7 @@ public class CommercialControllerTest {
     public void testCommercial() throws Exception {
         subject.perform(get("/commercial"))
                .andExpect(status().isOk())
-               .andExpect(view().name(".commercial.index"));
+               .andExpect(view().name(".commercial"));
     }
 
 }

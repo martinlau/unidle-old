@@ -8,7 +8,7 @@ public class TermsController {
 
     @RequestMapping("/terms")
     public String terms() {
-        return ".terms.index";
+        return ".terms";
     }
 
 }

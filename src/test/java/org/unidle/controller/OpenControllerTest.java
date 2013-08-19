@@ -38,7 +38,7 @@ public class OpenControllerTest {
     public void testOpen() throws Exception {
         subject.perform(get("/open"))
                .andExpect(status().isOk())
-               .andExpect(view().name(".open.index"));
+               .andExpect(view().name(".open"));
     }
 
 }

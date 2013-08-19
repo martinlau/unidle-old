@@ -32,7 +32,7 @@ public class SignupController {
     @RequestMapping(method = GET,
                     value = "/signup")
     public String signup() {
-        return ".signup.index";
+        return ".signup";
     }
 
     @ModelAttribute("signupForm")
@@ -59,13 +59,13 @@ public class SignupController {
                          final WebRequest webRequest) {
 
         if (errors.hasErrors()) {
-            return ".signup.index";
+            return ".signup";
         }
 
         if (userService.exists(signupForm.getEmail())) {
             errors.rejectValue("email", "errors.email.exists");
 
-            return ".signup.index";
+            return ".signup";
         }
 
         final User user = userService.createUser(signupForm.getEmail(), signupForm.getFirstName(),

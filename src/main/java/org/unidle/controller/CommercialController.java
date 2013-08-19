@@ -8,7 +8,7 @@ public class CommercialController {
 
     @RequestMapping("/commercial")
     public String commercial() {
-        return ".commercial.index";
+        return ".commercial";
     }
 
 }
