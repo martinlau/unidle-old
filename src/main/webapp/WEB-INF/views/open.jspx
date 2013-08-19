@@ -17,6 +17,10 @@
         <spring:message code="open.content.github" />
     </p>
 
+    <p>
+        <spring:message code="open.content.maxmind" />
+    </p>
+
     <tags:sign-in-buttons />
 
 </jsp:root>
