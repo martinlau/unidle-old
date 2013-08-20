@@ -15,6 +15,7 @@
                   maxElementsOnDisk="1048576"
                   memoryStoreEvictionPolicy="LRU"
                   overflowToDisk="true"
+                  statistics="true"
                   timeToIdleSeconds="120"
                   timeToLiveSeconds="120"/>
 
@@ -24,6 +25,7 @@
            maxElementsInMemory="2048"
            maxElementsOnDisk="2048"
            memoryStoreEvictionPolicy="LRU"
+           statistics="true"
            overflowToDisk="true"/>
 
     <cache name="org.unidle.service.LocationFactService"
@@ -32,6 +34,7 @@
            maxElementsInMemory="2048"
            memoryStoreEvictionPolicy="LRU"
            overflowToDisk="false"
+           statistics="true"
            timeToIdleSeconds="240"
            timeToLiveSeconds="480"/>
 
@@ -41,6 +44,7 @@
            maxElementsInMemory="2048"
            memoryStoreEvictionPolicy="LRU"
            overflowToDisk="false"
+           statistics="true"
            timeToIdleSeconds="240"
            timeToLiveSeconds="480"/>
 
@@ -50,6 +54,7 @@
            maxElementsInMemory="2048"
            memoryStoreEvictionPolicy="LRU"
            overflowToDisk="false"
+           statistics="true"
            timeToIdleSeconds="240"
            timeToLiveSeconds="480"/>
 
@@ -59,6 +64,7 @@
            maxElementsInMemory="16384"
            memoryStoreEvictionPolicy="LRU"
            overflowToDisk="false"
+           statistics="true"
            timeToIdleSeconds="240"
            timeToLiveSeconds="480"/>
 
