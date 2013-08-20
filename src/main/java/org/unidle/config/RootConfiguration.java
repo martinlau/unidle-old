@@ -224,20 +224,9 @@ public class RootConfiguration {
 
     @Bean
     public SpringLiquibase springLiquibase() {
-
-        @SuppressWarnings("unchecked")
-        final Class<Driver> driverClass = (Class<Driver>) ClassUtils.resolveClassName(dataSourceDriverClass, ClassUtils.getDefaultClassLoader());
-
-        final SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-
-        dataSource.setDriverClass(driverClass);
-        dataSource.setPassword(dataSourcePassword);
-        dataSource.setUrl(dataSourceUrl);
-        dataSource.setUsername(dataSourceUsername);
-
         final SpringLiquibase springLiquibase = new SpringLiquibase();
 
-        springLiquibase.setDataSource(dataSource);
+        springLiquibase.setDataSource(dataSource());
         springLiquibase.setChangeLog(liquibaseChangelog);
 
         return springLiquibase;
@@ -297,6 +286,24 @@ public class RootConfiguration {
     }
 
     @Bean
+    public SpringCacheCacheStrategy<CacheKey, CacheValue> cacheStrategy() {
+        final Cache cache = cacheManager().getCache(wroCacheName);
+
+        return new SpringCacheCacheStrategy<>(cache);
+    }
+
+    @Bean
+    public CacheManager cacheManager() {
+        final net.sf.ehcache.CacheManager ehCacheManager = net.sf.ehcache.CacheManager.create(ehcacheConfigurationResourceName);
+
+        final EhCacheCacheManager cacheManager = new EhCacheCacheManager();
+
+        cacheManager.setCacheManager(ehCacheManager);
+
+        return cacheManager;
+    }
+
+    @Bean
     public Properties wroProperties() {
         final Properties properties = new Properties();
 
@@ -318,24 +325,6 @@ public class RootConfiguration {
         properties.put(ConfigConstants.resourceWatcherUpdatePeriod.name(), wroResourceWatcherUpdatePeriod);
 
         return properties;
-    }
-
-    @Bean
-    public SpringCacheCacheStrategy<CacheKey, CacheValue> cacheStrategy() {
-        final Cache cache = cacheManager().getCache(wroCacheName);
-
-        return new SpringCacheCacheStrategy<>(cache);
-    }
-
-    @Bean
-    public CacheManager cacheManager() {
-        final net.sf.ehcache.CacheManager ehCacheManager = net.sf.ehcache.CacheManager.create(ehcacheConfigurationResourceName);
-
-        final EhCacheCacheManager cacheManager = new EhCacheCacheManager();
-
-        cacheManager.setCacheManager(ehCacheManager);
-
-        return cacheManager;
     }
 
 }
