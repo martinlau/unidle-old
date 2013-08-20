@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Auditable;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Cacheable
 @MappedSuperclass
 public class BaseEntity implements Auditable<User, UUID>, Serializable {
 
