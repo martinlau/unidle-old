@@ -12,6 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.view.RedirectView;
 import org.unidle.config.MvcConfiguration;
 import org.unidle.config.RootConfiguration;
 
@@ -47,6 +48,24 @@ public class GoogleAnalyticsIdInterceptorTest {
     @Test
     public void testPostHandleWithHandlerMethodWithWrongBean() throws Exception {
         subject.postHandle(null, null, new HandlerMethod(new Object(), "toString"), modelAndView);
+
+        assertThat(modelAndView.getModel()).isEmpty();
+    }
+
+    @Test
+    public void testPostHandleWithRedirectView() throws Exception {
+        modelAndView.setView(new RedirectView());
+
+        subject.postHandle(null, null, null, modelAndView);
+
+        assertThat(modelAndView.getModel()).isEmpty();
+    }
+
+    @Test
+    public void testPostHandleWithRedirectViewName() throws Exception {
+        modelAndView.setViewName("redirect:/");
+
+        subject.postHandle(null, null, null, modelAndView);
 
         assertThat(modelAndView.getModel()).isEmpty();
     }

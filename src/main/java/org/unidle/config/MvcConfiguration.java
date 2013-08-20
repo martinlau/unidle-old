@@ -12,10 +12,12 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.unidle.service.LocationService;
@@ -24,6 +26,8 @@ import org.unidle.web.BuildTimestampInterceptor;
 import org.unidle.web.LocationHandlerMethodArgumentResolver;
 
 import java.util.List;
+
+import static java.lang.Boolean.FALSE;
 
 @ComponentScan("org.unidle.controller")
 @Configuration
@@ -122,7 +126,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     public ViewResolver viewResolver() {
         final TilesViewResolver viewResolver = new TilesViewResolver();
 
-        viewResolver.setExposePathVariables(Boolean.FALSE);
+        viewResolver.setExposePathVariables(FALSE);
 
         return viewResolver;
     }
