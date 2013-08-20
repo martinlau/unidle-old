@@ -54,15 +54,16 @@
                             <usedDependencies>
                                 <usedDependency>ch.qos.logback:logback-classic</usedDependency>
                                 <usedDependency>com.h2database:h2</usedDependency>
-                                <usedDependency>javax.servlet.jsp:javax.servlet.jsp-api</usedDependency>
                                 <usedDependency>javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api</usedDependency>
                                 <usedDependency>org.apache.tiles:tiles-jsp</usedDependency>
                                 <usedDependency>org.glassfish.web:jstl-impl</usedDependency>
                                 <usedDependency>org.hamcrest:hamcrest-library</usedDependency>
                                 <usedDependency>org.hibernate:hibernate-ehcache</usedDependency>
                                 <usedDependency>org.hibernate:hibernate-entitymanager</usedDependency>
+                                <usedDependency>org.jadira.usertype:usertype.jodatime</usedDependency>
                                 <usedDependency>org.postgresql:postgresql</usedDependency>
                                 <usedDependency>org.slf4j:jcl-over-slf4j</usedDependency>
+                                <usedDependency>org.springframework:spring-aspects</usedDependency>
                                 <usedDependency>org.webjars:font-awesome</usedDependency>
                                 <usedDependency>org.webjars:foundation</usedDependency>
                                 <usedDependency>org.webjars:jquery</usedDependency>
@@ -302,11 +303,6 @@
                 <version>3.1.0</version>
             </dependency>
             <dependency>
-                <groupId>javax.servlet.jsp</groupId>
-                <artifactId>javax.servlet.jsp-api</artifactId>
-                <version>2.3.1</version>
-            </dependency>
-            <dependency>
                 <groupId>javax.servlet.jsp.jstl</groupId>
                 <artifactId>javax.servlet.jsp.jstl-api</artifactId>
                 <version>1.2.1</version>
@@ -315,6 +311,11 @@
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
                 <version>1.0.0.GA</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>2.2</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -382,6 +383,11 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>4.2.4.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-ehcache</artifactId>
                 <version>4.2.4.Final</version>
             </dependency>
@@ -399,6 +405,11 @@
                 <groupId>org.hibernate.javax.persistence</groupId>
                 <artifactId>hibernate-jpa-2.0-api</artifactId>
                 <version>1.0.1.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jadira.usertype</groupId>
+                <artifactId>usertype.jodatime</artifactId>
+                <version>2.0.1</version>
             </dependency>
             <dependency>
                 <groupId>org.jboss.logging</groupId>
@@ -434,6 +445,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aop</artifactId>
+                <version>3.2.4.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
                 <version>3.2.4.RELEASE</version>
             </dependency>
             <dependency>
@@ -694,11 +710,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>javax.servlet.jsp-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
             <artifactId>javax.servlet.jsp.jstl-api</artifactId>
             <scope>runtime</scope>
@@ -706,6 +717,10 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -741,6 +756,10 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
             <artifactId>hibernate-ehcache</artifactId>
         </dependency>
         <dependency>
@@ -754,6 +773,10 @@
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.0-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.jodatime</artifactId>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -772,6 +795,10 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

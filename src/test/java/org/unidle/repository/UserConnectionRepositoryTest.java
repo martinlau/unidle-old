@@ -169,8 +169,8 @@ public class UserConnectionRepositoryTest {
                                                                             "provider user id 3",
                                                                             "provider user id 4"));
 
-        assertThat(result).containsExactly(user1.getId(),
-                                           user2.getId());
+        assertThat(result).containsOnly(user1.getId(),
+                                        user2.getId());
 
     }
 

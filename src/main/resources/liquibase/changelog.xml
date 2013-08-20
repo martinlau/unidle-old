@@ -23,6 +23,20 @@
                     type="INTEGER">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="created_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="created_date"
+                    type="DATETIME">
+                <!--<constraints nullable="false"/>-->
+            </column>
+            <column name="last_modified_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="last_modified_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="continent"
                     type="VARCHAR">
                 <constraints nullable="false"/>
@@ -125,8 +139,22 @@
                     type="INTEGER">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="created_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="created_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="last_modified_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="email"
-                    type="VARCHAR" >
+                    type="VARCHAR">
                 <constraints nullable="false"
                              unique="true"/>
             </column>
@@ -150,6 +178,20 @@
                     type="INTEGER">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="created_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="created_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="last_modified_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="user_uuid"
                     type="VARCHAR">
             </column>
@@ -179,12 +221,12 @@
                     type="BIGINT"/>
         </createTable>
 
-        <addForeignKeyConstraint baseColumnNames="user_uuid"
-                                 baseTableName="user_connections"
+        <addForeignKeyConstraint baseTableName="user_connections"
+                                 baseColumnNames="user_uuid"
                                  constraintName="fk_user_connections_user_uuid"
                                  deleteCascade="true"
-                                 referencedColumnNames="uuid"
-                                 referencedTableName="users"/>
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
 
         <createIndex tableName="user_connections"
                      indexName="idx_user_connections_user_uuid_provider_id_provider_user_id"
@@ -201,6 +243,47 @@
             <column name="provider_id"/>
             <column name="rank"/>
         </createIndex>
+
+    </changeSet>
+
+    <changeSet id="005 audit_foreign_keys"
+               author="Martin Lau [m@hum.ph]">
+
+        <addForeignKeyConstraint baseTableName="location_facts"
+                                 baseColumnNames="created_by_user_uuid"
+                                 constraintName="fk_location_facts_created_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="location_facts"
+                                 baseColumnNames="last_modified_by_user_uuid"
+                                 constraintName="fk_location_facts_last_modified_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="created_by_user_uuid"
+                                 constraintName="fk_users_created_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="last_modified_by_user_uuid"
+                                 constraintName="fk_users_last_modified_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="created_by_user_uuid"
+                                 constraintName="fk_user_connections_created_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="last_modified_by_user_uuid"
+                                 constraintName="fk_user_connections_last_modified_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
 
     </changeSet>
 

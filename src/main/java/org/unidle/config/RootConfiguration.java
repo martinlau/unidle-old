@@ -3,6 +3,7 @@ package org.unidle.config;
 import liquibase.integration.spring.SpringLiquibase;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -13,9 +14,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -31,6 +34,9 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import org.unidle.cache.SpringCacheCacheStrategy;
+import org.unidle.domain.User;
+import org.unidle.repository.AuditorAwareImpl;
+import org.unidle.repository.UserRepository;
 import ro.isdc.wro.cache.CacheKey;
 import ro.isdc.wro.cache.CacheValue;
 import ro.isdc.wro.config.jmx.ConfigConstants;
@@ -55,6 +61,7 @@ import java.util.Properties;
 @EnableCaching
 @EnableJpaRepositories(basePackages = "org.unidle.repository")
 @EnableTransactionManagement
+@ImportResource("classpath:spring/jpa-audit.xml")
 @PropertySource("classpath:unidle.properties")
 public class RootConfiguration {
 
@@ -154,6 +161,12 @@ public class RootConfiguration {
     }
 
     @Bean
+    @Autowired
+    public AuditorAware<User> auditorAware(UserRepository userRepository) {
+        return new AuditorAwareImpl(userRepository);
+    }
+
+    @Bean
     public FactoryBean<EntityManager> entityManager() {
         final EntityManagerFactory entityManagerFactory = entityManagerFactory().getObject();
 
@@ -187,6 +200,7 @@ public class RootConfiguration {
         entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         entityManagerFactoryBean.setPackagesToScan("org.unidle.domain");
         entityManagerFactoryBean.setJpaPropertyMap(jpaProperties);
+        entityManagerFactoryBean.setMappingResources("jpa/orm.xml");
 
         return entityManagerFactoryBean;
     }
@@ -283,24 +297,6 @@ public class RootConfiguration {
     }
 
     @Bean
-    public SpringCacheCacheStrategy<CacheKey, CacheValue> cacheStrategy() {
-        final Cache cache = cacheManager().getCache(wroCacheName);
-
-        return new SpringCacheCacheStrategy<>(cache);
-    }
-
-    @Bean
-    public CacheManager cacheManager() {
-        final net.sf.ehcache.CacheManager ehCacheManager = net.sf.ehcache.CacheManager.create(ehcacheConfigurationResourceName);
-
-        final EhCacheCacheManager cacheManager = new EhCacheCacheManager();
-
-        cacheManager.setCacheManager(ehCacheManager);
-
-        return cacheManager;
-    }
-
-    @Bean
     public Properties wroProperties() {
         final Properties properties = new Properties();
 
@@ -322,6 +318,24 @@ public class RootConfiguration {
         properties.put(ConfigConstants.resourceWatcherUpdatePeriod.name(), wroResourceWatcherUpdatePeriod);
 
         return properties;
+    }
+
+    @Bean
+    public SpringCacheCacheStrategy<CacheKey, CacheValue> cacheStrategy() {
+        final Cache cache = cacheManager().getCache(wroCacheName);
+
+        return new SpringCacheCacheStrategy<>(cache);
+    }
+
+    @Bean
+    public CacheManager cacheManager() {
+        final net.sf.ehcache.CacheManager ehCacheManager = net.sf.ehcache.CacheManager.create(ehcacheConfigurationResourceName);
+
+        final EhCacheCacheManager cacheManager = new EhCacheCacheManager();
+
+        cacheManager.setCacheManager(ehCacheManager);
+
+        return cacheManager;
     }
 
 }
