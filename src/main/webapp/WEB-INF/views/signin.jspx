@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:form="http://www.springframework.org/tags/form"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:spring="http://www.springframework.org/tags"
+          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
+          version="2.0">
+
+    <tags:navigation />
+
+    <p>
+        <spring:message code="signin.introduction" />
+    </p>
+
+    <p>
+        <spring:message code="singin.wontAbuse" />
+    </p>
+
+    <spring:url value="/signin/facebook" var="facebook" />
+    <form action="${facebook}" method="post">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            <i class="icon-facebook icon-fixed-width"><!-- no collapse --></i>
+            Sign in with Facebook
+        </button>
+    </form>
+
+    <p><!-- no collapse --></p>
+
+    <spring:url value="/signin/twitter" var="twitter" />
+    <form action="${twitter}" method="post">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
+            Sign in with Twitter
+        </button>
+    </form>
+
+</jsp:root>
