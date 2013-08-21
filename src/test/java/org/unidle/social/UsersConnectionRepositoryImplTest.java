@@ -12,8 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.unidle.config.RootConfiguration;
+import org.unidle.config.CacheConfiguration;
+import org.unidle.config.DataConfiguration;
+import org.unidle.config.I18NConfiguration;
+import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.SocialConfiguration;
+import org.unidle.config.WroConfiguration;
 import org.unidle.domain.User;
 import org.unidle.domain.UserConnection;
 import org.unidle.repository.UserConnectionRepository;
@@ -27,7 +31,11 @@ import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 
-@ContextHierarchy({@ContextConfiguration(classes = RootConfiguration.class),
+@ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
+                   @ContextConfiguration(classes = DataConfiguration.class),
+                   @ContextConfiguration(classes = I18NConfiguration.class),
+                   @ContextConfiguration(classes = ServiceConfiguration.class),
+                   @ContextConfiguration(classes = WroConfiguration.class),
                    @ContextConfiguration(classes = SocialConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional

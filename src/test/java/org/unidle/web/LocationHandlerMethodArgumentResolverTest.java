@@ -14,8 +14,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.unidle.config.CacheConfiguration;
+import org.unidle.config.DataConfiguration;
+import org.unidle.config.I18NConfiguration;
 import org.unidle.config.MvcConfiguration;
-import org.unidle.config.RootConfiguration;
+import org.unidle.config.ServiceConfiguration;
+import org.unidle.config.WroConfiguration;
 import org.unidle.service.Location;
 
 import java.lang.reflect.Method;
@@ -26,7 +30,11 @@ import static org.unidle.test.Conditions.hasContinent;
 import static org.unidle.test.Conditions.hasCountry;
 import static org.unidle.test.Conditions.hasSubdivision;
 
-@ContextHierarchy({@ContextConfiguration(classes = RootConfiguration.class),
+@ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
+                   @ContextConfiguration(classes = DataConfiguration.class),
+                   @ContextConfiguration(classes = I18NConfiguration.class),
+                   @ContextConfiguration(classes = ServiceConfiguration.class),
+                   @ContextConfiguration(classes = WroConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

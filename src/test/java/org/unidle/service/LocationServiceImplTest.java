@@ -4,9 +4,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.unidle.config.RootConfiguration;
+import org.unidle.config.CacheConfiguration;
+import org.unidle.config.DataConfiguration;
+import org.unidle.config.I18NConfiguration;
+import org.unidle.config.ServiceConfiguration;
+import org.unidle.config.WroConfiguration;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.unidle.service.Location.DEFAULT;
@@ -15,7 +20,11 @@ import static org.unidle.test.Conditions.hasContinent;
 import static org.unidle.test.Conditions.hasCountry;
 import static org.unidle.test.Conditions.hasSubdivision;
 
-@ContextConfiguration(classes = RootConfiguration.class)
+@ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
+                   @ContextConfiguration(classes = DataConfiguration.class),
+                   @ContextConfiguration(classes = I18NConfiguration.class),
+                   @ContextConfiguration(classes = ServiceConfiguration.class),
+                   @ContextConfiguration(classes = WroConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 public class LocationServiceImplTest {

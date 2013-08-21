@@ -15,7 +15,11 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{RootConfiguration.class};
+        return new Class<?>[]{CacheConfiguration.class,
+                              DataConfiguration.class,
+                              I18NConfiguration.class,
+                              ServiceConfiguration.class,
+                              WroConfiguration.class};
     }
 
     @Override
