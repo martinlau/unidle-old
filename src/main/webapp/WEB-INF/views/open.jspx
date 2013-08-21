@@ -5,22 +5,19 @@
           xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
           version="2.0">
 
-    <h3 class="subheader text-center">
-        <spring:message code="open.header" />
-    </h3>
+    <tags:navigation />
 
     <p>
-        <spring:message code="open.content.sponsor" />
+        <spring:url var="contact" value="/contact" />
+        <spring:message code="open.content.sponsor" arguments="${contact}" />
     </p>
 
     <p>
-        <spring:message code="open.content.github" />
+        <spring:message code="open.content.introduction" />
     </p>
 
     <p>
         <spring:message code="open.content.maxmind" />
     </p>
-
-    <tags:sign-in-buttons />
 
 </jsp:root>

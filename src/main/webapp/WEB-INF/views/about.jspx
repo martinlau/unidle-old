@@ -5,9 +5,7 @@
           xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
           version="2.0">
 
-    <h3 class="subheader text-center">
-        <spring:message code="about.header" />
-    </h3>
+    <tags:navigation />
 
     <p>
         <spring:message code="about.content.platform" />
@@ -29,20 +27,12 @@
     </p>
 
     <p>
-        <spring:message code="about.content.open" />
-    </p>
-
-    <p>
         <spring:url var="open" value="/open" />
-        <a href="${open}">
-            <spring:message code="about.content.open.link" />
-        </a>
+        <spring:message code="about.content.open" arguments="${open}" />
     </p>
 
     <p>
         <spring:message code="about.content.not-evil" />
     </p>
-
-    <tags:sign-in-buttons />
 
 </jsp:root>

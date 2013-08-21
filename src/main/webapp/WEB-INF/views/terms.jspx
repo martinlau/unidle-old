@@ -5,9 +5,7 @@
           xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
           version="2.0">
 
-    <h3 class="subheader text-center">
-        <spring:message code="terms.header" />
-    </h3>
+    <tags:navigation />
 
     <p>
         <spring:message code="terms.content.introduction" />
@@ -17,7 +15,7 @@
         <spring:message code="terms.content.binding" />
     </p>
 
-    <h4 class="subheader text-center">
+    <h4>
         <spring:message code="terms.header.intellectual-property" />
     </h4>
 
@@ -25,7 +23,7 @@
         <spring:message code="terms.content.intellectual-property" />
     </p>
 
-    <h4 class="subheader text-center">
+    <h4>
         <spring:message code="terms.header.termination" />
     </h4>
 
@@ -33,15 +31,15 @@
         <spring:message code="terms.content.termination" />
     </p>
 
-    <h4 class="subheader text-center">
+    <h4>
         <spring:message code="terms.header.links" />
     </h4>
 
     <p>
-        <spring:message code="terms.content.links"/>
+        <spring:message code="terms.content.links" />
     </p>
 
-    <h4 class="subheader text-center">
+    <h4>
         <spring:message code="terms.header.law" />
     </h4>
 
@@ -49,7 +47,7 @@
         <spring:message code="terms.content.law" />
     </p>
 
-    <h4 class="subheader text-center">
+    <h4>
         <spring:message code="terms.header.changes" />
     </h4>
 
@@ -57,7 +55,7 @@
         <spring:message code="terms.content.changes" />
     </p>
 
-    <h4 class="subheader text-center">
+    <h4>
         <spring:message code="terms.header.contact" />
     </h4>
 
@@ -68,7 +66,5 @@
     <p>
         <spring:message code="terms.content.attribution" />
     </p>
-
-    <tags:sign-in-buttons />
 
 </jsp:root>

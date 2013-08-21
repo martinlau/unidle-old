@@ -10,68 +10,65 @@
 
     <jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
 
-    <jsp:text><![CDATA[
-        <!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
-        <!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
-    ]]></jsp:text>
+    <html>
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
+        <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>
-            <spring:message code="base.title" />
-        </title>
+            <title>
+                <tiles:importAttribute name="titleCode" />
+                <spring:message code="${titleCode}" />
+            </title>
 
-        <spring:url value="/image/favicon.ico?t=${buildTimestamp}" var="favicon_ico" />
-        <link rel="shortcut icon" href="${favicon_ico}" />
+            <spring:url value="/image/favicon.ico?t=${buildTimestamp}" var="favicon_ico" />
+            <link rel="shortcut icon" href="${favicon_ico}" />
 
-        <spring:url value="/resources/foundation.css?t=${buildTimestamp}" var="foundation_css" />
-        <link rel="stylesheet" href="${foundation_css}" />
+            <spring:url value="/resources/bootstrap.css?t=${buildTimestamp}" var="bootstrap_css" />
+            <link rel="stylesheet" href="${bootstrap_css}" />
 
-        <spring:url value="/resources/font-awesome.css?t=${buildTimestamp}" var="font_awesome_css" />
-        <link rel="stylesheet" href="${font_awesome_css}" />
+            <spring:url value="/resources/font-awesome.css?t=${buildTimestamp}" var="font_awesome_css" />
+            <link rel="stylesheet" href="${font_awesome_css}" />
 
-        <spring:url value="/resources/modernizr.js?t=${buildTimestamp}" var="modernizr_js" />
-        <script src="${modernizr_js}"><!-- // no collapse --></script>
-    </head>
+            <jsp:text><![CDATA[<!--[if lt IE 9]>]]></jsp:text>
+            <spring:url value="/resources/html5shiv.js?t=${buildTimestamp}" var="html5shiv_js" />
+            <script src="${html5shiv_js}"><!-- // no collapse --></script>
+            <jsp:text><![CDATA[<![endif]-->]]></jsp:text>
 
-    <body>
+        </head>
 
-        <div class="row">
-            <div class="small-12 columns">
-                <tiles:insertAttribute name="content" />
-            </div>
-        </div>
+        <body class="container">
 
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            <tiles:insertAttribute name="content" />
 
-          ga('create', '${googleAnalyticsId}', 'unidle.org');
-          ga('send', 'pageview');
-        </script>
+            <script>
+                (function (i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                    a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-        <!-- TODO include Zepto -->
-        <spring:url value="/resources/jquery.js?t=${buildTimestamp}" var="jquery_js" />
-        <script src="${jquery_js}"><!-- // no collapse --></script>
+                ga('create', '${googleAnalyticsId}', 'unidle.org');
+                ga('send', 'pageview');
+            </script>
 
-        <spring:url value="/resources/foundation.js?t=${buildTimestamp}" var="foundation_js" />
-        <script src="${foundation_js}"><!-- // no collapse --></script>
+            <spring:url value="/resources/jquery.js?t=${buildTimestamp}" var="jquery_js" />
+            <script src="${jquery_js}"><!-- // no collapse --></script>
 
-        <spring:url value="/script/common.js?t=${buildTimestamp}" var="common_js" />
-        <script src="${common_js}"><!-- // no collapse --></script>
+            <spring:url value="/resources/bootstrap.js?t=${buildTimestamp}" var="bootstrap_js" />
+            <script src="${bootstrap_js}"><!-- // no collapse --></script>
 
-        <script>
-            $(document).foundation();
-        </script>
+            <spring:url value="/resources/unidle.js?t=${buildTimestamp}" var="unidle_js" />
+            <script src="${unidle_js}"><!-- // no collapse --></script>
 
-    </body>
+        </body>
 
-    <jsp:text><![CDATA[
-        </html>
-    ]]></jsp:text>
+    </html>
 
 </jsp:root>

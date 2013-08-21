@@ -3,22 +3,27 @@
           xmlns:spring="http://www.springframework.org/tags"
           version="2.0">
 
-    <form method="post" action="">
-
-        <spring:url value="/signin/facebook" var="facebook" />
-        <a href="#" class="button expand radius form-submit" data-form-action="${facebook}" title="Facebook">
-            <i class="icon-large icon-fixed-width icon-facebook"><!-- no collapse --></i>
-            &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
-            <spring:message code="common.content.signin.facebook" />
-        </a>
-
-        <spring:url value="/signin/twitter" var="twitter" />
-        <a href="#" class="button expand radius form-submit" data-form-action="${twitter}" title="Twitter">
-            <i class="icon-large icon-fixed-width icon-twitter"><!-- no collapse --></i>
-            &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
-            <spring:message code="common.content.signin.twitter" />
-        </a>
-
-    </form>
+    <div class="row">
+        <div class="col-sm-6">
+            <p>
+                <spring:url value="/signin/facebook" var="facebook" />
+                <form method="post" action="${facebook}">
+                    <button type="submit" class="btn btn-lg btn-block btn-primary" value="Facebook">
+                        <spring:message code="common.content.signin.facebook" />
+                    </button>
+                </form>
+            </p>
+        </div>
+        <div class="col-sm-6">
+            <p>
+                <spring:url value="/signin/twitter" var="twitter" />
+                <form method="post" action="${twitter}">
+                    <button type="submit" class="btn btn-lg btn-block btn-primary" title="Twitter">
+                        <spring:message code="common.content.signin.twitter" />
+                    </button>
+                </form>
+            </p>
+        </div>
+    </div>
 
 </jsp:root>

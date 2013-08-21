@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:form="http://www.springframework.org/tags/form"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:spring="http://www.springframework.org/tags"
+          version="2.0">
+
+    <jsp:directive.tag display-name="input"
+                       body-content="empty"/>
+
+    <jsp:directive.attribute name="type"
+                             description="the input type"
+                             rtexprvalue="true"
+                             type="java.lang.String" />
+
+    <jsp:directive.attribute name="path"
+                             description="the spring model path"
+                             required="true"
+                             rtexprvalue="true"
+                             type="java.lang.String" />
+
+    <jsp:directive.attribute name="label"
+                             description="the label content"
+                             required="true"
+                             rtexprvalue="true"
+                             type="java.lang.String" />
+
+    <jsp:directive.attribute name="placeholder"
+                             description="the form placeholder content"
+                             required="true"
+                             rtexprvalue="true"
+                             type="java.lang.String" />
+
+    <spring:bind path="${path}">
+        <div class="form-group ${status.error ? 'has-error' : ''}">
+            <form:label path="${path}" cssClass="sr-only">${label}</form:label>
+            <form:input type="${type}" path="${path}" placeholder="${placeholder}" cssClass="form-control" />
+            <c:if test="${status.error}">
+                <span class="help-block">
+                    <strong>
+                        <form:errors path="${path}" />
+                    </strong>
+                </span>
+            </c:if>
+        </div>
+    </spring:bind>
+
+
+</jsp:root>

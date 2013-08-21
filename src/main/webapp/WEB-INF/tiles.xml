@@ -5,6 +5,7 @@
 
     <definition name=".base" template="/WEB-INF/views/_base.jspx">
         <put-attribute name="content" type="template"/>
+        <put-attribute name="titleCode" type="string" value="base.title"/>
     </definition>
 
     <definition name=".*" extends=".base">

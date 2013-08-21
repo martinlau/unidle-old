@@ -3,53 +3,58 @@
           xmlns:form="http://www.springframework.org/tags/form"
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:spring="http://www.springframework.org/tags"
+          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
           version="2.0">
 
-    <h3 class="subheader text-center">
-        <spring:message code="signup.header" />
-    </h3>
+    <tags:navigation />
 
     <p>
         <spring:message code="signup.introduction" />
     </p>
 
-    <form:form action="" modelAttribute="signupForm">
+    <form:form cssClass="form-inline" action="" modelAttribute="signupForm" role="form">
 
-        <p>
-            <form:label path="firstName" cssErrorClass="error">
+        <tags:input path="firstName" type="text">
+            <jsp:attribute name="label">
                 <spring:message code="signup.form.firstName.label" />
-            </form:label>
-            <spring:message code="signup.form.firstName.placeholder" var="firstNamePlaceholder" />
-            <form:input type="text" path="firstName" placeholder="${firstNamePlaceholder}" cssErrorClass="error" />
-            <form:errors cssClass="error" element="small" path="firstName" />
-        </p>
+            </jsp:attribute>
+            <jsp:attribute name="placeholder">
+                <spring:message code="signup.form.firstName.placeholder" />
+            </jsp:attribute>
+        </tags:input>
 
-        <p>
-            <form:label path="lastName" cssErrorClass="error">
+        <tags:input path="lastName" type="text">
+            <jsp:attribute name="label">
                 <spring:message code="signup.form.lastName.label" />
-            </form:label>
-            <spring:message code="signup.form.lastName.placeholder" var="lastNamePlaceholder" />
-            <form:input type="text" path="lastName" placeholder="${lastNamePlaceholder}" cssErrorClass="error" />
-            <form:errors cssClass="error" element="small" path="lastName" />
-        </p>
+            </jsp:attribute>
+            <jsp:attribute name="placeholder">
+                <spring:message code="signup.form.lastName.placeholder" />
+            </jsp:attribute>
+        </tags:input>
 
-        <p>
-            <form:label path="email" cssErrorClass="error">
+        <tags:input path="email" type="email">
+            <jsp:attribute name="label">
                 <spring:message code="signup.form.email.label" />
-            </form:label>
-            <spring:message code="signup.form.email.placeholder" var="emailPlaceholder" />
-            <form:input type="email" path="email" placeholder="${emailPlaceholder}" cssErrorClass="error" />
-            <form:errors cssClass="error" element="small" path="email" />
-        </p>
+            </jsp:attribute>
+            <jsp:attribute name="placeholder">
+                <spring:message code="signup.form.email.placeholder" />
+            </jsp:attribute>
+        </tags:input>
 
-        <p>
+        <p class="form-static-control">
             <spring:url var="terms" value="/terms" />
             <spring:message code="signup.form.acceptTerms.label" arguments="${terms}" />
         </p>
 
         <p>
-            <form:button type="submit" class="button expand radius">
+            <form:button type="submit" class="btn btn-lg btn-primary btn-block" value="confirm">
                 <spring:message code="singup.form.submit" />
+            </form:button>
+        </p>
+
+        <p>
+            <form:button type="submit" class="btn btn-lg btn-default btn-block" value="cancel">
+                <spring:message code="signup.form.cancel" />
             </form:button>
         </p>
 

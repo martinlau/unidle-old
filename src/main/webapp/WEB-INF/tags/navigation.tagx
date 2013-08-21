@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:spring="http://www.springframework.org/tags"
+          version="2.0">
+
+    <nav class="navbar navbar-default" role="naviation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".main-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"><!-- no collapse --></span>
+                <span class="icon-bar"><!-- no collapse --></span>
+                <span class="icon-bar"><!-- no collapse --></span>
+            </button>
+            <a class="navbar-brand" href="#">unidle: sign up</a>
+        </div>
+        <div class="collapse navbar-collapse main-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <spring:url value="/" var="home" />
+                    <a href="${home}">Home</a>
+                </li>
+                <li>
+                    <spring:url value="/about" var="about" />
+                    <a href="${about}">About us</a>
+                </li>
+                <li>
+                    <spring:url value="/commercial" var="commercial" />
+                    <a href="${commercial}">Commercial</a>
+                </li>
+                <li>
+                    <spring:url value="/open" var="open" />
+                    <a href="${open}">Open</a>
+                </li>
+                <li>
+                    <spring:url value="/signin" var="signin" />
+                    <a href="${signin}">Sign in</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+</jsp:root>

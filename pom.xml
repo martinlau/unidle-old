@@ -53,7 +53,8 @@
                                 <usedDependency>org.slf4j:jcl-over-slf4j</usedDependency>
                                 <usedDependency>org.springframework:spring-aspects</usedDependency>
                                 <usedDependency>org.webjars:font-awesome</usedDependency>
-                                <usedDependency>org.webjars:foundation</usedDependency>
+                                <usedDependency>org.webjars:bootstrap</usedDependency>
+                                <usedDependency>org.webjars:html5shiv</usedDependency>
                                 <usedDependency>org.webjars:jquery</usedDependency>
                                 <usedDependency>org.webjars:modernizr</usedDependency>
                                 <usedDependency>ro.isdc.wro4j:wro4j-extensions</usedDependency>
@@ -577,8 +578,13 @@
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
-                <artifactId>foundation</artifactId>
-                <version>${foundation.version}</version>
+                <artifactId>bootstrap</artifactId>
+                <version>${bootstrap.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>html5shiv</artifactId>
+                <version>${html5shiv.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars</groupId>
@@ -864,7 +870,12 @@
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>foundation</artifactId>
+            <artifactId>bootstrap</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>html5shiv</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -941,7 +952,7 @@
         <ehcache-core.version>2.6.6</ehcache-core.version>
         <fest-assert.version>1.4</fest-assert.version>
         <font-awesome.version>3.2.1</font-awesome.version>
-        <foundation.version>4.3.1</foundation.version>
+        <bootstrap.version>3.0.0</bootstrap.version>
         <geoip2.version>0.4.1</geoip2.version>
         <gravatar4java.version>1.1</gravatar4java.version>
         <guava.version>14.0.1</guava.version>
@@ -950,6 +961,7 @@
         <hibernate-jpa-api.version>1.0.1.Final</hibernate-jpa-api.version>
         <hibernate-validator.version>4.3.1.Final</hibernate-validator.version>
         <hibernate.version>4.2.4.Final</hibernate.version>
+        <html5shiv.version>3.6.2</html5shiv.version>
         <jackson-mapper.version>1.9.11</jackson-mapper.version>
         <jackson.version>2.2.2</jackson.version>
         <jboss-logging.version>3.1.3.GA</jboss-logging.version>
