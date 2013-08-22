@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ViewResolver;
@@ -32,6 +33,7 @@ import static java.lang.Boolean.FALSE;
 @ComponentScan("org.unidle.controller")
 @Configuration
 @EnableWebMvc
+@EnableTransactionManagement
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Value("${unidle.build.timestamp}")

@@ -12,7 +12,7 @@
         <spring:message code="signup.introduction" />
     </p>
 
-    <form:form cssClass="form-inline" action="" modelAttribute="signupForm" role="form">
+    <form:form cssClass="form-inline" modelAttribute="userForm" role="form">
 
         <tags:input path="firstName" type="text">
             <jsp:attribute name="label">

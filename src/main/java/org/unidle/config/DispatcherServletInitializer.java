@@ -3,8 +3,11 @@ package org.unidle.config;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
+import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.Filter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import java.util.EnumSet;
@@ -34,15 +37,9 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
         servletContext.setSessionTrackingModes(EnumSet.of(COOKIE));
 
-        servletContext.addFilter("openEntityManagerInView", OpenEntityManagerInViewFilter.class)
-                      .addMappingForUrlPatterns(null, false, "/*");
-
-        servletContext.addFilter("springSecurityFilterChain", SecurityContextPersistenceFilter.class)
-                      .addMappingForUrlPatterns(null, false, "/*");
-
         final DelegatingFilterProxy wroFilter = servletContext.createFilter(DelegatingFilterProxy.class);
         wroFilter.setTargetFilterLifecycle(true);
-        wroFilter.setBeanName("wroFilter    ");
+        wroFilter.setBeanName("wroFilter");
 
         servletContext.addFilter("wroFilter", wroFilter)
                       .addMappingForUrlPatterns(null, false, "/resources/*");
@@ -52,6 +49,16 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{
+                new HiddenHttpMethodFilter(),
+                new OpenEntityManagerInViewFilter(),
+                new RequestContextFilter(),
+                new SecurityContextPersistenceFilter()
+        };
     }
 
 }

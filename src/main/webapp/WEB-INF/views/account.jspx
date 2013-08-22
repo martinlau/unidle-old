@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:form="http://www.springframework.org/tags/form"
+          xmlns:spring="http://www.springframework.org/tags"
+          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
+          version="2.0">
+
+    <tags:navigation />
+
+    <p>
+        <spring:message code="account.introduction" />
+    </p>
+
+    <form:form modelAttribute="userForm" method="post" cssClass="form-inline">
+
+        <tags:input path="firstName" type="text">
+            <jsp:attribute name="label">
+                <spring:message code="account.form.first-name.label" />
+            </jsp:attribute>
+            <jsp:attribute name="placeholder">
+                <spring:message code="account.form.first-name.placeholder" />
+            </jsp:attribute>
+        </tags:input>
+
+        <tags:input path="lastName" type="text">
+            <jsp:attribute name="label">
+                <spring:message code="account.form.last-name.label" />
+            </jsp:attribute>
+            <jsp:attribute name="placeholder">
+                <spring:message code="account.form.last-name.placeholder" />
+            </jsp:attribute>
+        </tags:input>
+
+        <tags:input path="email" type="email">
+            <jsp:attribute name="label">
+                <spring:message code="account.form.email.label" />
+            </jsp:attribute>
+            <jsp:attribute name="placeholder">
+                <spring:message code="account.form.email.placeholder" />
+            </jsp:attribute>
+        </tags:input>
+
+        <p>
+            <form:button type="submit" class="btn btn-lg btn-primary btn-block" value="confirm">
+                <spring:message code="account.form.submit" />
+            </form:button>
+        </p>
+
+    </form:form>
+
+    <hr/>
+
+    <p>
+        <strong>
+            <spring:message code="account.connected-accounts" />
+        </strong>
+    </p>
+
+    <c:set var="hasTwitter" value="${false}" />
+    <c:set var="hasFacebook" value="${false}" />
+
+    <c:forEach items="${user.connections}" var="connection">
+        <c:if test="${connection.providerId eq 'facebook'}">
+            <c:set var="hasFacebook" value="${true}" />
+        </c:if>
+        <c:if test="${connection.providerId eq 'twitter'}">
+            <c:set var="hasTwitter" value="${true}" />
+        </c:if>
+        <div class="media">
+            <a class="pull-left" href="#">
+                <img class="media-object" src="${connection.imageUrl}" alt="${connection.displayName}" />
+            </a>
+            <div class="media-body">
+                <c:if test="${user.connections.size() gt 1}">
+                    <spring:url value="/connect/${connection.providerId}/${connection.providerUserId}" var="remove" />
+                    <form action="${remove}" method="post" class="pull-right">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <button type="submit" class="btn btn-danger">
+                            <spring:message code="account.connect.remove" />
+                        </button>
+                    </form>
+                </c:if>
+                <h4 class="media-heading">
+                    <c:choose>
+                        <c:when test="${not empty connection.profileUrl}">
+                            <a href="${connection.profileUrl}">
+                                ${connection.displayName}
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            ${connection.displayName}
+                        </c:otherwise>
+                    </c:choose>
+                </h4>
+            </div>
+        </div>
+    </c:forEach>
+
+    <hr/>
+
+    <spring:url value="/connect/facebook" var="facebook" />
+    <form action="${facebook}" method="post">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
+            <c:choose>
+                <c:when test="${hasFacebook}">
+                    <spring:message code="account.connect.facebook.more" />
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="account.connect.facebook" />
+                </c:otherwise>
+            </c:choose>
+        </button>
+    </form>
+
+    <p><!-- no collapse --></p>
+
+    <spring:url value="/connect/twitter" var="twitter" />
+    <form action="${twitter}" method="post">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
+            <c:choose>
+                <c:when test="${hasTwitter}">
+                    <spring:message code="account.connect.twitter.more" />
+                </c:when>
+                <c:otherwise>
+                    <spring:message code="account.connect.twitter" />
+                </c:otherwise>
+            </c:choose>
+        </button>
+    </form>
+
+    <!-- TODO Fix in CSS -->
+    <p><!-- no collapse --></p>
+
+</jsp:root>

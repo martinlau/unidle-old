@@ -19,7 +19,7 @@
     <form action="${facebook}" method="post">
         <button class="btn btn-lg btn-primary btn-block" type="submit">
             <i class="icon-facebook icon-fixed-width"><!-- no collapse --></i>
-            Sign in with Facebook
+            <spring:message code="singin.form.facebook" />
         </button>
     </form>
 
@@ -29,7 +29,7 @@
     <form action="${twitter}" method="post">
         <button class="btn btn-lg btn-primary btn-block" type="submit">
             <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
-            Sign in with Twitter
+            <spring:message code="singin.form.twitter" />
         </button>
     </form>
 

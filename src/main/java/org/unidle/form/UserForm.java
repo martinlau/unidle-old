@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.AssertTrue;
 
-public class SignupForm {
+public class UserForm {
 
     @Email
     @NotEmpty
@@ -17,13 +17,13 @@ public class SignupForm {
     @NotEmpty
     private String lastName;
 
-    public SignupForm() {
+    public UserForm() {
         super();
     }
 
-    public SignupForm(final String email,
-                      final String firstName,
-                      final String lastName) {
+    public UserForm(final String email,
+                    final String firstName,
+                    final String lastName) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

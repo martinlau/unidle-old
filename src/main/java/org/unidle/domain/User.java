@@ -34,6 +34,14 @@ public class User extends BaseEntity {
     @NotEmpty
     private String lastName;
 
+    public List<UserConnection> getConnections() {
+        return connections;
+    }
+
+    public void setConnections(final List<UserConnection> connections) {
+        this.connections = connections;
+    }
+
     public String getEmail() {
         return email;
     }

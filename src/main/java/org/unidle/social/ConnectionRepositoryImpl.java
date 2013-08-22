@@ -6,6 +6,7 @@ import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.DuplicateConnectionException;
 import org.springframework.social.connect.NoSuchConnectionException;
 import org.springframework.social.connect.NotConnectedException;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +27,9 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 
     private final TextEncryptor textEncryptor;
 
-    private final UserConnectionRepository userConnectionRepository;
-
     private final User user;
+
+    private final UserConnectionRepository userConnectionRepository;
 
     public ConnectionRepositoryImpl(final ConnectionFactoryLocator connectionFactoryLocator,
                                     final TextEncryptor textEncryptor,
@@ -180,12 +181,16 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
 
         final ConnectionData connectionData = connection.createData();
         final String providerId = connectionData.getProviderId();
+        final String providerUserId = connectionData.getProviderUserId();
 
         final int rank = userConnectionRepository.findRank(user, providerId);
 
         final UserConnection userConnection = Functions.toUserConnection(textEncryptor, rank, user)
                                                        .apply(connectionData);
 
+        if (userConnectionRepository.findOne(user, providerId, providerUserId) != null) {
+            throw new DuplicateConnectionException(connection.getKey());
+        }
         userConnectionRepository.save(userConnection);
     }
 

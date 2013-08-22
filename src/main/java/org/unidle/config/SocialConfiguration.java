@@ -16,15 +16,19 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
+import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.unidle.social.ConnectControllerImpl;
 
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 
 @Configuration
 @ComponentScan("org.unidle.social")
+@EnableTransactionManagement
 @PropertySource("classpath:unidle.properties")
 public class SocialConfiguration {
 
@@ -58,6 +62,24 @@ public class SocialConfiguration {
     }
 
     @Bean
+    public ConnectController connectController() {
+        return new ConnectControllerImpl(connectionFactoryLocator(),
+                                         connectionRepository());
+    }
+
+    @Bean
+    public ConnectionFactoryLocator connectionFactoryLocator() {
+        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
+
+        registry.addConnectionFactory(new FacebookConnectionFactory(facebookClientId,
+                                                                    facebookSecret));
+        registry.addConnectionFactory(new TwitterConnectionFactory(twitterConsumerKey,
+                                                                   twitterConsumerSecret));
+
+        return registry;
+    }
+
+    @Bean
     @Scope(value = "request",
            proxyMode = INTERFACES)
     public ConnectionRepository connectionRepository() {
@@ -78,18 +100,6 @@ public class SocialConfiguration {
         return new ProviderSignInController(connectionFactoryLocator(),
                                             usersConnectionRepository,
                                             signInAdapter);
-    }
-
-    @Bean
-    public ConnectionFactoryLocator connectionFactoryLocator() {
-        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-
-        registry.addConnectionFactory(new FacebookConnectionFactory(facebookClientId,
-                                                                    facebookSecret));
-        registry.addConnectionFactory(new TwitterConnectionFactory(twitterConsumerKey,
-                                                                   twitterConsumerSecret));
-
-        return registry;
     }
 
     @Bean
