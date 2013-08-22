@@ -33,7 +33,7 @@
 
     <p>
         <spring:url value="/signin" var="signin" />
-        <a href="${about}" class="btn btn-lg btn-primary btn-block">
+        <a href="${signin}" class="btn btn-lg btn-primary btn-block">
             <spring:message code="common.content.signin" />
         </a>
     </p>
