@@ -12,7 +12,7 @@
     </p>
 
     <p>
-        <spring:message code="singin.wontAbuse" />
+        <spring:message code="singin.wont-abuse" />
     </p>
 
     <spring:url value="/signin/facebook" var="facebook" />

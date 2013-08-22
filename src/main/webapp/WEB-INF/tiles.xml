@@ -11,7 +11,7 @@
 
     <definition name=".*" extends=".base">
         <put-attribute name="content" type="template" cascade="true" value="/WEB-INF/views/{1}.jspx"/>
-        <put-attribute name="subTitleCode" type="string" cascade="true" value="{1}.subTitle" />
+        <put-attribute name="subTitleCode" type="string" cascade="true" value="{1}.sub-title" />
     </definition>
 
 </tiles-definitions>

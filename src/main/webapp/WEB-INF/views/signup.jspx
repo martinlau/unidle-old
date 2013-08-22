@@ -16,19 +16,19 @@
 
         <tags:input path="firstName" type="text">
             <jsp:attribute name="label">
-                <spring:message code="signup.form.firstName.label" />
+                <spring:message code="signup.form.first-name.label" />
             </jsp:attribute>
             <jsp:attribute name="placeholder">
-                <spring:message code="signup.form.firstName.placeholder" />
+                <spring:message code="signup.form.first-name.placeholder" />
             </jsp:attribute>
         </tags:input>
 
         <tags:input path="lastName" type="text">
             <jsp:attribute name="label">
-                <spring:message code="signup.form.lastName.label" />
+                <spring:message code="signup.form.last-name.label" />
             </jsp:attribute>
             <jsp:attribute name="placeholder">
-                <spring:message code="signup.form.lastName.placeholder" />
+                <spring:message code="signup.form.last-name.placeholder" />
             </jsp:attribute>
         </tags:input>
 
@@ -43,7 +43,7 @@
 
         <p class="form-static-control">
             <spring:url var="terms" value="/terms" />
-            <spring:message code="signup.form.acceptTerms" arguments="${terms}" />
+            <spring:message code="signup.form.accept-terms" arguments="${terms}" />
         </p>
 
         <p>

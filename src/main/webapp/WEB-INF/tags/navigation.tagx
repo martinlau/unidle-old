@@ -13,9 +13,13 @@
                 <span class="icon-bar"><!-- no collapse --></span>
                 <span class="icon-bar"><!-- no collapse --></span>
             </button>
+            <!-- TODO Check if logged in and show link to something else -->
+            <spring:url value="/" var="home" />
             <span class="navbar-brand">
-                <tiles:importAttribute name="titleCode" />
-                <spring:message code="${titleCode}" />
+                <a href="${home}">
+                    <tiles:importAttribute name="titleCode" />
+                    <spring:message code="${titleCode}" />
+                </a>
                 <tiles:importAttribute name="subTitleCode" />
                 <spring:message code="${subTitleCode}" var="subTitle" text="" />
                 <c:if test="${not empty subTitle}">
@@ -25,6 +29,7 @@
         </div>
         <div class="collapse navbar-collapse main-navbar-collapse">
             <ul class="nav navbar-nav">
+                <!-- TODO Check if logged in and show link to something else -->
                 <li>
                     <spring:url value="/" var="home" />
                     <a href="${home}">Home</a>
@@ -41,7 +46,6 @@
                     <spring:url value="/open" var="open" />
                     <a href="${open}">Open</a>
                 </li>
-                <!-- TODO Check if logged in and show link to something else -->
                 <!-- TODO Check if logged in and show account link -->
                 <li>
                     <spring:url value="/signin" var="signin" />
