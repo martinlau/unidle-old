@@ -31,6 +31,7 @@
                                                       |${summaryDurationUnit}" argumentSeparator="|" />
     </p>
 
+    <!-- TODO Check if logged in and link to something else -->
     <p>
         <spring:url value="/signin" var="signin" />
         <a href="${signin}" class="btn btn-lg btn-primary btn-block">

@@ -8,6 +8,7 @@ public class SigninController {
 
     @RequestMapping("/signin")
     public String open() {
+        // TODO Check if logged in and redirect to something else
         return ".signin";
     }
 

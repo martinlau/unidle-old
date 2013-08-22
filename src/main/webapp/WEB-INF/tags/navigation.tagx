@@ -41,6 +41,8 @@
                     <spring:url value="/open" var="open" />
                     <a href="${open}">Open</a>
                 </li>
+                <!-- TODO Check if logged in and show link to something else -->
+                <!-- TODO Check if logged in and show account link -->
                 <li>
                     <spring:url value="/signin" var="signin" />
                     <a href="${signin}">Sign in</a>
