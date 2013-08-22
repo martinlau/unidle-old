@@ -43,7 +43,7 @@
 
         <p class="form-static-control">
             <spring:url var="terms" value="/terms" />
-            <spring:message code="signup.form.acceptTerms.label" arguments="${terms}" />
+            <spring:message code="signup.form.acceptTerms" arguments="${terms}" />
         </p>
 
         <p>

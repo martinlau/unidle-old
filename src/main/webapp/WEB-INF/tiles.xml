@@ -4,12 +4,14 @@
 <tiles-definitions>
 
     <definition name=".base" template="/WEB-INF/views/_base.jspx">
-        <put-attribute name="content" type="template"/>
-        <put-attribute name="titleCode" type="string" value="base.title"/>
+        <put-attribute name="content" type="template" cascade="true"/>
+        <put-attribute name="titleCode" type="string" cascade="true" value="base.title"/>
+        <put-attribute name="subTitleCode" type="string" cascade="true" value="" />
     </definition>
 
     <definition name=".*" extends=".base">
-        <put-attribute name="content" type="template" value="/WEB-INF/views/{1}.jspx"/>
+        <put-attribute name="content" type="template" cascade="true" value="/WEB-INF/views/{1}.jspx"/>
+        <put-attribute name="subTitleCode" type="string" cascade="true" value="{1}.subTitle" />
     </definition>
 
 </tiles-definitions>

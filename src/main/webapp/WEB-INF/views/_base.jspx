@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:spring="http://www.springframework.org/tags"
           xmlns:tiles="http://tiles.apache.org/tags-tiles"
@@ -19,6 +20,11 @@
             <title>
                 <tiles:importAttribute name="titleCode" />
                 <spring:message code="${titleCode}" />
+                <tiles:importAttribute name="subTitleCode" />
+                <spring:message code="${subTitleCode}" var="subTitle" text="" />
+                <c:if test="${not empty subTitle}">
+                    : ${subTitle}
+                </c:if>
             </title>
 
             <spring:url value="/image/favicon.ico?t=${buildTimestamp}" var="favicon_ico" />
