@@ -32,8 +32,15 @@
     </p>
 
     <p>
-        <spring:url value="/about" var="about" />
+        <spring:url value="/signin" var="signin" />
         <a href="${about}" class="btn btn-lg btn-primary btn-block">
+            <spring:message code="common.content.signin" />
+        </a>
+    </p>
+
+    <p>
+        <spring:url value="/about" var="about" />
+        <a href="${about}" class="btn btn-lg btn-default btn-block">
             <spring:message code="common.content.about" />
         </a>
     </p>

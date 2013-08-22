@@ -627,12 +627,20 @@
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
                     <exclusion>
-                        <groupId>org.codehaus.gmaven.runtime</groupId>
-                        <artifactId>gmaven-runtime-1.7</artifactId>
+                        <groupId>me.n4u.sass</groupId>
+                        <artifactId>sass-gems</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>nz.co.edmi</groupId>
                         <artifactId>bourbon-gem-jar</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.codehaus.gmaven.runtime</groupId>
+                        <artifactId>gmaven-runtime-1.7</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jruby</groupId>
+                        <artifactId>jruby-complete</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>org.webjars</groupId>
