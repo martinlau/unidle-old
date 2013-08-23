@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:spring="http://www.springframework.org/tags"
           version="2.0">
@@ -11,11 +12,12 @@
     <blockquote id="blockquote">
         <p>
             <spring:message code="${locationFact.taskTimeUnit.messageKey}" var="taskTimeUnit" />
+            <fmt:formatNumber value="${locationFact.taskPeople}" var="taskPeople" />
             <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}.plural" var="taskDurationTimeUnit" />
             <spring:message code="${locationFact.taskCode}" var="taskCode" />
             <spring:message code="home.fact" arguments="${taskTimeUnit}
                                                        |${locationFact.location}
-                                                       |${locationFact.taskPeople}
+                                                       |${taskPeople}
                                                        |${locationFact.taskDuration}
                                                        |${taskDurationTimeUnit}
                                                        |${taskCode}" argumentSeparator="|" />
