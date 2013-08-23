@@ -42,6 +42,7 @@
                             <usedDependencies>
                                 <usedDependency>ch.qos.logback:logback-classic</usedDependency>
                                 <usedDependency>com.h2database:h2</usedDependency>
+                                <usedDependency>info.cukes:cucumber-spring</usedDependency>
                                 <usedDependency>javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api</usedDependency>
                                 <usedDependency>org.apache.tiles:tiles-jsp</usedDependency>
                                 <usedDependency>org.glassfish.web:jstl-impl</usedDependency>
@@ -341,6 +342,11 @@
             </dependency>
             <dependency>
                 <groupId>info.cukes</groupId>
+                <artifactId>cucumber-core</artifactId>
+                <version>${cucumber.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>info.cukes</groupId>
                 <artifactId>cucumber-java</artifactId>
                 <version>${cucumber.version}</version>
             </dependency>
@@ -483,6 +489,11 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-api</artifactId>
+                <version>${selenium.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
@@ -782,6 +793,11 @@
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
+            <artifactId>cucumber-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.cukes</groupId>
             <artifactId>cucumber-java</artifactId>
             <scope>test</scope>
         </dependency>
@@ -877,6 +893,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>

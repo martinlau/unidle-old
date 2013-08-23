@@ -36,7 +36,7 @@ public class StepDefs {
     public void the_element_should_contain_the_text(final String element,
                                                     final String text) throws Throwable {
 
-        final String elementText = webDriver.findElement(By.tagName(element)).getText();
+        final String elementText = webDriver.findElement(By.id(element)).getText();
 
         assertThat(elementText).contains(text);
     }

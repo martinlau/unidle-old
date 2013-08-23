@@ -26,9 +26,7 @@ public class ScreenShotHook {
 
         final byte[] bytes = takesScreenshot.getScreenshotAs(BYTES);
 
-        scenario.write("<p>");
         scenario.embed(bytes, IMAGE_PNG_VALUE);
-        scenario.write("</p>");
     }
 
 }
