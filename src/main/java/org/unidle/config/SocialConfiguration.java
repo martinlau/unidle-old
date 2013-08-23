@@ -97,9 +97,13 @@ public class SocialConfiguration {
 
     @Bean
     public ProviderSignInController providerSignInController() {
-        return new ProviderSignInController(connectionFactoryLocator(),
-                                            usersConnectionRepository,
-                                            signInAdapter);
+        final ProviderSignInController providerSignInController = new ProviderSignInController(connectionFactoryLocator(),
+                                                                                               usersConnectionRepository,
+                                                                                               signInAdapter);
+
+        providerSignInController.setPostSignInUrl("/account");
+
+        return providerSignInController;
     }
 
     @Bean
