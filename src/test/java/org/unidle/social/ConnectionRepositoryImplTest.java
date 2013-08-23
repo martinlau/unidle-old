@@ -8,6 +8,7 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.DuplicateConnectionException;
 import org.springframework.social.connect.NoSuchConnectionException;
 import org.springframework.social.connect.NotConnectedException;
 import org.springframework.social.facebook.api.Facebook;
@@ -95,6 +96,23 @@ public class ConnectionRepositoryImplTest {
         userConnectionRepository.save(userConnection2);
 
         subject = connectionRepositoryFactory.getConnectionRepository(user.getId().toString());
+    }
+
+    @Test(expected = DuplicateConnectionException.class)
+    public void testAddConnectionWithDuplicate() throws Exception {
+        final ConnectionData connectionData = new ConnectionData("twitter",
+                                                                 "provider user id 3",
+                                                                 "display name",
+                                                                 "profile url",
+                                                                 "image url",
+                                                                 "access token",
+                                                                 "secret",
+                                                                 "refresh token",
+                                                                 1234L);
+        final Connection<?> connection = new ConnectionStub<>(connectionData);
+
+        subject.addConnection(connection);
+        subject.addConnection(connection);
     }
 
     @Test

@@ -28,10 +28,12 @@ public class AuditorAwareImpl implements AuditorAware<User> {
             return null;
         }
 
-        final String name = authentication.getName();
-        return name == null
+        final String uuid = authentication.getName();
+
+
+        return ((uuid == null) || "".equals(uuid))
                ? null
-               : userRepository.findOne(UUID.fromString(name));
+               : userRepository.findOne(UUID.fromString(uuid));
     }
 
 }
