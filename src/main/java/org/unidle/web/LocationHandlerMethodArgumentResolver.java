@@ -7,10 +7,12 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.util.WebUtils;
 import org.unidle.service.Location;
 import org.unidle.service.LocationService;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.util.StringUtils.hasText;
 
@@ -35,11 +37,12 @@ public class LocationHandlerMethodArgumentResolver implements HandlerMethodArgum
                                   final NativeWebRequest nativeWebRequest,
                                   final WebDataBinderFactory webDataBinderFactory) throws Exception {
 
-        final String address = hasText(nativeWebRequest.getParameter("address"))
-                               ? nativeWebRequest.getParameter("address")
-                               : hasText(nativeWebRequest.getHeader("X-Forwarded-For"))
-                                 ? nativeWebRequest.getHeader("X-Forwarded-For")
-                                 : nativeWebRequest.getNativeRequest(ServletRequest.class).getRemoteAddr();
+        final HttpServletRequest httpServletRequest = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
+        final Cookie cookie = WebUtils.getCookie(httpServletRequest, "address");
+
+        final String address = cookie != null ? cookie.getValue()
+                                              : hasText(nativeWebRequest.getHeader("X-Forwarded-For")) ? nativeWebRequest.getHeader("X-Forwarded-For")
+                                                                                                       : httpServletRequest.getRemoteAddr();
 
         return locationService.locateAddress(address);
     }

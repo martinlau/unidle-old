@@ -22,6 +22,7 @@ import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.WroConfiguration;
 import org.unidle.service.Location;
 
+import javax.servlet.http.Cookie;
 import java.lang.reflect.Method;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -73,9 +74,9 @@ public class LocationHandlerMethodArgumentResolverTest {
     }
 
     @Test
-    public void testResolveArgumentWithAddressOverride() throws Exception {
+    public void testResolveArgumentWithCookieOverride() throws Exception {
         mockRequest.setRemoteAddr("140.159.2.36"); // Melbourne
-        mockRequest.addParameter("address", "203.27.21.6"); // Sydney
+        mockRequest.setCookies(new Cookie("address", "203.27.21.6")); // Sydney
 
         final Location result = (Location) subject.resolveArgument(null, null, new ServletWebRequest(mockRequest), null);
 
