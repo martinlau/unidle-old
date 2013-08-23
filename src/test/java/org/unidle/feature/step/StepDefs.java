@@ -20,10 +20,10 @@ import static org.fest.assertions.Assertions.assertThat;
 public class StepDefs {
 
     @Autowired
-    private WebDriver webDriver;
+    private URL baseUrl;
 
     @Autowired
-    private URL baseUrl;
+    private WebDriver webDriver;
 
     @Given("^a user from \"([^\"]*)\" with the IP \"([^\"]*)\"$")
     public void a_user_from_with_the_IP(final String location,
