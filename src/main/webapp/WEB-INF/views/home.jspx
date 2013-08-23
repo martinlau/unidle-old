@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
           xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:spring="http://www.springframework.org/tags"
@@ -13,7 +14,12 @@
         <p>
             <spring:message code="${locationFact.taskTimeUnit.messageKey}" var="taskTimeUnit" />
             <fmt:formatNumber value="${locationFact.taskPeople}" var="taskPeople" />
-            <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}.plural" var="taskDurationTimeUnit" />
+            <c:choose>
+                <c:when test="${locationFact.taskDuration eq 1}">
+                    <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}" var="taskDurationTimeUnit" />                </c:when>
+                <c:otherwise>
+                    <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}.plural" var="taskDurationTimeUnit" />                </c:otherwise>
+            </c:choose>
             <spring:message code="${locationFact.taskCode}" var="taskCode" />
             <spring:message code="home.fact" arguments="${taskTimeUnit}
                                                        |${locationFact.location}
@@ -28,7 +34,14 @@
     </blockquote>
 
     <p id="summary">
-        <spring:message code="${locationFact.summaryDurationTimeUnit.messageKey}.plural" var="summaryDurationUnit" />
+        <c:choose>
+            <c:when test="${locationFact.summaryDuration eq 1}">
+                <spring:message code="${locationFact.summaryDurationTimeUnit.messageKey}" var="summaryDurationUnit" />
+            </c:when>
+            <c:otherwise>
+                <spring:message code="${locationFact.summaryDurationTimeUnit.messageKey}.plural" var="summaryDurationUnit" />
+            </c:otherwise>
+        </c:choose>
         <spring:message code="home.summary" arguments="${locationFact.summaryDuration}
                                                       |${summaryDurationUnit}" argumentSeparator="|" />
     </p>

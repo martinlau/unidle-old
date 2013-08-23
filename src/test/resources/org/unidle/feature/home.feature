@@ -7,12 +7,9 @@ Feature: Home page customisation
         And the "source" element should contain the text "<Source>"
         And the "summary" element should contain the text "<Summary>"
 
-    # TODO Format numbers
     # TODO Update the 'global' version to be something approaching literate
     # TODO Update 'people' to be 'person' if singular
     # TODO Update 'spend' to 'spends' if '1'
-    # TODO Update 'minute' to 'minutes' if '1'
-    # TODO Update 'year' to 'years' if '1'
     # TODO Allow for variations on names (eg every day in 'the' Northern Territory)
     Examples:
         | Location                     | Address         | Fact                                                                              | Source                                            | Summary                                                                                        |
