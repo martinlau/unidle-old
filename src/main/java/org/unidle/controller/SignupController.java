@@ -33,6 +33,7 @@ public class SignupController {
     @RequestMapping(method = GET,
                     value = "/signup")
     public String signup() {
+        // TODO Check for existing connection
         return ".signup";
     }
 
@@ -53,9 +54,9 @@ public class SignupController {
             return ".signup";
         }
 
-        final User user = userService.createUser(userForm.getEmail(), userForm.getFirstName(),
-                                                 userForm.getLastName()
-                                                );
+        final User user = userService.createUser(userForm.getEmail(),
+                                                 userForm.getFirstName(),
+                                                 userForm.getLastName());
 
         ProviderSignInUtils.handlePostSignUp(user.getId().toString(),
                                              webRequest);
@@ -79,9 +80,11 @@ public class SignupController {
 
         final UserProfile userProfile = connection.fetchUserProfile();
 
-        return new UserForm(userProfile.getEmail(),
-                            userProfile.getFirstName(),
-                            userProfile.getLastName());
+        return userProfile == null
+               ? new UserForm()
+               : new UserForm(userProfile.getEmail(),
+                              userProfile.getFirstName(),
+                              userProfile.getLastName());
     }
 
 }
