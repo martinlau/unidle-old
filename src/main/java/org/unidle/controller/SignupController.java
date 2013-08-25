@@ -25,6 +25,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 public class SignupController {
 
+    // TODO Test this
+
     @Autowired
     private UserService userService;
 
