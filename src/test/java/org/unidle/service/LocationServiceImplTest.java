@@ -133,7 +133,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForInternalAddress() throws Exception {
-        final Location result = subject.locateAddress("127.3.2.1");
+        final Location result = subject.locateAddress("127.0.0.1");
 
         assertThat(result)
                 .isSameAs(DEFAULT)
@@ -145,7 +145,19 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForUnknownAddress() throws Exception {
-        final Location result = subject.locateAddress("127.0.0.1");
+        final Location result = subject.locateAddress("0.0.0.0");
+
+        assertThat(result)
+                .isSameAs(DEFAULT)
+                .satisfies(hasCity(""))
+                .satisfies(hasSubdivision(""))
+                .satisfies(hasCountry(""))
+                .satisfies(hasContinent(""));
+    }
+
+    @Test
+    public void testLocateAddressWithNull() throws Exception {
+        final Location result = subject.locateAddress(null);
 
         assertThat(result)
                 .isSameAs(DEFAULT)
