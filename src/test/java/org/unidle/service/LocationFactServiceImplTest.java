@@ -88,15 +88,7 @@ public class LocationFactServiceImplTest {
     public void testFindBestFactWithNothing() throws Exception {
         final LocationFact result = subject.findBestFact("Unknown", "Unknown", "Unknown", "Unknown");
 
-        assertThat(result)
-                .satisfies(hasTaskTimeUnit(DAY))
-                .satisfies(hasTaskPeople(800000))
-                .satisfies(hasTaskDuration(75))
-                .satisfies(hasTaskDurationTimeUnit(MINUTE))
-                .satisfies(hasTaskCode("common.task.public-transport"))
-                .satisfies(hasSummaryDuration(100))
-                .satisfies(hasSummaryDurationTimeUnit(YEAR))
-                .satisfies(hasSource("Bureau of Transport Statistics, Transport for NSW"));
+        assertThat(result).isNull();
     }
 
     @Test
