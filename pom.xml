@@ -226,8 +226,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- TODO Enable this -->
-                    <haltOnFailure>false</haltOnFailure>
+                    <haltOnFailure>true</haltOnFailure>
                     <excludes>
                         <exclude>**/config/*.class</exclude>
                     </excludes>
@@ -238,7 +237,7 @@
                                 <limit>
                                     <counter>BRANCH</counter>
                                     <value>COVEREDRATIO</value>
-                                    <minimum>0.80</minimum>
+                                    <minimum>0.90</minimum>
                                 </limit>
                             </limits>
                         </rule>
@@ -248,7 +247,7 @@
                                 <limit>
                                     <counter>BRANCH</counter>
                                     <value>COVEREDRATIO</value>
-                                    <minimum>0.70</minimum>
+                                    <minimum>0.80</minimum>
                                 </limit>
                             </limits>
                         </rule>
@@ -258,7 +257,7 @@
                                 <limit>
                                     <counter>BRANCH</counter>
                                     <value>COVEREDRATIO</value>
-                                    <minimum>0.60</minimum>
+                                    <minimum>0.70</minimum>
                                 </limit>
                             </limits>
                         </rule>
@@ -268,7 +267,7 @@
                                 <limit>
                                     <counter>BRANCH</counter>
                                     <value>COVEREDRATIO</value>
-                                    <minimum>0.50</minimum>
+                                    <minimum>0.70</minimum>
                                 </limit>
                             </limits>
                         </rule>
