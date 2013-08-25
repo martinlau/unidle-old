@@ -12,6 +12,11 @@
 
     <blockquote id="blockquote">
         <p>
+            <c:set var="locationFactPrefix">
+                <c:if test="${not empty locationFact.locationPrefix}">
+                    <spring:message code="${locationFact.locationPrefix}" />
+                </c:if>
+            </c:set>
             <spring:message code="${locationFact.taskTimeUnit.messageKey}" var="taskTimeUnit" />
             <fmt:formatNumber value="${locationFact.taskPeople}" var="taskPeople" />
             <c:set var="taskDurationTimeUnit">
@@ -28,6 +33,7 @@
             <c:choose>
                 <c:when test="${locationFact.taskPeople eq 1}">
                     <spring:message code="home.fact" arguments="${taskTimeUnit}
+                                                               |${locationFactPrefix}
                                                                |${locationFact.location}
                                                                |${taskPeople}
                                                                |${locationFact.taskDuration}
@@ -36,6 +42,7 @@
                 </c:when>
                 <c:otherwise>
                     <spring:message code="home.fact.plural" arguments="${taskTimeUnit}
+                                                                      |${locationFactPrefix}
                                                                       |${locationFact.location}
                                                                       |${taskPeople}
                                                                       |${locationFact.taskDuration}

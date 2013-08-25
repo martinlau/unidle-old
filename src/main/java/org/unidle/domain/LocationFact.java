@@ -27,6 +27,10 @@ public class LocationFact extends BaseEntity implements Serializable {
             nullable = false)
     private String country = "";
 
+    @Column(name = "location_prefix",
+            nullable = false)
+    private String locationPrefix = "";
+
     @Column(name = "source",
             nullable = false)
     private String source = "";
@@ -96,6 +100,14 @@ public class LocationFact extends BaseEntity implements Serializable {
                                                     : hasText(country) ? country
                                                                        : hasText(continent) ? continent
                                                                                             : null;
+    }
+
+    public String getLocationPrefix() {
+        return locationPrefix;
+    }
+
+    public void setLocationPrefix(final String locationPrefix) {
+        this.locationPrefix = locationPrefix;
     }
 
     public String getSource() {
@@ -173,10 +185,11 @@ public class LocationFact extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return format(
-                "LocationFact(city='%s', continent='%s', country='%s', source='%s', subdivision='%s', summaryDuration=%d, summaryDurationTimeUnit=%s, taskCode='%s', taskDuration=%d, taskDurationTimeUnit=%s, taskPeople=%d, taskTimeUnit=%s)",
+                "LocationFact(city='%s', continent='%s', country='%s', source='%s', locationPrefix='%s', subdivision='%s', summaryDuration=%d, summaryDurationTimeUnit=%s, taskCode='%s', taskDuration=%d, taskDurationTimeUnit=%s, taskPeople=%d, taskTimeUnit=%s)",
                 city,
                 continent,
                 country,
+                locationPrefix,
                 source,
                 subdivision,
                 summaryDuration,

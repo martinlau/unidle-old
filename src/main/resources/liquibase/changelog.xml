@@ -53,6 +53,10 @@
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
+            <column name="location_prefix"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
             <column name="task_time_unit"
                     type="VARCHAR">
                 <constraints nullable="false"/>
