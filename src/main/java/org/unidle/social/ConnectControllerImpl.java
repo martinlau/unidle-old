@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ConnectControllerImpl extends ConnectController {
 
+    // TODO Test this
+
     public ConnectControllerImpl(final ConnectionFactoryLocator connectionFactoryLocator,
                                  final ConnectionRepository connectionRepository) {
         super(connectionFactoryLocator, connectionRepository);
