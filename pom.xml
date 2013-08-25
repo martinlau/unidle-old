@@ -226,15 +226,29 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <!-- TODO Enable this -->
                     <haltOnFailure>false</haltOnFailure>
+                    <excludes>
+                        <exclude>**/config/*.class</exclude>
+                    </excludes>
                     <rules>
+                        <rule>
+                            <element>BUNDLE</element>
+                            <limits>
+                                <limit>
+                                    <counter>BRANCH</counter>
+                                    <value>COVEREDRATIO</value>
+                                    <minimum>0.80</minimum>
+                                </limit>
+                            </limits>
+                        </rule>
                         <rule>
                             <element>PACKAGE</element>
                             <limits>
                                 <limit>
                                     <counter>BRANCH</counter>
                                     <value>COVEREDRATIO</value>
-                                    <minimum>0.75</minimum>
+                                    <minimum>0.70</minimum>
                                 </limit>
                             </limits>
                         </rule>
@@ -244,7 +258,7 @@
                                 <limit>
                                     <counter>BRANCH</counter>
                                     <value>COVEREDRATIO</value>
-                                    <minimum>0.75</minimum>
+                                    <minimum>0.60</minimum>
                                 </limit>
                             </limits>
                         </rule>
@@ -254,7 +268,7 @@
                                 <limit>
                                     <counter>BRANCH</counter>
                                     <value>COVEREDRATIO</value>
-                                    <minimum>0.75</minimum>
+                                    <minimum>0.50</minimum>
                                 </limit>
                             </limits>
                         </rule>
