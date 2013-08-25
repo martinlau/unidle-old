@@ -46,7 +46,6 @@
                                 <usedDependency>javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api</usedDependency>
                                 <usedDependency>org.apache.tiles:tiles-jsp</usedDependency>
                                 <usedDependency>org.glassfish.web:jstl-impl</usedDependency>
-                                <usedDependency>org.hamcrest:hamcrest-library</usedDependency>
                                 <usedDependency>org.hibernate:hibernate-ehcache</usedDependency>
                                 <usedDependency>org.hibernate:hibernate-entitymanager</usedDependency>
                                 <usedDependency>org.jadira.usertype:usertype.jodatime</usedDependency>

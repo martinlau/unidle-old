@@ -1,5 +1,6 @@
 package org.unidle.repository;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,6 +48,11 @@ public class AuditorAwareImplTest {
         user.setLastName("last name");
 
         user = userRepository.save(user);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        SecurityContextHolder.clearContext();
     }
 
     @Test
