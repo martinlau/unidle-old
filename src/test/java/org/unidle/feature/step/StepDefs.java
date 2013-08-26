@@ -28,6 +28,7 @@ public class StepDefs {
     @Given("^a user from \"([^\"]*)\" with the IP \"([^\"]*)\"$")
     public void a_user_from_with_the_IP(final String location,
                                         final String address) throws Throwable {
+
         webDriver.manage().addCookie(new Cookie("location", location));
         webDriver.manage().addCookie(new Cookie("address", address));
     }
