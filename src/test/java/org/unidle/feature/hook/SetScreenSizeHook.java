@@ -13,19 +13,17 @@ import org.unidle.feature.config.FeatureConfig;
 @WebAppConfiguration
 public class SetScreenSizeHook {
 
-    @Autowired(required = false)
+    @Autowired
     private Dimension dimension;
 
-    @Autowired(required = false)
+    @Autowired
     private WebDriver webDriver;
 
     @Before
     public void beforeScenario(@SuppressWarnings("unused") final Scenario scenario) {
-        if (webDriver == null) {
-            return;
-        }
-
-        webDriver.manage().window().setSize(dimension);
+        webDriver.manage()
+                 .window()
+                 .setSize(dimension);
     }
 
 }
