@@ -1,4 +1,5 @@
 Feature: Home page customisation
+
     As a prospective user
     I want to be shown information about time wasted
     In order to feel motivated to join the site
