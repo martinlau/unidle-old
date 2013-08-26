@@ -25,6 +25,11 @@ public class StepDefs {
     @Autowired
     private WebDriver webDriver;
 
+    @Given("^a user$")
+    public void a_user() throws Throwable {
+        // Nothing to see here
+    }
+
     @Given("^a user from \"([^\"]*)\" with the IP \"([^\"]*)\"$")
     public void a_user_from_with_the_IP(final String location,
                                         final String address) throws Throwable {
@@ -40,6 +45,19 @@ public class StepDefs {
         final String elementText = webDriver.findElement(By.id(element)).getText();
 
         assertThat(elementText).contains(text);
+    }
+
+    @Then("^the page should contain \"([^\"]*)\"$")
+    public void the_page_should_contain(final String content) throws Throwable {
+        final String body = webDriver.findElement(By.tagName("body")).getText();
+
+        assertThat(body).contains(content);
+    }
+
+    @Then("^the title should contain \"([^\"]*)\"$")
+    public void the_title_should_contain(final String title) throws Throwable {
+
+        assertThat(webDriver.getTitle()).contains(title);
     }
 
     @When("^they access the \"([^\"]*)\" page$")
