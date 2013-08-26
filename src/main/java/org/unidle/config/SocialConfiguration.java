@@ -22,7 +22,6 @@ import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.unidle.social.ConnectControllerImpl;
 
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 
@@ -63,20 +62,8 @@ public class SocialConfiguration {
 
     @Bean
     public ConnectController connectController() {
-        return new ConnectControllerImpl(connectionFactoryLocator(),
-                                         connectionRepository());
-    }
-
-    @Bean
-    public ConnectionFactoryLocator connectionFactoryLocator() {
-        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-
-        registry.addConnectionFactory(new FacebookConnectionFactory(facebookClientId,
-                                                                    facebookSecret));
-        registry.addConnectionFactory(new TwitterConnectionFactory(twitterConsumerKey,
-                                                                   twitterConsumerSecret));
-
-        return registry;
+        return new ConnectController(connectionFactoryLocator(),
+                                     connectionRepository());
     }
 
     @Bean
@@ -93,6 +80,18 @@ public class SocialConfiguration {
         final String name = authentication.getName();
 
         return usersConnectionRepository.createConnectionRepository(name);
+    }
+
+    @Bean
+    public ConnectionFactoryLocator connectionFactoryLocator() {
+        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
+
+        registry.addConnectionFactory(new FacebookConnectionFactory(facebookClientId,
+                                                                    facebookSecret));
+        registry.addConnectionFactory(new TwitterConnectionFactory(twitterConsumerKey,
+                                                                   twitterConsumerSecret));
+
+        return registry;
     }
 
     @Bean
