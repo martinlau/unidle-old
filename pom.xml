@@ -73,7 +73,7 @@
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>${maven-enforcer-plugin.version}</version>
                 <configuration>
-                    <rules combine.children="append">
+                    <rules>
                         <bannedDependencies>
                             <excludes>
                                 <exclude>commons-logging:commons-logging</exclude>
@@ -166,7 +166,7 @@
                         <phase>post-integration-test</phase>
                     </execution>
                 </executions>
-                <configuration combine.children="append">
+                <configuration>
                     <path>/</path>
                 </configuration>
             </plugin>
@@ -526,6 +526,11 @@
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.seleniumhq.selenium</groupId>
+                <artifactId>selenium-support</artifactId>
+                <version>${selenium.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -926,6 +931,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-support</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <scope>runtime</scope>
@@ -1081,7 +1091,7 @@
                         <artifactId>maven-enforcer-plugin</artifactId>
                         <version>${maven-enforcer-plugin.version}</version>
                         <configuration>
-                            <rules>
+                            <rules combine.self="append">
                                 <requireProperty>
                                     <property>facebook.username</property>
                                     <message>'facebook.username' must be defined in your settings.xml</message>
@@ -1143,7 +1153,7 @@
                         <groupId>org.apache.tomcat.maven</groupId>
                         <artifactId>tomcat7-maven-plugin</artifactId>
                         <version>${tomcat7-maven-plugin.version}</version>
-                        <configuration combine.children="append">
+                        <configuration combine.self="append">
                             <port>${tomcat.port}</port>
                             <systemProperties>
                                 <unidle.facebook.clientId>${unidle.facebook.clientId}</unidle.facebook.clientId>
