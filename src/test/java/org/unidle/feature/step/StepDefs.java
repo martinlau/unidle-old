@@ -1,5 +1,7 @@
 package org.unidle.feature.step;
 
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -23,7 +25,7 @@ public class StepDefs {
     private URL baseUrl;
 
     @Autowired
-    private WebDriver webDriver;
+    private WebDriver driver;
 
     @Given("^a user$")
     public void a_user() throws Throwable {
@@ -34,22 +36,22 @@ public class StepDefs {
     public void a_user_from_with_the_IP(final String location,
                                         final String address) throws Throwable {
 
-        webDriver.manage().addCookie(new Cookie("location", location));
-        webDriver.manage().addCookie(new Cookie("address", address));
+        driver.manage().addCookie(new Cookie("location", location));
+        driver.manage().addCookie(new Cookie("address", address));
     }
 
     @Then("^the \"([^\"]*)\" element should contain the text \"([^\"]*)\"$")
     public void the_element_should_contain_the_text(final String element,
                                                     final String text) throws Throwable {
 
-        final String elementText = webDriver.findElement(By.id(element)).getText();
+        final String elementText = driver.findElement(By.id(element)).getText();
 
         assertThat(elementText).contains(text);
     }
 
     @Then("^the page should contain \"([^\"]*)\"$")
     public void the_page_should_contain(final String content) throws Throwable {
-        final String body = webDriver.findElement(By.tagName("body")).getText();
+        final String body = driver.findElement(By.tagName("body")).getText();
 
         assertThat(body).contains(content);
     }
@@ -57,12 +59,12 @@ public class StepDefs {
     @Then("^the title should contain \"([^\"]*)\"$")
     public void the_title_should_contain(final String title) throws Throwable {
 
-        assertThat(webDriver.getTitle()).contains(title);
+        assertThat(driver.getTitle()).contains(title);
     }
 
     @When("^they access the \"([^\"]*)\" page$")
     public void they_access_the_page(final String path) throws Throwable {
-        webDriver.navigate().to(baseUrl + path);
+        driver.navigate().to(baseUrl + path);
     }
 
 }
