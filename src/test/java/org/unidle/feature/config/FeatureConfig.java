@@ -16,17 +16,17 @@ import static java.lang.String.format;
 @Configuration
 public class FeatureConfig {
 
+    @Value("${tomcat.port}")
+    private int port;
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    @Value("${tomcat.port}")
-    private int port;
-
     @Bean
     public URL baseUrl() throws MalformedURLException {
-        return new URL(format("http://localhost:%d", port));
+        return new URL(format("http://127.0.0.1.xip.io:%d", port));
     }
 
     @Bean
