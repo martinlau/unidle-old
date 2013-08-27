@@ -33,7 +33,7 @@ public class FeatureConfig {
 
     @Bean
     public URL baseUrl() throws MalformedURLException {
-        return new URL(format("http://127.0.0.1.xip.io:%d", port));
+        return new URL(format("http://127.0.0.1:%d", port));
     }
 
     @Bean
