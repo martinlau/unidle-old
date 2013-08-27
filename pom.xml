@@ -54,6 +54,11 @@
         <developerConnection>scm:git:git@github.com:martinlau/unidle.git</developerConnection>
     </scm>
 
+    <ciManagement>
+        <system>drone.io</system>
+        <url>https://drone.io/github.com/martinlau/unidle</url>
+    </ciManagement>
+
     <issueManagement>
         <url>https://github.com/martinlau/unidle/issues</url>
         <system>github</system>
