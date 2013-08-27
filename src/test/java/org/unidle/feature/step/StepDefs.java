@@ -1,17 +1,13 @@
 package org.unidle.feature.step;
 
-import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.unidle.feature.config.FeatureConfig;
+import org.unidle.feature.page.GenericPage;
 
 import java.net.URL;
 
@@ -25,7 +21,7 @@ public class StepDefs {
     private URL baseUrl;
 
     @Autowired
-    private WebDriver driver;
+    private GenericPage genericPage;
 
     @Given("^a user$")
     public void a_user() throws Throwable {
@@ -36,35 +32,31 @@ public class StepDefs {
     public void a_user_from_with_the_IP(final String location,
                                         final String address) throws Throwable {
 
-        driver.manage().addCookie(new Cookie("location", location));
-        driver.manage().addCookie(new Cookie("address", address));
+        genericPage.addCookie("location", location);
+        genericPage.addCookie("address", address);
     }
 
     @Then("^the \"([^\"]*)\" element should contain the text \"([^\"]*)\"$")
     public void the_element_should_contain_the_text(final String element,
                                                     final String text) throws Throwable {
 
-        final String elementText = driver.findElement(By.id(element)).getText();
-
-        assertThat(elementText).contains(text);
+        assertThat(genericPage.getText(element)).contains(text);
     }
 
     @Then("^the page should contain \"([^\"]*)\"$")
     public void the_page_should_contain(final String content) throws Throwable {
-        final String body = driver.findElement(By.tagName("body")).getText();
-
-        assertThat(body).contains(content);
+        assertThat(genericPage.getText()).contains(content);
     }
 
     @Then("^the title should contain \"([^\"]*)\"$")
     public void the_title_should_contain(final String title) throws Throwable {
 
-        assertThat(driver.getTitle()).contains(title);
+        assertThat(genericPage.getTitle()).contains(title);
     }
 
     @When("^they access the \"([^\"]*)\" page$")
     public void they_access_the_page(final String path) throws Throwable {
-        driver.navigate().to(baseUrl + path);
+        genericPage.navigateTo(baseUrl + path);
     }
 
 }
