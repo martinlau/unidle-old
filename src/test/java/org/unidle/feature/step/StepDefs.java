@@ -25,7 +25,7 @@ public class StepDefs {
 
     @Given("^a user$")
     public void a_user() throws Throwable {
-        // Nothing to see here
+        assertThat(genericPage.isAcceptable()).isTrue();
     }
 
     @Given("^a user from \"([^\"]*)\" with the IP \"([^\"]*)\"$")
