@@ -119,7 +119,7 @@ public class DataConfiguration {
 
         jpaVendorAdapter.setDatabase(jpaVendorDatabase);
 
-        final Map<String, Object> jpaProperties = new LinkedHashMap<String, Object>();
+        final Map<String, Object> jpaProperties = new LinkedHashMap<>();
 
         jpaProperties.put("hibernate.cache.region.factory_class", hibernateEhcacheRegionFactoryClass);
         jpaProperties.put("hibernate.cache.use_query_cache", hibernateUseQueryCache);
