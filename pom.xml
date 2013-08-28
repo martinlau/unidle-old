@@ -1294,13 +1294,6 @@
         <license.failOnMissingHeader>true</license.failOnMissingHeader>
         <license.licenseName>agpl_v3</license.licenseName>
 
-        <!--<jacoco-maven-plugin.bundle.branch-coverage.minimum>1.00</jacoco-maven-plugin.bundle.branch-coverage.minimum>-->
-        <!--<jacoco-maven-plugin.bundle.instruction-coverage.minimum>1.00</jacoco-maven-plugin.bundle.instruction-coverage.minimum>-->
-        <!--<jacoco-maven-plugin.package.branch-coverage.minimum>1.00</jacoco-maven-plugin.package.branch-coverage.minimum>-->
-        <!--<jacoco-maven-plugin.package.instruction-coverage.minimum>1.00</jacoco-maven-plugin.package.instruction-coverage.minimum>-->
-        <!--<jacoco-maven-plugin.class.branch-coverage.minimum>1.00</jacoco-maven-plugin.class.branch-coverage.minimum>-->
-        <!--<jacoco-maven-plugin.class.instruction-coverage.minimum>1.00</jacoco-maven-plugin.class.instruction-coverage.minimum>-->
-        <!--<jacoco-maven-plugin.method.branch-coverage.minimum>1.00</jacoco-maven-plugin.method.branch-coverage.minimum>-->
         <jacoco-maven-plugin.bundle.branch-coverage.minimum>0.95</jacoco-maven-plugin.bundle.branch-coverage.minimum>
         <jacoco-maven-plugin.bundle.instruction-coverage.minimum>0.95</jacoco-maven-plugin.bundle.instruction-coverage.minimum>
         <jacoco-maven-plugin.package.branch-coverage.minimum>0.95</jacoco-maven-plugin.package.branch-coverage.minimum>
