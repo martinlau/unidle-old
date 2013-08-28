@@ -20,10 +20,14 @@
  */
 package org.unidle.domain;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 import static java.lang.String.format;
@@ -53,6 +57,7 @@ public class LocationFact extends BaseEntity implements Serializable {
 
     @Column(name = "source",
             nullable = false)
+    @NotEmpty
     private String source = "";
 
     @Column(name = "subdivision",
@@ -61,33 +66,43 @@ public class LocationFact extends BaseEntity implements Serializable {
 
     @Column(name = "summary_duration",
             nullable = false)
+    @Min(0)
+    @NotNull
     private Integer summaryDuration = 0;
 
     @Column(name = "summary_duration_time_unit",
             nullable = false)
     @Enumerated(STRING)
+    @NotNull
     private TimeUnit summaryDurationTimeUnit = UNKNOWN;
 
     @Column(name = "task_code",
             nullable = false)
+    @NotEmpty
     private String taskCode = "";
 
     @Column(name = "task_duration",
             nullable = false)
+    @Min(0)
+    @NotNull
     private Integer taskDuration = 0;
 
     @Column(name = "task_duration_time_unit",
             nullable = false)
     @Enumerated(STRING)
+    @NotNull
     private TimeUnit taskDurationTimeUnit = UNKNOWN;
 
     @Column(name = "task_people",
             nullable = false)
+    @Min(0)
+    @NotNull
     private Integer taskPeople = 0;
 
     @Column(name = "task_time_unit",
             nullable = false)
     @Enumerated(STRING)
+    @NotNull
     private TimeUnit taskTimeUnit = UNKNOWN;
 
     public String getCity() {
