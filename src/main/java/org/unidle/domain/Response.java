@@ -38,25 +38,25 @@ import java.util.Set;
 import static java.lang.String.format;
 
 @Entity
-@Table(name = "replies")
-public class Reply extends BaseEntity implements Serializable {
+@Table(name = "responses")
+public class Response extends BaseEntity implements Serializable {
 
-    @OneToMany(mappedBy = "parentReply")
+    @OneToMany(mappedBy = "parentResponse")
     @OrderBy("createdDate ASC")
-    private List<Reply> childReplies = new LinkedList<>();
+    private List<Response> childReplies = new LinkedList<>();
 
-    @JoinColumn(name = "parent_reply_uuid")
+    @Column(name = "comments",
+            nullable = false)
+    private String comments = "";
+
+    @JoinColumn(name = "parent_response_uuid")
     @ManyToOne
-    private Reply parentReply;
+    private Response parentResponse;
 
     @JoinColumn(name = "question_uuid",
                 nullable = false)
     @ManyToOne
     private Question question;
-
-    @Column(name = "reply",
-            nullable = false)
-    private String reply = "";
 
     @Column(name = "score",
             nullable = false)
@@ -64,24 +64,32 @@ public class Reply extends BaseEntity implements Serializable {
 
     @Column(name = "tag")
     @ElementCollection
-    @JoinTable(name = "reply_tags",
-               joinColumns = @JoinColumn(name = "reply_uuid"))
+    @JoinTable(name = "response_tags",
+               joinColumns = @JoinColumn(name = "response_uuid"))
     private Set<String> tags = new HashSet<>();
 
-    public List<Reply> getChildReplies() {
+    public List<Response> getChildReplies() {
         return childReplies;
     }
 
-    public void setChildReplies(final List<Reply> childReplies) {
+    public void setChildReplies(final List<Response> childReplies) {
         this.childReplies = childReplies;
     }
 
-    public Reply getParentReply() {
-        return parentReply;
+    public String getComments() {
+        return comments;
     }
 
-    public void setParentReply(final Reply parentReply) {
-        this.parentReply = parentReply;
+    public void setComments(final String comments) {
+        this.comments = comments;
+    }
+
+    public Response getParentResponse() {
+        return parentResponse;
+    }
+
+    public void setParentResponse(final Response parentResponse) {
+        this.parentResponse = parentResponse;
     }
 
     public Question getQuestion() {
@@ -90,14 +98,6 @@ public class Reply extends BaseEntity implements Serializable {
 
     public void setQuestion(final Question question) {
         this.question = question;
-    }
-
-    public String getReply() {
-        return reply;
-    }
-
-    public void setReply(final String reply) {
-        this.reply = reply;
     }
 
     public Short getScore() {
@@ -118,8 +118,8 @@ public class Reply extends BaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return format("Reply(childReplies=%s, parentReply=%s, question=%s, tags=%s, reply='%s', score=%s)",
-                      childReplies, parentReply, question, tags, reply, score);
+        return format("Response(childReplies=%s, parentResponse=%s, question=%s, tags=%s, comments='%s', score=%s)",
+                      childReplies, parentResponse, question, tags, comments, score);
     }
 
 }

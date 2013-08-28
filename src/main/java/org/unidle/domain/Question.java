@@ -46,7 +46,7 @@ public class Question extends BaseEntity implements Serializable {
 
     @OneToMany(mappedBy = "question")
     @OrderBy("createdDate ASC")
-    private List<Reply> replies = new LinkedList<>();
+    private List<Response> responses = new LinkedList<>();
 
     @Column(name = "tag")
     @ElementCollection
@@ -62,12 +62,12 @@ public class Question extends BaseEntity implements Serializable {
         this.question = question;
     }
 
-    public List<Reply> getReplies() {
-        return replies;
+    public List<Response> getResponses() {
+        return responses;
     }
 
-    public void setReplies(final List<Reply> replies) {
-        this.replies = replies;
+    public void setResponses(final List<Response> responses) {
+        this.responses = responses;
     }
 
     public Set<String> getTags() {
@@ -80,8 +80,8 @@ public class Question extends BaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return format("Question(question='%s', replies=%s, tags=%s)",
-                      question, replies, tags);
+        return format("Question(question='%s', responses=%s, tags=%s)",
+                      question, responses, tags);
     }
 
 }

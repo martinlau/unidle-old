@@ -376,10 +376,10 @@
 
     </changeSet>
 
-    <changeSet id="008 replies"
+    <changeSet id="008 responses"
                author="Martin Lau [m@hum.ph]">
 
-        <createTable tableName="replies">
+        <createTable tableName="responses">
             <column name="uuid"
                     type="VARCHAR">
                 <constraints primaryKey="true"/>
@@ -406,10 +406,10 @@
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
-            <column name="parent_reply_uuid"
+            <column name="parent_response_uuid"
                     type="VARCHAR"/>
 
-            <column name="reply"
+            <column name="comments"
                     type="VARCHAR">
                 <constraints nullable="false"/>
             </column>
@@ -420,25 +420,25 @@
 
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="replies"
+        <addForeignKeyConstraint baseTableName="responses"
                                  baseColumnNames="created_by_user_uuid"
-                                 constraintName="fk_replies_created_by_user_uuid"
+                                 constraintName="fk_responses_created_by_user_uuid"
                                  referencedTableName="users"
                                  referencedColumnNames="uuid"/>
 
-        <addForeignKeyConstraint baseTableName="replies"
+        <addForeignKeyConstraint baseTableName="responses"
                                  baseColumnNames="last_modified_by_user_uuid"
-                                 constraintName="fk_replies_last_modified_by_user_uuid"
+                                 constraintName="fk_responses_last_modified_by_user_uuid"
                                  referencedTableName="users"
                                  referencedColumnNames="uuid"/>
 
     </changeSet>
 
-    <changeSet id="009 reply_tags"
+    <changeSet id="009 response_tags"
                author="Martin Lau [m@hum.ph]">
 
-        <createTable tableName="reply_tags">
-            <column name="reply_uuid"
+        <createTable tableName="response_tags">
+            <column name="response_uuid"
                     type="VARCHAR">
                 <constraints primaryKey="true"/>
             </column>
@@ -449,10 +449,10 @@
 
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="reply_tags"
-                                 baseColumnNames="reply_uuid"
-                                 constraintName="fk_reply_tags_reply_uuid"
-                                 referencedTableName="replies"
+        <addForeignKeyConstraint baseTableName="response_tags"
+                                 baseColumnNames="response_uuid"
+                                 constraintName="fk_response_tags_response_uuid"
+                                 referencedTableName="responses"
                                  referencedColumnNames="uuid"/>
 
     </changeSet>

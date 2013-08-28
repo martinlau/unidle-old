@@ -51,13 +51,13 @@ public class QuestionTest {
     }
 
     @Test
-    public void testGetReplies() throws Exception {
-        final List<Reply> replies = newArrayList(new Reply(), new Reply());
-        setField(subject, "replies", replies);
+    public void testGetResponses() throws Exception {
+        final List<Response> responses = newArrayList(new Response(), new Response());
+        setField(subject, "responses", responses);
 
-        final List<Reply> result = subject.getReplies();
+        final List<Response> result = subject.getResponses();
 
-        assertThat(result).isEqualTo(replies);
+        assertThat(result).isEqualTo(responses);
     }
 
     @Test
@@ -79,13 +79,13 @@ public class QuestionTest {
     }
 
     @Test
-    public void testSetReplies() throws Exception {
-        final List<Reply> replies = newArrayList(new Reply(), new Reply());
+    public void testSetResponses() throws Exception {
+        final List<Response> responses = newArrayList(new Response(), new Response());
 
-        subject.setReplies(replies);
+        subject.setResponses(responses);
 
-        final Object result = getField(subject, "replies");
-        assertThat(result).isEqualTo(replies);
+        final Object result = getField(subject, "responses");
+        assertThat(result).isEqualTo(responses);
     }
 
     @Test
