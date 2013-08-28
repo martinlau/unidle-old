@@ -30,13 +30,6 @@ public class ConnectionStub<A> extends AbstractConnection<A> {
 
     private final UserProfile userProfile;
 
-    public ConnectionStub(final UserProfile userProfile) {
-        super(null);
-
-        this.connectionData = null;
-        this.userProfile = userProfile;
-    }
-
     public ConnectionStub(final ConnectionData connectionData,
                           final UserProfile userProfile) {
         super(connectionData, null);
