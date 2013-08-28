@@ -301,4 +301,60 @@ public class LocationFactTest {
         assertThat(result).isEqualTo(TimeUnit.DAY);
     }
 
+    @Test
+    public void testTimeUnitGetMessageKeyForDay() throws Exception {
+        final String result = TimeUnit.DAY.getMessageKey();
+
+        assertThat(result).isEqualTo("common.period.day");
+    }
+
+    @Test
+    public void testTimeUnitGetMessageKeyForHour() throws Exception {
+        final String result = TimeUnit.HOUR.getMessageKey();
+
+        assertThat(result).isEqualTo("common.period.hour");
+    }
+
+    @Test
+    public void testTimeUnitGetMessageKeyForMinute() throws Exception {
+        final String result = TimeUnit.MINUTE.getMessageKey();
+
+        assertThat(result).isEqualTo("common.period.minute");
+    }
+
+    @Test
+    public void testTimeUnitGetMessageKeyForMonth() throws Exception {
+        final String result = TimeUnit.MONTH.getMessageKey();
+
+        assertThat(result).isEqualTo("common.period.month");
+    }
+
+    @Test
+    public void testTimeUnitGetMessageKeyForSecond() throws Exception {
+        final String result = TimeUnit.SECOND.getMessageKey();
+
+        assertThat(result).isEqualTo("common.period.second");
+    }
+
+    @Test
+    public void testTimeUnitGetMessageKeyForUnknown() throws Exception {
+        final String result = TimeUnit.UNKNOWN.getMessageKey();
+
+        assertThat(result).isEqualTo("common.period.unknown");
+    }
+
+    @Test
+    public void testTimeUnitGetMessageKeyForWeek() throws Exception {
+        final String result = TimeUnit.WEEK.getMessageKey();
+
+        assertThat(result).isEqualTo("common.period.week");
+    }
+
+    @Test
+    public void testTimeUnitGetMessageKeyForYear() throws Exception {
+        final String result = TimeUnit.YEAR.getMessageKey();
+
+        assertThat(result).isEqualTo("common.period.year");
+    }
+
 }
