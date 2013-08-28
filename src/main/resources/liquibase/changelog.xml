@@ -24,14 +24,65 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="000 hibernate_sequence"
+    <changeSet id="001 hibernate_sequence"
                author="Martin Lau [m@hum.ph]">
 
         <createSequence sequenceName="hibernate_sequence"/>
 
     </changeSet>
 
-    <changeSet id="001 location_facts"
+    <changeSet id="002 users"
+               author="Martin Lau [m@hum.ph]">
+
+        <createTable tableName="users">
+            <column name="uuid"
+                    type="VARCHAR">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="revision"
+                    type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="created_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="last_modified_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email"
+                    type="VARCHAR">
+                <constraints nullable="false"
+                             unique="true"/>
+            </column>
+            <column name="first_name"
+                    type="VARCHAR"/>
+            <column name="last_name"
+                    type="VARCHAR"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="created_by_user_uuid"
+                                 constraintName="fk_users_created_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="last_modified_by_user_uuid"
+                                 constraintName="fk_users_last_modified_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+    </changeSet>
+
+    <changeSet id="003 location_facts"
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="location_facts">
@@ -48,7 +99,7 @@
                     type="VARCHAR"/>
             <column name="created_date"
                     type="DATETIME">
-                <!--<constraints nullable="false"/>-->
+                <constraints nullable="false"/>
             </column>
             <column name="last_modified_by_user_uuid"
                     type="VARCHAR"/>
@@ -141,9 +192,21 @@
             <column name="subdivision"/>
         </createIndex>
 
+        <addForeignKeyConstraint baseTableName="location_facts"
+                                 baseColumnNames="created_by_user_uuid"
+                                 constraintName="fk_location_facts_created_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="location_facts"
+                                 baseColumnNames="last_modified_by_user_uuid"
+                                 constraintName="fk_location_facts_last_modified_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
     </changeSet>
 
-    <changeSet id="002 location_facts data"
+    <changeSet id="004 location_facts data"
                author="Martin Lau [m@hum.ph]">
 
         <loadData tableName="location_facts"
@@ -151,46 +214,7 @@
 
     </changeSet>
 
-    <changeSet id="003 users"
-               author="Martin Lau [m@hum.ph]">
-
-        <createTable tableName="users">
-            <column name="uuid"
-                    type="VARCHAR">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="revision"
-                    type="INTEGER">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="created_by_user_uuid"
-                    type="VARCHAR"/>
-            <column name="created_date"
-                    type="DATETIME">
-                <constraints nullable="false"/>
-            </column>
-            <column name="last_modified_by_user_uuid"
-                    type="VARCHAR"/>
-            <column name="last_modified_date"
-                    type="DATETIME">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="email"
-                    type="VARCHAR">
-                <constraints nullable="false"
-                             unique="true"/>
-            </column>
-            <column name="first_name"
-                    type="VARCHAR"/>
-            <column name="last_name"
-                    type="VARCHAR"/>
-        </createTable>
-
-    </changeSet>
-
-    <changeSet id="004 user_connections"
+    <changeSet id="005 user_connections"
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="user_connections">
@@ -268,45 +292,167 @@
             <column name="rank"/>
         </createIndex>
 
-    </changeSet>
-
-    <changeSet id="005 audit_foreign_keys"
-               author="Martin Lau [m@hum.ph]">
-
-        <addForeignKeyConstraint baseTableName="location_facts"
-                                 baseColumnNames="created_by_user_uuid"
-                                 constraintName="fk_location_facts_created_by_user_uuid"
-                                 referencedTableName="users"
-                                 referencedColumnNames="uuid"/>
-
-        <addForeignKeyConstraint baseTableName="location_facts"
-                                 baseColumnNames="last_modified_by_user_uuid"
-                                 constraintName="fk_location_facts_last_modified_by_user_uuid"
-                                 referencedTableName="users"
-                                 referencedColumnNames="uuid"/>
-
-        <addForeignKeyConstraint baseTableName="users"
-                                 baseColumnNames="created_by_user_uuid"
-                                 constraintName="fk_users_created_by_user_uuid"
-                                 referencedTableName="users"
-                                 referencedColumnNames="uuid"/>
-
-        <addForeignKeyConstraint baseTableName="users"
-                                 baseColumnNames="last_modified_by_user_uuid"
-                                 constraintName="fk_users_last_modified_by_user_uuid"
-                                 referencedTableName="users"
-                                 referencedColumnNames="uuid"/>
-
-        <addForeignKeyConstraint baseTableName="users"
+        <addForeignKeyConstraint baseTableName="user_connections"
                                  baseColumnNames="created_by_user_uuid"
                                  constraintName="fk_user_connections_created_by_user_uuid"
                                  referencedTableName="users"
                                  referencedColumnNames="uuid"/>
 
-        <addForeignKeyConstraint baseTableName="users"
+        <addForeignKeyConstraint baseTableName="user_connections"
                                  baseColumnNames="last_modified_by_user_uuid"
                                  constraintName="fk_user_connections_last_modified_by_user_uuid"
                                  referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+    </changeSet>
+
+    <changeSet id="006 questions"
+               author="Martin Lau [m@hum.ph]">
+
+        <createTable tableName="questions">
+            <column name="uuid"
+                    type="VARCHAR">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="revision"
+                    type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="created_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="last_modified_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="question"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="questions"
+                                 baseColumnNames="created_by_user_uuid"
+                                 constraintName="fk_questions_created_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="questions"
+                                 baseColumnNames="last_modified_by_user_uuid"
+                                 constraintName="fk_questions_last_modified_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+    </changeSet>
+
+    <changeSet id="007 question_tags"
+               author="Martin Lau [m@hum.ph]">
+
+        <createTable tableName="question_tags">
+            <column name="question_uuid"
+                    type="VARCHAR">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="tag"
+                    type="VARCHAR">
+                <constraints primaryKey="true"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="question_tags"
+                                 baseColumnNames="question_uuid"
+                                 constraintName="fk_question_tags_question_uuid"
+                                 referencedTableName="questions"
+                                 referencedColumnNames="uuid"/>
+
+    </changeSet>
+
+    <changeSet id="008 replies"
+               author="Martin Lau [m@hum.ph]">
+
+        <createTable tableName="replies">
+            <column name="uuid"
+                    type="VARCHAR">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="revision"
+                    type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="created_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="last_modified_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="question_uuid"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_reply_uuid"
+                    type="VARCHAR"/>
+
+            <column name="reply"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="score"
+                    type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="replies"
+                                 baseColumnNames="created_by_user_uuid"
+                                 constraintName="fk_replies_created_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="replies"
+                                 baseColumnNames="last_modified_by_user_uuid"
+                                 constraintName="fk_replies_last_modified_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+    </changeSet>
+
+    <changeSet id="009 reply_tags"
+               author="Martin Lau [m@hum.ph]">
+
+        <createTable tableName="reply_tags">
+            <column name="reply_uuid"
+                    type="VARCHAR">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="tag"
+                    type="VARCHAR">
+                <constraints primaryKey="true"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="reply_tags"
+                                 baseColumnNames="reply_uuid"
+                                 constraintName="fk_reply_tags_reply_uuid"
+                                 referencedTableName="replies"
                                  referencedColumnNames="uuid"/>
 
     </changeSet>
