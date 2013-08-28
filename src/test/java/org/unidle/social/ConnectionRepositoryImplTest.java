@@ -78,10 +78,6 @@ public class ConnectionRepositoryImplTest {
 
     private User user;
 
-    private UserConnection userConnection1;
-
-    private UserConnection userConnection2;
-
     @Autowired
     private UserConnectionRepository userConnectionRepository;
 
@@ -97,7 +93,7 @@ public class ConnectionRepositoryImplTest {
 
         userRepository.save(user);
 
-        userConnection1 = new UserConnection();
+        final UserConnection userConnection1 = new UserConnection();
         userConnection1.setAccessToken("access token 1");
         userConnection1.setProviderId("twitter");
         userConnection1.setProviderUserId("provider user id 1");
@@ -106,7 +102,7 @@ public class ConnectionRepositoryImplTest {
 
         userConnectionRepository.save(userConnection1);
 
-        userConnection2 = new UserConnection();
+        final UserConnection userConnection2 = new UserConnection();
         userConnection2.setAccessToken("access token 2");
         userConnection2.setProviderId("twitter");
         userConnection2.setProviderUserId("provider user id 2");

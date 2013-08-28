@@ -61,14 +61,6 @@ public class UserConnectionRepositoryTest {
 
     private User user2;
 
-    private UserConnection userConnection1;
-
-    private UserConnection userConnection2;
-
-    private UserConnection userConnection3;
-
-    private UserConnection userConnection4;
-
     @Autowired
     private UserRepository userRepository;
 
@@ -88,7 +80,7 @@ public class UserConnectionRepositoryTest {
 
         user2 = userRepository.save(user2);
 
-        userConnection1 = new UserConnection();
+        final UserConnection userConnection1 = new UserConnection();
         userConnection1.setAccessToken("access token");
         userConnection1.setProviderId("provider id 1");
         userConnection1.setProviderUserId("provider user id 1");
@@ -97,7 +89,7 @@ public class UserConnectionRepositoryTest {
 
         subject.save(userConnection1);
 
-        userConnection2 = new UserConnection();
+        final UserConnection userConnection2 = new UserConnection();
         userConnection2.setAccessToken("access token");
         userConnection2.setProviderId("provider id 1");
         userConnection2.setProviderUserId("provider user id 2");
@@ -106,7 +98,7 @@ public class UserConnectionRepositoryTest {
 
         subject.save(userConnection2);
 
-        userConnection3 = new UserConnection();
+        final UserConnection userConnection3 = new UserConnection();
         userConnection3.setAccessToken("access token");
         userConnection3.setProviderId("provider id 1");
         userConnection3.setProviderUserId("provider user id 3");
@@ -115,7 +107,7 @@ public class UserConnectionRepositoryTest {
 
         subject.save(userConnection3);
 
-        userConnection4 = new UserConnection();
+        final UserConnection userConnection4 = new UserConnection();
         userConnection4.setAccessToken("access token");
         userConnection4.setProviderId("provider id 2");
         userConnection4.setProviderUserId("provider user id 4");
