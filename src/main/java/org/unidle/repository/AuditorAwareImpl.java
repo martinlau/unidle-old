@@ -50,8 +50,7 @@ public class AuditorAwareImpl implements AuditorAware<User> {
 
         final String uuid = authentication.getName();
 
-
-        return ((uuid == null) || "".equals(uuid))
+        return "".equals(uuid)
                ? null
                : userRepository.findOne(UUID.fromString(uuid));
     }

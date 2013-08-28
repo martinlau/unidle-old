@@ -123,6 +123,35 @@ public class SignupControllerTest {
     }
 
     @Test
+    public void testSignupWithoutUserProfile() throws Exception {
+
+        final ConnectionData connectionData = new ConnectionData("provider id",
+                                                                 "provider user id",
+                                                                 "display name",
+                                                                 "profile url",
+                                                                 "image url",
+                                                                 "access token",
+                                                                 "secret",
+                                                                 "refresh token",
+                                                                 1234L);
+
+        final Connection<?> connection = new ConnectionStub<>(connectionData);
+
+        final ConnectionFactory<?> connectionFactory = new ConnectionFactoryStub<>("provider id", connection);
+
+        final ConnectionFactoryLocatorStub connectionFactoryLocator = new ConnectionFactoryLocatorStub(connectionFactory);
+
+        final ProviderSignInAttempt providerSignInAttempt = new ProviderSignInAttempt(connection, connectionFactoryLocator, null);
+
+        subject.perform(get("/signup")
+                                .sessionAttr(ProviderSignInAttempt.class.getName(), providerSignInAttempt))
+               .andExpect(view().name(".signup"))
+               .andExpect(model().attribute("userForm", allOf(hasProperty("email", nullValue()),
+                                                              hasProperty("firstName", nullValue()),
+                                                              hasProperty("lastName", nullValue()))));
+    }
+
+    @Test
     public void testSubmit() throws Exception {
 
         final ConnectionData connectionData = new ConnectionData("provider id",

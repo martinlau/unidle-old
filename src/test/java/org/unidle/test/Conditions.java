@@ -44,7 +44,9 @@ public class Conditions {
         return new Condition<Object>(format("has access token: %s", accessToken)) {
             @Override
             public boolean matches(final Object value) {
-                return accessToken.equals(getField(value, "accessToken"));
+                return accessToken == null
+                       ? getField(value, "accessToken") == null
+                       : accessToken.equals(getField(value, "accessToken"));
             }
         };
     }
@@ -188,7 +190,9 @@ public class Conditions {
         return new Condition<Object>(format("has refresh token: %s", refreshToken)) {
             @Override
             public boolean matches(final Object value) {
-                return refreshToken.equals(getField(value, "refreshToken"));
+                return refreshToken == null
+                       ? getField(value, "refreshToken") == null
+                       : refreshToken.equals(getField(value, "refreshToken"));
             }
         };
     }
@@ -197,7 +201,9 @@ public class Conditions {
         return new Condition<Object>(format("has secret: %s", secret)) {
             @Override
             public boolean matches(final Object value) {
-                return secret.equals(getField(value, "secret"));
+                return secret == null
+                       ? getField(value, "secret") == null
+                       : secret.equals(getField(value, "secret"));
             }
         };
     }

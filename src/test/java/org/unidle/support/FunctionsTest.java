@@ -78,6 +78,34 @@ public class FunctionsTest {
     }
 
     @Test
+    public void testToConnectionDataWithNullAccessToken() throws Exception {
+        final UserConnection userConnection = new UserConnection();
+
+        userConnection.setAccessToken(null);
+        userConnection.setDisplayName("display name");
+        userConnection.setExpireTime(1234L);
+        userConnection.setImageUrl("image url");
+        userConnection.setProfileUrl("profile url");
+        userConnection.setProviderId("provider id");
+        userConnection.setProviderUserId("provider user id");
+        userConnection.setRefreshToken("refresh token");
+        userConnection.setSecret("secret");
+
+        final ConnectionData result = toConnectionData(noOpText()).apply(userConnection);
+
+        assertThat(result)
+                .satisfies(hasAccessToken(null))
+                .satisfies(hasDisplayName("display name"))
+                .satisfies(hasExpireTime(1234L))
+                .satisfies(hasImageUrl("image url"))
+                .satisfies(hasProfileUrl("profile url"))
+                .satisfies(hasProviderId("provider id"))
+                .satisfies(hasProviderUserId("provider user id"))
+                .satisfies(hasRefreshToken("refresh token"))
+                .satisfies(hasSecret("secret"));
+    }
+
+    @Test
     public void testToConnectionDataWithNull() throws Exception {
         final ConnectionData result = toConnectionData(noOpText()).apply(null);
 
@@ -190,6 +218,38 @@ public class FunctionsTest {
                 .satisfies(hasAccessToken("access token"))
                 .satisfies(hasSecret("secret"))
                 .satisfies(hasRefreshToken("refresh token"))
+                .satisfies(hasExpireTime(1234L))
+                .satisfies(hasUser(user))
+                .satisfies(hasRank(1234));
+    }
+
+    @Test
+    public void testToUserConnectionWithTextEncryptorIntegerUserAndNullAccessTokenSecretRefreshToken() throws Exception {
+        final User user = new User();
+
+        final ConnectionData connectionData = new ConnectionData("provider id",
+                                                                 "provider user id",
+                                                                 "display name",
+                                                                 "profile url",
+                                                                 "image url",
+                                                                 null,
+                                                                 null,
+                                                                 null,
+                                                                 1234L);
+
+        final UserConnection result = toUserConnection(noOpText(),
+                                                       1234,
+                                                       user).apply(connectionData);
+
+        assertThat(result)
+                .satisfies(hasProviderId("provider id"))
+                .satisfies(hasProviderUserId("provider user id"))
+                .satisfies(hasDisplayName("display name"))
+                .satisfies(hasProfileUrl("profile url"))
+                .satisfies(hasImageUrl("image url"))
+                .satisfies(hasAccessToken(null))
+                .satisfies(hasSecret(null))
+                .satisfies(hasRefreshToken(null))
                 .satisfies(hasExpireTime(1234L))
                 .satisfies(hasUser(user))
                 .satisfies(hasRank(1234));

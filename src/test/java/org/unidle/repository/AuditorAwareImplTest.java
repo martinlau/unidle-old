@@ -93,7 +93,7 @@ public class AuditorAwareImplTest {
     }
 
     @Test
-    public void testGetCurrentAuditorWithoutAuthenticationUuid() throws Exception {
+    public void testGetCurrentAuditorWithoutUuid() throws Exception {
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(null, null));
 
         final Object result = subject.getCurrentAuditor();
