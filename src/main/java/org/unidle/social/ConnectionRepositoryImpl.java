@@ -41,7 +41,7 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.transform;
 
-public class ConnectionRepositoryImpl implements ConnectionRepository {
+class ConnectionRepositoryImpl implements ConnectionRepository {
 
     private final ConnectionFactoryLocator connectionFactoryLocator;
 
@@ -247,7 +247,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
         userConnectionRepository.delete(user, providerId, providerUserId);
     }
 
-    protected <A> String getProviderId(final Class<A> apiType) {
+    <A> String getProviderId(final Class<A> apiType) {
 
         return connectionFactoryLocator.getConnectionFactory(apiType)
                                        .getProviderId();

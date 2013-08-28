@@ -27,7 +27,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 
-public class ConnectionRepositoryStub implements ConnectionRepository {
+class ConnectionRepositoryStub implements ConnectionRepository {
 
     @Override
     public MultiValueMap<String, Connection<?>> findAllConnections() {
