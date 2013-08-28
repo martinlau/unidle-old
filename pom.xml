@@ -1313,7 +1313,7 @@
         <commons-io.version>2.4</commons-io.version>
         <commons-lang3.version>3.1</commons-lang3.version>
         <commons-pool.version>1.6</commons-pool.version>
-        <ehcache-core.version>2.6.7</ehcache-core.version>
+        <ehcache-core.version>2.6.6</ehcache-core.version>
         <fest-assert.version>1.4</fest-assert.version>
         <font-awesome.version>3.2.1</font-awesome.version>
         <bootstrap.version>3.0.0</bootstrap.version>
