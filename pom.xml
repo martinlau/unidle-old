@@ -244,7 +244,7 @@
                         <goals>
                             <goal>check-file-header</goal>
                         </goals>
-                        <phase>validate</phase>
+                        <phase>verify</phase>
                     </execution>
                 </executions>
                 <configuration>
