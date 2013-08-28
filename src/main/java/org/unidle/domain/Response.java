@@ -60,7 +60,7 @@ public class Response extends BaseEntity implements Serializable {
 
     @Column(name = "score",
             nullable = false)
-    private Short score = 0;
+    private Integer score = 0;
 
     @Column(name = "tag")
     @ElementCollection
@@ -100,11 +100,11 @@ public class Response extends BaseEntity implements Serializable {
         this.question = question;
     }
 
-    public Short getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(final Short score) {
+    public void setScore(final Integer score) {
         this.score = score;
     }
 
