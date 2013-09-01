@@ -31,46 +31,71 @@
         <spring:message code="base.title" />
     </h1>
 
+    <c:set var="locationFactPrefix">
+        <c:if test="${not empty locationFact.locationPrefix}">
+            <spring:message code="${locationFact.locationPrefix}" />
+        </c:if>
+    </c:set>
+
+    <spring:message code="${locationFact.taskTimeUnit.messageKey}" var="taskTimeUnit" />
+
+    <fmt:formatNumber value="${locationFact.taskPeople}" var="taskPeople" />
+
+    <c:set var="taskDurationTimeUnit">
+        <c:choose>
+            <c:when test="${locationFact.taskDuration eq 1}">
+                <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}" />
+            </c:when>
+            <c:otherwise>
+                <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}.plural" />
+            </c:otherwise>
+        </c:choose>
+    </c:set>
+
+    <spring:message code="${locationFact.taskCode}" var="taskCode" />
+
+    <c:set var="fact">
+        <c:choose>
+            <c:when test="${locationFact.taskPeople eq 1}">
+                <spring:message code="home.fact" argumentSeparator="|" arguments="${taskTimeUnit}
+                                                                                 |${locationFactPrefix}
+                                                                                 |${locationFact.location}
+                                                                                 |${taskPeople}
+                                                                                 |${locationFact.taskDuration}
+                                                                                 |${taskDurationTimeUnit}
+                                                                                 |${taskCode}" />
+            </c:when>
+            <c:otherwise>
+                <spring:message code="home.fact.plural" argumentSeparator="|" arguments="${taskTimeUnit}
+                                                                                        |${location FactPrefix}
+                                                                                        |${locationFact.location}
+                                                                                        |${taskPeople}
+                                                                                        |${locationFact.taskDuration}
+                                                                                        |${taskDurationTimeUnit}
+                                                                                        |${taskCode}" />
+            </c:otherwise>
+        </c:choose>
+    </c:set>
+
+    <c:set var="summaryDurationUnit">
+        <c:choose>
+            <c:when test="${locationFact.summaryDuration eq 1}">
+                <spring:message code="${locationFact.summaryDurationTimeUnit.messageKey}" />
+            </c:when>
+            <c:otherwise>
+                <spring:message code="${locationFact.summaryDurationTimeUnit.messageKey}.plural" />
+            </c:otherwise>
+        </c:choose>
+    </c:set>
+
+    <spring:message code="home.summary" argumentSeparator="|" var="summary" arguments="${locationFact.summaryDuration}
+                                                                                      |${summaryDurationUnit}" />
+
+    <!-- TODO Move all of the above to the controller -->
+
     <blockquote id="blockquote">
         <p>
-            <c:set var="locationFactPrefix">
-                <c:if test="${not empty locationFact.locationPrefix}">
-                    <spring:message code="${locationFact.locationPrefix}" />
-                </c:if>
-            </c:set>
-            <spring:message code="${locationFact.taskTimeUnit.messageKey}" var="taskTimeUnit" />
-            <fmt:formatNumber value="${locationFact.taskPeople}" var="taskPeople" />
-            <c:set var="taskDurationTimeUnit">
-                <c:choose>
-                    <c:when test="${locationFact.taskDuration eq 1}">
-                        <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}" />
-                    </c:when>
-                    <c:otherwise>
-                        <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}.plural" />
-                    </c:otherwise>
-                </c:choose>
-            </c:set>
-            <spring:message code="${locationFact.taskCode}" var="taskCode" />
-            <c:choose>
-                <c:when test="${locationFact.taskPeople eq 1}">
-                    <spring:message code="home.fact" arguments="${taskTimeUnit}
-                                                               |${locationFactPrefix}
-                                                               |${locationFact.location}
-                                                               |${taskPeople}
-                                                               |${locationFact.taskDuration}
-                                                               |${taskDurationTimeUnit}
-                                                               |${taskCode}" argumentSeparator="|" />
-                </c:when>
-                <c:otherwise>
-                    <spring:message code="home.fact.plural" arguments="${taskTimeUnit}
-                                                                      |${locationFactPrefix}
-                                                                      |${locationFact.location}
-                                                                      |${taskPeople}
-                                                                      |${locationFact.taskDuration}
-                                                                      |${taskDurationTimeUnit}
-                                                                      |${taskCode}" argumentSeparator="|" />
-                </c:otherwise>
-            </c:choose>
+            ${fact}
         </p>
         <small id="source">
             ${locationFact.source}
@@ -78,32 +103,21 @@
     </blockquote>
 
     <p id="summary">
-        <c:set var="summaryDurationUnit">
-            <c:choose>
-                <c:when test="${locationFact.summaryDuration eq 1}">
-                    <spring:message code="${locationFact.summaryDurationTimeUnit.messageKey}" />
-                </c:when>
-                <c:otherwise>
-                    <spring:message code="${locationFact.summaryDurationTimeUnit.messageKey}.plural" />
-                </c:otherwise>
-            </c:choose>
-        </c:set>
-        <spring:message code="home.summary" arguments="${locationFact.summaryDuration}
-                                                      |${summaryDurationUnit}" argumentSeparator="|" />
+        ${summary}
+    </p>
+
+    <p>
+        <spring:url value="/about" var="about" />
+        <a href="${about}" class="btn btn-block btn-lg btn-default">
+            <spring:message code="common.content.about" />
+        </a>
     </p>
 
     <!-- TODO Check if logged in and link to something else -->
     <p>
         <spring:url value="/signin" var="signin" />
-        <a href="${signin}" class="btn btn-lg btn-primary btn-block">
+        <a href="${signin}" class="btn btn-block btn-lg btn-primary">
             <spring:message code="common.content.signin" />
-        </a>
-    </p>
-
-    <p>
-        <spring:url value="/about" var="about" />
-        <a href="${about}" class="btn btn-lg btn-default btn-block">
-            <spring:message code="common.content.about" />
         </a>
     </p>
 
