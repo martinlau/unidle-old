@@ -37,8 +37,6 @@ import static org.springframework.util.StringUtils.hasText;
 @Controller
 public class HomeController {
 
-    private static final Object[] NO_ARGS = null;
-
     private final LocationFactService locationFactService;
 
     private final MessageSource messageSource;
@@ -60,10 +58,10 @@ public class HomeController {
                        final Locale locale) {
         final LocationFact locationFact = getBestFact(location);
 
-        final String timeUnit = messageSource.getMessage(locationFact.getTaskTimeUnit().getMessageKey(), NO_ARGS, locale);
+        final String timeUnit = messageSource.getMessage(locationFact.getTaskTimeUnit().getMessageKey(), null, locale);
 
         final String locationPrefix = hasText(locationFact.getLocationPrefix())
-                                      ? messageSource.getMessage(locationFact.getLocationPrefix(), NO_ARGS, locale)
+                                      ? messageSource.getMessage(locationFact.getLocationPrefix(), null, locale)
                                       : "";
 
         final String locationName = hasText(locationFact.getLocationName())
@@ -75,10 +73,10 @@ public class HomeController {
         final String duration = numberFormatter.print(locationFact.getTaskDuration(), locale);
 
         final String durationTimeUnit = locationFact.getTaskDuration() == 1
-                                        ? messageSource.getMessage(locationFact.getTaskDurationTimeUnit().getMessageKey(), NO_ARGS, locale)
-                                        : messageSource.getMessage(locationFact.getTaskDurationTimeUnit().getMessageKey() + ".plural", NO_ARGS, locale);
+                                        ? messageSource.getMessage(locationFact.getTaskDurationTimeUnit().getMessageKey(), null, locale)
+                                        : messageSource.getMessage(locationFact.getTaskDurationTimeUnit().getMessageKey() + ".plural", null, locale);
 
-        final String task = messageSource.getMessage(locationFact.getTaskCode(), NO_ARGS, locale);
+        final String task = messageSource.getMessage(locationFact.getTaskCode(), null, locale);
 
         final Object[] args = new Object[]{
                 timeUnit,
@@ -121,8 +119,8 @@ public class HomeController {
         final String duration = numberFormatter.print(locationFact.getSummaryDuration(), locale);
 
         final String durationUnit = locationFact.getSummaryDuration() == 1
-                                    ? messageSource.getMessage(locationFact.getSummaryDurationTimeUnit().getMessageKey(), NO_ARGS, locale)
-                                    : messageSource.getMessage(locationFact.getSummaryDurationTimeUnit().getMessageKey() + ".plural", NO_ARGS, locale);
+                                    ? messageSource.getMessage(locationFact.getSummaryDurationTimeUnit().getMessageKey(), null, locale)
+                                    : messageSource.getMessage(locationFact.getSummaryDurationTimeUnit().getMessageKey() + ".plural", null, locale);
 
         final Object[] args = {
                 duration,
