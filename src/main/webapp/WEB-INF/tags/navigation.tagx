@@ -37,10 +37,8 @@
             <!-- TODO Check if logged in and show link to something else -->
             <spring:url value="/" var="home" />
             <span class="navbar-brand">
-                <a href="${home}">
-                    <tiles:importAttribute name="titleCode" />
-                    <spring:message code="${titleCode}" />
-                </a>
+                <tiles:importAttribute name="titleCode" />
+                <spring:message code="${titleCode}" />
                 <tiles:importAttribute name="subTitleCode" />
                 <spring:message code="${subTitleCode}" var="subTitle" text="" />
                 <c:if test="${not empty subTitle}">
