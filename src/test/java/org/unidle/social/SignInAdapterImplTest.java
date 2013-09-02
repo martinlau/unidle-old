@@ -25,17 +25,22 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
 import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.SocialConfiguration;
 import org.unidle.config.WroConfiguration;
+import org.unidle.social.test.ConnectionStub;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -63,13 +68,26 @@ public class SignInAdapterImplTest {
 
     @Test
     public void testSignIn() throws Exception {
-        subject.signIn("userId", null, null);
+        final ConnectionStub<Object> connection = new ConnectionStub<>(new ConnectionData("provider id",
+                                                                                          "provider user id",
+                                                                                          "display name",
+                                                                                          "profile url",
+                                                                                          "image url",
+                                                                                          "access token",
+                                                                                          "secret",
+                                                                                          "refresh token",
+                                                                                          1234L));
+
+        final MockHttpServletResponse response = new MockHttpServletResponse();
+
+        subject.signIn("userId", connection, new ServletWebRequest(new MockHttpServletRequest(), response));
 
         final Object principal = SecurityContextHolder.getContext()
                                                       .getAuthentication()
                                                       .getPrincipal();
 
         assertThat(principal).isEqualTo("userId");
+        assertThat(response.getCookie("last_login_source").getValue()).isEqualTo("provider id");
     }
 
 }

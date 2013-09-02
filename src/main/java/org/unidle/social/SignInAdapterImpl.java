@@ -28,8 +28,15 @@ import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 @Component
 public class SignInAdapterImpl implements SignInAdapter {
+
+    public static final int LAST_LOGIN_SOURCE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 10;
+
+    public static final String LAST_LOGIN_SOURCE_COOKIE_NAME = "last_login_source";
 
     @Override
     public String signIn(final String userId,
@@ -40,6 +47,11 @@ public class SignInAdapterImpl implements SignInAdapter {
 
         SecurityContextHolder.getContext()
                              .setAuthentication(authentication);
+
+
+        final Cookie cookie = new Cookie(LAST_LOGIN_SOURCE_COOKIE_NAME, connection.createData().getProviderId());
+        cookie.setMaxAge(LAST_LOGIN_SOURCE_COOKIE_MAX_AGE);
+        request.getNativeResponse(HttpServletResponse.class).addCookie(cookie);
 
         return null;
     }
