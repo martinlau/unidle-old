@@ -9,39 +9,34 @@
   it under the terms of the GNU Affero General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-  
+
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-  
+
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   #L%
   -->
 
-<jsp:root xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:jsp="http://java.sun.com/JSP/Page"
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:spring="http://www.springframework.org/tags"
-          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
           version="2.0">
 
-    <h1 class="text-center">
-        <spring:message code="base.title" />
-    </h1>
+    <jsp:directive.tag body-content="empty"
+                       display-name="twitter-button"
+                       description="Displays a sign in with twitter button" />
+
+    <spring:url value="/signin/twitter" var="twitter" />
 
     <p>
-        <spring:message code="signin.introduction" />
+        <form action="${twitter}" method="post">
+            <button class="btn btn-lg btn-block btn-primary" type="submit">
+                <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
+                <spring:message code="singin.form.twitter" />
+            </button>
+        </form>
     </p>
-
-    <p>
-        <spring:message code="singin.wont-abuse" />
-    </p>
-
-    <tags:facebook-button />
-
-    <p><!-- no collapse --></p>
-
-    <tags:twitter-button />
 
 </jsp:root>
