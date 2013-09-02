@@ -63,7 +63,7 @@ public class SigninControllerTest {
     }
 
     @Test
-    public void testOpen() throws Exception {
+    public void testSignin() throws Exception {
         subject.perform(get("/signin"))
                .andExpect(status().isOk())
                .andExpect(view().name(".signin"));

@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SigninController {
 
     @RequestMapping("/signin")
-    public String open() {
+    public String signin() {
         // TODO Check if logged in and redirect to something else
         return ".signin";
     }
