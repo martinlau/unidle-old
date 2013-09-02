@@ -20,6 +20,7 @@
  */
 package org.unidle.controller;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +38,9 @@ import org.unidle.config.MvcConfiguration;
 import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.WroConfiguration;
 
+import java.util.Locale;
+
+import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,10 +70,35 @@ public class HomeControllerTest {
 
     @Test
     public void testHome() throws Exception {
-        subject.perform(get("/").with(remoteAddr("203.27.21.6")))
+        subject.perform(get("/").with(remoteAddr("203.27.21.6"))
+                                .locale(Locale.ENGLISH))
                .andExpect(status().isOk())
                .andExpect(view().name(".home"))
-               .andExpect(model().attributeExists("locationFact"));
+               .andExpect(model().attribute("fact", equalToIgnoringWhiteSpace("Every day in Sydney 800,000 people spend 75 minutes on public transport.")))
+               .andExpect(model().attribute("source", equalToIgnoringWhiteSpace("Bureau of Transport Statistics, Transport for NSW")))
+               .andExpect(model().attribute("summary", equalToIgnoringWhiteSpace("That's over 100 years spent checking facebook, reading the paper or staring out of the window.")));
+    }
+
+    @Test
+    public void testHomeWithLocationPrefix() throws Exception {
+        subject.perform(get("/").with(remoteAddr("113.197.6.245"))
+                                .locale(Locale.ENGLISH))
+               .andExpect(status().isOk())
+               .andExpect(view().name(".home"))
+               .andExpect(model().attribute("fact", equalToIgnoringWhiteSpace("Every day in the Northern Territory 1 person spends 1 minute doing stuff.")))
+               .andExpect(model().attribute("source", equalToIgnoringWhiteSpace("Martin's Imagination")))
+               .andExpect(model().attribute("summary", equalToIgnoringWhiteSpace("That's over 1 year spent checking facebook, reading the paper or staring out of the window.")));
+    }
+
+    @Test
+    public void testHomeWithUnknownLocation() throws Exception {
+        subject.perform(get("/").with(remoteAddr("127.0.0.1"))
+                                .locale(Locale.ENGLISH))
+               .andExpect(status().isOk())
+               .andExpect(view().name(".home"))
+               .andExpect(model().attribute("fact", equalToIgnoringWhiteSpace("Every day in the world 800,000 people spend 75 minutes on public transport.")))
+               .andExpect(model().attribute("source", equalToIgnoringWhiteSpace("Bureau of Transport Statistics, Transport for NSW")))
+               .andExpect(model().attribute("summary", equalToIgnoringWhiteSpace("That's over 100 years spent checking facebook, reading the paper or staring out of the window.")));
     }
 
 }
