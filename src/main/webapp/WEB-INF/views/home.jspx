@@ -21,9 +21,9 @@
   -->
 
 <jsp:root xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:c="http://java.sun.com/jsp/jstl/core"
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:spring="http://www.springframework.org/tags"
+          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
           version="2.0">
 
     <h1 class="text-center">
@@ -50,33 +50,6 @@
         </a>
     </p>
 
-    <c:choose>
-        <c:when test="${cookie['last_login_source'] eq 'facebook'}">
-            <spring:url value="/signin/facebook" var="facebook" />
-            <form action="${facebook}" method="post">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">
-                    <i class="icon-facebook icon-fixed-width"><!-- no collapse --></i>
-                    <spring:message code="singin.form.facebook" />
-                </button>
-            </form>
-        </c:when>
-        <c:when test="${cookie['last_login_source'] eq 'twitter'}">
-            <spring:url value="/signin/twitter" var="twitter" />
-            <form action="${twitter}" method="post">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">
-                    <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
-                    <spring:message code="singin.form.twitter" />
-                </button>
-            </form>
-        </c:when>
-        <c:otherwise>
-            <p>
-                <spring:url value="/signin" var="signin" />
-                <a href="${signin}" class="btn btn-block btn-lg btn-primary">
-                    <spring:message code="common.content.signin" />
-                </a>
-            </p>
-        </c:otherwise>
-    </c:choose>
+    <tags:login-buttons />
 
 </jsp:root>

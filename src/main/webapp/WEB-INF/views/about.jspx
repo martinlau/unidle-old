@@ -23,37 +23,31 @@
 <jsp:root xmlns="http://www.w3.org/1999/xhtml"
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:spring="http://www.springframework.org/tags"
-          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
-          version="2.0">
+          version="2.0" xmlns:tags="urn:jsptagdir:/WEB-INF/tags">
 
-    <tags:navigation />
+    <h1 class="text-center">
+        <spring:message code="base.title" />
+    </h1>
 
     <p>
-        <spring:message code="about.content.platform" />
+        <spring:message code="about.content.para.1" />
     </p>
 
     <p>
-        <spring:message code="about.content.usage" />
+        <spring:message code="about.content.para.2" />
     </p>
 
     <p>
-        <spring:url var="commercial" value="/commercial" />
-        <a href="${commercial}">
-            <spring:message code="about.content.commercial" />
+        <spring:message code="about.content.para.3" />
+    </p>
+
+    <p>
+        <spring:url value="/today" var="today" />
+        <a href="${today}" class="btn btn-block btn-lg btn-default">
+            <spring:message code="about.link.today" />
         </a>
     </p>
 
-    <p>
-        <spring:message code="about.content.license" />
-    </p>
-
-    <p>
-        <spring:url var="open" value="/open" />
-        <spring:message code="about.content.open" arguments="${open}" />
-    </p>
-
-    <p>
-        <spring:message code="about.content.not-evil" />
-    </p>
+    <tags:login-buttons />
 
 </jsp:root>
