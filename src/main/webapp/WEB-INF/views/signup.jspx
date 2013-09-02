@@ -27,7 +27,9 @@
           xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
           version="2.0">
 
-    <tags:navigation />
+    <h1 class="text-center">
+        <spring:message code="base.title" />
+    </h1>
 
     <p>
         <spring:message code="signup.introduction" />
@@ -62,20 +64,9 @@
             </jsp:attribute>
         </tags:input>
 
-        <p class="form-static-control">
-            <spring:url var="terms" value="/terms" />
-            <spring:message code="signup.form.accept-terms" arguments="${terms}" />
-        </p>
-
         <p>
-            <form:button type="submit" class="btn btn-lg btn-primary btn-block" value="confirm">
+            <form:button type="submit" class="btn btn-lg btn-block btn-primary" name="action" value="confirm">
                 <spring:message code="singup.form.submit" />
-            </form:button>
-        </p>
-
-        <p>
-            <form:button type="submit" class="btn btn-lg btn-default btn-block" value="cancel">
-                <spring:message code="signup.form.cancel" />
             </form:button>
         </p>
 
