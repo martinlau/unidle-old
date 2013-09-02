@@ -21,8 +21,6 @@
   -->
 
 <jsp:root xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:c="http://java.sun.com/jsp/jstl/core"
-          xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:spring="http://www.springframework.org/tags"
           version="2.0">
@@ -31,74 +29,12 @@
         <spring:message code="base.title" />
     </h1>
 
-    <c:set var="locationFactPrefix">
-        <c:if test="${not empty locationFact.locationPrefix}">
-            <spring:message code="${locationFact.locationPrefix}" />
-        </c:if>
-    </c:set>
-
-    <spring:message code="${locationFact.taskTimeUnit.messageKey}" var="taskTimeUnit" />
-
-    <fmt:formatNumber value="${locationFact.taskPeople}" var="taskPeople" />
-
-    <c:set var="taskDurationTimeUnit">
-        <c:choose>
-            <c:when test="${locationFact.taskDuration eq 1}">
-                <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}" />
-            </c:when>
-            <c:otherwise>
-                <spring:message code="${locationFact.taskDurationTimeUnit.messageKey}.plural" />
-            </c:otherwise>
-        </c:choose>
-    </c:set>
-
-    <spring:message code="${locationFact.taskCode}" var="taskCode" />
-
-    <c:set var="fact">
-        <c:choose>
-            <c:when test="${locationFact.taskPeople eq 1}">
-                <spring:message code="home.fact" argumentSeparator="|" arguments="${taskTimeUnit}
-                                                                                 |${locationFactPrefix}
-                                                                                 |${locationFact.location}
-                                                                                 |${taskPeople}
-                                                                                 |${locationFact.taskDuration}
-                                                                                 |${taskDurationTimeUnit}
-                                                                                 |${taskCode}" />
-            </c:when>
-            <c:otherwise>
-                <spring:message code="home.fact.plural" argumentSeparator="|" arguments="${taskTimeUnit}
-                                                                                        |${location FactPrefix}
-                                                                                        |${locationFact.location}
-                                                                                        |${taskPeople}
-                                                                                        |${locationFact.taskDuration}
-                                                                                        |${taskDurationTimeUnit}
-                                                                                        |${taskCode}" />
-            </c:otherwise>
-        </c:choose>
-    </c:set>
-
-    <c:set var="summaryDurationUnit">
-        <c:choose>
-            <c:when test="${locationFact.summaryDuration eq 1}">
-                <spring:message code="${locationFact.summaryDurationTimeUnit.messageKey}" />
-            </c:when>
-            <c:otherwise>
-                <spring:message code="${locationFact.summaryDurationTimeUnit.messageKey}.plural" />
-            </c:otherwise>
-        </c:choose>
-    </c:set>
-
-    <spring:message code="home.summary" argumentSeparator="|" var="summary" arguments="${locationFact.summaryDuration}
-                                                                                      |${summaryDurationUnit}" />
-
-    <!-- TODO Move all of the above to the controller -->
-
     <blockquote id="blockquote">
         <p>
             ${fact}
         </p>
         <small id="source">
-            ${locationFact.source}
+            ${source}
         </small>
     </blockquote>
 

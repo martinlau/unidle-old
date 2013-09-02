@@ -129,7 +129,7 @@ public class LocationFact extends BaseEntity implements Serializable {
         this.country = country;
     }
 
-    public String getLocation() {
+    public String getLocationName() {
         return hasText(city) ? city
                              : hasText(subdivision) ? subdivision
                                                     : hasText(country) ? country

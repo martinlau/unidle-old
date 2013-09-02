@@ -77,7 +77,7 @@ public class LocationFactTest {
     public void testGetLocationWithCity() throws Exception {
         subject.setCity("city");
 
-        final String result = subject.getLocation();
+        final String result = subject.getLocationName();
 
         assertThat(result).isEqualTo("city");
     }
@@ -86,7 +86,7 @@ public class LocationFactTest {
     public void testGetLocationWithContent() throws Exception {
         subject.setContinent("continent");
 
-        final String result = subject.getLocation();
+        final String result = subject.getLocationName();
 
         assertThat(result).isEqualTo("continent");
     }
@@ -95,14 +95,14 @@ public class LocationFactTest {
     public void testGetLocationWithCountry() throws Exception {
         subject.setCountry("country");
 
-        final String result = subject.getLocation();
+        final String result = subject.getLocationName();
 
         assertThat(result).isEqualTo("country");
     }
 
     @Test
     public void testGetLocationWithNothing() throws Exception {
-        final String result = subject.getLocation();
+        final String result = subject.getLocationName();
 
         assertThat(result).isNull();
     }
@@ -111,7 +111,7 @@ public class LocationFactTest {
     public void testGetLocationWithSubdivision() throws Exception {
         subject.setSubdivision("subdivision");
 
-        final String result = subject.getLocation();
+        final String result = subject.getLocationName();
 
         assertThat(result).isEqualTo("subdivision");
     }
