@@ -42,6 +42,7 @@ import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.unidle.controller.RedirectingConnectController;
 
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 
@@ -82,8 +83,22 @@ public class SocialConfiguration {
 
     @Bean
     public ConnectController connectController() {
-        return new ConnectController(connectionFactoryLocator(),
-                                     connectionRepository());
+        final RedirectingConnectController connectController = new RedirectingConnectController(connectionFactoryLocator(),
+                                                                                                connectionRepository());
+
+        return connectController;
+    }
+
+    @Bean
+    public ConnectionFactoryLocator connectionFactoryLocator() {
+        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
+
+        registry.addConnectionFactory(new FacebookConnectionFactory(facebookClientId,
+                                                                    facebookSecret));
+        registry.addConnectionFactory(new TwitterConnectionFactory(twitterConsumerKey,
+                                                                   twitterConsumerSecret));
+
+        return registry;
     }
 
     @Bean
@@ -100,18 +115,6 @@ public class SocialConfiguration {
         final String name = authentication.getName();
 
         return usersConnectionRepository.createConnectionRepository(name);
-    }
-
-    @Bean
-    public ConnectionFactoryLocator connectionFactoryLocator() {
-        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-
-        registry.addConnectionFactory(new FacebookConnectionFactory(facebookClientId,
-                                                                    facebookSecret));
-        registry.addConnectionFactory(new TwitterConnectionFactory(twitterConsumerKey,
-                                                                   twitterConsumerSecret));
-
-        return registry;
     }
 
     @Bean

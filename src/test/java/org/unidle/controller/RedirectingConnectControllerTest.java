@@ -8,32 +8,37 @@
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
 package org.unidle.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.junit.Before;
+import org.junit.Test;
 
-@Controller
-public class PostConnectController {
+import static org.fest.assertions.Assertions.assertThat;
 
-    @RequestMapping("/connect/facebookConnected")
-    public String postFacebook() {
-        return "redirect:/account";
+public class RedirectingConnectControllerTest {
+
+    private RedirectingConnectController subject;
+
+    @Before
+    public void setUp() throws Exception {
+        subject = new RedirectingConnectController(null, null);
     }
 
-    @RequestMapping("/connect/twitterConnected")
-    public String postTwitter() {
-        return "redirect:/account";
+    @Test
+    public void testConnectedView() throws Exception {
+        final String result = subject.connectedView("provider id");
+
+        assertThat(result).isEqualTo("redirect:/account?connected=provider%20id");
     }
 
 }
