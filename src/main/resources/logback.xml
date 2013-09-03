@@ -35,12 +35,6 @@
         </encoder>
     </appender>
 
-    <logger name="net.sf.ehcache"/>
-
-    <logger name="org.hibernate.SQL"/>
-
-    <logger name="org.hibernate.type"/>
-
     <root level="info">
         <appender-ref ref="console"/>
     </root>
