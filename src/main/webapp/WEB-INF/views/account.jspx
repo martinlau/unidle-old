@@ -26,134 +26,203 @@
           xmlns:form="http://www.springframework.org/tags/form"
           xmlns:spring="http://www.springframework.org/tags"
           xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
-          version="2.0">
+          version="2.0" xmlns:sprign="http://java.sun.com/jsp/jstl/fmt">
 
     <tags:navigation />
 
-    <p>
-        <spring:message code="account.introduction" />
+    <h4>
+        <spring:message code="account.heading.personal-details" />
+    </h4>
+
+    <p class="pull-right">
+        <a href="#userForm" data-toggle="modal" class="btn btn-default">
+            <spring:message code="account.details.update" />
+        </a>
     </p>
 
-    <form:form modelAttribute="userForm" method="post" cssClass="form-inline">
+    <address>
+        <spring:message code="account.details.name" />
+        <strong>
+            ${user.firstName}
+            ${user.lastName}
+        </strong>
+        <br />
+        <spring:message code="account.details.email"/>
+        ${user.email}
+    </address>
 
-        <tags:input path="firstName" type="text">
-            <jsp:attribute name="label">
-                <spring:message code="account.form.first-name.label" />
-            </jsp:attribute>
-            <jsp:attribute name="placeholder">
-                <spring:message code="account.form.first-name.placeholder" />
-            </jsp:attribute>
-        </tags:input>
+    <div id="userForm" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &amp;times;
+                    </button>
+                    <h4 class="modal-title">
+                        <spring:message code="account.details.update.title" />
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form:form modelAttribute="userForm" method="post" cssClass="form-inline">
+                        <!-- TODO AJAX submit -->
 
-        <tags:input path="lastName" type="text">
-            <jsp:attribute name="label">
-                <spring:message code="account.form.last-name.label" />
-            </jsp:attribute>
-            <jsp:attribute name="placeholder">
-                <spring:message code="account.form.last-name.placeholder" />
-            </jsp:attribute>
-        </tags:input>
+                        <tags:input path="firstName" type="text">
+                            <jsp:attribute name="label">
+                                <spring:message code="account.form.first-name.label" />
+                            </jsp:attribute>
+                            <jsp:attribute name="placeholder">
+                                <spring:message code="account.form.first-name.placeholder" />
+                            </jsp:attribute>
+                        </tags:input>
 
-        <tags:input path="email" type="email">
-            <jsp:attribute name="label">
-                <spring:message code="account.form.email.label" />
-            </jsp:attribute>
-            <jsp:attribute name="placeholder">
-                <spring:message code="account.form.email.placeholder" />
-            </jsp:attribute>
-        </tags:input>
+                        <tags:input path="lastName" type="text">
+                            <jsp:attribute name="label">
+                                <spring:message code="account.form.last-name.label" />
+                            </jsp:attribute>
+                            <jsp:attribute name="placeholder">
+                                <spring:message code="account.form.last-name.placeholder" />
+                            </jsp:attribute>
+                        </tags:input>
 
-        <p>
-            <form:button type="submit" class="btn btn-lg btn-primary btn-block" value="confirm">
-                <spring:message code="account.form.submit" />
-            </form:button>
-        </p>
+                        <tags:input path="email" type="email">
+                            <jsp:attribute name="label">
+                                <spring:message code="account.form.email.label" />
+                            </jsp:attribute>
+                            <jsp:attribute name="placeholder">
+                                <spring:message code="account.form.email.placeholder" />
+                            </jsp:attribute>
+                        </tags:input>
 
-    </form:form>
+                        <p>
+                            <form:button type="submit" class="btn btn-lg btn-block btn-primary" value="confirm">
+                                <spring:message code="account.form.submit" />
+                            </form:button>
+                        </p>
 
-    <hr/>
+                        <p>
+                            <a href="#" data-dismiss="modal" class="btn btn-lg btn-block btn-default">
+                                <spring:message code="account.form.cancel" />
+                            </a>
+                        </p>
+
+                    </form:form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <h4>
+        <spring:message code="account.connected-accounts" />
+    </h4>
 
     <p>
-        <strong>
-            <spring:message code="account.connected-accounts" />
-        </strong>
+        <spring:message code="account.connected-accounts.signin" />
     </p>
 
     <c:set var="hasTwitter" value="${false}" />
     <c:set var="hasFacebook" value="${false}" />
 
-    <c:forEach items="${user.connections}" var="connection">
+    <c:forEach items="${user.connections}" var="connection" varStatus="status">
+
         <c:if test="${connection.providerId eq 'facebook'}">
             <c:set var="hasFacebook" value="${true}" />
         </c:if>
+
         <c:if test="${connection.providerId eq 'twitter'}">
             <c:set var="hasTwitter" value="${true}" />
         </c:if>
+
         <div class="media">
-            <a class="pull-left" href="#">
+            <p class="media-object pull-left thumbnail">
                 <img class="media-object" src="${connection.imageUrl}" alt="${connection.displayName}" />
-            </a>
-            <div class="media-body">
-                <c:if test="${user.connections.size() gt 1}">
-                    <spring:url value="/connect/${connection.providerId}/${connection.providerUserId}" var="remove" />
-                    <form action="${remove}" method="post" class="pull-right">
-                        <input type="hidden" name="_method" value="DELETE" />
-                        <button type="submit" class="btn btn-danger">
-                            <spring:message code="account.connect.remove" />
-                        </button>
-                    </form>
-                </c:if>
-                <h4 class="media-heading">
-                    <c:choose>
-                        <c:when test="${not empty connection.profileUrl}">
-                            <a href="${connection.profileUrl}">
-                                ${connection.displayName}
-                            </a>
-                        </c:when>
-                        <c:otherwise>
+            </p>
+            <c:if test="${user.connections.size() gt 1}">
+                <p class="pull-right">
+                    <a href="#unlink${status.index}" data-toggle="modal" class="btn btn-danger">Remove</a>
+                </p>
+                <div id="unlink${status.index}" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    &amp;times;
+                                </button>
+                                <h4 class="modal-title">
+                                    <spring:message code="account.disconnect" />
+                                    ${connection.displayName}
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    <spring:message code="account.disconnect.confirm" arguments="${connection.providerId}" />
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <spring:url value="/connect/${connection.providerId}/${connection.providerUserId}" var="remove" />
+                                <form action="${remove}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        <spring:message code="account.disconnect.close" />
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <spring:message code="account.connect.remove" />
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
+            <h4 class="media-heading">
+                <c:choose>
+                    <c:when test="${not empty connection.profileUrl}">
+                        <a href="${connection.profileUrl}">
                             ${connection.displayName}
-                        </c:otherwise>
-                    </c:choose>
-                </h4>
-            </div>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        ${connection.displayName}
+                    </c:otherwise>
+                </c:choose>
+            </h4>
         </div>
+
     </c:forEach>
 
-    <hr/>
-
     <spring:url value="/connect/facebook" var="facebook" />
-    <form action="${facebook}" method="post">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">
-            <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
-            <c:choose>
-                <c:when test="${hasFacebook}">
-                    <spring:message code="account.connect.facebook.more" />
-                </c:when>
-                <c:otherwise>
-                    <spring:message code="account.connect.facebook" />
-                </c:otherwise>
-            </c:choose>
-        </button>
+    <form action="${facebook}" method="post" class="form-inline">
+        <p>
+            <button class="btn btn-lg btn-block btn-primary" type="submit">
+                <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
+                <c:choose>
+                    <c:when test="${hasFacebook}">
+                        <spring:message code="account.connect.facebook.more" />
+                    </c:when>
+                    <c:otherwise>
+                        <spring:message code="account.connect.facebook" />
+                    </c:otherwise>
+                </c:choose>
+            </button>
+        </p>
     </form>
-
-    <p><!-- no collapse --></p>
 
     <spring:url value="/connect/twitter" var="twitter" />
-    <form action="${twitter}" method="post">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">
-            <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
-            <c:choose>
-                <c:when test="${hasTwitter}">
-                    <spring:message code="account.connect.twitter.more" />
-                </c:when>
-                <c:otherwise>
-                    <spring:message code="account.connect.twitter" />
-                </c:otherwise>
-            </c:choose>
-        </button>
+    <form action="${twitter}" method="post" class="form-inline">
+        <p>
+            <button class="btn btn-lg btn-block btn-primary" type="submit">
+                <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
+                <c:choose>
+                    <c:when test="${hasTwitter}">
+                        <spring:message code="account.connect.twitter.more" />
+                    </c:when>
+                    <c:otherwise>
+                        <spring:message code="account.connect.twitter" />
+                    </c:otherwise>
+                </c:choose>
+            </button>
+        </p>
     </form>
-
-    <!-- TODO Fix in CSS -->
-    <p><!-- no collapse --></p>
 
 </jsp:root>
