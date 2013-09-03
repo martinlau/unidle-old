@@ -187,6 +187,9 @@
                     </c:otherwise>
                 </c:choose>
             </h4>
+            <p class="media-body">
+                ${connection.providerId}
+            </p>
         </div>
 
     </c:forEach>
