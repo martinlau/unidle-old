@@ -23,7 +23,8 @@
 <jsp:root xmlns="http://www.w3.org/1999/xhtml"
           xmlns:jsp="http://java.sun.com/JSP/Page"
           xmlns:spring="http://www.springframework.org/tags"
-          version="2.0" xmlns:tags="urn:jsptagdir:/WEB-INF/tags">
+          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
+          version="2.0">
 
     <h1 class="text-center">
         <spring:message code="base.title" />
