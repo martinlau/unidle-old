@@ -46,7 +46,6 @@ import org.unidle.repository.UserRepository;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.nullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -74,11 +73,6 @@ public class AccountControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    @After
-    public void tearDown() throws Exception {
-        SecurityContextHolder.clearContext();
-    }
-
     @Before
     public void setUp() throws Exception {
         subject = webAppContextSetup(webApplicationContext).build();
@@ -90,6 +84,11 @@ public class AccountControllerTest {
         user.setLastName("last name");
 
         user = userRepository.save(user);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        SecurityContextHolder.clearContext();
     }
 
     @Test
@@ -111,12 +110,9 @@ public class AccountControllerTest {
     @Test
     public void testAccountWithoutAuthentication() throws Exception {
         subject.perform(get("/account"))
-               .andExpect(status().isOk())
-               .andExpect(view().name(".account"))
+               .andExpect(view().name("redirect:/signin"))
                .andExpect(model().attributeDoesNotExist("user"))
-               .andExpect(model().attribute("userForm", allOf(hasProperty("email", nullValue()),
-                                                              hasProperty("firstName", nullValue()),
-                                                              hasProperty("lastName", nullValue()))));
+               .andExpect(model().attributeDoesNotExist("userForm"));
     }
 
 }

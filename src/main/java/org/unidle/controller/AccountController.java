@@ -44,7 +44,10 @@ public class AccountController {
 
     @RequestMapping("/account")
     public String account() {
-        // TODO Check for a non logged in user
+        if (SecurityContextHolder.getContext()
+                                 .getAuthentication() == null) {
+            return "redirect:/signin";
+        }
         return ".account";
     }
 
@@ -53,7 +56,7 @@ public class AccountController {
         final User user = user();
 
         return user == null
-               ? new UserForm()
+               ? null
                : new UserForm(user.getEmail(),
                               user.getFirstName(),
                               user.getLastName());
