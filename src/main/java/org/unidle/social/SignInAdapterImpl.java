@@ -31,12 +31,11 @@ import org.springframework.web.context.request.NativeWebRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.unidle.support.CookieKeys.LAST_LOGIN_SOURCE;
+
 @Component
 public class SignInAdapterImpl implements SignInAdapter {
-
-    public static final int LAST_LOGIN_SOURCE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 10;
-
-    public static final String LAST_LOGIN_SOURCE_COOKIE_NAME = "last_login_source";
 
     @Override
     public String signIn(final String userId,
@@ -49,8 +48,10 @@ public class SignInAdapterImpl implements SignInAdapter {
                              .setAuthentication(authentication);
 
 
-        final Cookie cookie = new Cookie(LAST_LOGIN_SOURCE_COOKIE_NAME, connection.createData().getProviderId());
-        cookie.setMaxAge(LAST_LOGIN_SOURCE_COOKIE_MAX_AGE);
+        final Cookie cookie = new Cookie(LAST_LOGIN_SOURCE.getName(), connection.createData().getProviderId());
+        cookie.setMaxAge(LAST_LOGIN_SOURCE.getMaxAgeAs(SECONDS));
+        cookie.setPath("/");
+
         request.getNativeResponse(HttpServletResponse.class).addCookie(cookie);
 
         return null;

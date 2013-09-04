@@ -23,7 +23,11 @@ package org.unidle.controller;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import static org.springframework.web.servlet.view.UrlBasedViewResolver.REDIRECT_URL_PREFIX;
 
 public class RedirectingConnectController extends ConnectController {
 
@@ -35,12 +39,24 @@ public class RedirectingConnectController extends ConnectController {
 
     @Override
     protected String connectedView(final String providerId) {
-        return "redirect:" + UriComponentsBuilder.newInstance()
-                                                 .path("/account")
-                                                 .queryParam("connected", providerId)
-                                                 .build()
-                                                 .encode()
-                                                 .toUriString();
+        return REDIRECT_URL_PREFIX + UriComponentsBuilder.newInstance()
+                                                         .path("/account")
+                                                         .queryParam("connected", providerId)
+                                                         .build()
+                                                         .encode()
+                                                         .toUriString();
+    }
+
+    @Override
+    protected RedirectView connectionStatusRedirect(final String providerId, final NativeWebRequest request) {
+        final String url = UriComponentsBuilder.newInstance()
+                                               .path("/account")
+                                               .queryParam("disconnected", providerId)
+                                               .build()
+                                               .encode()
+                                               .toUriString();
+
+        return new RedirectView(url, true);
     }
 
 }

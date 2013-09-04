@@ -32,6 +32,11 @@
                              required="true"
                              type="java.lang.String" />
 
+    <jsp:directive.attribute name="dataRemote"
+                             description="The URL of the remote content to load"
+                             required="false"
+                             type="java.lang.String" />
+
     <jsp:directive.attribute name="title"
                              description="The title of the modal dialog"
                              required="false"
@@ -42,7 +47,7 @@
                              required="false"
                              type="java.lang.String" />
 
-    <div id="${id}" class="modal fade">
+    <div id="${id}" class="modal fade" data-remote="${dataRemote}">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

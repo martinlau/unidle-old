@@ -357,4 +357,10 @@ public class LocationFactTest {
         assertThat(result).isEqualTo("common.period.year");
     }
 
+    @Test
+    public void testValueOf() throws Exception {
+        final TimeUnit result = TimeUnit.valueOf("YEAR");
+
+        assertThat(result).isEqualTo(TimeUnit.YEAR);
+    }
 }

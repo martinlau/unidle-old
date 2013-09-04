@@ -24,10 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.unidle.domain.User;
-import org.unidle.form.UserForm;
 import org.unidle.repository.UserRepository;
 
 import java.util.UUID;
@@ -42,28 +43,18 @@ public class AccountController {
         this.userRepository = userRepository;
     }
 
-    @RequestMapping("/account")
+    @RequestMapping(value = "/account",
+                    method = RequestMethod.GET)
     public String account() {
-        if (SecurityContextHolder.getContext()
-                                 .getAuthentication() == null) {
+        if (user() == null) {
             return "redirect:/signin";
         }
         return ".account";
     }
 
-    @ModelAttribute("userForm")
-    public UserForm userForm() {
-        final User user = user();
-
-        return user == null
-               ? null
-               : new UserForm(user.getEmail(),
-                              user.getFirstName(),
-                              user.getLastName());
-    }
-
     @ModelAttribute("user")
     public User user() {
+        /* TODO Move this to a web argument resolver */
         final Authentication authentication = SecurityContextHolder.getContext()
                                                                    .getAuthentication();
 

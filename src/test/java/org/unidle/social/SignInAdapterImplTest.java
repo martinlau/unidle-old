@@ -41,8 +41,10 @@ import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.SocialConfiguration;
 import org.unidle.config.WroConfiguration;
 import org.unidle.social.test.ConnectionStub;
+import org.unidle.support.CookieKeys;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.unidle.support.CookieKeys.LAST_LOGIN_SOURCE;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
                    @ContextConfiguration(classes = DataConfiguration.class),
@@ -87,7 +89,7 @@ public class SignInAdapterImplTest {
                                                       .getPrincipal();
 
         assertThat(principal).isEqualTo("userId");
-        assertThat(response.getCookie("last_login_source").getValue()).isEqualTo("provider id");
+        assertThat(response.getCookie(LAST_LOGIN_SOURCE.getName()).getValue()).isEqualTo("provider id");
     }
 
 }

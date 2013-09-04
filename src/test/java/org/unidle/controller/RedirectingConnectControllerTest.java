@@ -22,6 +22,7 @@ package org.unidle.controller;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.web.servlet.view.RedirectView;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -39,6 +40,13 @@ public class RedirectingConnectControllerTest {
         final String result = subject.connectedView("provider id");
 
         assertThat(result).isEqualTo("redirect:/account?connected=provider%20id");
+    }
+
+    @Test
+    public void testConnectionStatusRedirect() throws Exception {
+        final RedirectView result = subject.connectionStatusRedirect("provider id", null);
+
+        assertThat(result.getUrl()).isEqualTo("/account?disconnected=provider%20id");
     }
 
 }

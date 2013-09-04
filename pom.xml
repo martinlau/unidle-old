@@ -338,6 +338,11 @@
                                     <value>COVEREDRATIO</value>
                                     <minimum>${jacoco-maven-plugin.method.branch-coverage.minimum}</minimum>
                                 </limit>
+                                <limit>
+                                    <counter>INSTRUCTION</counter>
+                                    <value>COVEREDRATIO</value>
+                                    <minimum>${jacoco-maven-plugin.method.instruction-coverage.minimum}</minimum>
+                                </limit>
                             </limits>
                         </rule>
                     </rules>
@@ -1294,13 +1299,14 @@
         <license.failOnMissingHeader>true</license.failOnMissingHeader>
         <license.licenseName>agpl_v3</license.licenseName>
 
-        <jacoco-maven-plugin.bundle.branch-coverage.minimum>0.95</jacoco-maven-plugin.bundle.branch-coverage.minimum>
-        <jacoco-maven-plugin.bundle.instruction-coverage.minimum>0.95</jacoco-maven-plugin.bundle.instruction-coverage.minimum>
-        <jacoco-maven-plugin.package.branch-coverage.minimum>0.95</jacoco-maven-plugin.package.branch-coverage.minimum>
-        <jacoco-maven-plugin.package.instruction-coverage.minimum>0.95</jacoco-maven-plugin.package.instruction-coverage.minimum>
-        <jacoco-maven-plugin.class.branch-coverage.minimum>0.90</jacoco-maven-plugin.class.branch-coverage.minimum>
-        <jacoco-maven-plugin.class.instruction-coverage.minimum>0.90</jacoco-maven-plugin.class.instruction-coverage.minimum>
-        <jacoco-maven-plugin.method.branch-coverage.minimum>0.90</jacoco-maven-plugin.method.branch-coverage.minimum>
+        <jacoco-maven-plugin.bundle.branch-coverage.minimum>1.00</jacoco-maven-plugin.bundle.branch-coverage.minimum>
+        <jacoco-maven-plugin.bundle.instruction-coverage.minimum>0.99</jacoco-maven-plugin.bundle.instruction-coverage.minimum>
+        <jacoco-maven-plugin.package.branch-coverage.minimum>1.00</jacoco-maven-plugin.package.branch-coverage.minimum>
+        <jacoco-maven-plugin.package.instruction-coverage.minimum>0.97</jacoco-maven-plugin.package.instruction-coverage.minimum>
+        <jacoco-maven-plugin.class.branch-coverage.minimum>1.00</jacoco-maven-plugin.class.branch-coverage.minimum>
+        <jacoco-maven-plugin.class.instruction-coverage.minimum>0.92</jacoco-maven-plugin.class.instruction-coverage.minimum>
+        <jacoco-maven-plugin.method.branch-coverage.minimum>1.00</jacoco-maven-plugin.method.branch-coverage.minimum>
+        <jacoco-maven-plugin.method.instruction-coverage.minimum>0.88</jacoco-maven-plugin.method.instruction-coverage.minimum>
 
         <timestamp>${maven.build.timestamp}</timestamp>
 

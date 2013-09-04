@@ -18,11 +18,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-(function ($, win) {
+$(function () {
+
     "use strict";
-    if (!win.location.hash) {
-        $(function () {
-            $("body").animate({ scrollTop: "0" });
+
+    $("body").on("submit", "form.ajax-form", function (ev) {
+
+        ev.preventDefault();
+
+        var $form = $(this),
+            action = $form.attr("action"),
+            content = $form.serialize();
+
+        $.post(action, content, "html").done(function (data) {
+            $form.html(data);
         });
-    }
-}(jQuery, window));
+
+    });
+});

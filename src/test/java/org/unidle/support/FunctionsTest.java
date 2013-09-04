@@ -50,6 +50,12 @@ import static org.unidle.test.Conditions.hasUser;
 public class FunctionsTest {
 
     @Test
+    public void testConstructor() throws Exception {
+        // XXX A dumb test case just to get method coverage > 0% for this one :S (since jacoco can't be configured to skip private constructors yet)
+        new Functions();
+    }
+
+    @Test
     public void testToConnectionData() throws Exception {
         final UserConnection userConnection = new UserConnection();
 

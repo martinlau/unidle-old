@@ -43,14 +43,19 @@ import org.unidle.config.WroConfiguration;
 import org.unidle.domain.User;
 import org.unidle.repository.UserRepository;
 
+import static org.fest.assertions.Assertions.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.unidle.test.Conditions.hasEmail;
+import static org.unidle.test.Conditions.hasFirstName;
+import static org.unidle.test.Conditions.hasLastName;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
                    @ContextConfiguration(classes = DataConfiguration.class),
@@ -61,7 +66,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @WebAppConfiguration
-public class AccountControllerTest {
+public class AccountUpdateControllerTest {
 
     private MockMvc subject;
 
@@ -76,6 +81,14 @@ public class AccountControllerTest {
     @Before
     public void setUp() throws Exception {
         subject = webAppContextSetup(webApplicationContext).build();
+
+        user = new User();
+
+        user.setEmail("another@example.com");
+        user.setFirstName("another first name");
+        user.setLastName("another last name");
+
+        user = userRepository.save(user);
 
         user = new User();
 
@@ -96,19 +109,73 @@ public class AccountControllerTest {
         SecurityContextHolder.getContext()
                              .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid().toString(), null));
 
-        subject.perform(get("/account"))
+        subject.perform(get("/account/update"))
                .andExpect(status().isOk())
-               .andExpect(view().name(".account"))
-               .andExpect(model().attribute("user", allOf(hasProperty("email", equalTo("email@example.com")),
-                                                          hasProperty("firstName", equalTo("first name")),
-                                                          hasProperty("lastName", equalTo("last name")))));
+               .andExpect(view().name(".ajax.account-update"))
+               .andExpect(model().attribute("userForm", allOf(hasProperty("email", equalTo("email@example.com")),
+                                                              hasProperty("firstName", equalTo("first name")),
+                                                              hasProperty("lastName", equalTo("last name")))));
     }
 
     @Test
     public void testAccountWithoutAuthentication() throws Exception {
-        subject.perform(get("/account"))
+        subject.perform(get("/account/update"))
                .andExpect(view().name("redirect:/signin"))
-               .andExpect(model().attributeDoesNotExist("user"));
+               .andExpect(model().attributeDoesNotExist("userForm"));
+    }
+
+    @Test
+    public void testUpdate() throws Exception {
+        SecurityContextHolder.getContext()
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid().toString(), null));
+
+        subject.perform(post("/account/update")
+                                .param("email", "new@example.com")
+                                .param("firstName", "new first name")
+                                .param("lastName", "new last name"))
+               .andExpect(view().name(".ajax.account-updated"));
+
+
+        assertThat(userRepository.findOne(user.getUuid()))
+                .satisfies(hasEmail("new@example.com"))
+                .satisfies(hasFirstName("new first name"))
+                .satisfies(hasLastName("new last name"));
+    }
+
+    @Test
+    public void testUpdateWithSameEmail() throws Exception {
+        SecurityContextHolder.getContext()
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid().toString(), null));
+
+        subject.perform(post("/account/update")
+                                .param("email", "email@example.com")
+                                .param("firstName", "new first name")
+                                .param("lastName", "new last name"))
+               .andExpect(view().name(".ajax.account-updated"));
+
+        assertThat(userRepository.findOne(user.getUuid()))
+                .satisfies(hasEmail("email@example.com"))
+                .satisfies(hasFirstName("new first name"))
+                .satisfies(hasLastName("new last name"));
+    }
+
+    @Test
+    public void testUpdateWithoutAuthentication() throws Exception {
+        subject.perform(post("/account/update"))
+               .andExpect(view().name("redirect:/signin"));
+    }
+
+    @Test
+    public void testUpdateWithoutAuthenticationWithExistingEmail() throws Exception {
+        SecurityContextHolder.getContext()
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid().toString(), null));
+
+        subject.perform(post("/account/update")
+                                .param("email", "another@example.com")
+                                .param("firstName", "new first name")
+                                .param("lastName", "new last name"))
+               .andExpect(view().name(".ajax.account-update"))
+               .andExpect(model().attributeHasFieldErrors("userForm", "email"));
     }
 
 }
