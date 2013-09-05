@@ -124,6 +124,12 @@ public class SignupControllerTest {
     }
 
     @Test
+    public void testSignupWithoutConnection() throws Exception {
+        subject.perform(get("/signup"))
+               .andExpect(view().name("redirect:/signin"));
+    }
+
+    @Test
     public void testSignupWithoutUserProfile() throws Exception {
 
         final ConnectionData connectionData = new ConnectionData("provider id",
@@ -193,6 +199,7 @@ public class SignupControllerTest {
 
     @Test
     public void testSubmitWithExistingEmail() throws Exception {
+
         User user = new User();
 
         user.setEmail("email@example.com");
@@ -201,10 +208,36 @@ public class SignupControllerTest {
 
         userRepository.save(user);
 
+        final ConnectionData connectionData = new ConnectionData("provider id",
+                                                                 "provider user id",
+                                                                 "display name",
+                                                                 "profile url",
+                                                                 "image url",
+                                                                 "access token",
+                                                                 "secret",
+                                                                 "refresh token",
+                                                                 1234L);
+
+        final UserProfile userProfile = new UserProfileBuilder().setFirstName("first name")
+                                                                .setLastName("last name")
+                                                                .setEmail("email@example.com")
+                                                                .build();
+
+        final Connection<?> connection = new ConnectionStub<>(connectionData, userProfile);
+
+        final ConnectionFactory<?> connectionFactory = new ConnectionFactoryStub<>("provider id", connection);
+
+        final ConnectionFactoryLocatorStub connectionFactoryLocator = new ConnectionFactoryLocatorStub(connectionFactory);
+
+        final UsersConnectionRepository usersConnectionRepository = new UsersConnectionRepositoryStub();
+
+        final ProviderSignInAttempt providerSignInAttempt = new ProviderSignInAttempt(connection, connectionFactoryLocator, usersConnectionRepository);
+
         subject.perform(post("/signup")
                                 .param("email", "email@example.com")
                                 .param("firstName", "first name")
-                                .param("lastName", "last name"))
+                                .param("lastName", "last name")
+                                .sessionAttr(ProviderSignInAttempt.class.getName(), providerSignInAttempt))
                .andExpect(view().name(".signup"))
                .andExpect(model().attributeHasFieldErrors("userForm",
                                                           "email"));
@@ -212,13 +245,48 @@ public class SignupControllerTest {
 
     @Test
     public void testSubmitWithValidationErrors() throws Exception {
+        final ConnectionData connectionData = new ConnectionData("provider id",
+                                                                 "provider user id",
+                                                                 "display name",
+                                                                 "profile url",
+                                                                 "image url",
+                                                                 "access token",
+                                                                 "secret",
+                                                                 "refresh token",
+                                                                 1234L);
+
+        final UserProfile userProfile = new UserProfileBuilder().setFirstName("first name")
+                                                                .setLastName("last name")
+                                                                .setEmail("email@example.com")
+                                                                .build();
+
+        final Connection<?> connection = new ConnectionStub<>(connectionData, userProfile);
+
+        final ConnectionFactory<?> connectionFactory = new ConnectionFactoryStub<>("provider id", connection);
+
+        final ConnectionFactoryLocatorStub connectionFactoryLocator = new ConnectionFactoryLocatorStub(connectionFactory);
+
+        final UsersConnectionRepository usersConnectionRepository = new UsersConnectionRepositoryStub();
+
+        final ProviderSignInAttempt providerSignInAttempt = new ProviderSignInAttempt(connection, connectionFactoryLocator, usersConnectionRepository);
+
         subject.perform(post("/signup")
                                 .param("email", "")
                                 .param("firstName", "")
-                                .param("lastName", ""))
+                                .param("lastName", "")
+                                .sessionAttr(ProviderSignInAttempt.class.getName(), providerSignInAttempt))
                .andExpect(view().name(".signup"))
                .andExpect(model().attributeHasFieldErrors("userForm",
                                                           "email", "firstName", "lastName"));
+    }
+
+    @Test
+    public void testSubmitWithoutConnection() throws Exception {
+        subject.perform(post("/signup")
+                                .param("email", "email@example.com")
+                                .param("firstName", "first name")
+                                .param("lastName", "last name"))
+               .andExpect(view().name("redirect:/signin"));
     }
 
 }

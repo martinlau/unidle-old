@@ -54,8 +54,11 @@ public class SignupController {
 
     @RequestMapping(method = GET,
                     value = "/signup")
-    public String signup() {
-        // TODO Check for existing connection
+    public String signup(final WebRequest webRequest) {
+        final Connection<?> connection = ProviderSignInUtils.getConnection(webRequest);
+        if (connection == null) {
+            return "redirect:/signin";
+        }
         return ".signup";
     }
 
@@ -65,6 +68,11 @@ public class SignupController {
     public String submit(@Valid final UserForm userForm,
                          final Errors errors,
                          final WebRequest webRequest) {
+
+        final Connection<?> connection = ProviderSignInUtils.getConnection(webRequest);
+        if (connection == null) {
+            return "redirect:/signin";
+        }
 
         if (errors.hasErrors()) {
             return ".signup";
