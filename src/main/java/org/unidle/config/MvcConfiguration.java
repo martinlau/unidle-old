@@ -82,6 +82,9 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Value("${unidle.segment.io.apiKey}")
     private String segmentIoApiKey;
 
+    @Value("${unidle.segment.io.secret}")
+    private String segmentIoSecret;
+
     @Autowired
     private UserService userService;
 
@@ -143,7 +146,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @PostConstruct
     public void analytics() {
-        Analytics.initialize(segmentIoApiKey);
+        Analytics.initialize(segmentIoSecret);
     }
 
     @Bean
