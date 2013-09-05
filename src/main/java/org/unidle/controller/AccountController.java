@@ -21,17 +21,12 @@
 package org.unidle.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.unidle.domain.User;
 import org.unidle.repository.UserRepository;
-
-import java.util.UUID;
 
 @Controller
 public class AccountController {
@@ -45,26 +40,16 @@ public class AccountController {
 
     @RequestMapping(value = "/account",
                     method = RequestMethod.GET)
-    public String account() {
-        if (user() == null) {
+    public String account(final User user) {
+        if (user == null) {
             return "redirect:/signin";
         }
         return ".account";
     }
 
     @ModelAttribute("user")
-    public User user() {
-        /* TODO Move this to a web argument resolver */
-        final Authentication authentication = SecurityContextHolder.getContext()
-                                                                   .getAuthentication();
-
-        if (authentication == null) {
-            return null;
-        }
-
-        final String userId = authentication.getName();
-
-        return userRepository.findOne(UUID.fromString(userId));
+    public User user(final User user) {
+        return user;
     }
 
 }

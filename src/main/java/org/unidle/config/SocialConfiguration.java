@@ -112,9 +112,9 @@ public class SocialConfiguration {
             throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
         }
 
-        final String name = authentication.getName();
+        final String uuid = authentication.getName();
 
-        return usersConnectionRepository.createConnectionRepository(name);
+        return usersConnectionRepository.createConnectionRepository(uuid);
     }
 
     @Bean

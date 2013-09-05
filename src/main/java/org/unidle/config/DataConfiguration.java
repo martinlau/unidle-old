@@ -96,7 +96,7 @@ public class DataConfiguration {
 
     @Bean
     @Autowired
-    public AuditorAware<User> auditorAware(UserRepository userRepository) {
+    public AuditorAware<User> auditorAware(final UserRepository userRepository) {
         return new AuditorAwareImpl(userRepository);
     }
 

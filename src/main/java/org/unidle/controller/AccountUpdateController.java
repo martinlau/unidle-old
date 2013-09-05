@@ -24,12 +24,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.unidle.domain.User;
 import org.unidle.form.UserForm;
 import org.unidle.repository.UserRepository;
+import org.unidle.service.UserService;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -43,11 +45,13 @@ public class AccountUpdateController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/account/update",
                     method = GET)
-    public String update() {
-        if (SecurityContextHolder.getContext()
-                                 .getAuthentication() == null) {
+    public String update(final User user) {
+        if (user == null) {
             return "redirect:/signin";
         }
         return ".ajax.account-update";
@@ -56,15 +60,15 @@ public class AccountUpdateController {
     @RequestMapping(value = "/account/update",
                     method = POST)
     public String update(@Valid final UserForm userForm,
-                         final Errors errors) {
+                         final Errors errors,
+                         final User user,
+                         final ModelMap modelMap) {
 
-        final User user = user();
         if (user == null) {
             return "redirect:/signin";
         }
 
-        final User userWithEmail = userRepository.findOne(userForm.getEmail());
-        if (userWithEmail != null && !userWithEmail.getUuid().equals(user.getUuid())) {
+        if (userService.exists(userForm.getEmail())  && !userService.isCurrentUser(userForm.getEmail())) {
             errors.rejectValue("email", "error.email.exists");
         }
 
@@ -72,33 +76,18 @@ public class AccountUpdateController {
             return ".ajax.account-update";
         }
 
-        // TODO Move this to a service
-        user.setEmail(userForm.getEmail());
-        user.setFirstName(userForm.getFirstName());
-        user.setLastName(userForm.getLastName());
+        final User updatedUser = userService.updateUser(user.getUuid(),
+                                                        userForm.getEmail(),
+                                                        userForm.getFirstName(),
+                                                        userForm.getLastName());
 
-        userRepository.save(user);
+        modelMap.addAttribute("user", updatedUser);
 
         return ".ajax.account-updated";
     }
 
-    public User user() {
-        final Authentication authentication = SecurityContextHolder.getContext()
-                                                                   .getAuthentication();
-
-        if (authentication == null) {
-            return null;
-        }
-
-        final String userId = authentication.getName();
-
-        return userRepository.findOne(UUID.fromString(userId));
-    }
-
     @ModelAttribute("userForm")
-    public UserForm userForm() {
-        final User user = user();
-
+    public UserForm userForm(final User user) {
         return user == null
                ? null
                : new UserForm(user.getEmail(),

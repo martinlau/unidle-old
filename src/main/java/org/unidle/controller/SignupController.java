@@ -45,8 +45,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 public class SignupController {
 
-    // TODO Test this
-
     @Autowired
     private UserService userService;
 
@@ -81,7 +79,7 @@ public class SignupController {
         ProviderSignInUtils.handlePostSignUp(user.getId().toString(),
                                              webRequest);
 
-        final Authentication authentication = new UsernamePasswordAuthenticationToken(user.getId().toString(), null);
+        final Authentication authentication = new UsernamePasswordAuthenticationToken(user.getId(), null);
 
         SecurityContextHolder.getContext()
                              .setAuthentication(authentication);

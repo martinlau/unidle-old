@@ -25,6 +25,7 @@ import org.unidle.domain.LocationFact.TimeUnit;
 import org.unidle.domain.User;
 
 import java.util.Map;
+import java.util.UUID;
 
 import static java.lang.String.format;
 import static org.springframework.test.util.ReflectionTestUtils.getField;
@@ -294,6 +295,15 @@ public class Conditions {
             @Override
             public boolean matches(final Object value) {
                 return user.equals(getField(value, "user"));
+            }
+        };
+    }
+
+    public static Condition<Object> hasUuid(final UUID uuid) {
+        return new Condition<Object>(format("has uuid: %s", uuid)) {
+            @Override
+            public boolean matches(final Object value) {
+                return uuid.equals(getField(value, "uuid"));
             }
         };
     }

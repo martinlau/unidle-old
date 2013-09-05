@@ -41,8 +41,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.unidle.service.LocationService;
+import org.unidle.service.UserService;
 import org.unidle.web.BuildTimestampInterceptor;
-import org.unidle.web.LocationHandlerMethodArgumentResolver;
+import org.unidle.web.CurrentUserMethodArgumentResolver;
+import org.unidle.web.LocationMethodArgumentResolver;
 import org.unidle.web.SegmentIoApiKeyInterceptor;
 
 import javax.annotation.PostConstruct;
@@ -80,6 +82,9 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Value("${unidle.segment.io.apiKey}")
     private String segmentIoApiKey;
 
+    @Autowired
+    private UserService userService;
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
@@ -87,7 +92,13 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(locationHandlerMethodArgumentResolver());
+        argumentResolvers.add(locationMethodArgumentResolver());
+        argumentResolvers.add(currentUserMethodArgumentResolver());
+    }
+
+    @Bean
+    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
+        return new CurrentUserMethodArgumentResolver(userService);
     }
 
     @Override
@@ -126,8 +137,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public LocationHandlerMethodArgumentResolver locationHandlerMethodArgumentResolver() {
-        return new LocationHandlerMethodArgumentResolver(locationService);
+    public LocationMethodArgumentResolver locationMethodArgumentResolver() {
+        return new LocationMethodArgumentResolver(locationService);
     }
 
     @PostConstruct

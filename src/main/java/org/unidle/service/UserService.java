@@ -20,13 +20,26 @@
  */
 package org.unidle.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.unidle.domain.User;
+
+import java.util.UUID;
 
 public interface UserService {
 
-    User createUser(final String email, final String firstName,
+    User createUser(final String email,
+                    final String firstName,
                     final String lastName);
+
+    User currentUser();
 
     boolean exists(final String email);
 
+    boolean isCurrentUser(String email);
+
+    @Transactional
+    User updateUser(UUID uuid,
+                    String email,
+                    String firstName,
+                    String lastName);
 }

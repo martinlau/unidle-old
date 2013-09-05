@@ -27,12 +27,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.MethodParameter;
-import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
@@ -40,16 +41,14 @@ import org.unidle.config.I18NConfiguration;
 import org.unidle.config.MvcConfiguration;
 import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.WroConfiguration;
+import org.unidle.domain.User;
+import org.unidle.repository.UserRepository;
 import org.unidle.service.Location;
+import org.unidle.test.Conditions;
 
-import javax.servlet.http.Cookie;
 import java.lang.reflect.Method;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.unidle.test.Conditions.hasCity;
-import static org.unidle.test.Conditions.hasContinent;
-import static org.unidle.test.Conditions.hasCountry;
-import static org.unidle.test.Conditions.hasSubdivision;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
                    @ContextConfiguration(classes = DataConfiguration.class),
@@ -58,72 +57,59 @@ import static org.unidle.test.Conditions.hasSubdivision;
                    @ContextConfiguration(classes = WroConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
 @WebAppConfiguration
-public class LocationHandlerMethodArgumentResolverTest {
+public class CurrentUserMethodArgumentResolverTest {
 
-    private static final Method TEST_METHOD = MethodUtils.getAccessibleMethod(TestClass.class, "testMethod", Location.class, String.class);
-
-    private MethodParameter locationMethodParameter;
-
-    private MockHttpServletRequest mockRequest;
+    private static final Method TEST_METHOD = MethodUtils.getAccessibleMethod(TestClass.class, "testMethod", User.class, String.class);
 
     private MethodParameter stringMethodParameter;
 
     @Autowired
-    @Qualifier("locationHandlerMethodArgumentResolver")
+    @Qualifier("currentUserMethodArgumentResolver")
     private HandlerMethodArgumentResolver subject;
+
+    private User user;
+
+    private MethodParameter userMethodParameter;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Before
     public void setUp() throws Exception {
-        locationMethodParameter = new MethodParameter(TEST_METHOD, 0);
-        mockRequest = new MockHttpServletRequest();
+        userMethodParameter = new MethodParameter(TEST_METHOD, 0);
         stringMethodParameter = new MethodParameter(TEST_METHOD, 1);
+
+        user = new User();
+
+        user.setEmail("email@example.com");
+        user.setFirstName("first name");
+        user.setLastName("last name");
+
+        user = userRepository.save(user);
     }
 
     @Test
-    public void testResolveArgument() throws Exception {
-        mockRequest.setRemoteAddr("203.27.21.6");
+    public void testResolveArgumentWithLoggedInUser() throws Exception {
+        SecurityContextHolder.getContext()
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
 
-        final Location result = (Location) subject.resolveArgument(null, null, new ServletWebRequest(mockRequest), null);
+        final User result = (User) subject.resolveArgument(null, null, null, null);
 
-        assertThat(result)
-                .satisfies(hasCity("Sydney"))
-                .satisfies(hasSubdivision("New South Wales"))
-                .satisfies(hasCountry("Australia"))
-                .satisfies(hasContinent("Oceania"));
+        assertThat(result).isEqualTo(user);
     }
 
     @Test
-    public void testResolveArgumentWithCookieOverride() throws Exception {
-        mockRequest.setRemoteAddr("140.159.2.36"); // Melbourne
-        mockRequest.setCookies(new Cookie("address", "203.27.21.6")); // Sydney
+    public void testResolveArgumentWithoutLoggedInUser() throws Exception {
+        final User result = (User) subject.resolveArgument(null, null, null, null);
 
-        final Location result = (Location) subject.resolveArgument(null, null, new ServletWebRequest(mockRequest), null);
-
-        assertThat(result)
-                .satisfies(hasCity("Sydney"))
-                .satisfies(hasSubdivision("New South Wales"))
-                .satisfies(hasCountry("Australia"))
-                .satisfies(hasContinent("Oceania"));
-    }
-
-    @Test
-    public void testResolveArgumentWithHeaderOverride() throws Exception {
-        mockRequest.setRemoteAddr("140.159.2.36"); // Melbourne
-        mockRequest.addHeader("X-Forwarded-For", "203.27.21.6"); // Sydney
-
-        final Location result = (Location) subject.resolveArgument(null, null, new ServletWebRequest(mockRequest), null);
-
-        assertThat(result)
-                .satisfies(hasCity("Sydney"))
-                .satisfies(hasSubdivision("New South Wales"))
-                .satisfies(hasCountry("Australia"))
-                .satisfies(hasContinent("Oceania"));
+        assertThat(result).isNull();
     }
 
     @Test
     public void testSupportsParameterForLocationArgument() throws Exception {
-        final boolean result = subject.supportsParameter(locationMethodParameter);
+        final boolean result = subject.supportsParameter(userMethodParameter);
 
         assertThat(result).isTrue();
     }
@@ -138,7 +124,7 @@ public class LocationHandlerMethodArgumentResolverTest {
     public static final class TestClass {
 
         @SuppressWarnings("unused")
-        public void testMethod(Location location, String string) {
+        public void testMethod(User user, String string) {
             // Nothing to see here
         }
 

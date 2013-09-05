@@ -107,7 +107,7 @@ public class AccountUpdateControllerTest {
     @Test
     public void testAccount() throws Exception {
         SecurityContextHolder.getContext()
-                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid().toString(), null));
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
 
         subject.perform(get("/account/update"))
                .andExpect(status().isOk())
@@ -127,14 +127,16 @@ public class AccountUpdateControllerTest {
     @Test
     public void testUpdate() throws Exception {
         SecurityContextHolder.getContext()
-                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid().toString(), null));
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
 
         subject.perform(post("/account/update")
                                 .param("email", "new@example.com")
                                 .param("firstName", "new first name")
                                 .param("lastName", "new last name"))
-               .andExpect(view().name(".ajax.account-updated"));
-
+               .andExpect(view().name(".ajax.account-updated"))
+               .andExpect(model().attribute("user", allOf(hasProperty("email", equalTo("new@example.com")),
+                                                          hasProperty("firstName", equalTo("new first name")),
+                                                          hasProperty("lastName", equalTo("new last name")))));
 
         assertThat(userRepository.findOne(user.getUuid()))
                 .satisfies(hasEmail("new@example.com"))
@@ -145,7 +147,7 @@ public class AccountUpdateControllerTest {
     @Test
     public void testUpdateWithSameEmail() throws Exception {
         SecurityContextHolder.getContext()
-                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid().toString(), null));
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
 
         subject.perform(post("/account/update")
                                 .param("email", "email@example.com")
@@ -168,7 +170,7 @@ public class AccountUpdateControllerTest {
     @Test
     public void testUpdateWithoutAuthenticationWithExistingEmail() throws Exception {
         SecurityContextHolder.getContext()
-                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid().toString(), null));
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
 
         subject.perform(post("/account/update")
                                 .param("email", "another@example.com")

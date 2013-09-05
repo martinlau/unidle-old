@@ -22,10 +22,14 @@ package org.unidle.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.unidle.domain.User;
 import org.unidle.repository.UserRepository;
+
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -49,12 +53,51 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public User currentUser() {
+
+        final Authentication authentication = SecurityContextHolder.getContext()
+                                                                   .getAuthentication();
+
+        if (authentication == null) {
+            return null;
+        }
+
+        final String uuid = authentication.getName();
+
+        return userRepository.findOne(UUID.fromString(uuid));
+    }
+
     @Cacheable(value = "org.unidle.service.UserService",
                unless = "#result == false")
     @Override
     @Transactional(readOnly = true)
     public boolean exists(final String email) {
         return userRepository.findOne(email) != null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isCurrentUser(final String email) {
+        final User user = userRepository.findOne(email);
+        return user != null && user.equals(currentUser());
+    }
+
+    @Override
+    @Transactional
+    public User updateUser(final UUID uuid,
+                           final String email,
+                           final String firstName,
+                           final String lastName) {
+
+        final User user = userRepository.findOne(uuid);
+
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+
+        return userRepository.save(user);
     }
 
 }

@@ -94,7 +94,7 @@ public class AccountControllerTest {
     @Test
     public void testAccount() throws Exception {
         SecurityContextHolder.getContext()
-                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid().toString(), null));
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
 
         subject.perform(get("/account"))
                .andExpect(status().isOk())
