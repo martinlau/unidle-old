@@ -29,14 +29,14 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GoogleAnalyticsIdInterceptor extends HandlerInterceptorAdapter {
+public class SegmentIoApiKeyInterceptor extends HandlerInterceptorAdapter {
 
-    public static final String GOOGLE_ANALYTICS_ID = "googleAnalyticsId";
+    public static final String SEGMENT_IO_API_KEY = "segmentIoApiKey";
 
-    private final String googleAnalyticsId;
+    private final String segmentIoApiKey;
 
-    public GoogleAnalyticsIdInterceptor(final String googleAnalyticsId) {
-        this.googleAnalyticsId = googleAnalyticsId;
+    public SegmentIoApiKeyInterceptor(final String segmentIoApiKey) {
+        this.segmentIoApiKey = segmentIoApiKey;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class GoogleAnalyticsIdInterceptor extends HandlerInterceptorAdapter {
             packageName = ClassUtils.getPackageName(((HandlerMethod) handler).getBean().getClass());
         }
         if (packageName.startsWith("org.unidle")) {
-            modelAndView.addObject(GOOGLE_ANALYTICS_ID, googleAnalyticsId);
+            modelAndView.addObject(SEGMENT_IO_API_KEY, segmentIoApiKey);
         }
     }
 

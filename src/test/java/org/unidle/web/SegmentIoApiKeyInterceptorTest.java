@@ -42,7 +42,7 @@ import org.unidle.config.WroConfiguration;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.unidle.test.Conditions.containsKey;
-import static org.unidle.web.GoogleAnalyticsIdInterceptor.GOOGLE_ANALYTICS_ID;
+import static org.unidle.web.SegmentIoApiKeyInterceptor.SEGMENT_IO_API_KEY;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
                    @ContextConfiguration(classes = DataConfiguration.class),
@@ -52,12 +52,12 @@ import static org.unidle.web.GoogleAnalyticsIdInterceptor.GOOGLE_ANALYTICS_ID;
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-public class GoogleAnalyticsIdInterceptorTest {
+public class SegmentIoApiKeyInterceptorTest {
 
     private ModelAndView modelAndView;
 
     @Autowired
-    @Qualifier("googleAnalyticsIdInterceptor")
+    @Qualifier("segmentIoApiKeyInterceptor")
     private HandlerInterceptorAdapter subject;
 
     @Before
@@ -70,7 +70,7 @@ public class GoogleAnalyticsIdInterceptorTest {
         subject.postHandle(null, null, new HandlerMethod(this, "toString"), modelAndView);
 
         assertThat(modelAndView.getModel())
-                .satisfies(containsKey((GOOGLE_ANALYTICS_ID)));
+                .satisfies(containsKey((SEGMENT_IO_API_KEY)));
     }
 
     @Test

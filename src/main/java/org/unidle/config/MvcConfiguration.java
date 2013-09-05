@@ -20,6 +20,7 @@
  */
 package org.unidle.config;
 
+import com.github.segmentio.Analytics;
 import de.bripkens.gravatar.DefaultImage;
 import de.bripkens.gravatar.Gravatar;
 import de.bripkens.gravatar.Rating;
@@ -33,19 +34,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.unidle.service.LocationService;
-import org.unidle.web.GoogleAnalyticsIdInterceptor;
 import org.unidle.web.BuildTimestampInterceptor;
 import org.unidle.web.LocationHandlerMethodArgumentResolver;
+import org.unidle.web.SegmentIoApiKeyInterceptor;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 import static java.lang.Boolean.FALSE;
@@ -58,9 +58,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Value("${unidle.build.timestamp}")
     private String buildTimestamp;
-
-    @Value("${unidle.google.analyticsId}")
-    private String googleAnalyticsId;
 
     @Value("${unidle.gravatar.https}")
     private boolean gravatarHttps;
@@ -80,6 +77,9 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Value("${unidle.resource.cachePeriod}")
     private int resourceCachePeriod;
 
+    @Value("${unidle.segment.io.apiKey}")
+    private String segmentIoApiKey;
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
@@ -93,7 +93,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(buildTimestampInterceptor());
-        registry.addInterceptor(googleAnalyticsIdInterceptor());
+        registry.addInterceptor(segmentIoApiKeyInterceptor());
     }
 
     @Bean
@@ -102,8 +102,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public HandlerInterceptor googleAnalyticsIdInterceptor() {
-        return new GoogleAnalyticsIdInterceptor(googleAnalyticsId);
+    public HandlerInterceptor segmentIoApiKeyInterceptor() {
+        return new SegmentIoApiKeyInterceptor(segmentIoApiKey);
     }
 
     @Override
@@ -128,6 +128,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public LocationHandlerMethodArgumentResolver locationHandlerMethodArgumentResolver() {
         return new LocationHandlerMethodArgumentResolver(locationService);
+    }
+
+    @PostConstruct
+    public void analytics() {
+        Analytics.initialize(segmentIoApiKey);
     }
 
     @Bean
