@@ -32,7 +32,7 @@ public class RedirectingConnectControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new RedirectingConnectController(null, null, null);
+        subject = new RedirectingConnectController(null, null);
     }
 
     @Test

@@ -43,6 +43,7 @@ import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
 import org.unidle.config.MvcConfiguration;
 import org.unidle.config.ServiceConfiguration;
+import org.unidle.config.SocialConfiguration;
 import org.unidle.config.WroConfiguration;
 import org.unidle.domain.User;
 import org.unidle.repository.UserRepository;
@@ -67,6 +68,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = I18NConfiguration.class),
                    @ContextConfiguration(classes = ServiceConfiguration.class),
+                   @ContextConfiguration(classes = SocialConfiguration.class),
                    @ContextConfiguration(classes = WroConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -85,7 +87,6 @@ public class SignupControllerTest {
     @Before
     public void setUp() throws Exception {
         subject = webAppContextSetup(webApplicationContext).build();
-
     }
 
     @Test

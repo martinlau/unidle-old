@@ -22,11 +22,9 @@ package org.unidle.support;
 
 public enum EventKeys {
 
-    CONNECT("Connect an Account"),
+    CONNECT("Connected an Account"),
 
-    DISCONNECT("Disconnect an Account"),
-
-    SIGN_UP("Sign Up");
+    SIGN_UP("Signed Up");
 
     private final String name;
 

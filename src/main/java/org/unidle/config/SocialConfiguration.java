@@ -37,6 +37,7 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.connect.web.ConnectController;
+import org.springframework.social.connect.web.ConnectInterceptor;
 import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
@@ -44,7 +45,11 @@ import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.unidle.controller.RedirectingConnectController;
 import org.unidle.service.UserService;
+import org.unidle.social.AnalyticTrackingConnectInterceptor;
 
+import javax.annotation.PostConstruct;
+
+import static com.github.segmentio.Analytics.initialize;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 
 @Configuration
@@ -58,6 +63,9 @@ public class SocialConfiguration {
 
     @Value("${unidle.facebook.secret}")
     private String facebookSecret;
+
+    @Value("${unidle.segment.io.secret}")
+    private String segmentIoSecret;
 
     @Autowired
     private SignInAdapter signInAdapter;
@@ -88,10 +96,16 @@ public class SocialConfiguration {
     @Bean
     public ConnectController connectController() {
         final RedirectingConnectController connectController = new RedirectingConnectController(connectionFactoryLocator(),
-                                                                                                connectionRepository(),
-                                                                                                userService);
+                                                                                                connectionRepository());
+
+        connectController.addInterceptor(analyticTrackingConnectInterceptor());
 
         return connectController;
+    }
+
+    @Bean
+    public ConnectInterceptor<?> analyticTrackingConnectInterceptor() {
+        return new AnalyticTrackingConnectInterceptor<>(userService);
     }
 
     @Bean
@@ -120,6 +134,11 @@ public class SocialConfiguration {
                                                                    twitterConsumerSecret));
 
         return registry;
+    }
+
+    @PostConstruct
+    public void initializeAnalytics() {
+        initialize(segmentIoSecret);
     }
 
     @Bean

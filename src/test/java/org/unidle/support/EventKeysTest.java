@@ -24,16 +24,14 @@ import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.unidle.support.EventKeys.CONNECT;
-import static org.unidle.support.EventKeys.DISCONNECT;
 import static org.unidle.support.EventKeys.SIGN_UP;
 
 public class EventKeysTest {
 
     @Test
     public void testGetName() throws Exception {
-        assertThat(CONNECT.getName()).isEqualTo("Connect an Account");
-        assertThat(DISCONNECT.getName()).isEqualTo("Disconnect an Account");
-        assertThat(SIGN_UP.getName()).isEqualTo("Sign Up");
+        assertThat(CONNECT.getName()).isEqualTo("Connected an Account");
+        assertThat(SIGN_UP.getName()).isEqualTo("Signed Up");
     }
 
     @Test
@@ -44,7 +42,6 @@ public class EventKeysTest {
     @Test
     public void testValues() throws Exception {
         assertThat(EventKeys.values()).containsOnly(CONNECT,
-                                                    DISCONNECT,
                                                     SIGN_UP);
     }
 

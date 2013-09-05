@@ -20,7 +20,6 @@
  */
 package org.unidle.config;
 
-import com.github.segmentio.Analytics;
 import de.bripkens.gravatar.DefaultImage;
 import de.bripkens.gravatar.Gravatar;
 import de.bripkens.gravatar.Rating;
@@ -48,10 +47,8 @@ import org.unidle.web.CurrentUserMethodArgumentResolver;
 import org.unidle.web.LocationMethodArgumentResolver;
 import org.unidle.web.SegmentIoApiKeyInterceptor;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
-import static com.github.segmentio.Analytics.initialize;
 import static java.lang.Boolean.FALSE;
 
 @ComponentScan("org.unidle.controller")
@@ -84,9 +81,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Value("${unidle.segment.io.apiKey}")
     private String segmentIoApiKey;
 
-    @Value("${unidle.segment.io.secret}")
-    private String segmentIoSecret;
-
     @Autowired
     private UserService userService;
 
@@ -102,8 +96,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
-        return new CurrentUserMethodArgumentResolver(userService);
+    public LocationMethodArgumentResolver locationMethodArgumentResolver() {
+        return new LocationMethodArgumentResolver(locationService);
     }
 
     @Override
@@ -111,21 +105,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addInterceptor(buildTimestampInterceptor());
         registry.addInterceptor(currentUserInterceptor());
         registry.addInterceptor(segmentIoApiKeyInterceptor());
-    }
-
-    @Bean
-    public HandlerInterceptor buildTimestampInterceptor() {
-        return new BuildTimestampInterceptor(buildTimestamp);
-    }
-
-    @Bean
-    public HandlerInterceptor segmentIoApiKeyInterceptor() {
-        return new SegmentIoApiKeyInterceptor(segmentIoApiKey);
-    }
-
-    @Bean
-    public HandlerInterceptor currentUserInterceptor() {
-        return new CurrentUserInterceptor(userService);
     }
 
     @Override
@@ -148,13 +127,23 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public LocationMethodArgumentResolver locationMethodArgumentResolver() {
-        return new LocationMethodArgumentResolver(locationService);
+    public HandlerInterceptor currentUserInterceptor() {
+        return new CurrentUserInterceptor(userService);
     }
 
-    @PostConstruct
-    public void initializeAnalytics() {
-        initialize(segmentIoSecret);
+    @Bean
+    public HandlerInterceptor segmentIoApiKeyInterceptor() {
+        return new SegmentIoApiKeyInterceptor(segmentIoApiKey);
+    }
+
+    @Bean
+    public HandlerInterceptor buildTimestampInterceptor() {
+        return new BuildTimestampInterceptor(buildTimestamp);
+    }
+
+    @Bean
+    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
+        return new CurrentUserMethodArgumentResolver(userService);
     }
 
     @Bean
