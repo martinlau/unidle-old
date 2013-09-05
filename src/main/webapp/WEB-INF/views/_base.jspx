@@ -68,12 +68,15 @@
 
             <tiles:insertAttribute name="content" />
 
+            <hr />
+
             <footer>
-                <hr/>
-                <a id="feedback" href="#" class="btn btn-block btn-default">
-                    <i class="icon-fixed-width icon-large icon-question"><!-- no collapse --></i>
-                    Feedback &amp; Support
-                </a>
+                <p>
+                    <a id="feedback" href="#" class="btn btn-block btn-default">
+                        <i class="icon-fixed-width icon-large icon-question"><!-- no collapse --></i>
+                        Feedback &amp; Support
+                    </a>
+                </p>
             </footer>
 
             <script><![CDATA[
