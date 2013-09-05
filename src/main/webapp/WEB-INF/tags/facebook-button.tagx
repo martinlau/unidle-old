@@ -33,7 +33,7 @@
     <p>
         <form action="${facebook}" method="post">
             <button class="btn btn-lg btn-block btn-primary" type="submit">
-                <i class="icon-facebook icon-fixed-width"><!-- no collapse --></i>
+                <i class="icon-fixed-width icon-facebook"><!-- no collapse --></i>
                 <spring:message code="singin.form.facebook" />
             </button>
         </form>

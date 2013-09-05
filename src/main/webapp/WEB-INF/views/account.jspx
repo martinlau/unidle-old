@@ -145,7 +145,7 @@
     <form action="${facebook}" method="post" class="form-inline">
         <p>
             <button class="btn btn-lg btn-block btn-primary" type="submit">
-                <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
+                <i class="icon-fixed-width icon-facebook"><!-- no collapse --></i>
                 <c:choose>
                     <c:when test="${hasFacebook}">
                         <spring:message code="account.connect.facebook.more" />
@@ -162,7 +162,7 @@
     <form action="${twitter}" method="post" class="form-inline">
         <p>
             <button class="btn btn-lg btn-block btn-primary" type="submit">
-                <i class="icon-twitter icon-fixed-width"><!-- no collapse --></i>
+                <i class="icon-fixed-width icon-twitter"><!-- no collapse --></i>
                 <c:choose>
                     <c:when test="${hasTwitter}">
                         <spring:message code="account.connect.twitter.more" />
