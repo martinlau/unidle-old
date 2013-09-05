@@ -22,42 +22,30 @@ package org.unidle.support;
 
 import org.junit.Test;
 
-import static java.util.concurrent.TimeUnit.DAYS;
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.fest.assertions.Assertions.assertThat;
-import static org.unidle.support.CookieKeys.LAST_LOGIN_SOURCE;
+import static org.unidle.support.RequestKeys.BUILD_TIMESTAMP;
+import static org.unidle.support.RequestKeys.CURRENT_USER;
+import static org.unidle.support.RequestKeys.SEGMENT_IO_API_KEY;
 
-public class CookieKeysTest {
-
-    @Test
-    public void testGetMaxAge() throws Exception {
-        assertThat(LAST_LOGIN_SOURCE.getMaxAge()).isEqualTo(28);
-    }
-
-    @Test
-    public void testGetMaxAgeAs() throws Exception {
-        assertThat(LAST_LOGIN_SOURCE.getMaxAgeAs(SECONDS)).isEqualTo(2_419_200);
-    }
+public class RequestKeysTest {
 
     @Test
     public void testGetName() throws Exception {
-        assertThat(LAST_LOGIN_SOURCE.getName()).isEqualTo("last_login_source");
-    }
-
-    @Test
-    public void testGetTimeUnit() throws Exception {
-        assertThat(LAST_LOGIN_SOURCE.getTimeUnit()).isEqualTo(DAYS);
-    }
-
-    @Test
-    public void testValues() throws Exception {
-        assertThat(CookieKeys.values()).containsOnly(LAST_LOGIN_SOURCE);
+        assertThat(BUILD_TIMESTAMP.getName()).isEqualTo("buildTimestamp");
+        assertThat(CURRENT_USER.getName()).isEqualTo("currentUser");
+        assertThat(SEGMENT_IO_API_KEY.getName()).isEqualTo("segmentIoApiKey");
     }
 
     @Test
     public void testValueOf() throws Exception {
-        assertThat(CookieKeys.valueOf("LAST_LOGIN_SOURCE")).isEqualTo(LAST_LOGIN_SOURCE);
+        assertThat(RequestKeys.valueOf("BUILD_TIMESTAMP")).isEqualTo(BUILD_TIMESTAMP);
+    }
 
+    @Test
+    public void testValues() throws Exception {
+        assertThat(RequestKeys.values()).containsOnly(BUILD_TIMESTAMP,
+                                                      CURRENT_USER,
+                                                      SEGMENT_IO_API_KEY);
     }
 
 }

@@ -43,6 +43,7 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 import org.unidle.service.LocationService;
 import org.unidle.service.UserService;
 import org.unidle.web.BuildTimestampInterceptor;
+import org.unidle.web.CurrentUserInterceptor;
 import org.unidle.web.CurrentUserMethodArgumentResolver;
 import org.unidle.web.LocationMethodArgumentResolver;
 import org.unidle.web.SegmentIoApiKeyInterceptor;
@@ -50,6 +51,7 @@ import org.unidle.web.SegmentIoApiKeyInterceptor;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+import static com.github.segmentio.Analytics.initialize;
 import static java.lang.Boolean.FALSE;
 
 @ComponentScan("org.unidle.controller")
@@ -107,6 +109,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(buildTimestampInterceptor());
+        registry.addInterceptor(currentUserInterceptor());
         registry.addInterceptor(segmentIoApiKeyInterceptor());
     }
 
@@ -118,6 +121,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public HandlerInterceptor segmentIoApiKeyInterceptor() {
         return new SegmentIoApiKeyInterceptor(segmentIoApiKey);
+    }
+
+    @Bean
+    public HandlerInterceptor currentUserInterceptor() {
+        return new CurrentUserInterceptor(userService);
     }
 
     @Override
@@ -145,8 +153,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @PostConstruct
-    public void analytics() {
-        Analytics.initialize(segmentIoSecret);
+    public void initializeAnalytics() {
+        initialize(segmentIoSecret);
     }
 
     @Bean

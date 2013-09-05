@@ -20,9 +20,8 @@
  */
 package org.unidle.controller;
 
+import com.github.segmentio.models.Traits;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
@@ -34,8 +33,8 @@ import org.unidle.repository.UserRepository;
 import org.unidle.service.UserService;
 
 import javax.validation.Valid;
-import java.util.UUID;
 
+import static com.github.segmentio.Analytics.identify;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -68,7 +67,7 @@ public class AccountUpdateController {
             return "redirect:/signin";
         }
 
-        if (userService.exists(userForm.getEmail())  && !userService.isCurrentUser(userForm.getEmail())) {
+        if (userService.exists(userForm.getEmail()) && !userService.isCurrentUser(userForm.getEmail())) {
             errors.rejectValue("email", "error.email.exists");
         }
 
@@ -82,6 +81,11 @@ public class AccountUpdateController {
                                                         userForm.getLastName());
 
         modelMap.addAttribute("user", updatedUser);
+
+        identify(user.getUuid().toString(),
+                 new Traits().put("email", updatedUser.getEmail())
+                             .put("firstName", updatedUser.getFirstName())
+                             .put("lastName", updatedUser.getLastName()));
 
         return ".ajax.account-updated";
     }

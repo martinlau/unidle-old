@@ -43,6 +43,7 @@ import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.unidle.controller.RedirectingConnectController;
+import org.unidle.service.UserService;
 
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 
@@ -74,6 +75,9 @@ public class SocialConfiguration {
     private String twitterConsumerSecret;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private UsersConnectionRepository usersConnectionRepository;
 
     @Bean
@@ -84,21 +88,10 @@ public class SocialConfiguration {
     @Bean
     public ConnectController connectController() {
         final RedirectingConnectController connectController = new RedirectingConnectController(connectionFactoryLocator(),
-                                                                                                connectionRepository());
+                                                                                                connectionRepository(),
+                                                                                                userService);
 
         return connectController;
-    }
-
-    @Bean
-    public ConnectionFactoryLocator connectionFactoryLocator() {
-        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-
-        registry.addConnectionFactory(new FacebookConnectionFactory(facebookClientId,
-                                                                    facebookSecret));
-        registry.addConnectionFactory(new TwitterConnectionFactory(twitterConsumerKey,
-                                                                   twitterConsumerSecret));
-
-        return registry;
     }
 
     @Bean
@@ -115,6 +108,18 @@ public class SocialConfiguration {
         final String uuid = authentication.getName();
 
         return usersConnectionRepository.createConnectionRepository(uuid);
+    }
+
+    @Bean
+    public ConnectionFactoryLocator connectionFactoryLocator() {
+        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
+
+        registry.addConnectionFactory(new FacebookConnectionFactory(facebookClientId,
+                                                                    facebookSecret));
+        registry.addConnectionFactory(new TwitterConnectionFactory(twitterConsumerKey,
+                                                                   twitterConsumerSecret));
+
+        return registry;
     }
 
     @Bean

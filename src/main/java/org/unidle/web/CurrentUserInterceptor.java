@@ -25,19 +25,20 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.view.RedirectView;
+import org.unidle.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static org.springframework.web.servlet.view.UrlBasedViewResolver.REDIRECT_URL_PREFIX;
-import static org.unidle.support.RequestKeys.BUILD_TIMESTAMP;
+import static org.unidle.support.RequestKeys.CURRENT_USER;
 
-public class BuildTimestampInterceptor extends HandlerInterceptorAdapter {
+public class CurrentUserInterceptor extends HandlerInterceptorAdapter {
 
-    private final String timestamp;
+    private final UserService userService;
 
-    public BuildTimestampInterceptor(final String timestamp) {
-        this.timestamp = timestamp;
+    public CurrentUserInterceptor(final UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -59,11 +60,9 @@ public class BuildTimestampInterceptor extends HandlerInterceptorAdapter {
         if (handler instanceof HandlerMethod) {
             packageName = ClassUtils.getPackageName(((HandlerMethod) handler).getBean().getClass());
         }
-
         if (packageName.startsWith("org.unidle")) {
-            modelAndView.addObject(BUILD_TIMESTAMP.getName(), timestamp);
+            modelAndView.addObject(CURRENT_USER.getName(), userService.currentUser());
         }
-
     }
 
 }

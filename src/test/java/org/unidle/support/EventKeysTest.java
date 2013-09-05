@@ -22,42 +22,30 @@ package org.unidle.support;
 
 import org.junit.Test;
 
-import static java.util.concurrent.TimeUnit.DAYS;
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.fest.assertions.Assertions.assertThat;
-import static org.unidle.support.CookieKeys.LAST_LOGIN_SOURCE;
+import static org.unidle.support.EventKeys.CONNECT;
+import static org.unidle.support.EventKeys.DISCONNECT;
+import static org.unidle.support.EventKeys.SIGN_UP;
 
-public class CookieKeysTest {
-
-    @Test
-    public void testGetMaxAge() throws Exception {
-        assertThat(LAST_LOGIN_SOURCE.getMaxAge()).isEqualTo(28);
-    }
-
-    @Test
-    public void testGetMaxAgeAs() throws Exception {
-        assertThat(LAST_LOGIN_SOURCE.getMaxAgeAs(SECONDS)).isEqualTo(2_419_200);
-    }
+public class EventKeysTest {
 
     @Test
     public void testGetName() throws Exception {
-        assertThat(LAST_LOGIN_SOURCE.getName()).isEqualTo("last_login_source");
-    }
-
-    @Test
-    public void testGetTimeUnit() throws Exception {
-        assertThat(LAST_LOGIN_SOURCE.getTimeUnit()).isEqualTo(DAYS);
-    }
-
-    @Test
-    public void testValues() throws Exception {
-        assertThat(CookieKeys.values()).containsOnly(LAST_LOGIN_SOURCE);
+        assertThat(CONNECT.getName()).isEqualTo("Connect an Account");
+        assertThat(DISCONNECT.getName()).isEqualTo("Disconnect an Account");
+        assertThat(SIGN_UP.getName()).isEqualTo("Sign Up");
     }
 
     @Test
     public void testValueOf() throws Exception {
-        assertThat(CookieKeys.valueOf("LAST_LOGIN_SOURCE")).isEqualTo(LAST_LOGIN_SOURCE);
+        assertThat(EventKeys.valueOf("CONNECT")).isEqualTo(CONNECT);
+    }
 
+    @Test
+    public void testValues() throws Exception {
+        assertThat(EventKeys.values()).containsOnly(CONNECT,
+                                                    DISCONNECT,
+                                                    SIGN_UP);
     }
 
 }

@@ -41,8 +41,8 @@ import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.WroConfiguration;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.unidle.support.RequestKeys.SEGMENT_IO_API_KEY;
 import static org.unidle.test.Conditions.containsKey;
-import static org.unidle.web.SegmentIoApiKeyInterceptor.SEGMENT_IO_API_KEY;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
                    @ContextConfiguration(classes = DataConfiguration.class),
@@ -70,7 +70,7 @@ public class SegmentIoApiKeyInterceptorTest {
         subject.postHandle(null, null, new HandlerMethod(this, "toString"), modelAndView);
 
         assertThat(modelAndView.getModel())
-                .satisfies(containsKey((SEGMENT_IO_API_KEY)));
+                .satisfies(containsKey((SEGMENT_IO_API_KEY.getName())));
     }
 
     @Test

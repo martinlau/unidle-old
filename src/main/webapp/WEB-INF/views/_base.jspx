@@ -71,35 +71,25 @@
             <script><![CDATA[
             var analytics = analytics || [];
             (function () {
-
                 var methods = ['identify', 'track', 'trackLink', 'trackForm', 'trackClick', 'trackSubmit', 'page', 'pageview', 'ab', 'alias', 'ready', 'group'],
                     factory = function (method) {
                         return function () {
                             analytics.push([method].concat(Array.prototype.slice.call(arguments, 0)));
                         };
                     };
-
                 for (var i = 0; i < methods.length; i++) {
                     analytics[methods[i]] = factory(methods[i]);
                 }
-
             }());
-
             analytics.load = function (apiKey) {
-
                 var script = document.createElement('script'),
                     firstScript = document.getElementsByTagName('script')[0];
-
                 script.type = 'text/javascript';
                 script.async = true;
                 script.src = ('https:' === document.location.protocol ? 'https://' : 'http://') + 'd2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/' + apiKey + '/analytics.min.js';
-
                 firstScript.parentNode.insertBefore(script, firstScript);
-
             };
-
             analytics.load('${segmentIoApiKey}');
-
             ]]></script>
 
             <spring:url value="/resources/jquery.js?t=${buildTimestamp}" var="jquery_js" />
@@ -110,6 +100,14 @@
 
             <spring:url value="/resources/unidle.js?t=${buildTimestamp}" var="unidle_js" />
             <script src="${unidle_js}"><!-- // no collapse --></script>
+
+            <c:if test="${not empty currentUser}">
+                <script>
+                $(window).load(function() {
+                    analytics.alias("${currentUser.uuid}");
+                });
+                </script>
+            </c:if>
 
         </body>
 

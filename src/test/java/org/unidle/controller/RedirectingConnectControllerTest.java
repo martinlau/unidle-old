@@ -32,21 +32,21 @@ public class RedirectingConnectControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        subject = new RedirectingConnectController(null, null);
+        subject = new RedirectingConnectController(null, null, null);
     }
 
     @Test
     public void testConnectedView() throws Exception {
         final String result = subject.connectedView("provider id");
 
-        assertThat(result).isEqualTo("redirect:/account?connected=provider%20id");
+        assertThat(result).isEqualTo("redirect:/account");
     }
 
     @Test
     public void testConnectionStatusRedirect() throws Exception {
         final RedirectView result = subject.connectionStatusRedirect("provider id", null);
 
-        assertThat(result.getUrl()).isEqualTo("/account?disconnected=provider%20id");
+        assertThat(result.getUrl()).isEqualTo("/account");
     }
 
 }

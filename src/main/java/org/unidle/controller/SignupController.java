@@ -20,6 +20,7 @@
  */
 package org.unidle.controller;
 
+import com.github.segmentio.models.Traits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -39,8 +40,11 @@ import org.unidle.service.UserService;
 
 import javax.validation.Valid;
 
+import static com.github.segmentio.Analytics.identify;
+import static com.github.segmentio.Analytics.track;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.unidle.support.EventKeys.SIGN_UP;
 
 @Controller
 public class SignupController {
@@ -76,13 +80,22 @@ public class SignupController {
                                                  userForm.getFirstName(),
                                                  userForm.getLastName());
 
-        ProviderSignInUtils.handlePostSignUp(user.getId().toString(),
+        ProviderSignInUtils.handlePostSignUp(user.getUuid().toString(),
                                              webRequest);
 
         final Authentication authentication = new UsernamePasswordAuthenticationToken(user.getId(), null);
 
         SecurityContextHolder.getContext()
                              .setAuthentication(authentication);
+
+        identify(user.getUuid().toString(),
+                 new Traits().put("created", user.getCreatedDate().toDate())
+                             .put("email", user.getEmail())
+                             .put("firstName", user.getFirstName())
+                             .put("lastName", user.getLastName()));
+
+        track(user.getUuid().toString(),
+              SIGN_UP.getName());
 
         return "redirect:/account";
     }

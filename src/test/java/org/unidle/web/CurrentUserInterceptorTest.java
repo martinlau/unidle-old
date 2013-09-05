@@ -25,10 +25,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -39,10 +42,11 @@ import org.unidle.config.I18NConfiguration;
 import org.unidle.config.MvcConfiguration;
 import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.WroConfiguration;
-import org.unidle.support.RequestKeys;
+import org.unidle.domain.User;
+import org.unidle.repository.UserRepository;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.unidle.support.RequestKeys.BUILD_TIMESTAMP;
+import static org.unidle.support.RequestKeys.CURRENT_USER;
 import static org.unidle.test.Conditions.containsKey;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
@@ -52,26 +56,44 @@ import static org.unidle.test.Conditions.containsKey;
                    @ContextConfiguration(classes = WroConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
 @WebAppConfiguration
-public class BuildTimestampInterceptorTest {
+public class CurrentUserInterceptorTest {
 
     private ModelAndView modelAndView;
 
     @Autowired
-    @Qualifier("buildTimestampInterceptor")
+    @Qualifier("currentUserInterceptor")
     private HandlerInterceptorAdapter subject;
+
+    private User user;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Before
     public void setUp() throws Exception {
         modelAndView = new ModelAndView();
+
+        user = new User();
+
+        user.setEmail("email@example.com");
+        user.setFirstName("first name");
+        user.setLastName("last name");
+
+        user = userRepository.save(user);
     }
 
     @Test
     public void testPostHandleWithHandlerMethodWithCorrectBean() throws Exception {
+
+        SecurityContextHolder.getContext()
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
+
         subject.postHandle(null, null, new HandlerMethod(this, "toString"), modelAndView);
 
         assertThat(modelAndView.getModel())
-                .satisfies(containsKey((BUILD_TIMESTAMP.getName())));
+                .satisfies(containsKey((CURRENT_USER.getName())));
     }
 
     @Test

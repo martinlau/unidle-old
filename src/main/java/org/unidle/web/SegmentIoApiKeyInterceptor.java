@@ -25,13 +25,15 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.view.RedirectView;
+import org.unidle.support.RequestKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SegmentIoApiKeyInterceptor extends HandlerInterceptorAdapter {
+import static org.springframework.web.servlet.view.UrlBasedViewResolver.REDIRECT_URL_PREFIX;
+import static org.unidle.support.RequestKeys.SEGMENT_IO_API_KEY;
 
-    public static final String SEGMENT_IO_API_KEY = "segmentIoApiKey";
+public class SegmentIoApiKeyInterceptor extends HandlerInterceptorAdapter {
 
     private final String segmentIoApiKey;
 
@@ -50,7 +52,7 @@ public class SegmentIoApiKeyInterceptor extends HandlerInterceptorAdapter {
         }
 
         if (modelAndView.getViewName() != null &&
-            modelAndView.getViewName().startsWith("redirect:")) {
+            modelAndView.getViewName().startsWith(REDIRECT_URL_PREFIX)) {
             return;
         }
 
@@ -59,7 +61,7 @@ public class SegmentIoApiKeyInterceptor extends HandlerInterceptorAdapter {
             packageName = ClassUtils.getPackageName(((HandlerMethod) handler).getBean().getClass());
         }
         if (packageName.startsWith("org.unidle")) {
-            modelAndView.addObject(SEGMENT_IO_API_KEY, segmentIoApiKey);
+            modelAndView.addObject(SEGMENT_IO_API_KEY.getName(), segmentIoApiKey);
         }
     }
 
