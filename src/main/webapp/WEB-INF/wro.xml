@@ -50,7 +50,6 @@
         <js>/WEB-INF/script/ajax-form.js</js>
         <js>/WEB-INF/script/auto-scroll.js</js>
         <js>/WEB-INF/script/clear-modal.js</js>
-        <js>/WEB-INF/script/user-voice.js</js>
     </group>
 
 </groups>
