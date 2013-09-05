@@ -70,7 +70,7 @@
 
             <footer>
                 <hr/>
-                <a href="#" class="btn btn-block btn-default" data-uv-lightbox="classic_widget" data-uv-mode="full" data-uv-primary-color="#cc6d00" data-uv-link-color="#007dbf" data-uv-default-mode="support" data-uv-forum-id="221424">
+                <a id="feedback" href="#" class="btn btn-block btn-default">
                     <i class="icon-fixed-width icon-large icon-question"><!-- no collapse --></i>
                     Feedback &amp; Support
                 </a>

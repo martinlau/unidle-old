@@ -22,13 +22,11 @@ $(function () {
 
     "use strict";
 
-    var firstScript = document.getElementsByTagName('script')[0],
-        userVoiceScript = document.createElement('script');
+    $("#feedback").on("click", function (ev) {
 
-    userVoiceScript.type = 'text/javascript';
-    userVoiceScript.async = true;
-    userVoiceScript.src = '//widget.uservoice.com/gZTfxLnHbIG8vnbgwyeQg.js';
+        ev.preventDefault();
 
-    firstScript.parentNode.insertBefore(userVoiceScript, firstScript);
+        UserVoice.push(['showLightbox', 'classic_widget']);
 
+    });
 });
