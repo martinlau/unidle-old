@@ -39,16 +39,12 @@
 
                 <div class="modal-content">
                     <form:form modelAttribute="userForm" method="post" cssClass="form-inline ajax-form">
-                        <!-- TODO Break this into a tag -->
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                &amp;times;
-                            </button>
-                            <spring:message code="account.details.update.title" />
-                        </div>
 
-                        <!-- TODO Break this into a tag -->
-                        <div class="modal-body">
+                        <tags:modal-header>
+                            <spring:message code="account.details.update.title" />
+                        </tags:modal-header>
+
+                        <tags:modal-body>
 
                             <tags:input path="firstName" type="text">
                                 <jsp:attribute name="label">
@@ -77,17 +73,18 @@
                                 </jsp:attribute>
                             </tags:input>
 
-                        </div>
+                        </tags:modal-body>
 
-                        <!-- TODO Break this into a tag -->
-                        <div class="modal-footer">
+                        <tags:modal-footer>
+
                             <a href="#" data-dismiss="modal" class="btn btn-lg btn-default pull-left">
                                 <spring:message code="account.form.cancel" />
                             </a>
                             <form:button type="submit" class="btn btn-lg btn-primary" value="confirm">
                                 <spring:message code="account.form.submit" />
                             </form:button>
-                        </div>
+
+                        </tags:modal-footer>
 
                     </form:form>
 
