@@ -27,7 +27,7 @@
           xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
           version="2.0">
 
-    <tags:navigation />
+    <tags:navbar />
 
     <h4>
         <spring:message code="account.heading.personal-details" />
