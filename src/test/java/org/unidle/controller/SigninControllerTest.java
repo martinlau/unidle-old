@@ -24,11 +24,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
@@ -36,6 +39,8 @@ import org.unidle.config.I18NConfiguration;
 import org.unidle.config.MvcConfiguration;
 import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.WroConfiguration;
+import org.unidle.domain.User;
+import org.unidle.repository.UserRepository;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,10 +54,16 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
                    @ContextConfiguration(classes = WroConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
 @WebAppConfiguration
 public class SigninControllerTest {
 
     private MockMvc subject;
+
+    private User user;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -60,6 +71,14 @@ public class SigninControllerTest {
     @Before
     public void setUp() throws Exception {
         subject = webAppContextSetup(webApplicationContext).build();
+
+        user = new User();
+
+        user.setEmail("email@example.com");
+        user.setFirstName("first name");
+        user.setLastName("last name");
+
+        user = userRepository.save(user);
     }
 
     @Test
@@ -67,6 +86,16 @@ public class SigninControllerTest {
         subject.perform(get("/signin"))
                .andExpect(status().isOk())
                .andExpect(view().name(".signin"));
+    }
+
+    @Test
+    public void testSigninWhenAuthenticated() throws Exception {
+
+        SecurityContextHolder.getContext()
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
+
+        subject.perform(get("/signin"))
+               .andExpect(view().name("redirect:/account"));
     }
 
 }

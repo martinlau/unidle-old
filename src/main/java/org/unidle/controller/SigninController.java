@@ -20,15 +20,22 @@
  */
 package org.unidle.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.unidle.domain.User;
+import org.unidle.service.UserService;
 
 @Controller
 public class SigninController {
 
     @RequestMapping("/signin")
-    public String signin() {
-        // TODO Check if logged in and redirect to something else
+    public String signin(final User user) {
+
+        if (user != null) {
+            return "redirect:/account";
+        }
+
         return ".signin";
     }
 
