@@ -35,7 +35,6 @@
 
                 <div class="modal-content">
 
-                    <!-- TODO AJAX submit -->
                     <!-- TODO Break this into a tag -->
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">
@@ -51,6 +50,7 @@
 
                     <!-- TODO Break this into a tag -->
                     <div class="modal-footer">
+                        <!-- TODO Reload on close -->
                         <a href="#" data-dismiss="modal" class="btn btn-lg btn-default pull-left">
                             Close
                         </a>

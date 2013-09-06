@@ -39,7 +39,6 @@
 
                 <div class="modal-content">
                     <form:form modelAttribute="userForm" method="post" cssClass="form-inline ajax-form">
-                        <!-- TODO AJAX submit -->
                         <!-- TODO Break this into a tag -->
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">
@@ -52,30 +51,30 @@
                         <div class="modal-body">
 
                             <tags:input path="firstName" type="text">
-                        <jsp:attribute name="label">
-                            <spring:message code="account.form.first-name.label" />
-                        </jsp:attribute>
-                        <jsp:attribute name="placeholder">
-                            <spring:message code="account.form.first-name.placeholder" />
-                        </jsp:attribute>
+                                <jsp:attribute name="label">
+                                    <spring:message code="account.form.first-name.label" />
+                                </jsp:attribute>
+                                <jsp:attribute name="placeholder">
+                                    <spring:message code="account.form.first-name.placeholder" />
+                                </jsp:attribute>
                             </tags:input>
 
                             <tags:input path="lastName" type="text">
-                        <jsp:attribute name="label">
-                            <spring:message code="account.form.last-name.label" />
-                        </jsp:attribute>
-                        <jsp:attribute name="placeholder">
-                            <spring:message code="account.form.last-name.placeholder" />
-                        </jsp:attribute>
+                                <jsp:attribute name="label">
+                                    <spring:message code="account.form.last-name.label" />
+                                </jsp:attribute>
+                                <jsp:attribute name="placeholder">
+                                    <spring:message code="account.form.last-name.placeholder" />
+                                </jsp:attribute>
                             </tags:input>
 
                             <tags:input path="email" type="email">
-                        <jsp:attribute name="label">
-                            <spring:message code="account.form.email.label" />
-                        </jsp:attribute>
-                        <jsp:attribute name="placeholder">
-                            <spring:message code="account.form.email.placeholder" />
-                        </jsp:attribute>
+                                <jsp:attribute name="label">
+                                    <spring:message code="account.form.email.label" />
+                                </jsp:attribute>
+                                <jsp:attribute name="placeholder">
+                                    <spring:message code="account.form.email.placeholder" />
+                                </jsp:attribute>
                             </tags:input>
 
                         </div>
