@@ -20,6 +20,7 @@
  */
 package org.unidle.config;
 
+import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
@@ -74,6 +75,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     @Override
     protected Filter[] getServletFilters() {
         return new Filter[]{
+                new MDCInsertingServletFilter(),
                 new HiddenHttpMethodFilter(),
                 new OpenEntityManagerInViewFilter(),
                 new RequestContextFilter(),

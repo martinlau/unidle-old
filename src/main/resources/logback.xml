@@ -28,10 +28,9 @@
         <resetJUL>true</resetJUL>
     </contextListener>
 
-    <appender class="ch.qos.logback.core.ConsoleAppender"
-              name="console">
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="console">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS}|[%thread]|%highlight(%-5level)|%logger{36}|%msg|%mdc{req.xForwardedFor}|%mdc{req.requestURL}|%mdc{req.queryString}|%mdc{req.userAgent}%n</pattern>
         </encoder>
     </appender>
 

@@ -104,7 +104,6 @@
                         </goals>
                         <configuration>
                             <usedDependencies>
-                                <usedDependency>ch.qos.logback:logback-classic</usedDependency>
                                 <usedDependency>com.h2database:h2</usedDependency>
                                 <usedDependency>com.mattbertolini:liquibase-slf4j</usedDependency>
                                 <usedDependency>info.cukes:cucumber-spring</usedDependency>
@@ -905,7 +904,6 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
