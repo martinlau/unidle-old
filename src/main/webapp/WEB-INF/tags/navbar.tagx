@@ -52,11 +52,17 @@
 
         <div class="collapse navbar-collapse main-navbar-collapse">
             <ul class="nav navbar-nav">
-                <!-- TODO i18n -->
-                <tags:navbar-link href="/today" title="Today" />
-                <tags:navbar-link href="/account" title="Account" />
-                <tags:navbar-link href="/help" title="Help" />
-                <tags:navbar-link href="/signout" title="Sign out" />
+                <spring:message code="navigation.today" var="today"/>
+                <tags:navbar-link href="/today" title="${today}" />
+
+                <spring:message code="navigation.account" var="account"/>
+                <tags:navbar-link href="/account" title="${account}" />
+
+                <spring:message code="navigation.help" var="help" />
+                <tags:navbar-link href="/help" title="${help}" />
+
+                <spring:message code="navigation.signout" var="${signout}" />
+                <tags:navbar-link href="/signout" title="${signout}" />
             </ul>
         </div>
     </nav>
