@@ -22,6 +22,7 @@
 
 <jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core"
           xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
           version="2.0">
 
     <jsp:directive.tag display-name="modal"
@@ -50,23 +51,20 @@
     <div id="${id}" class="modal fade" data-remote="${dataRemote}">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        &amp;times;
-                    </button>
+                <tags:modal-header>
                     <c:if test="${not empty title}">
                         <h4 class="modal-title">
                             ${title}
                         </h4>
                     </c:if>
-                </div>
-                <div class="modal-body">
+                </tags:modal-header>
+                <tags:modal-body>
                     <jsp:doBody />
-                </div>
+                </tags:modal-body>
                 <c:if test="${not empty footer}">
-                    <div class="modal-footer">
+                    <tags:modal-footer>
                         ${footer}
-                    </div>
+                    </tags:modal-footer>
                 </c:if>
             </div>
         </div>
