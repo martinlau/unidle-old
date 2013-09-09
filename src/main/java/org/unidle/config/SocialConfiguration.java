@@ -138,6 +138,7 @@ public class SocialConfiguration {
 
     @PostConstruct
     public void initializeAnalytics() {
+        // TODO Wrap this in an interface and allow a dummy configuration for testing
         initialize(segmentIoSecret);
     }
 
