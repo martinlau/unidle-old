@@ -22,8 +22,8 @@
 Feature: Home page customisation
 
     As a prospective user
-    I want to be shown information about time wasted
     In order to feel motivated to join the site
+    I want to be shown information about time wasted
 
     Scenario Outline: Location facts
         Given a user from "<Location>"
@@ -32,7 +32,7 @@ Feature: Home page customisation
         Then the "source" element should contain the text "<Source>"
         Then the "summary" element should contain the text "<Summary>"
 
-    Examples:
+    Scenarios:
         | Location                     | Fact                                                                                | Source                                            | Summary                                                                                        |
         | Global                       | Every day in the world 1 person spends 1 minute doing stuff.                        | Martin's Imagination                              | That's over 1 year spent checking facebook, reading the paper or staring out of the window.    |
         | Oceania                      | Every day in Oceania 800,000 people spend 75 minutes on public transport.           | Bureau of Transport Statistics, Transport for NSW | That's over 100 years spent checking facebook, reading the paper or staring out of the window. |

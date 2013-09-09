@@ -22,8 +22,8 @@
 Feature: Site content
 
     As a site user
+    In order to learn more about the site
     I want to read more information
-    To learn more about the site
 
     Scenario Outline: Information pages
         Given a user
@@ -31,7 +31,7 @@ Feature: Site content
         Then the title should contain "<Title>"
         And the page should contain "<Content>"
 
-    Examples:
+    Scenarios:
         | Page        | Title        | Content                                                                                                    |
         | /about      | About us     | Unidle is platform for people to ask questions and provide solutions in those idle moments during the day. |
         | /signin     | Sign in      | We leave managing your password security to Twitter and Facebook.                                          |
