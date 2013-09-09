@@ -109,7 +109,7 @@ public class LocationGenerator {
 
         final ConcurrentMap<String, Boolean> locations = new MapMaker().concurrencyLevel(THREADS).makeMap();
 
-        for (Locations location : Locations.values()) {
+        for (KnownLocation location : KnownLocation.values()) {
 
             final String name = formatLocation(location.continent,
                                                location.country,

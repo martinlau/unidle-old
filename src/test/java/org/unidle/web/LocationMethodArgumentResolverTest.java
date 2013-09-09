@@ -46,8 +46,8 @@ import javax.servlet.http.Cookie;
 import java.lang.reflect.Method;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.unidle.test.Locations.MELBOURNE;
-import static org.unidle.test.Locations.SYDNEY;
+import static org.unidle.test.KnownLocation.MELBOURNE;
+import static org.unidle.test.KnownLocation.SYDNEY;
 import static org.unidle.test.Conditions.hasCity;
 import static org.unidle.test.Conditions.hasContinent;
 import static org.unidle.test.Conditions.hasCountry;

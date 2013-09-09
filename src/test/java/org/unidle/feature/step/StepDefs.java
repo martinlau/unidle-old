@@ -28,7 +28,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.unidle.feature.config.FeatureConfig;
 import org.unidle.feature.page.GenericPage;
-import org.unidle.test.Locations;
+import org.unidle.test.KnownLocation;
+import org.unidle.test.KnownPage;
 
 import java.net.URL;
 
@@ -50,9 +51,9 @@ public class StepDefs {
     }
 
     @Given("^a user from \"([^\"]*)\"$")
-    public void a_user_from(final String address) throws Throwable {
+    public void a_user_from(final String location) throws Throwable {
 
-        genericPage.addCookie("address", Locations.valueOf(address.toUpperCase().replace(' ', '_')).address);
+        genericPage.addCookie("address", KnownLocation.byDisplay(location).address);
     }
 
     @Then("^the \"([^\"]*)\" element should contain the text \"([^\"]*)\"$")
@@ -74,8 +75,8 @@ public class StepDefs {
     }
 
     @When("^they access the \"([^\"]*)\" page$")
-    public void they_access_the_page(final String path) throws Throwable {
-        genericPage.navigateTo(baseUrl + path);
+    public void they_access_the_page(final String name) throws Throwable {
+        genericPage.navigateTo(baseUrl + KnownPage.byDisplay(name).path);
     }
 
 }

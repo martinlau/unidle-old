@@ -44,8 +44,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-import static org.unidle.test.Locations.NORTHERN_TERRITORY;
-import static org.unidle.test.Locations.SYDNEY;
+import static org.unidle.test.KnownLocation.NORTHERN_TERRITORY;
+import static org.unidle.test.KnownLocation.SYDNEY;
 import static org.unidle.test.RequestProcessors.remoteAddr;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),

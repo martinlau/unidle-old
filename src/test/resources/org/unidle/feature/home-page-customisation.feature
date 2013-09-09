@@ -27,7 +27,7 @@ Feature: Home page customisation
 
     Scenario Outline: Location facts
         Given a user from "<Location>"
-        When they access the "/" page
+        When they access the "Home" page
         Then the "blockquote" element should contain the text "<Fact>"
         Then the "source" element should contain the text "<Source>"
         Then the "summary" element should contain the text "<Summary>"
