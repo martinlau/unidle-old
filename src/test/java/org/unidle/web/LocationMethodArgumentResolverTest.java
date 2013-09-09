@@ -46,6 +46,8 @@ import javax.servlet.http.Cookie;
 import java.lang.reflect.Method;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.unidle.service.test.Locations.MELBOURNE;
+import static org.unidle.service.test.Locations.SYDNEY;
 import static org.unidle.test.Conditions.hasCity;
 import static org.unidle.test.Conditions.hasContinent;
 import static org.unidle.test.Conditions.hasCountry;
@@ -82,7 +84,7 @@ public class LocationMethodArgumentResolverTest {
 
     @Test
     public void testResolveArgument() throws Exception {
-        mockRequest.setRemoteAddr("203.27.21.6");
+        mockRequest.setRemoteAddr(SYDNEY.address);
 
         final Location result = (Location) subject.resolveArgument(null, null, new ServletWebRequest(mockRequest), null);
 
@@ -95,8 +97,8 @@ public class LocationMethodArgumentResolverTest {
 
     @Test
     public void testResolveArgumentWithCookieOverride() throws Exception {
-        mockRequest.setRemoteAddr("140.159.2.36"); // Melbourne
-        mockRequest.setCookies(new Cookie("address", "203.27.21.6")); // Sydney
+        mockRequest.setRemoteAddr(MELBOURNE.address);
+        mockRequest.setCookies(new Cookie("address", SYDNEY.address));
 
         final Location result = (Location) subject.resolveArgument(null, null, new ServletWebRequest(mockRequest), null);
 
@@ -109,8 +111,8 @@ public class LocationMethodArgumentResolverTest {
 
     @Test
     public void testResolveArgumentWithHeaderOverride() throws Exception {
-        mockRequest.setRemoteAddr("140.159.2.36"); // Melbourne
-        mockRequest.addHeader("X-Forwarded-For", "203.27.21.6"); // Sydney
+        mockRequest.setRemoteAddr(MELBOURNE.address);
+        mockRequest.addHeader("X-Forwarded-For", SYDNEY.address);
 
         final Location result = (Location) subject.resolveArgument(null, null, new ServletWebRequest(mockRequest), null);
 

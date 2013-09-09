@@ -35,6 +35,14 @@ import org.unidle.config.WroConfiguration;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.unidle.service.Location.DEFAULT;
+import static org.unidle.service.test.Locations.ADELAIDE;
+import static org.unidle.service.test.Locations.BRISBANE;
+import static org.unidle.service.test.Locations.CANBERRA;
+import static org.unidle.service.test.Locations.DARWIN;
+import static org.unidle.service.test.Locations.HOBART;
+import static org.unidle.service.test.Locations.MELBOURNE;
+import static org.unidle.service.test.Locations.PERTH;
+import static org.unidle.service.test.Locations.SYDNEY;
 import static org.unidle.test.Conditions.hasCity;
 import static org.unidle.test.Conditions.hasContinent;
 import static org.unidle.test.Conditions.hasCountry;
@@ -54,7 +62,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForAdelaideAustralia() throws Exception {
-        final Location result = subject.locateAddress("203.6.146.5");
+        final Location result = subject.locateAddress(ADELAIDE.address);
 
         assertThat(result)
                 .satisfies(hasCity("Adelaide"))
@@ -65,7 +73,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForBrisbaneAustralia() throws Exception {
-        final Location result = subject.locateAddress("132.234.251.230");
+        final Location result = subject.locateAddress(BRISBANE.address);
 
         assertThat(result)
                 .satisfies(hasCity("Brisbane"))
@@ -76,7 +84,7 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForCanberraAustralia() throws Exception {
-        final Location result = subject.locateAddress("203.6.77.2");
+        final Location result = subject.locateAddress(CANBERRA.address);
 
         assertThat(result)
                 .satisfies(hasCity("Canberra"))
@@ -86,8 +94,19 @@ public class LocationServiceImplTest {
     }
 
     @Test
+    public void testLocateAddressForCommaSeparatedList() throws Exception {
+        final Location result = subject.locateAddress(SYDNEY.address + "," + ADELAIDE.address);
+
+        assertThat(result)
+                .satisfies(hasCity("Sydney"))
+                .satisfies(hasSubdivision("New South Wales"))
+                .satisfies(hasCountry("Australia"))
+                .satisfies(hasContinent("Oceania"));
+    }
+
+    @Test
     public void testLocateAddressForDarwinAustralia() throws Exception {
-        final Location result = subject.locateAddress("138.80.0.10");
+        final Location result = subject.locateAddress(DARWIN.address);
 
         assertThat(result)
                 .satisfies(hasCity("Darwin"))
@@ -98,55 +117,11 @@ public class LocationServiceImplTest {
 
     @Test
     public void testLocateAddressForHobartAustralia() throws Exception {
-        final Location result = subject.locateAddress("147.41.128.8");
+        final Location result = subject.locateAddress(HOBART.address);
 
         assertThat(result)
                 .satisfies(hasCity("Hobart"))
                 .satisfies(hasSubdivision("Tasmania"))
-                .satisfies(hasCountry("Australia"))
-                .satisfies(hasContinent("Oceania"));
-    }
-
-    @Test
-    public void testLocateAddressForMelbourneAustralia() throws Exception {
-        final Location result = subject.locateAddress("140.159.2.36");
-
-        assertThat(result)
-                .satisfies(hasCity("Melbourne"))
-                .satisfies(hasSubdivision("Victoria"))
-                .satisfies(hasCountry("Australia"))
-                .satisfies(hasContinent("Oceania"));
-    }
-
-    @Test
-    public void testLocateAddressForPerthAustralia() throws Exception {
-        final Location result = subject.locateAddress("165.118.1.50");
-
-        assertThat(result)
-                .satisfies(hasCity("Perth"))
-                .satisfies(hasSubdivision("Western Australia"))
-                .satisfies(hasCountry("Australia"))
-                .satisfies(hasContinent("Oceania"));
-    }
-
-    @Test
-    public void testLocateAddressForSydneyAustralia() throws Exception {
-        final Location result = subject.locateAddress("203.27.21.6");
-
-        assertThat(result)
-                .satisfies(hasCity("Sydney"))
-                .satisfies(hasSubdivision("New South Wales"))
-                .satisfies(hasCountry("Australia"))
-                .satisfies(hasContinent("Oceania"));
-    }
-
-    @Test
-    public void testLocateAddressForCommaSeparatedList() throws Exception {
-        final Location result = subject.locateAddress("203.27.21.6, 165.118.1.50");
-
-        assertThat(result)
-                .satisfies(hasCity("Sydney"))
-                .satisfies(hasSubdivision("New South Wales"))
                 .satisfies(hasCountry("Australia"))
                 .satisfies(hasContinent("Oceania"));
     }
@@ -161,6 +136,39 @@ public class LocationServiceImplTest {
                 .satisfies(hasSubdivision(""))
                 .satisfies(hasCountry(""))
                 .satisfies(hasContinent(""));
+    }
+
+    @Test
+    public void testLocateAddressForMelbourneAustralia() throws Exception {
+        final Location result = subject.locateAddress(MELBOURNE.address);
+
+        assertThat(result)
+                .satisfies(hasCity("Melbourne"))
+                .satisfies(hasSubdivision("Victoria"))
+                .satisfies(hasCountry("Australia"))
+                .satisfies(hasContinent("Oceania"));
+    }
+
+    @Test
+    public void testLocateAddressForPerthAustralia() throws Exception {
+        final Location result = subject.locateAddress(PERTH.address);
+
+        assertThat(result)
+                .satisfies(hasCity("Perth"))
+                .satisfies(hasSubdivision("Western Australia"))
+                .satisfies(hasCountry("Australia"))
+                .satisfies(hasContinent("Oceania"));
+    }
+
+    @Test
+    public void testLocateAddressForSydneyAustralia() throws Exception {
+        final Location result = subject.locateAddress(SYDNEY.address);
+
+        assertThat(result)
+                .satisfies(hasCity("Sydney"))
+                .satisfies(hasSubdivision("New South Wales"))
+                .satisfies(hasCountry("Australia"))
+                .satisfies(hasContinent("Oceania"));
     }
 
     @Test

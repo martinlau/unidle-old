@@ -108,7 +108,15 @@ public class LocationFactServiceImplTest {
     public void testFindBestFactWithNothing() throws Exception {
         final LocationFact result = subject.findBestFact("Unknown", "Unknown", "Unknown", "Unknown");
 
-        assertThat(result).isNull();
+        assertThat(result)
+                .satisfies(hasTaskTimeUnit(DAY))
+                .satisfies(hasTaskPeople(1))
+                .satisfies(hasTaskDuration(1))
+                .satisfies(hasTaskDurationTimeUnit(MINUTE))
+                .satisfies(hasTaskCode("common.task.unknown"))
+                .satisfies(hasSummaryDuration(1))
+                .satisfies(hasSummaryDurationTimeUnit(YEAR))
+                .satisfies(hasSource("Martin's Imagination"));
     }
 
     @Test

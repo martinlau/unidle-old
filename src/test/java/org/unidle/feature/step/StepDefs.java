@@ -28,6 +28,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.unidle.feature.config.FeatureConfig;
 import org.unidle.feature.page.GenericPage;
+import org.unidle.service.test.Locations;
 
 import java.net.URL;
 
@@ -48,12 +49,10 @@ public class StepDefs {
         assertThat(genericPage.isAcceptable()).isTrue();
     }
 
-    @Given("^a user from \"([^\"]*)\" with the IP \"([^\"]*)\"$")
-    public void a_user_from_with_the_IP(final String location,
-                                        final String address) throws Throwable {
+    @Given("^a user from \"([^\"]*)\"$")
+    public void a_user_from(final String address) throws Throwable {
 
-        genericPage.addCookie("location", location);
-        genericPage.addCookie("address", address);
+        genericPage.addCookie("address", Locations.valueOf(address.toUpperCase().replace(' ', '_')).address);
     }
 
     @Then("^the \"([^\"]*)\" element should contain the text \"([^\"]*)\"$")
