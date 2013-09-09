@@ -20,7 +20,6 @@
  */
 package org.unidle.controller;
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,9 +36,6 @@ import org.unidle.config.I18NConfiguration;
 import org.unidle.config.MvcConfiguration;
 import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.WroConfiguration;
-import org.unidle.service.test.Locations;
-
-import java.util.Locale;
 
 import static java.util.Locale.ENGLISH;
 import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
@@ -48,8 +44,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-import static org.unidle.service.test.Locations.NORTHERN_TERRITORY;
-import static org.unidle.service.test.Locations.SYDNEY;
+import static org.unidle.test.Locations.NORTHERN_TERRITORY;
+import static org.unidle.test.Locations.SYDNEY;
 import static org.unidle.test.RequestProcessors.remoteAddr;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),

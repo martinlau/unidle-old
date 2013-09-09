@@ -28,7 +28,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.unidle.feature.config.FeatureConfig;
 import org.unidle.feature.page.GenericPage;
-import org.unidle.service.test.Locations;
+import org.unidle.test.Locations;
 
 import java.net.URL;
 
