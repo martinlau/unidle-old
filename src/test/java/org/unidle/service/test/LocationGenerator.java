@@ -30,7 +30,6 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.util.Date;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
@@ -100,6 +99,12 @@ public class LocationGenerator {
         }
     }
 
+    private static DatabaseReader databaseReader() throws IOException {
+        final File file = new ClassPathResource("/maxmind/GeoLite2-City.mmdb").getFile();
+
+        return new DatabaseReader(file);
+    }
+
     private static ConcurrentMap<String, Boolean> locations() {
 
         final ConcurrentMap<String, Boolean> locations = new MapMaker().concurrencyLevel(THREADS).makeMap();
@@ -127,12 +132,6 @@ public class LocationGenerator {
                       country == null || "".equals(country) ? "XXX" : country,
                       subdivision == null || "".equals(subdivision) ? "XXX" : subdivision,
                       city == null || "".equals(city) ? "XXX" : city);
-    }
-
-    private static DatabaseReader databaseReader() throws IOException {
-        final File file = new ClassPathResource("/maxmind/GeoLite2-City.mmdb").getFile();
-
-        return new DatabaseReader(file);
     }
 
     private static class AddressChecker implements Runnable {
@@ -232,4 +231,5 @@ public class LocationGenerator {
             }
         }
     }
+
 }
