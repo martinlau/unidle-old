@@ -75,12 +75,13 @@ public enum Locations {
               final String country,
               final String subdivision,
               final String city) {
+
         this.address = address;
         this.continent = continent;
         this.country = country;
         this.subdivision = subdivision;
         this.city = city;
-    }
 
+    }
 
 }
