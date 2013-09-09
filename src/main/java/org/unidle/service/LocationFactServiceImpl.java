@@ -60,7 +60,12 @@ public class LocationFactServiceImpl implements LocationFactService {
             return locationFact;
         }
 
-        return locationFactRepository.findOne(continent);
+        locationFact = locationFactRepository.findOne(continent);
+        if (locationFact != null) {
+            return locationFact;
+        }
+
+        return locationFactRepository.findOne("", "", "", "");
     }
 
 }

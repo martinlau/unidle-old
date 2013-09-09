@@ -220,7 +220,7 @@ public class LocationFact extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return format(
-                "LocationFact(city='%s', continent='%s', country='%s', source='%s', locationPrefix='%s', subdivision='%s', summaryDuration=%d, summaryDurationTimeUnit=%s, taskCode='%s', taskDuration=%d, taskDurationTimeUnit=%s, taskPeople=%d, taskTimeUnit=%s)",
+                "LocationFact(city='%s', continent='%s', country='%s', locationPrefix='%s', source='%s', subdivision='%s', summaryDuration=%d, summaryDurationTimeUnit=%s, taskCode='%s', taskDuration=%d, taskDurationTimeUnit=%s, taskPeople=%d, taskTimeUnit=%s)",
                 city,
                 continent,
                 country,
