@@ -26,12 +26,12 @@ import org.openqa.selenium.TakesScreenshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.unidle.feature.config.FeatureConfig;
+import org.unidle.feature.config.FeatureConfiguration;
 
 import static org.openqa.selenium.OutputType.BYTES;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
-@ContextConfiguration(classes = FeatureConfig.class)
+@ContextConfiguration(classes = FeatureConfiguration.class)
 @WebAppConfiguration
 public class ScreenShotHook {
 

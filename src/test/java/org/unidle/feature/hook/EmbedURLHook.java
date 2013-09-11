@@ -21,8 +21,7 @@
 package org.unidle.feature.hook;
 
 import cucumber.api.Scenario;
-import cucumber.api.java.Before;
-import org.openqa.selenium.Dimension;
+import cucumber.api.java.After;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,19 +30,18 @@ import org.unidle.feature.config.FeatureConfiguration;
 
 @ContextConfiguration(classes = FeatureConfiguration.class)
 @WebAppConfiguration
-public class SetScreenSizeHook {
+public class EmbedURLHook {
 
-    @Autowired
-    private Dimension dimension;
-
-    @Autowired
+    @Autowired(required = false)
     private WebDriver webDriver;
 
-    @Before
-    public void beforeScenario(@SuppressWarnings("unused") final Scenario scenario) {
-        webDriver.manage()
-                 .window()
-                 .setSize(dimension);
+    @After
+    public void afterScenario(final Scenario scenario) {
+        if (webDriver == null) {
+            return;
+        }
+
+        scenario.write(webDriver.getCurrentUrl());
     }
 
 }

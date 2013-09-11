@@ -18,34 +18,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-package org.unidle.test;
+package org.unidle.feature.page;
 
-public enum KnownPage {
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-    ABOUT("About", "/about"),
+public class SignInPage extends GenericPage implements NavigablePage {
 
-    HOME("Home", "/"),
+    @FindBy(id = "signin_facebook")
+    private WebElement facebook;
 
-    SIGN_IN("Sign in", "/signin");
+    @FindBy(id = "signin_twitter")
+    private WebElement twitter;
 
-    public final String display;
-
-    public final String path;
-
-    private KnownPage(final String display,
-                      final String path) {
-
-        this.display = display;
-        this.path = path;
+    public SignInPage(final WebDriver driver) {
+        super(driver);
     }
 
-    public static KnownPage byDisplay(final String display) {
-        for (KnownPage page : values()) {
-            if (page.display.equals(display)) {
-                return page;
-            }
-        }
-        throw new IllegalArgumentException(display);
+    @Override
+    public String name() {
+        return "Sign in";
+    }
+
+    @Override
+    public void browseTo() {
+        browseTo("/signin");
+    }
+
+    public void signInWithFacebook() {
+        facebook.click();
+    }
+
+    public void signInWithTwitter() {
+        twitter.click();
     }
 
 }

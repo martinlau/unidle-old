@@ -29,13 +29,16 @@ import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URI;
+import java.util.Map;
+
 import static org.openqa.selenium.remote.CapabilityType.SUPPORTS_JAVASCRIPT;
 
-public class GenericPage {
+public class GenericPage implements Page {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GenericPage.class);
 
-    private final WebDriver driver;
+    protected final WebDriver driver;
 
     @FindBy(tagName = "body")
     private WebElement bodyElement;
@@ -49,28 +52,49 @@ public class GenericPage {
         driver.manage().addCookie(new Cookie(name, value));
     }
 
-    public String getText(final String element) {
-        return bodyElement.findElement(By.id(element)).getText();
+    public void browseTo(final String path) {
+        final String url = URI.create(driver.getCurrentUrl())
+                              .resolve(path)
+                              .toASCIIString();
+
+        driver.navigate().to(url);
     }
 
+    public void clickElement(final String element) {
+        driver.findElement(By.id(element)).click();
+    }
+
+    @Override
+    public void fillForm(final Map<String, String> dataTable) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String getPath() {
+        return URI.create(driver.getCurrentUrl()).getPath();
+    }
+
+    @Override
     public String getText() {
         return bodyElement.getText();
     }
 
+    @Override
     public String getTitle() {
         return driver.getTitle();
+    }
+
+    public String getText(final String element) {
+        return bodyElement.findElement(By.id(element)).getText();
     }
 
     public boolean isAcceptable() {
         if (driver instanceof HasCapabilities) {
             return ((HasCapabilities) driver).getCapabilities().is(SUPPORTS_JAVASCRIPT);
         }
+
         LOGGER.warn("WebDriver '{}' doesn't support capabilities - can't tell if we're alive - hold on and hope for the best", driver);
         return true;
-    }
-
-    public void navigateTo(final String page) {
-        driver.navigate().to(page);
     }
 
 }

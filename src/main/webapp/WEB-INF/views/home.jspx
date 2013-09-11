@@ -50,6 +50,6 @@
         </a>
     </p>
 
-    <tags:login-buttons />
+    <tags:signin-buttons />
 
 </jsp:root>

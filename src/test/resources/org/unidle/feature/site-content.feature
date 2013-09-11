@@ -27,8 +27,9 @@ Feature: Site content
 
     Scenario Outline: Information pages
         Given a user
-        When they access the "<Page>" page
-        Then the title should contain "<Title>"
+        When I access the "<Page>" page
+        Then I should see the "<Page>" page
+        And the title should contain "<Title>"
         And the page should contain "<Content>"
 
     Scenarios:

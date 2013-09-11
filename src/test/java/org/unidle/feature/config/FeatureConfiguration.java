@@ -28,7 +28,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.unidle.feature.page.AboutPage;
+import org.unidle.feature.page.AccountPage;
+import org.unidle.feature.page.FacebookAuthenticationPage;
 import org.unidle.feature.page.GenericPage;
+import org.unidle.feature.page.HomePage;
+import org.unidle.feature.page.SignInPage;
+import org.unidle.feature.page.SignUpPage;
+import org.unidle.feature.page.TwitterAuthenticationPage;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,7 +43,7 @@ import java.net.URL;
 import static java.lang.String.format;
 
 @Configuration
-public class FeatureConfig {
+public class FeatureConfiguration {
 
     @Value("${tomcat.port}")
     private int port;
@@ -47,13 +54,23 @@ public class FeatureConfig {
     }
 
     @Bean
-    public GenericPage genericPage() {
-        return PageFactory.initElements(webDriver(), GenericPage.class);
+    public AboutPage aboutPage() {
+        return PageFactory.initElements(webDriver(), AboutPage.class);
+    }
+
+    @Bean(destroyMethod = "quit")
+    public WebDriver webDriver() {
+        return new FirefoxDriver();
+    }
+
+    @Bean
+    public AccountPage accountPage() {
+        return PageFactory.initElements(webDriver(), AccountPage.class);
     }
 
     @Bean
     public URL baseUrl() throws MalformedURLException {
-        return new URL(format("http://127.0.0.1:%d", port));
+        return new URL(format("http://127.0.0.1.xip.io:%d", port));
     }
 
     @Bean
@@ -61,9 +78,34 @@ public class FeatureConfig {
         return new Dimension(320, 568);
     }
 
-    @Bean(destroyMethod = "quit")
-    public WebDriver webDriver() {
-        return new FirefoxDriver();
+    @Bean
+    public FacebookAuthenticationPage facebookAuthenticationPage() {
+        return PageFactory.initElements(webDriver(), FacebookAuthenticationPage.class);
+    }
+
+    @Bean
+    public GenericPage genericPage() {
+        return PageFactory.initElements(webDriver(), GenericPage.class);
+    }
+
+    @Bean
+    public HomePage homePage() {
+        return PageFactory.initElements(webDriver(), HomePage.class);
+    }
+
+    @Bean
+    public SignInPage signInPage() {
+        return PageFactory.initElements(webDriver(), SignInPage.class);
+    }
+
+    @Bean
+    public SignUpPage signUpPage() {
+        return PageFactory.initElements(webDriver(), SignUpPage.class);
+    }
+
+    @Bean
+    public TwitterAuthenticationPage twitterAuthenticationPage() {
+        return PageFactory.initElements(webDriver(), TwitterAuthenticationPage.class);
     }
 
 }
