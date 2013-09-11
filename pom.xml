@@ -1291,6 +1291,8 @@
                                     <goal>reserve-network-port</goal>
                                 </goals>
                                 <configuration>
+                                    <maxPortNumber>8080</maxPortNumber>
+                                    <minPortNumber>8080</minPortNumber>
                                     <portNames>
                                         <portName>tomcat.port</portName>
                                     </portNames>
