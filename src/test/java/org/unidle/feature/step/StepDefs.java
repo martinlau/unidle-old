@@ -21,15 +21,15 @@
 package org.unidle.feature.step;
 
 import cucumber.api.DataTable;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.unidle.feature.config.FeatureConfiguration;
+import org.springframework.test.context.ContextHierarchy;
+import org.unidle.feature.config.PageConfiguration;
+import org.unidle.feature.config.SocialCredentialsConfiguration;
+import org.unidle.feature.config.WebDriverConfiguration;
 import org.unidle.feature.page.FacebookAuthenticationPage;
 import org.unidle.feature.page.GenericPage;
 import org.unidle.feature.page.NavigablePage;
@@ -43,8 +43,9 @@ import java.util.List;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
-@ContextConfiguration(classes = FeatureConfiguration.class)
-@WebAppConfiguration
+@ContextHierarchy({@ContextConfiguration(classes = WebDriverConfiguration.class),
+                   @ContextConfiguration(classes = SocialCredentialsConfiguration.class),
+                   @ContextConfiguration(classes = PageConfiguration.class)})
 public class StepDefs {
 
     @Autowired
@@ -53,10 +54,10 @@ public class StepDefs {
     @Autowired
     private FacebookAuthenticationPage facebookAuthenticationPage;
 
-    @Value("${facebook.password}")
+    @Autowired
     private String facebookPassword;
 
-    @Value("${facebook.username}")
+    @Autowired
     private String facebookUsername;
 
     @Autowired
@@ -71,10 +72,10 @@ public class StepDefs {
     @Autowired
     private TwitterAuthenticationPage twitterAuthenticationPage;
 
-    @Value("${twitter.password}")
+    @Autowired
     private String twitterPassword;
 
-    @Value("${twitter.username}")
+    @Autowired
     private String twitterUsername;
 
     @When("^I access the \"([^\"]*)\" page$")
@@ -83,17 +84,28 @@ public class StepDefs {
         target.browseTo();
     }
 
-    private NavigablePage findPage(final String name) {
-        NavigablePage target = null;
-        for (NavigablePage navigablePage : navigablePages) {
-            if (navigablePage.name().equals(name)) {
-                target = navigablePage;
-            }
+    @When("^I authorize \"([^\"]*)\" access$")
+    public void I_authorize_access(final String service) {
+        switch (service) {
+            case "Facebook":
+                I_authorize_twitter_access();
+                break;
+            case "Twitter":
+                I_authorize_facebook_access();
+                break;
+            default:
+                fail("Unknown service: " + service);
         }
-        if (target == null) {
-            throw new IllegalArgumentException("Unknown page: " + name);
-        }
-        return target;
+    }
+
+    @When("^I authorize Twitter access$")
+    public void I_authorize_twitter_access() {
+        twitterAuthenticationPage.submit();
+    }
+
+    @When("^I authorize Facebook access$")
+    public void I_authorize_facebook_access() {
+        facebookAuthenticationPage.authorize();
     }
 
     @When("^I choose to sign in with \"([^\"]*)\"$")
@@ -121,6 +133,37 @@ public class StepDefs {
         findPage(name).fillForm(dataTable.asMaps().get(0));
     }
 
+    @Given("^I have previously registered via Facebook with:$")
+    public void I_have_previously_registered_via_facebook_with(final DataTable dataTable) {
+        I_access_the_page("Sign in");
+        I_choose_to_sign_in_with("Facebook");
+        I_provide_my_facebook_credentials();
+        I_fill_in_the_form_with("Sign up", dataTable);
+    }
+
+    @Given("^I have previously registered via Twitter with:$")
+    public void I_have_previously_registered_via_twitter_with(final DataTable dataTable) {
+        I_access_the_page("Sign in");
+        I_choose_to_sign_in_with("Twitter");
+        I_provide_my_twitter_credentials();
+        I_fill_in_the_form_with("Sign up", dataTable);
+    }
+
+    @Given("^I have previously registered via \"([^\"]*)\" with:$")
+    public void I_have_previously_registered_via_with(final String service,
+                                                      final DataTable dataTable) throws Throwable {
+        switch (service) {
+            case "Facebook":
+                I_have_previously_registered_via_facebook_with(dataTable);
+                break;
+            case "Twitter":
+                I_have_previously_registered_via_twitter_with(dataTable);
+                break;
+            default:
+                fail("Unknown service: " + service);
+        }
+    }
+
     @When("^I provide my \"([^\"]*)\" credentials$")
     public void I_provide_my_credentials(final String service) {
         switch (service) {
@@ -135,14 +178,6 @@ public class StepDefs {
         }
     }
 
-    @When("^I provide my Twitter credentials$")
-    public void I_provide_my_twitter_credentials() {
-        twitterAuthenticationPage.setUsername(twitterUsername);
-        twitterAuthenticationPage.setPassword(twitterPassword);
-        twitterAuthenticationPage.setRemember(false);
-        twitterAuthenticationPage.submit();
-    }
-
     @When("^I provide my Facebook credentials$")
     public void I_provide_my_facebook_credentials() {
         facebookAuthenticationPage.setUsername(facebookUsername);
@@ -151,9 +186,30 @@ public class StepDefs {
         facebookAuthenticationPage.submit();
     }
 
+    @When("^I provide my Twitter credentials$")
+    public void I_provide_my_twitter_credentials() {
+        twitterAuthenticationPage.setUsername(twitterUsername);
+        twitterAuthenticationPage.setPassword(twitterPassword);
+        twitterAuthenticationPage.setRemember(false);
+        twitterAuthenticationPage.submit();
+    }
+
     @Then("^I should see the \"([^\"]*)\" page$")
     public void I_should_see_the_page(final String page) {
         assertThat(genericPage.getPath()).endsWith(findPage(page).getPath());
+    }
+
+    private NavigablePage findPage(final String name) {
+        NavigablePage target = null;
+        for (NavigablePage navigablePage : navigablePages) {
+            if (navigablePage.name().equals(name)) {
+                target = navigablePage;
+            }
+        }
+        if (target == null) {
+            fail("Unknown page: " + name);
+        }
+        return target;
     }
 
     @Given("^a user from \"([^\"]*)\"$")
@@ -166,8 +222,6 @@ public class StepDefs {
     @Given("^a user$")
     public void a_user() {
         genericPage.browseTo(baseUrl.toExternalForm());
-
-        assertThat(genericPage.isAcceptable()).isTrue();
     }
 
     @Then("^the \"([^\"]*)\" element should contain the text \"([^\"]*)\"$")

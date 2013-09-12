@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.Map;
+import java.util.Set;
 
 import static org.openqa.selenium.remote.CapabilityType.SUPPORTS_JAVASCRIPT;
 
@@ -86,15 +87,6 @@ public class GenericPage implements Page {
 
     public String getText(final String element) {
         return bodyElement.findElement(By.id(element)).getText();
-    }
-
-    public boolean isAcceptable() {
-        if (driver instanceof HasCapabilities) {
-            return ((HasCapabilities) driver).getCapabilities().is(SUPPORTS_JAVASCRIPT);
-        }
-
-        LOGGER.warn("WebDriver '{}' doesn't support capabilities - can't tell if we're alive - hold on and hope for the best", driver);
-        return true;
     }
 
 }

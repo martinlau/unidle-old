@@ -26,11 +26,9 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.unidle.feature.config.FeatureConfiguration;
+import org.unidle.feature.config.WebDriverConfiguration;
 
-@ContextConfiguration(classes = FeatureConfiguration.class)
-@WebAppConfiguration
+@ContextConfiguration(classes = WebDriverConfiguration.class)
 public class SetScreenSizeHook {
 
     @Autowired
@@ -41,9 +39,7 @@ public class SetScreenSizeHook {
 
     @Before
     public void beforeScenario(@SuppressWarnings("unused") final Scenario scenario) {
-        webDriver.manage()
-                 .window()
-                 .setSize(dimension);
+        webDriver.manage().window().setSize(dimension);
     }
 
 }

@@ -27,8 +27,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @Options(format = {"html:target/cucumber",
                    "progress"},
-         glue = {"org.unidle.feature.config",
-                 "org.unidle.feature.hook",
+         glue = {"org.unidle.feature.hook",
                  "org.unidle.feature.step"})
 public class CucumberIT {
 

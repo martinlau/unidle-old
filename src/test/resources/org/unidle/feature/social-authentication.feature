@@ -1,3 +1,4 @@
+
 ###
 # #%L
 # unidle
@@ -32,11 +33,11 @@ Feature: Social authentication
         And I provide my "Facebook" credentials
         Then I should see the "Sign up" page
         When I fill in the "Sign up" form with:
-            | First Name | Last Name | Email                     |
-            | John       | Smith     | john+facebook@example.com |
+            | First Name | Last Name | Email            |
+            | John       | Smith     | john@example.com |
         Then I should see the "Account" page
         Then the page should contain "John Smith"
-        And the page should contain "john+facebook@example.com"
+        And the page should contain "john@example.com"
         And the page should contain "Facebook"
 
     Scenario: New user registration via Twitter
@@ -46,9 +47,36 @@ Feature: Social authentication
         And I provide my "Twitter" credentials
         Then I should see the "Sign up" page
         When I fill in the "Sign up" form with:
-            | First Name | Last Name | Email                    |
-            | John       | Smith     | john+twitter@example.com |
+            | First Name | Last Name | Email            |
+            | John       | Smith     | john@example.com |
         Then I should see the "Account" page
         Then the page should contain "John Smith"
-        And the page should contain "john+twitter@example.com"
+        And the page should contain "john@example.com"
         And the page should contain "Twitter"
+
+#    Scenario: Existing user login via Facebook
+#        Given a user
+#        And I have previously registered via "Facebook" with:
+#            | First Name | Last Name | Email            |
+#            | John       | Smith     | john@example.com |
+#        When I access the "Sign in" page
+#        And I provide my "Facebook" credentials
+#        And I authorize "Facebook" access
+#        Then I should see the "Account" page
+#        Then the page should contain "John Smith"
+#        And the page should contain "john@example.com"
+#        And the page should contain "Facebook"
+#
+#    Scenario: Existing user login via Twitter
+#        Given a user
+#        And I have previously registered via "Twitter" with:
+#            | First Name | Last Name | Email            |
+#            | John       | Smith     | john@example.com |
+#        When I access the "Sign in" page
+#        And I provide my "Twitter" credentials
+#        And I authorize "Twitter" access
+#        Then I should see the "Account" page
+#        Then the page should contain "John Smith"
+#        And the page should contain "john@example.com"
+#        And the page should contain "Twitter"
+

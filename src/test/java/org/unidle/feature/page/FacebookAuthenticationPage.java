@@ -42,6 +42,10 @@ public class FacebookAuthenticationPage extends GenericPage {
         super(driver);
     }
 
+    public void authorize() {
+        throw new UnsupportedOperationException();
+    }
+
     public void setPassword(final String password) {
         this.password.clear();
         this.password.sendKeys(password);

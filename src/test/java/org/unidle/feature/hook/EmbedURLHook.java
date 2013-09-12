@@ -25,12 +25,10 @@ import cucumber.api.java.After;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.unidle.feature.config.FeatureConfiguration;
+import org.unidle.feature.config.WebDriverConfiguration;
 
-@ContextConfiguration(classes = FeatureConfiguration.class)
-@WebAppConfiguration
-public class EmbedURLHook {
+@ContextConfiguration(classes = WebDriverConfiguration.class)
+public class EmbedUrlHook {
 
     @Autowired(required = false)
     private WebDriver webDriver;

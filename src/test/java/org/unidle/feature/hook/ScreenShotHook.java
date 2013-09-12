@@ -25,14 +25,12 @@ import cucumber.api.java.After;
 import org.openqa.selenium.TakesScreenshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.unidle.feature.config.FeatureConfiguration;
+import org.unidle.feature.config.WebDriverConfiguration;
 
 import static org.openqa.selenium.OutputType.BYTES;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
-@ContextConfiguration(classes = FeatureConfiguration.class)
-@WebAppConfiguration
+@ContextConfiguration(classes = WebDriverConfiguration.class)
 public class ScreenShotHook {
 
     @Autowired(required = false)

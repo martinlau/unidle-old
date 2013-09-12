@@ -20,14 +20,11 @@
  */
 package org.unidle.feature.config;
 
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.unidle.feature.page.AboutPage;
 import org.unidle.feature.page.AccountPage;
 import org.unidle.feature.page.FacebookAuthenticationPage;
@@ -37,75 +34,50 @@ import org.unidle.feature.page.SignInPage;
 import org.unidle.feature.page.SignUpPage;
 import org.unidle.feature.page.TwitterAuthenticationPage;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import static java.lang.String.format;
-
 @Configuration
-public class FeatureConfiguration {
+public class PageConfiguration {
 
-    @Value("${tomcat.port}")
-    private int port;
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }
+    @Autowired
+    private WebDriver webDriver;
 
     @Bean
     public AboutPage aboutPage() {
-        return PageFactory.initElements(webDriver(), AboutPage.class);
-    }
-
-    @Bean(destroyMethod = "quit")
-    public WebDriver webDriver() {
-        return new FirefoxDriver();
+        return PageFactory.initElements(webDriver, AboutPage.class);
     }
 
     @Bean
     public AccountPage accountPage() {
-        return PageFactory.initElements(webDriver(), AccountPage.class);
-    }
-
-    @Bean
-    public URL baseUrl() throws MalformedURLException {
-        return new URL(format("http://127.0.0.1.xip.io:%d", port));
-    }
-
-    @Bean
-    public Dimension dimension() {
-        return new Dimension(320, 568);
+        return PageFactory.initElements(webDriver, AccountPage.class);
     }
 
     @Bean
     public FacebookAuthenticationPage facebookAuthenticationPage() {
-        return PageFactory.initElements(webDriver(), FacebookAuthenticationPage.class);
+        return PageFactory.initElements(webDriver, FacebookAuthenticationPage.class);
     }
 
     @Bean
     public GenericPage genericPage() {
-        return PageFactory.initElements(webDriver(), GenericPage.class);
+        return PageFactory.initElements(webDriver, GenericPage.class);
     }
 
     @Bean
     public HomePage homePage() {
-        return PageFactory.initElements(webDriver(), HomePage.class);
+        return PageFactory.initElements(webDriver, HomePage.class);
     }
 
     @Bean
     public SignInPage signInPage() {
-        return PageFactory.initElements(webDriver(), SignInPage.class);
+        return PageFactory.initElements(webDriver, SignInPage.class);
     }
 
     @Bean
     public SignUpPage signUpPage() {
-        return PageFactory.initElements(webDriver(), SignUpPage.class);
+        return PageFactory.initElements(webDriver, SignUpPage.class);
     }
 
     @Bean
     public TwitterAuthenticationPage twitterAuthenticationPage() {
-        return PageFactory.initElements(webDriver(), TwitterAuthenticationPage.class);
+        return PageFactory.initElements(webDriver, TwitterAuthenticationPage.class);
     }
 
 }
