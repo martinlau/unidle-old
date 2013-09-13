@@ -22,7 +22,6 @@ package org.unidle.feature.page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,9 +30,6 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.Map;
-import java.util.Set;
-
-import static org.openqa.selenium.remote.CapabilityType.SUPPORTS_JAVASCRIPT;
 
 public class GenericPage implements Page {
 
@@ -59,6 +55,10 @@ public class GenericPage implements Page {
                               .toASCIIString();
 
         driver.navigate().to(url);
+    }
+
+    public void clearCookies() {
+        driver.manage().deleteAllCookies();
     }
 
     public void clickElement(final String element) {

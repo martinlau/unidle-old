@@ -20,14 +20,16 @@
  */
 package org.unidle.feature.page;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class TwitterAuthenticationPage extends GenericPage {
 
-    @FindBy(id = "username_or_email")
-    private WebElement usernameOrEmail;
+    @FindBy(id = "allow")
+    private WebElement allow;
 
     @FindBy(id = "password")
     private WebElement password;
@@ -35,16 +37,20 @@ public class TwitterAuthenticationPage extends GenericPage {
     @FindBy(id = "remember")
     private WebElement remember;
 
-    @FindBy(id = "allow")
-    private WebElement allow;
+    @FindBy(id = "username_or_email")
+    private WebElement usernameOrEmail;
 
     public TwitterAuthenticationPage(final WebDriver driver) {
         super(driver);
     }
 
-    public void setUsername(final String usernameOrEmail) {
-        this.usernameOrEmail.clear();
-        this.usernameOrEmail.sendKeys(usernameOrEmail);
+    public boolean requiresCredentials() {
+        try {
+            return usernameOrEmail.isDisplayed();
+        }
+        catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     public void setPassword(final String password) {
@@ -56,6 +62,11 @@ public class TwitterAuthenticationPage extends GenericPage {
         if (remember.isSelected() ^ checked) {
             remember.click();
         }
+    }
+
+    public void setUsername(final String usernameOrEmail) {
+        this.usernameOrEmail.clear();
+        this.usernameOrEmail.sendKeys(usernameOrEmail);
     }
 
     public void submit() {

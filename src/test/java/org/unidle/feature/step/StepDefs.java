@@ -84,30 +84,6 @@ public class StepDefs {
         target.browseTo();
     }
 
-    @When("^I authorize \"([^\"]*)\" access$")
-    public void I_authorize_access(final String service) {
-        switch (service) {
-            case "Facebook":
-                I_authorize_twitter_access();
-                break;
-            case "Twitter":
-                I_authorize_facebook_access();
-                break;
-            default:
-                fail("Unknown service: " + service);
-        }
-    }
-
-    @When("^I authorize Twitter access$")
-    public void I_authorize_twitter_access() {
-        twitterAuthenticationPage.submit();
-    }
-
-    @When("^I authorize Facebook access$")
-    public void I_authorize_facebook_access() {
-        facebookAuthenticationPage.authorize();
-    }
-
     @When("^I choose to sign in with \"([^\"]*)\"$")
     public void I_choose_to_sign_in_with(final String service) {
         switch (service) {
@@ -162,6 +138,7 @@ public class StepDefs {
             default:
                 fail("Unknown service: " + service);
         }
+        genericPage.clearCookies();
     }
 
     @When("^I provide my \"([^\"]*)\" credentials$")
@@ -180,17 +157,21 @@ public class StepDefs {
 
     @When("^I provide my Facebook credentials$")
     public void I_provide_my_facebook_credentials() {
-        facebookAuthenticationPage.setUsername(facebookUsername);
-        facebookAuthenticationPage.setPassword(facebookPassword);
-        facebookAuthenticationPage.setRemember(false);
-        facebookAuthenticationPage.submit();
+        if (facebookAuthenticationPage.requiresCredentials()) {
+            facebookAuthenticationPage.setEmailOrPhone(facebookUsername);
+            facebookAuthenticationPage.setPassword(facebookPassword);
+            facebookAuthenticationPage.setKeepMeLoggedIn(false);
+            facebookAuthenticationPage.submit();
+        }
     }
 
     @When("^I provide my Twitter credentials$")
     public void I_provide_my_twitter_credentials() {
-        twitterAuthenticationPage.setUsername(twitterUsername);
-        twitterAuthenticationPage.setPassword(twitterPassword);
-        twitterAuthenticationPage.setRemember(false);
+        if (twitterAuthenticationPage.requiresCredentials()) {
+            twitterAuthenticationPage.setUsername(twitterUsername);
+            twitterAuthenticationPage.setPassword(twitterPassword);
+            twitterAuthenticationPage.setRemember(false);
+        }
         twitterAuthenticationPage.submit();
     }
 

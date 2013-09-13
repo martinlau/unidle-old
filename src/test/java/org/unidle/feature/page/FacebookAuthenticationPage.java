@@ -20,6 +20,7 @@
  */
 package org.unidle.feature.page;
 
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -42,24 +43,30 @@ public class FacebookAuthenticationPage extends GenericPage {
         super(driver);
     }
 
-    public void authorize() {
-        throw new UnsupportedOperationException();
+    public boolean requiresCredentials() {
+        try {
+            return driver.getCurrentUrl().contains("facebook.com") &&
+                   emailOrPhone.isDisplayed();
+        }
+        catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public void setEmailOrPhone(final String emailOrPhone) {
+        this.emailOrPhone.clear();
+        this.emailOrPhone.sendKeys(emailOrPhone);
+    }
+
+    public void setKeepMeLoggedIn(final boolean keepMeLoggedIn) {
+        if (this.keepMeLoggedIn.isSelected() ^ keepMeLoggedIn) {
+            this.keepMeLoggedIn.click();
+        }
     }
 
     public void setPassword(final String password) {
         this.password.clear();
         this.password.sendKeys(password);
-    }
-
-    public void setRemember(final boolean checked) {
-        if (keepMeLoggedIn.isSelected() ^ checked) {
-            keepMeLoggedIn.click();
-        }
-    }
-
-    public void setUsername(final String usernameOrEmail) {
-        this.emailOrPhone.clear();
-        this.emailOrPhone.sendKeys(usernameOrEmail);
     }
 
     public void submit() {

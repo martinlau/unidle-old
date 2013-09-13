@@ -21,7 +21,6 @@
 package org.unidle.feature.config;
 
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,14 +28,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import static java.lang.String.format;
-import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 
 @Configuration
 @ImportResource("classpath:cucumber/runtime/java/spring/cucumber-glue.xml")
@@ -67,11 +64,16 @@ public class WebDriverConfiguration {
     @Bean(destroyMethod = "quit")
 //    @Scope(value = "cucumber-glue",
 //           proxyMode = INTERFACES)
-    public WebDriver webDriver() {
+    public FirefoxDriver firefoxDriver() {
+        return new FirefoxDriver(firefoxProfile());
+    }
+
+    @Bean
+    public FirefoxProfile firefoxProfile() {
         final FirefoxProfile profile = new FirefoxProfile();
         profile.setEnableNativeEvents(true);
 
-        return new FirefoxDriver(profile);
+        return profile;
     }
 
 }
