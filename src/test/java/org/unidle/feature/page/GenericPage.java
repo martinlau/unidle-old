@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 
 public class GenericPage implements Page {
@@ -39,6 +40,12 @@ public class GenericPage implements Page {
 
     @FindBy(tagName = "body")
     private WebElement bodyElement;
+
+    public void setField(final WebElement webElement,
+                         final String value) {
+        webElement.clear();
+        webElement.sendKeys(value);
+    }
 
     public GenericPage(final WebDriver driver) {
         this.driver = driver;
@@ -66,7 +73,7 @@ public class GenericPage implements Page {
     }
 
     @Override
-    public void fillForm(final Map<String, String> dataTable) {
+    public void fillForm(final List<Map<String, String>> data) {
         throw new UnsupportedOperationException();
     }
 
@@ -83,6 +90,11 @@ public class GenericPage implements Page {
     @Override
     public String getTitle() {
         return driver.getTitle();
+    }
+
+    @Override
+    public String getValidationError(String name) {
+        throw new UnsupportedOperationException();
     }
 
     public String getText(final String element) {

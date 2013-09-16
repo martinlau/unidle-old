@@ -43,6 +43,10 @@ public class FacebookAuthenticationPage extends GenericPage {
         super(driver);
     }
 
+    public boolean isFacebookPage() {
+        return driver.getCurrentUrl().contains("facebook.com");
+    }
+
     public boolean requiresCredentials() {
         try {
             return driver.getCurrentUrl().contains("facebook.com") &&

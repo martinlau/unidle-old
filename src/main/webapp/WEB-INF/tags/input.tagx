@@ -57,7 +57,7 @@
             <form:label path="${path}" cssClass="sr-only">${label}</form:label>
             <form:input type="${type}" path="${path}" placeholder="${placeholder}" cssClass="form-control" />
             <c:if test="${status.error}">
-                <span class="help-block">
+                <span id="${path}_validation" class="help-block">
                     <strong>
                         <form:errors path="${path}" />
                     </strong>

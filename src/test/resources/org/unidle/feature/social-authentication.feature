@@ -25,6 +25,36 @@ Feature: Social authentication
     In order to easily register for and log in to the site
     I want to be able to register and log in to the site using other services
 
+    Scenario: New user registration validation
+        Given a user
+        And I have previously registered via "Facebook" with:
+            | Field Name | Value            |
+            | First Name | John             |
+            | Last Name  | Smith            |
+            | Email      | john@example.com |
+        When I access the "Sign in" page
+        And I choose to sign in with "Twitter"
+        And I provide my "Twitter" credentials
+        Then I should see the "Sign up" page
+        When I fill in the "Sign up" form with:
+            | Field Name | Value |
+            | First Name |       |
+            | Last Name  |       |
+            | Email      |       |
+        Then I should see the "Sign up" form validation errors:
+            | Field Name | Message          |
+            | First Name | may not be empty |
+            | Last Name  | may not be empty |
+            | Email      | may not be empty |
+        When I fill in the "Sign up" form with:
+            | Field Name | Value            |
+            | First Name | John             |
+            | Last Name  | Smith            |
+            | Email      | john@example.com |
+        Then I should see the "Sign up" form validation errors:
+            | Field Name | Message                              |
+            | Email      | That email address is already in use |
+
     Scenario: New user registration via Facebook
         Given a user
         When I access the "Sign in" page
@@ -32,8 +62,10 @@ Feature: Social authentication
         And I provide my "Facebook" credentials
         Then I should see the "Sign up" page
         When I fill in the "Sign up" form with:
-            | First Name | Last Name | Email            |
-            | John       | Smith     | john@example.com |
+            | Field Name | Value            |
+            | First Name | John             |
+            | Last Name  | Smith            |
+            | Email      | john@example.com |
         Then I should see the "Account" page
         Then the page should contain "John Smith"
         And the page should contain "john@example.com"
@@ -46,8 +78,10 @@ Feature: Social authentication
         And I provide my "Twitter" credentials
         Then I should see the "Sign up" page
         When I fill in the "Sign up" form with:
-            | First Name | Last Name | Email            |
-            | John       | Smith     | john@example.com |
+            | Field Name | Value            |
+            | First Name | John             |
+            | Last Name  | Smith            |
+            | Email      | john@example.com |
         Then I should see the "Account" page
         Then the page should contain "John Smith"
         And the page should contain "john@example.com"
@@ -56,8 +90,10 @@ Feature: Social authentication
     Scenario: Existing user login via Facebook
         Given a user
         And I have previously registered via "Facebook" with:
-            | First Name | Last Name | Email            |
-            | John       | Smith     | john@example.com |
+            | Field Name | Value            |
+            | First Name | John             |
+            | Last Name  | Smith            |
+            | Email      | john@example.com |
         When I access the "Sign in" page
         And I choose to sign in with "Facebook"
         And I provide my "Facebook" credentials
@@ -69,8 +105,10 @@ Feature: Social authentication
     Scenario: Existing user login via Twitter
         Given a user
         And I have previously registered via "Twitter" with:
-            | First Name | Last Name | Email            |
-            | John       | Smith     | john@example.com |
+            | Field Name | Value            |
+            | First Name | John             |
+            | Last Name  | Smith            |
+            | Email      | john@example.com |
         When I access the "Sign in" page
         And I choose to sign in with "Twitter"
         And I provide my "Twitter" credentials

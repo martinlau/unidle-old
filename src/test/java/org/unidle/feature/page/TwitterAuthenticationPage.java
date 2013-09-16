@@ -44,6 +44,10 @@ public class TwitterAuthenticationPage extends GenericPage {
         super(driver);
     }
 
+    public boolean isTwitterPage() {
+        return driver.getCurrentUrl().contains("twitter.com");
+    }
+
     public boolean requiresCredentials() {
         try {
             return usernameOrEmail.isDisplayed();

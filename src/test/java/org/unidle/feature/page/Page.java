@@ -20,15 +20,21 @@
  */
 package org.unidle.feature.page;
 
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 import java.util.Map;
 
 public interface Page {
 
-    void fillForm(Map<String, String> dataTable);
+    void fillForm(List<Map<String, String>> data);
 
     String getPath();
 
     String getText();
 
     String getTitle();
+
+    String getValidationError(String name);
+
 }

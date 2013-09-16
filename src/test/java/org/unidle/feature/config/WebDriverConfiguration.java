@@ -36,7 +36,6 @@ import java.net.URL;
 import static java.lang.String.format;
 
 @Configuration
-@ImportResource("classpath:cucumber/runtime/java/spring/cucumber-glue.xml")
 @PropertySource("classpath:unidle.properties")
 public class WebDriverConfiguration {
 
@@ -62,18 +61,11 @@ public class WebDriverConfiguration {
     }
 
     @Bean(destroyMethod = "quit")
-//    @Scope(value = "cucumber-glue",
-//           proxyMode = INTERFACES)
     public FirefoxDriver firefoxDriver() {
-        return new FirefoxDriver(firefoxProfile());
-    }
-
-    @Bean
-    public FirefoxProfile firefoxProfile() {
         final FirefoxProfile profile = new FirefoxProfile();
         profile.setEnableNativeEvents(true);
 
-        return profile;
+        return new FirefoxDriver(profile);
     }
 
 }

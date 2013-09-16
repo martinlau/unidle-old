@@ -20,7 +20,6 @@
  */
 package org.unidle.feature.step;
 
-import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -39,6 +38,7 @@ import org.unidle.test.KnownLocation;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
@@ -105,35 +105,35 @@ public class StepDefs {
 
     @When("^I fill in the \"([^\"]*)\" form with:$")
     public void I_fill_in_the_form_with(final String name,
-                                        final DataTable dataTable) {
-        findPage(name).fillForm(dataTable.asMaps().get(0));
+                                        final List<Map<String, String>> data) {
+        findPage(name).fillForm(data);
     }
 
     @Given("^I have previously registered via Facebook with:$")
-    public void I_have_previously_registered_via_facebook_with(final DataTable dataTable) {
+    public void I_have_previously_registered_via_facebook_with(final List<Map<String, String>> data) {
         I_access_the_page("Sign in");
         I_choose_to_sign_in_with("Facebook");
         I_provide_my_facebook_credentials();
-        I_fill_in_the_form_with("Sign up", dataTable);
+        I_fill_in_the_form_with("Sign up", data);
     }
 
     @Given("^I have previously registered via Twitter with:$")
-    public void I_have_previously_registered_via_twitter_with(final DataTable dataTable) {
+    public void I_have_previously_registered_via_twitter_with(final List<Map<String, String>> data) {
         I_access_the_page("Sign in");
         I_choose_to_sign_in_with("Twitter");
         I_provide_my_twitter_credentials();
-        I_fill_in_the_form_with("Sign up", dataTable);
+        I_fill_in_the_form_with("Sign up", data);
     }
 
     @Given("^I have previously registered via \"([^\"]*)\" with:$")
     public void I_have_previously_registered_via_with(final String service,
-                                                      final DataTable dataTable) throws Throwable {
+                                                      final List<Map<String, String>> data) throws Throwable {
         switch (service) {
             case "Facebook":
-                I_have_previously_registered_via_facebook_with(dataTable);
+                I_have_previously_registered_via_facebook_with(data);
                 break;
             case "Twitter":
-                I_have_previously_registered_via_twitter_with(dataTable);
+                I_have_previously_registered_via_twitter_with(data);
                 break;
             default:
                 fail("Unknown service: " + service);
@@ -157,27 +157,41 @@ public class StepDefs {
 
     @When("^I provide my Facebook credentials$")
     public void I_provide_my_facebook_credentials() {
-        if (facebookAuthenticationPage.requiresCredentials()) {
-            facebookAuthenticationPage.setEmailOrPhone(facebookUsername);
-            facebookAuthenticationPage.setPassword(facebookPassword);
-            facebookAuthenticationPage.setKeepMeLoggedIn(false);
+        if (facebookAuthenticationPage.isFacebookPage()) {
+            if (facebookAuthenticationPage.requiresCredentials()) {
+                facebookAuthenticationPage.setEmailOrPhone(facebookUsername);
+                facebookAuthenticationPage.setPassword(facebookPassword);
+                facebookAuthenticationPage.setKeepMeLoggedIn(false);
+            }
             facebookAuthenticationPage.submit();
         }
     }
 
     @When("^I provide my Twitter credentials$")
     public void I_provide_my_twitter_credentials() {
-        if (twitterAuthenticationPage.requiresCredentials()) {
-            twitterAuthenticationPage.setUsername(twitterUsername);
-            twitterAuthenticationPage.setPassword(twitterPassword);
-            twitterAuthenticationPage.setRemember(false);
+        if (twitterAuthenticationPage.isTwitterPage()) {
+            if (twitterAuthenticationPage.requiresCredentials()) {
+                twitterAuthenticationPage.setUsername(twitterUsername);
+                twitterAuthenticationPage.setPassword(twitterPassword);
+                twitterAuthenticationPage.setRemember(false);
+            }
+            twitterAuthenticationPage.submit();
         }
-        twitterAuthenticationPage.submit();
     }
 
-    @Then("^I should see the \"([^\"]*)\" page$")
-    public void I_should_see_the_page(final String page) {
-        assertThat(genericPage.getPath()).endsWith(findPage(page).getPath());
+    @Then("^I should see the \"([^\"]*)\" form validation errors:$")
+    public void I_should_see_the_form_validation_errors(final String name,
+                                                        final List<Map<String, String>> data) throws Throwable {
+
+        final NavigablePage page = findPage(name);
+
+        for (Map<String, String> row : data) {
+            final String field = row.get("Field Name");
+            final String message = row.get("Message");
+            if (message != null && !"".equals(message)) {
+                assertThat(page.getValidationError(field)).contains(message);
+            }
+        }
     }
 
     private NavigablePage findPage(final String name) {
@@ -191,6 +205,11 @@ public class StepDefs {
             fail("Unknown page: " + name);
         }
         return target;
+    }
+
+    @Then("^I should see the \"([^\"]*)\" page$")
+    public void I_should_see_the_page(final String page) {
+        assertThat(genericPage.getPath()).endsWith(findPage(page).getPath());
     }
 
     @Given("^a user from \"([^\"]*)\"$")
