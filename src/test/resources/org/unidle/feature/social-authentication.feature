@@ -31,7 +31,7 @@ Feature: Social authentication
             | Field Name | Value            |
             | First Name | John             |
             | Last Name  | Smith            |
-            | Email      | john@example.com |
+            | Email      | smith@example.com |
         When I access the "Sign in" page
         And I choose to sign in with "Twitter"
         And I provide my "Twitter" credentials
@@ -50,10 +50,19 @@ Feature: Social authentication
             | Field Name | Value            |
             | First Name | John             |
             | Last Name  | Smith            |
-            | Email      | john@example.com |
+            | Email      | smith@example.com |
         Then I should see the "Sign up" form validation errors:
             | Field Name | Message                              |
             | Email      | That email address is already in use |
+        When I fill in the "Sign up" form with:
+            | Field Name | Value            |
+            | First Name | John             |
+            | Last Name  | Smith            |
+            | Email      | john@example.com |
+        Then I should see the "Account" page
+        Then the page should contain "John Smith"
+        And the page should contain "john@example.com"
+        And the page should contain "Facebook"
 
     Scenario: New user registration via Facebook
         Given a user
