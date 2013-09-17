@@ -36,7 +36,7 @@ public class SetScreenSizeHook {
     @Autowired
     private WebDriver webDriver;
 
-    @Before(order = 30_000)
+    @Before(order = 25_000)
     public void beforeScenario() {
         webDriver.manage().window().setSize(dimension);
     }
