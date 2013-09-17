@@ -30,14 +30,11 @@ import org.unidle.feature.config.WebDriverConfiguration;
 @ContextConfiguration(classes = WebDriverConfiguration.class)
 public class EmbedUrlHook {
 
-    @Autowired(required = false)
+    @Autowired
     private WebDriver webDriver;
 
-    @After
+    @After(order = 25_000)
     public void afterScenario(final Scenario scenario) {
-        if (webDriver == null) {
-            return;
-        }
 
         scenario.write(webDriver.getCurrentUrl());
     }

@@ -20,12 +20,10 @@
  */
 package org.unidle.feature.page;
 
-import java.util.Map;
-
 public interface NavigablePage extends Page {
 
-    String name();
-
     void browseTo();
+
+    String name();
 
 }

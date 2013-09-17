@@ -21,12 +21,11 @@
 package org.unidle.feature.config;
 
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
@@ -62,10 +61,7 @@ public class WebDriverConfiguration {
 
     @Bean(destroyMethod = "quit")
     public FirefoxDriver firefoxDriver() {
-        final FirefoxProfile profile = new FirefoxProfile();
-        profile.setEnableNativeEvents(true);
-
-        return new FirefoxDriver(profile);
+        return new FirefoxDriver();
     }
 
 }

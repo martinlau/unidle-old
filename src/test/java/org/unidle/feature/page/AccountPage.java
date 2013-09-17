@@ -21,11 +21,62 @@
 package org.unidle.feature.page;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
+import java.util.Map;
 
 public class AccountPage extends GenericPage implements NavigablePage {
 
+    public static final String EMAIL = "Email";
+
+    public static final String FIRST_NAME = "First Name";
+
+    public static final String LAST_NAME = "Last Name";
+
+    @FindBy(id = "email")
+    private WebElement email;
+
+    @FindBy(id = "firstName")
+    private WebElement firstName;
+
+    @FindBy(id = "lastName")
+    private WebElement lastName;
+
+    @FindBy(id = "submit")
+    private WebElement submit;
+
     public AccountPage(final WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public void fillForm(final List<Map<String, String>> data) {
+        for (Map<String, String> map : data) {
+
+            final String name = map.get("Field Name");
+            final String value = map.get("Value");
+
+            switch (name) {
+                case FIRST_NAME:
+                    setField(firstName, value);
+                    break;
+                case LAST_NAME:
+                    setField(lastName, value);
+                    break;
+                case EMAIL:
+                    setField(email, value);
+                    break;
+            }
+
+        }
+
+        submit();
+    }
+
+    public void submit() {
+        submit.click();
     }
 
     @Override

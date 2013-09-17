@@ -33,18 +33,13 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @ContextConfiguration(classes = WebDriverConfiguration.class)
 public class ScreenShotHook {
 
-    @Autowired(required = false)
+    @Autowired
     private TakesScreenshot takesScreenshot;
 
-    @After
+    @After(order = 20_000)
     public void afterScenario(final Scenario scenario) {
-        if (takesScreenshot == null) {
-            return;
-        }
 
-        final byte[] bytes = takesScreenshot.getScreenshotAs(BYTES);
-
-        scenario.embed(bytes, IMAGE_PNG_VALUE);
+        scenario.embed(takesScreenshot.getScreenshotAs(BYTES), IMAGE_PNG_VALUE);
     }
 
 }

@@ -21,10 +21,12 @@
 package org.unidle.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.unidle.domain.Response;
 
 import java.util.UUID;
 
-public interface ResponseRepository extends JpaRepository<Response, UUID> {
+public interface ResponseRepository extends JpaRepository<Response, UUID>,
+                                            JpaSpecificationExecutor<Response> {
 
 }

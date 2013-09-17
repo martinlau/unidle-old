@@ -24,8 +24,12 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
+import org.unidle.config.CacheConfiguration;
+import org.unidle.config.DataConfiguration;
+import org.unidle.domain.UserConnection;
 import org.unidle.feature.config.PageConfiguration;
 import org.unidle.feature.config.SocialCredentialsConfiguration;
 import org.unidle.feature.config.WebDriverConfiguration;
@@ -34,18 +38,26 @@ import org.unidle.feature.page.GenericPage;
 import org.unidle.feature.page.NavigablePage;
 import org.unidle.feature.page.SignInPage;
 import org.unidle.feature.page.TwitterAuthenticationPage;
+import org.unidle.repository.UserConnectionRepository;
 import org.unidle.test.KnownLocation;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
+import static org.unidle.domain.UserConnection_.providerId;
 
 @ContextHierarchy({@ContextConfiguration(classes = WebDriverConfiguration.class),
-                   @ContextConfiguration(classes = SocialCredentialsConfiguration.class),
-                   @ContextConfiguration(classes = PageConfiguration.class)})
+                   @ContextConfiguration(classes = PageConfiguration.class),
+                   @ContextConfiguration(classes = CacheConfiguration.class),
+                   @ContextConfiguration(classes = DataConfiguration.class),
+                   @ContextConfiguration(classes = SocialCredentialsConfiguration.class)})
 public class StepDefs {
 
     @Autowired
@@ -78,6 +90,9 @@ public class StepDefs {
     @Autowired
     private String twitterUsername;
 
+    @Autowired
+    private UserConnectionRepository userConnectionRepository;
+
     @When("^I access the \"([^\"]*)\" page$")
     public void I_access_the_page(final String name) {
         NavigablePage target = findPage(name);
@@ -109,36 +124,68 @@ public class StepDefs {
         findPage(name).fillForm(data);
     }
 
-    @Given("^I have previously registered via Facebook with:$")
-    public void I_have_previously_registered_via_facebook_with(final List<Map<String, String>> data) {
-        I_access_the_page("Sign in");
-        I_choose_to_sign_in_with("Facebook");
-        I_provide_my_facebook_credentials();
-        I_fill_in_the_form_with("Sign up", data);
+    private NavigablePage findPage(final String name) {
+        NavigablePage target = null;
+        for (NavigablePage navigablePage : navigablePages) {
+            if (navigablePage.name().equals(name)) {
+                target = navigablePage;
+            }
+        }
+        if (target == null) {
+            fail("Unknown page: " + name);
+        }
+        return target;
     }
 
-    @Given("^I have previously registered via Twitter with:$")
-    public void I_have_previously_registered_via_twitter_with(final List<Map<String, String>> data) {
-        I_access_the_page("Sign in");
-        I_choose_to_sign_in_with("Twitter");
-        I_provide_my_twitter_credentials();
-        I_fill_in_the_form_with("Sign up", data);
-    }
-
-    @Given("^I have previously registered via \"([^\"]*)\" with:$")
-    public void I_have_previously_registered_via_with(final String service,
-                                                      final List<Map<String, String>> data) throws Throwable {
+    @Given("^I have previously registered via \"([^\"]*)\"$")
+    public void I_have_previously_registered_via(final String service) throws Throwable {
         switch (service) {
             case "Facebook":
-                I_have_previously_registered_via_facebook_with(data);
-                break;
             case "Twitter":
-                I_have_previously_registered_via_twitter_with(data);
+                assertThat(userConnectionRepository.count(hasService(service.toLowerCase()))).isPositive();
                 break;
             default:
                 fail("Unknown service: " + service);
         }
-        genericPage.clearCookies();
+    }
+
+    public static Specification<UserConnection> hasService(final String service) {
+        return new Specification<UserConnection>() {
+            @Override
+            public Predicate toPredicate(final Root<UserConnection> root,
+                                         final CriteriaQuery<?> criteriaQuery,
+                                         final CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.equal(root.get(providerId), service);
+            }
+        };
+    }
+
+    @When("^I log in with \"([^\"]*)\"$")
+    public void I_log_in_with(final String service) throws Throwable {
+        switch (service) {
+            case "Facebook":
+                I_log_in_with_facebook();
+                break;
+            case "Twitter":
+                I_log_in_with_twitter();
+                break;
+            default:
+                fail("Unknown service: " + service);
+        }
+    }
+
+    @When("^I log in with Facebook$")
+    public void I_log_in_with_facebook() {
+        I_access_the_page("Sign in");
+        I_choose_to_sign_in_with("Facebook");
+        I_provide_my_credentials("Facebook");
+    }
+
+    @When("^I log in with Twitter$")
+    public void I_log_in_with_twitter() {
+        I_access_the_page("Sign in");
+        I_choose_to_sign_in_with("Twitter");
+        I_provide_my_credentials("Twitter");
     }
 
     @When("^I provide my \"([^\"]*)\" credentials$")
@@ -192,19 +239,6 @@ public class StepDefs {
                 assertThat(page.getValidationError(field)).contains(message);
             }
         }
-    }
-
-    private NavigablePage findPage(final String name) {
-        NavigablePage target = null;
-        for (NavigablePage navigablePage : navigablePages) {
-            if (navigablePage.name().equals(name)) {
-                target = navigablePage;
-            }
-        }
-        if (target == null) {
-            fail("Unknown page: " + name);
-        }
-        return target;
     }
 
     @Then("^I should see the \"([^\"]*)\" page$")

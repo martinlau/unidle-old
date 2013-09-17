@@ -37,6 +37,7 @@ import org.unidle.domain.User;
 import org.unidle.domain.UserConnection;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.google.common.collect.Sets.newHashSet;
 import static java.util.Arrays.asList;
@@ -184,7 +185,7 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testFindUserIdsConnectedTo() throws Exception {
-        final List<Long> result = subject.findUserIdsConnectedTo("provider id 1",
+        final List<UUID> result = subject.findUserIdsConnectedTo("provider id 1",
                                                                  newHashSet("provider user id 1",
                                                                             "provider user id 2",
                                                                             "provider user id 3",
@@ -197,7 +198,7 @@ public class UserConnectionRepositoryTest {
 
     @Test
     public void testFindUserIdsWithConnection() throws Exception {
-        final List<Long> result = subject.findUserIdsWithConnection("provider id 1",
+        final List<UUID> result = subject.findUserIdsWithConnection("provider id 1",
                                                                     "provider user id 1");
 
         assertThat(result).containsExactly(user1.getId());

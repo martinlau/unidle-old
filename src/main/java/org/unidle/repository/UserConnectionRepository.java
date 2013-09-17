@@ -21,6 +21,7 @@
 package org.unidle.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -31,7 +32,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-public interface UserConnectionRepository extends JpaRepository<UserConnection, UUID> {
+public interface UserConnectionRepository extends JpaRepository<UserConnection, UUID>,
+                                                  JpaSpecificationExecutor<UserConnection> {
 
     @Query("DELETE FROM UserConnection uc WHERE uc.user = :user AND uc.providerId = :providerId AND uc.providerUserId = :providerUserId")
     @Modifying
@@ -70,11 +72,11 @@ public interface UserConnectionRepository extends JpaRepository<UserConnection, 
                      @Param("providerId") final String providerId);
 
     @Query("SELECT DISTINCT uc.user.id FROM UserConnection uc WHERE uc.providerId = :providerId AND uc.providerUserId IN :providerUserIds")
-    List<Long> findUserIdsConnectedTo(@Param("providerId") final String providerId,
+    List<UUID> findUserIdsConnectedTo(@Param("providerId") final String providerId,
                                       @Param("providerUserIds") final Set<String> providerUserIds);
 
     @Query("SELECT DISTINCT uc.user.id FROM UserConnection uc WHERE uc.providerId = :providerId AND uc.providerUserId = :providerUserId")
-    List<Long> findUserIdsWithConnection(@Param("providerId") final String providerId,
+    List<UUID> findUserIdsWithConnection(@Param("providerId") final String providerId,
                                          @Param("providerUserId") final String providerUserId);
 
 }

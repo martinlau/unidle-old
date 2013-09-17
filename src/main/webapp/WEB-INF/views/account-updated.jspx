@@ -41,12 +41,14 @@
                     </tags:modal-header>
 
                     <tags:modal-body>
+                        <!-- TODO i18n -->
                         <p class="success">Your details have been updated</p>
                     </tags:modal-body>
 
                     <tags:modal-footer>
                         <!-- TODO Reload on close -->
-                        <a href="#" data-dismiss="modal" class="btn btn-lg btn-default pull-left">
+                        <a href="#" data-dismiss="modal" class="btn btn-lg btn-default pull-left" id="close">
+                            <!-- TODO i18n -->
                             Close
                         </a>
                     </tags:modal-footer>

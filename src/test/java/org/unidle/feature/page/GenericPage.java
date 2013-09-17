@@ -25,8 +25,6 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.util.List;
@@ -34,18 +32,10 @@ import java.util.Map;
 
 public class GenericPage implements Page {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenericPage.class);
-
     protected final WebDriver driver;
 
     @FindBy(tagName = "body")
     private WebElement bodyElement;
-
-    public void setField(final WebElement webElement,
-                         final String value) {
-        webElement.clear();
-        webElement.sendKeys(value);
-    }
 
     public GenericPage(final WebDriver driver) {
         this.driver = driver;
@@ -99,6 +89,12 @@ public class GenericPage implements Page {
 
     public String getText(final String element) {
         return bodyElement.findElement(By.id(element)).getText();
+    }
+
+    public void setField(final WebElement webElement,
+                         final String value) {
+        webElement.clear();
+        webElement.sendKeys(value);
     }
 
 }

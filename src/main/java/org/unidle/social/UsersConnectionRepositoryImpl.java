@@ -31,6 +31,7 @@ import org.unidle.repository.UserConnectionRepository;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import static com.google.common.base.Functions.toStringFunction;
 import static com.google.common.collect.Lists.transform;
@@ -56,7 +57,7 @@ public class UsersConnectionRepositoryImpl implements UsersConnectionRepository 
     public List<String> findUserIdsWithConnection(final Connection<?> connection) {
         final ConnectionData connectionData = connection.createData();
 
-        final List<Long> userIds = userConnectionRepository.findUserIdsWithConnection(connectionData.getProviderId(),
+        final List<UUID> userIds = userConnectionRepository.findUserIdsWithConnection(connectionData.getProviderId(),
                                                                                       connectionData.getProviderUserId());
 
         return transform(userIds, toStringFunction());
@@ -67,7 +68,7 @@ public class UsersConnectionRepositoryImpl implements UsersConnectionRepository 
     public Set<String> findUserIdsConnectedTo(final String providerId,
                                               final Set<String> providerUserIds) {
 
-        final List<Long> userIds = userConnectionRepository.findUserIdsConnectedTo(providerId,
+        final List<UUID> userIds = userConnectionRepository.findUserIdsConnectedTo(providerId,
                                                                                    providerUserIds);
         return newHashSet(transform(userIds, toStringFunction()));
     }

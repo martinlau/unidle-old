@@ -20,7 +20,6 @@
  */
 package org.unidle.feature.hook;
 
-import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -37,8 +36,8 @@ public class SetScreenSizeHook {
     @Autowired
     private WebDriver webDriver;
 
-    @Before
-    public void beforeScenario(@SuppressWarnings("unused") final Scenario scenario) {
+    @Before(order = 30_000)
+    public void beforeScenario() {
         webDriver.manage().window().setSize(dimension);
     }
 
