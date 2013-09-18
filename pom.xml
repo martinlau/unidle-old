@@ -1360,6 +1360,8 @@
         <!-- Dependency versions -->
         <analytics.version>0.3.0</analytics.version>
         <antlr-runtime.version>3.5</antlr-runtime.version>
+        <!-- Don't use 1.1.5 - there's a bug with @ContextHierarchy -->
+        <!-- https://github.com/cucumber/cucumber-jvm/pull/590 -->
         <cucumber.version>1.1.4</cucumber.version>
         <commons-beanutils.version>1.8.3</commons-beanutils.version>
         <commons-codec.version>1.8</commons-codec.version>
