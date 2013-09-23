@@ -18,12 +18,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-package org.unidle.feature.page;
+$(function () {
 
-public interface NavigablePage extends Page {
+    "use strict";
 
-    void browseTo();
+    $(document).ajaxStart(function () {
+        $("#loader").show();
+    }).ajaxComplete(function () {
+        $("#loader").hide();
+    });
 
-    String name();
-
-}
+});

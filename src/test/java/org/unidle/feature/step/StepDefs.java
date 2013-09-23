@@ -35,7 +35,6 @@ import org.unidle.feature.config.SocialCredentialsConfiguration;
 import org.unidle.feature.config.WebDriverConfiguration;
 import org.unidle.feature.page.FacebookAuthenticationPage;
 import org.unidle.feature.page.GenericPage;
-import org.unidle.feature.page.NavigablePage;
 import org.unidle.feature.page.SignInPage;
 import org.unidle.feature.page.TwitterAuthenticationPage;
 import org.unidle.repository.UserConnectionRepository;
@@ -73,10 +72,7 @@ public class StepDefs {
     private String facebookUsername;
 
     @Autowired
-    private GenericPage genericPage;
-
-    @Autowired
-    private List<NavigablePage> navigablePages;
+    private List<GenericPage> genericPages;
 
     @Autowired
     private SignInPage signInPage;
@@ -95,7 +91,7 @@ public class StepDefs {
 
     @When("^I access the \"([^\"]*)\" page$")
     public void I_access_the_page(final String name) {
-        NavigablePage target = findPage(name);
+        GenericPage target = findPage(name);
         target.browseTo();
     }
 
@@ -115,26 +111,27 @@ public class StepDefs {
 
     @When("^I click the \"([^\"]*)\" element")
     public void I_click_the_element(final String element) {
-        genericPage.clickElement(element);
+        genericPage().clickElement(element);
+    }
+
+    protected GenericPage genericPage() {
+        return findPage("Generic Page");
+    }
+
+    private GenericPage findPage(final String name) {
+        for (GenericPage genericPage : genericPages) {
+            if (genericPage.getName().equals(name)) {
+                return genericPage;
+            }
+        }
+        fail("Unknown page: " + name);
+        return null;
     }
 
     @When("^I fill in the \"([^\"]*)\" form with:$")
     public void I_fill_in_the_form_with(final String name,
                                         final List<Map<String, String>> data) {
         findPage(name).fillForm(data);
-    }
-
-    private NavigablePage findPage(final String name) {
-        NavigablePage target = null;
-        for (NavigablePage navigablePage : navigablePages) {
-            if (navigablePage.name().equals(name)) {
-                target = navigablePage;
-            }
-        }
-        if (target == null) {
-            fail("Unknown page: " + name);
-        }
-        return target;
     }
 
     @Given("^I have previously registered via \"([^\"]*)\"$")
@@ -230,50 +227,52 @@ public class StepDefs {
     public void I_should_see_the_form_validation_errors(final String name,
                                                         final List<Map<String, String>> data) throws Throwable {
 
-        final NavigablePage page = findPage(name);
+        final GenericPage genericPage = findPage(name);
 
         for (Map<String, String> row : data) {
+
             final String field = row.get("Field Name");
             final String message = row.get("Message");
+
             if (message != null && !"".equals(message)) {
-                assertThat(page.getValidationError(field)).contains(message);
+                assertThat(genericPage.getValidationError(field)).contains(message);
             }
         }
     }
 
     @Then("^I should see the \"([^\"]*)\" page$")
     public void I_should_see_the_page(final String page) {
-        assertThat(genericPage.getPath()).endsWith(findPage(page).getPath());
+        assertThat(genericPage().getPath()).endsWith(findPage(page).getPath());
+    }
+
+    @Given("^a user$")
+    public void a_user() {
+        genericPage().browseTo(baseUrl.toExternalForm());
     }
 
     @Given("^a user from \"([^\"]*)\"$")
     public void a_user_from(final String location) {
         a_user();
 
-        genericPage.addCookie("address", KnownLocation.byDisplay(location).address);
-    }
-
-    @Given("^a user$")
-    public void a_user() {
-        genericPage.browseTo(baseUrl.toExternalForm());
+        genericPage().addCookie("address", KnownLocation.byDisplay(location).address);
     }
 
     @Then("^the \"([^\"]*)\" element should contain the text \"([^\"]*)\"$")
     public void the_element_should_contain_the_text(final String element,
                                                     final String text) {
 
-        assertThat(genericPage.getText(element)).contains(text);
+        assertThat(genericPage().getText(element)).contains(text);
     }
 
     @Then("^the page should contain \"([^\"]*)\"$")
     public void the_page_should_contain(final String content) {
-        assertThat(genericPage.getText()).contains(content);
+        assertThat(genericPage().getText()).contains(content);
     }
 
     @Then("^the title should contain \"([^\"]*)\"$")
     public void the_title_should_contain(final String title) {
 
-        assertThat(genericPage.getTitle()).contains(title);
+        assertThat(genericPage().getTitle()).contains(title);
     }
 
 }

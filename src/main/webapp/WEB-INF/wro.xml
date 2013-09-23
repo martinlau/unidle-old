@@ -47,7 +47,9 @@
     </group>
 
     <group name="unidle">
+        <css>/WEB-INF/scss/loader.scss</css>
         <js>/WEB-INF/script/ajax-form.js</js>
+        <js>/WEB-INF/script/ajax-loader.js</js>
         <js>/WEB-INF/script/auto-scroll.js</js>
         <js>/WEB-INF/script/clear-modal.js</js>
     </group>

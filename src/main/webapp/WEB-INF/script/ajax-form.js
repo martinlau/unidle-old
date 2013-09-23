@@ -22,7 +22,7 @@ $(function () {
 
     "use strict";
 
-    $("body").on("submit", "form.ajax-form", function (ev) {
+    $(document).on("submit", "form.ajax-form", function (ev) {
 
         ev.preventDefault();
 
@@ -31,7 +31,8 @@ $(function () {
             content = $form.serialize();
 
         $.post(action, content, "html").done(function (data) {
-            $form.html(data);
+            var $newForm = $("form.ajax-form", data);
+            $form.html($newForm.length ? $newForm.html() : data);
         });
 
     });

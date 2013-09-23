@@ -68,7 +68,7 @@ public class AccountUpdateController {
         }
 
         if (userService.exists(userForm.getEmail()) && !userService.isCurrentUser(userForm.getEmail())) {
-            errors.rejectValue("email", "error.email.exists");
+            errors.rejectValue("email", "errors.email.exists");
         }
 
         if (errors.hasErrors()) {

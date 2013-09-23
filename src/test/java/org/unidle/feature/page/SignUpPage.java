@@ -26,16 +26,7 @@ import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.Map;
-
-public class SignUpPage extends GenericPage implements NavigablePage {
-
-    public static final String EMAIL = "Email";
-
-    public static final String FIRST_NAME = "First Name";
-
-    public static final String LAST_NAME = "Last Name";
+public class SignUpPage extends GenericPage {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SignUpPage.class);
 
@@ -61,59 +52,17 @@ public class SignUpPage extends GenericPage implements NavigablePage {
     private WebElement submit;
 
     public SignUpPage(final WebDriver driver) {
-        super(driver);
-    }
-
-    @Override
-    public void fillForm(final List<Map<String, String>> data) {
-        for (Map<String, String> map : data) {
-
-            final String name = map.get("Field Name");
-            final String value = map.get("Value");
-
-            switch (name) {
-                case FIRST_NAME:
-                    setField(firstName, value);
-                    break;
-                case LAST_NAME:
-                    setField(lastName, value);
-                    break;
-                case EMAIL:
-                    setField(email, value);
-                    break;
-            }
-
-        }
-
-        submit();
-    }
-
-    public void submit() {
-        submit.click();
-    }
-
-    @Override
-    public String getValidationError(final String name) {
-        switch (name) {
-            case FIRST_NAME:
-                return firstNameValidation.getText();
-            case LAST_NAME:
-                return lastNameValidation.getText();
-            case EMAIL:
-                return emailValidation.getText();
-            default:
-                throw new IllegalArgumentException(name);
-        }
-    }
-
-    @Override
-    public String name() {
-        return "Sign up";
+        super(driver, "Sign up", "/signup");
     }
 
     public void browseTo() {
         LOGGER.warn("Browsing to the sign up page is probably not going to work");
-        browseTo("/signup");
+        super.browseTo();
+    }
+
+    @Override
+    public void submit() {
+        submit.click();
     }
 
     public void setEmail(final String email) {

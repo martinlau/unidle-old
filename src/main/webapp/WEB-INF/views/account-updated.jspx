@@ -47,7 +47,8 @@
 
                     <tags:modal-footer>
                         <!-- TODO Reload on close -->
-                        <a href="#" data-dismiss="modal" class="btn btn-lg btn-default pull-left" id="close">
+                        <spring:url var="account" value="/account" />
+                        <a href="${account}" class="btn btn-lg btn-default pull-left" id="close">
                             <!-- TODO i18n -->
                             Close
                         </a>

@@ -38,7 +38,7 @@
             <div class="modal-dialog">
 
                 <div class="modal-content">
-                    <form:form modelAttribute="userForm" method="post" cssClass="form-inline ajax-form">
+                    <form:form modelAttribute="userForm" method="post" cssClass="form-inline ajax-form" id="account-form">
 
                         <tags:modal-header>
                             <spring:message code="account.details.update.title" />
@@ -80,6 +80,7 @@
                             <a href="#" data-dismiss="modal" class="btn btn-lg btn-default pull-left">
                                 <spring:message code="account.form.cancel" />
                             </a>
+
                             <form:button type="submit" class="btn btn-lg btn-primary" value="confirm" id="submit">
                                 <spring:message code="account.form.submit" />
                             </form:button>

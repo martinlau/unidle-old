@@ -24,7 +24,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class SignInPage extends GenericPage implements NavigablePage {
+import java.util.Map;
+
+public class SignInPage extends GenericPage {
 
     @FindBy(id = "signin_facebook")
     private WebElement facebook;
@@ -33,17 +35,7 @@ public class SignInPage extends GenericPage implements NavigablePage {
     private WebElement twitter;
 
     public SignInPage(final WebDriver driver) {
-        super(driver);
-    }
-
-    @Override
-    public String name() {
-        return "Sign in";
-    }
-
-    @Override
-    public void browseTo() {
-        browseTo("/signin");
+        super(driver, "Sign in", "/signin");
     }
 
     public void signInWithFacebook() {

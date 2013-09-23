@@ -44,13 +44,12 @@ public class FacebookAuthenticationPage extends GenericPage {
     }
 
     public boolean isFacebookPage() {
-        return driver.getCurrentUrl().contains("facebook.com");
+        return currentUrl().contains("facebook.com");
     }
 
     public boolean requiresCredentials() {
         try {
-            return driver.getCurrentUrl().contains("facebook.com") &&
-                   emailOrPhone.isDisplayed();
+            return currentUrl().contains("facebook.com") && emailOrPhone.isDisplayed();
         }
         catch (NoSuchElementException e) {
             return false;

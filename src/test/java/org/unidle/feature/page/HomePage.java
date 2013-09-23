@@ -22,20 +22,10 @@ package org.unidle.feature.page;
 
 import org.openqa.selenium.WebDriver;
 
-public class HomePage extends GenericPage implements NavigablePage {
+public class HomePage extends GenericPage {
 
     public HomePage(final WebDriver driver) {
-        super(driver);
-    }
-
-    @Override
-    public String name() {
-        return "Home";
-    }
-
-    @Override
-    public void browseTo() {
-        browseTo("/");
+        super(driver, "Home", "/");
     }
 
 }

@@ -22,7 +22,7 @@ $(function () {
 
     "use strict";
 
-    $("body").on("hidden.bs.modal", ".modal", function () {
+    $(document).on("hidden.bs.modal", ".modal", function () {
         $(this).removeData("bs.modal");
     });
 

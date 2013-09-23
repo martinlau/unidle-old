@@ -57,6 +57,9 @@
             <spring:url value="/resources/font-awesome.css?t=${buildTimestamp}" var="font_awesome_css" />
             <link rel="stylesheet" href="${font_awesome_css}" />
 
+            <spring:url value="/resources/unidle.css?t=${buildTimestamp}" var="unidle_css" />
+            <link rel="stylesheet" href="${unidle_css}" />
+
             <jsp:text><![CDATA[<!--[if lt IE 9]>]]></jsp:text>
             <spring:url value="/resources/html5shiv.js?t=${buildTimestamp}" var="html5shiv_js" />
             <script src="${html5shiv_js}"><!-- // no collapse --></script>
@@ -67,6 +70,11 @@
         <body class="container">
 
             <tiles:insertAttribute name="content" />
+
+            <!-- TODO Remove inline styles -->
+            <div id="loader">
+                <i class="icon-muted icon-spin icon-refresh"><!-- no collapse --></i>
+            </div>
 
             <script><![CDATA[
             var analytics = analytics || [];

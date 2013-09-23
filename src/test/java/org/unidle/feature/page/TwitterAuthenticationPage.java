@@ -20,7 +20,6 @@
  */
 package org.unidle.feature.page;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,7 +44,8 @@ public class TwitterAuthenticationPage extends GenericPage {
     }
 
     public boolean isTwitterPage() {
-        return driver.getCurrentUrl().contains("twitter.com");
+
+        return currentUrl().contains("twitter.com");
     }
 
     public boolean requiresCredentials() {

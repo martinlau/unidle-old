@@ -27,25 +27,17 @@ Feature: Account management
 
     Scenario: Access user account
         Given a user
-        And I have previously registered via "Twitter" with:
-            | Field Name | Value            |
-            | First Name | John             |
-            | Last Name  | Smith            |
-            | Email      | john@example.com |
-        When I log in with "Twitter"
+        And I have previously registered via "Facebook"
+        When I log in with "Facebook"
         Then I should see the "Account" page
         And the page should contain "John Smith"
         And the page should contain "john@example.com"
-        And the page should contain "Twitter"
+        And the page should contain "Facebook"
 
     Scenario: Update personal details
         Given a user
-        And I have previously registered via "Twitter" with:
-            | Field Name | Value            |
-            | First Name | John             |
-            | Last Name  | Smith            |
-            | Email      | john@example.com |
-        When I log in with "Twitter"
+        And I have previously registered via "Facebook"
+        When I log in with "Facebook"
         Then I should see the "Account" page
         When I click the "update" element
         And I fill in the "Account" form with:
@@ -53,12 +45,20 @@ Feature: Account management
             | First Name | Johnathon             |
             | Last Name  | Smithers              |
             | Email      | johnathon@example.com |
+        Then I should see the "Account" form validation errors:
+            | Field Name | Message                              |
+            | Email      | That email address is already in use |
+        When I fill in the "Account" form with:
+            | Field Name | Value                          |
+            | First Name | Johnathon                      |
+            | Last Name  | Smithers                       |
+            | Email      | johnathon.smithers@example.com |
         Then the page should contain "Your details have been updated"
         When I click the "close" element
         Then I should see the "Account" page
         And the page should contain "Johnathon Smithers"
-        And the page should contain "johnathon@example.com"
-        And the page should contain "Twitter"
+        And the page should contain "johnathon.smithers@example.com"
+        And the page should contain "Facebook"
 
     Scenario: Add a social network
 
