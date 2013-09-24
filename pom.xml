@@ -878,7 +878,7 @@
                     </exclusion>
                     <exclusion>
                         <groupId>org.jruby</groupId>
-                        <artifactId>jruby-complete</artifactId>
+                        <artifactId>jruby-core</artifactId>
                     </exclusion>
                     <exclusion>
                         <groupId>org.webjars</groupId>
@@ -1410,7 +1410,7 @@
         <tiles-jsp.version>3.0.1</tiles-jsp.version>
         <usertype.jodatime.version>2.0.1</usertype.jodatime.version>
         <validation-api.version>1.0.0.GA</validation-api.version>
-        <wro4j.version>1.7.0</wro4j.version>
+        <wro4j.version>1.7.1</wro4j.version>
 
         <!-- Plugin versions -->
         <build-helper-maven-plugin.version>1.8</build-helper-maven-plugin.version>
