@@ -105,16 +105,21 @@ public class GenericPage {
         }
         new WebDriverWait(webDriver, 10).pollingEvery(1, SECONDS)
                                         .until(new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(final WebDriver webDriver) {
-                try {
-                    return !webDriver.findElement(By.id("loader")).isDisplayed();
-                }
-                catch (NoSuchElementException e) {
-                    return true;
-                }
-            }
-        });
+                                            @Override
+                                            public boolean apply(final WebDriver webDriver) {
+                                                try {
+                                                    return !webDriver.findElement(By.id("loader")).isDisplayed();
+                                                }
+                                                catch (NoSuchElementException e) {
+                                                    return true;
+                                                }
+                                            }
+                                        });
+    }
+
+    public void clickElement(final int index,
+                             final String element) {
+        webDriver.findElement(By.id(element + "_" + index)).click();
     }
 
     public String currentUrl() {

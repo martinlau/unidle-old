@@ -38,8 +38,7 @@ Feature: Account management
         Given a user
         And I have previously registered via "Facebook"
         When I log in with "Facebook"
-        Then I should see the "Account" page
-        When I click the "update" element
+        And I click the "update" element
         And I fill in the "Account" form with:
             | Field Name | Value                 |
             | First Name | Johnathon             |
@@ -61,6 +60,13 @@ Feature: Account management
         And the page should contain "Facebook"
 
     Scenario: Add a social network
+        Given a user
+        And I have previously registered via "Facebook"
+        When I log in with "Facebook"
+        And I click the "add_twitter" element
+        And I provide my "Twitter" credentials
+        Then the page should contain "Facebook"
+        And the page should contain "Twitter"
 
     Scenario: Remove a social network
 

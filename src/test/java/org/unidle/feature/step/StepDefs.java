@@ -128,14 +128,26 @@ public class StepDefs {
         return null;
     }
 
+    @When("^I click the \"([^\"]*)\" \"([^\"]*)\" element")
+    public void I_click_the_nth_element(final String index,
+                                        final String element) {
+        switch (index) {
+            case "first":
+                genericPage().clickElement(0, element);
+                break;
+            default:
+                fail("Unknown index: " + index);
+        }
+    }
+
     @When("^I fill in the \"([^\"]*)\" form with:$")
     public void I_fill_in_the_form_with(final String name,
                                         final List<Map<String, String>> data) {
         findPage(name).fillForm(data);
     }
 
-    @Given("^I have previously registered via \"([^\"]*)\"$")
-    public void I_have_previously_registered_via(final String service) throws Throwable {
+    @Given("^I have previously connected to \"([^\"]*)\"$")
+    public void I_have_previously_connected_to(final String service) throws Throwable {
         switch (service) {
             case "Facebook":
             case "Twitter":
@@ -155,6 +167,18 @@ public class StepDefs {
                 return criteriaBuilder.equal(root.get(providerId), service);
             }
         };
+    }
+
+    @Given("^I have previously registered via \"([^\"]*)\"$")
+    public void I_have_previously_registered_via(final String service) throws Throwable {
+        switch (service) {
+            case "Facebook":
+            case "Twitter":
+                assertThat(userConnectionRepository.count(hasService(service.toLowerCase()))).isPositive();
+                break;
+            default:
+                fail("Unknown service: " + service);
+        }
     }
 
     @When("^I log in with \"([^\"]*)\"$")
@@ -264,9 +288,21 @@ public class StepDefs {
         assertThat(genericPage().getText(element)).contains(text);
     }
 
+    @Then("^the \"([^\"]*)\" element should not contain the text \"([^\"]*)\"$")
+    public void the_element_should_not_contain_the_text(final String element,
+                                                        final String text) {
+
+        assertThat(genericPage().getText(element)).doesNotContain(text);
+    }
+
     @Then("^the page should contain \"([^\"]*)\"$")
     public void the_page_should_contain(final String content) {
         assertThat(genericPage().getText()).contains(content);
+    }
+
+    @Then("^the page should not contain \"([^\"]*)\"$")
+    public void the_page_should_not_contain(final String content) {
+        assertThat(genericPage().getText()).doesNotContain(content);
     }
 
     @Then("^the title should contain \"([^\"]*)\"$")
