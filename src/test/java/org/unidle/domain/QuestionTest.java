@@ -42,6 +42,16 @@ public class QuestionTest {
     }
 
     @Test
+    public void testGetAttachments() throws Exception {
+        final List<Attachment> attachments = newArrayList(new Attachment(), new Attachment());
+        setField(subject, "attachments", attachments);
+
+        final List<Attachment> result = subject.getAttachments();
+
+        assertThat(result).isEqualTo(attachments);
+    }
+
+    @Test
     public void testGetQuestion() throws Exception {
         setField(subject, "question", "question");
 
@@ -68,6 +78,16 @@ public class QuestionTest {
         final Set<String> result = subject.getTags();
 
         assertThat(result).isEqualTo(tags);
+    }
+
+    @Test
+    public void testSetAttachments() throws Exception {
+        final List<Attachment> attachments = newArrayList(new Attachment(), new Attachment());
+
+        subject.setAttachments(attachments);
+
+        final Object result = getField(subject, "attachments");
+        assertThat(result).isEqualTo(attachments);
     }
 
     @Test
