@@ -40,6 +40,13 @@ import static java.lang.String.format;
 @Table(name = "questions")
 public class Question extends BaseEntity implements Serializable {
 
+    @JoinTable(name = "question_attachments",
+               joinColumns = @JoinColumn(name = "question_uuid"),
+               inverseJoinColumns = @JoinColumn(name = "attachment_uuid"))
+    @OneToMany
+    @OrderBy("createdDate ASC")
+    private List<Attachment> attachments = new LinkedList<>();
+
     @Column(name = "question",
             nullable = false)
     private String question = "";
@@ -53,6 +60,14 @@ public class Question extends BaseEntity implements Serializable {
     @JoinTable(name = "question_tags",
                joinColumns = @JoinColumn(name = "question_uuid"))
     private Set<String> tags = new HashSet<>();
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(final List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
 
     public String getQuestion() {
         return question;
@@ -80,8 +95,8 @@ public class Question extends BaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return format("Question(question='%s', responses=%s, tags=%s)",
-                      question, responses, tags);
+        return format("Question(question='%s', responses=%s, attachments=%s, tags=%s)",
+                      question, responses, attachments, tags);
     }
 
 }

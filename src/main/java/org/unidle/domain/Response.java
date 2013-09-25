@@ -41,6 +41,13 @@ import static java.lang.String.format;
 @Table(name = "responses")
 public class Response extends BaseEntity implements Serializable {
 
+    @JoinTable(name = "response_attachments",
+               joinColumns = @JoinColumn(name = "response_uuid"),
+               inverseJoinColumns = @JoinColumn(name = "attachment_uuid"))
+    @OneToMany
+    @OrderBy("createdDate ASC")
+    private List<Attachment> attachments = new LinkedList<>();
+
     @OneToMany(mappedBy = "parentResponse")
     @OrderBy("createdDate ASC")
     private List<Response> childReplies = new LinkedList<>();
@@ -67,6 +74,14 @@ public class Response extends BaseEntity implements Serializable {
     @JoinTable(name = "response_tags",
                joinColumns = @JoinColumn(name = "response_uuid"))
     private Set<String> tags = new HashSet<>();
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(final List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
 
     public List<Response> getChildReplies() {
         return childReplies;
@@ -118,8 +133,8 @@ public class Response extends BaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return format("Response(childReplies=%s, parentResponse=%s, question=%s, tags=%s, comments='%s', score=%s)",
-                      childReplies, parentResponse, question, tags, comments, score);
+        return format("Response(childReplies=%s, parentResponse=%s, question=%s, attachments=%s, tags=%s, comments='%s', score=%s)",
+                      childReplies, parentResponse, question, attachments, tags, comments, score);
     }
 
 }
