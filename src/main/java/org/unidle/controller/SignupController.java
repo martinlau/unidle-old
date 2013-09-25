@@ -55,10 +55,13 @@ public class SignupController {
     @RequestMapping(method = GET,
                     value = "/signup")
     public String signup(final WebRequest webRequest) {
+
         final Connection<?> connection = ProviderSignInUtils.getConnection(webRequest);
+
         if (connection == null) {
             return "redirect:/signin";
         }
+
         return ".signup";
     }
 
@@ -70,6 +73,7 @@ public class SignupController {
                          final WebRequest webRequest) {
 
         final Connection<?> connection = ProviderSignInUtils.getConnection(webRequest);
+
         if (connection == null) {
             return "redirect:/signin";
         }

@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.unidle.domain.User;
 import org.unidle.form.UserForm;
-import org.unidle.repository.UserRepository;
 import org.unidle.service.UserService;
 
 import javax.validation.Valid;

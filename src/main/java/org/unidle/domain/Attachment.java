@@ -25,7 +25,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Table;
 import java.io.Serializable;
 
