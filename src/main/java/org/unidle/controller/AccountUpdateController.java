@@ -42,9 +42,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class AccountUpdateController {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/account/update",

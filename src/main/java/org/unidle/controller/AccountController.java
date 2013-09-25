@@ -31,13 +31,6 @@ import org.unidle.repository.UserRepository;
 @Controller
 public class AccountController {
 
-    private final UserRepository userRepository;
-
-    @Autowired
-    public AccountController(final UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     @RequestMapping(value = "/account",
                     method = RequestMethod.GET)
     public String account(final User user) {
