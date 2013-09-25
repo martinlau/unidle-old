@@ -306,7 +306,60 @@
 
     </changeSet>
 
-    <changeSet id="006 questions"
+    <changeSet id="006 attachments" author="Martin Lau [m@hum.ph]">
+        <createTable tableName="attachments">
+            <column name="uuid"
+                    type="VARCHAR">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="revision"
+                    type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="created_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by_user_uuid"
+                    type="VARCHAR"/>
+            <column name="last_modified_date"
+                    type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="title"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content_type"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content"
+                    type="BLOB">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="attachments"
+                                 baseColumnNames="created_by_user_uuid"
+                                 constraintName="fk_attachments_created_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="attachments"
+                                 baseColumnNames="last_modified_by_user_uuid"
+                                 constraintName="fk_attachments_last_modified_by_user_uuid"
+                                 referencedTableName="users"
+                                 referencedColumnNames="uuid"/>
+
+    </changeSet>
+
+    <changeSet id="007 questions"
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="questions">
@@ -353,7 +406,35 @@
 
     </changeSet>
 
-    <changeSet id="007 question_tags"
+    <changeSet id="008 question_attachments"
+               author="Martin Lau [m@hum.ph]">
+
+        <createTable tableName="question_attachments">
+            <column name="question_uuid"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="attachment_uuid"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="question_attachments"
+                                 baseColumnNames="question_uuid"
+                                 constraintName="fk_question_attachments_question_uuid"
+                                 referencedTableName="questions"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="question_attachments"
+                                 baseColumnNames="attachment_uuid"
+                                 constraintName="fk_question_attachments_attachment_uuid"
+                                 referencedTableName="attachments"
+                                 referencedColumnNames="uuid"/>
+
+    </changeSet>
+
+    <changeSet id="009 question_tags"
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="question_tags">
@@ -376,7 +457,7 @@
 
     </changeSet>
 
-    <changeSet id="008 responses"
+    <changeSet id="010 responses"
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="responses">
@@ -434,7 +515,35 @@
 
     </changeSet>
 
-    <changeSet id="009 response_tags"
+    <changeSet id="011 response_attachments"
+               author="Martin Lau [m@hum.ph]">
+
+        <createTable tableName="response_attachments">
+            <column name="response_uuid"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="attachment_uuid"
+                    type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="response_attachments"
+                                 baseColumnNames="response_uuid"
+                                 constraintName="fk_response_attachments_response_uuid"
+                                 referencedTableName="responses"
+                                 referencedColumnNames="uuid"/>
+
+        <addForeignKeyConstraint baseTableName="response_attachments"
+                                 baseColumnNames="attachment_uuid"
+                                 constraintName="fk_response_attachments_attachment_uuid"
+                                 referencedTableName="attachments"
+                                 referencedColumnNames="uuid"/>
+
+    </changeSet>
+
+    <changeSet id="012 response_tags"
                author="Martin Lau [m@hum.ph]">
 
         <createTable tableName="response_tags">
