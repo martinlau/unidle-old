@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  unidle
+  %%
+  Copyright (C) 2013 Martin Lau
+  %%
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  #L%
+  -->
+
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:form="http://www.springframework.org/tags/form"
+          xmlns:spring="http://www.springframework.org/tags"
+          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
+          version="2.0">
+
+    <jsp:output omit-xml-declaration="true" />
+    <jsp:output doctype-root-element="html" doctype-system="about:legacy-compat" />
+
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
+
+    <tags:navbar />
+
+    <form:form enctype="multipart/form-data" modelAttribute="questionForm" method="post" cssClass="form-inline" id="question-form">
+
+        <tags:textarea path="question" rows="3">
+            <jsp:attribute name="label">
+                Question
+            </jsp:attribute>
+            <jsp:attribute name="placeholder">
+                Question
+            </jsp:attribute>
+        </tags:textarea>
+
+        <tags:input type="file" path="attachments">
+            <jsp:attribute name="label">
+                Attachments
+            </jsp:attribute>
+        </tags:input>
+
+        <tags:input type="text" path="tags">
+            <jsp:attribute name="label">
+                Tags
+            </jsp:attribute>
+            <jsp:attribute name="placeholder">
+                #tags
+            </jsp:attribute>
+        </tags:input>
+
+        <p>
+            <form:button type="submit" class="btn btn-lg btn-block btn-primary" id="submit">
+                <spring:message code="question.form.submit" />
+            </form:button>
+        </p>
+
+    </form:form>
+
+</jsp:root>

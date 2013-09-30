@@ -70,12 +70,24 @@ public class QuestionServiceImplTest {
         assertThat(questionRepository.count()).isEqualTo(1L);
         assertThat(attachmentRepository.count()).isEqualTo(1L);
         assertThat(question.getQuestion()).isEqualTo("this is a question");
-        assertThat(question.getTags()).containsOnly("tag1","tag2","tag3","tag4");
+        assertThat(question.getTags()).containsOnly("tag1", "tag2", "tag3", "tag4");
         assertThat(question.getAttachments()).hasSize(1);
         assertThat(question.getAttachments().get(0).getContent()).isEqualTo("this is a text file".getBytes());
         assertThat(question.getAttachments().get(0).getContentType()).isEqualTo("text/plain");
         assertThat(question.getAttachments().get(0).getTitle()).isEqualTo("test.txt");
+    }
 
+    @Test
+    public void testCreateQuestionWithoutAttachments() throws Exception {
+        final Question question = subject.createQuestion("this is a question",
+                                                         "tag1, tag2 , ,, tag3,tag4",
+                                                         null);
+
+        assertThat(questionRepository.count()).isEqualTo(1L);
+        assertThat(attachmentRepository.count()).isZero();
+        assertThat(question.getQuestion()).isEqualTo("this is a question");
+        assertThat(question.getTags()).containsOnly("tag1", "tag2", "tag3", "tag4");
+        assertThat(question.getAttachments()).isEmpty();
     }
 
 }

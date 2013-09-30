@@ -69,19 +69,21 @@ public class QuestionServiceImpl implements QuestionService {
                           .add(tag);
         }
 
-        for (MultipartFile file : attachments) {
+        if (attachments != null) {
+            for (MultipartFile file : attachments) {
 
-            final Attachment attachment;
-            try {
-                attachment = attachmentService.createAttachment(file);
-            }
-            catch (IOException e) {
-                LOGGER.error("Error streaming file content for file: {}", file, e);
-                continue;
-            }
+                final Attachment attachment;
+                try {
+                    attachment = attachmentService.createAttachment(file);
+                }
+                catch (IOException e) {
+                    LOGGER.error("Error streaming file content for file: {}", file, e);
+                    continue;
+                }
 
-            questionEntity.getAttachments()
-                          .add(attachment);
+                questionEntity.getAttachments()
+                              .add(attachment);
+            }
         }
 
         return questionRepository.save(questionEntity);
