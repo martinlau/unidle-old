@@ -71,7 +71,6 @@
 
             <tiles:insertAttribute name="content" />
 
-            <!-- TODO Remove inline styles -->
             <div id="loader">
                 <i class="icon-muted icon-spin icon-refresh"><!-- no collapse --></i>
             </div>
