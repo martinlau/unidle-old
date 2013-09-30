@@ -29,13 +29,23 @@ import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration.Dynamic;
 import java.util.EnumSet;
 
 import static javax.servlet.SessionTrackingMode.COOKIE;
 
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+    private static final int FILE_SIZE_THRESHOLD = -1;
+
+    private static final String LOCATION = "";
+
+    private static final long MAX_FILE_SIZE = 1024L * 1024L * 3L; // 3mb
+
+    private static final long MAX_REQUEST_SIZE = 1024L * 1024L * 1L; // 1mb
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -81,6 +91,11 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
                 new RequestContextFilter(),
                 new SecurityContextPersistenceFilter()
         };
+    }
+
+    @Override
+    protected void customizeRegistration(final Dynamic registration) {
+        registration.setMultipartConfig(new MultipartConfigElement(LOCATION, MAX_FILE_SIZE, MAX_REQUEST_SIZE, FILE_SIZE_THRESHOLD));
     }
 
 }

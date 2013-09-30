@@ -29,8 +29,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -91,13 +94,14 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addArgumentResolvers(final List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(locationMethodArgumentResolver());
         argumentResolvers.add(currentUserMethodArgumentResolver());
+        argumentResolvers.add(locationMethodArgumentResolver());
+        argumentResolvers.add(pageableHandlerMethodArgumentResolver());
     }
 
     @Bean
-    public LocationMethodArgumentResolver locationMethodArgumentResolver() {
-        return new LocationMethodArgumentResolver(locationService);
+    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
+        return new CurrentUserMethodArgumentResolver(userService);
     }
 
     @Override
@@ -105,6 +109,21 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addInterceptor(buildTimestampInterceptor());
         registry.addInterceptor(currentUserInterceptor());
         registry.addInterceptor(segmentIoApiKeyInterceptor());
+    }
+
+    @Bean
+    public HandlerInterceptor buildTimestampInterceptor() {
+        return new BuildTimestampInterceptor(buildTimestamp);
+    }
+
+    @Bean
+    public HandlerInterceptor segmentIoApiKeyInterceptor() {
+        return new SegmentIoApiKeyInterceptor(segmentIoApiKey);
+    }
+
+    @Bean
+    public HandlerInterceptor currentUserInterceptor() {
+        return new CurrentUserInterceptor(userService);
     }
 
     @Override
@@ -127,23 +146,17 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public HandlerInterceptor currentUserInterceptor() {
-        return new CurrentUserInterceptor(userService);
+    public LocationMethodArgumentResolver locationMethodArgumentResolver() {
+        return new LocationMethodArgumentResolver(locationService);
     }
 
     @Bean
-    public HandlerInterceptor segmentIoApiKeyInterceptor() {
-        return new SegmentIoApiKeyInterceptor(segmentIoApiKey);
-    }
+    public PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver() {
+        final PageableHandlerMethodArgumentResolver argumentResolver = new PageableHandlerMethodArgumentResolver();
 
-    @Bean
-    public HandlerInterceptor buildTimestampInterceptor() {
-        return new BuildTimestampInterceptor(buildTimestamp);
-    }
+        argumentResolver.setFallbackPageable(new PageRequest(0, 10));
 
-    @Bean
-    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
-        return new CurrentUserMethodArgumentResolver(userService);
+        return argumentResolver;
     }
 
     @Bean
@@ -156,6 +169,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         gravatar.setStandardDefaultImage(gravatarStandardDefaultImages);
 
         return gravatar;
+    }
+
+    @Bean
+    public StandardServletMultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
     }
 
     @Bean
