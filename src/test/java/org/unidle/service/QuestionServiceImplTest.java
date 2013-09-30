@@ -33,9 +33,11 @@ import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
 import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.WroConfiguration;
-import org.unidle.domain.Attachment;
+import org.unidle.domain.Question;
 import org.unidle.repository.AttachmentRepository;
+import org.unidle.repository.QuestionRepository;
 
+import static java.util.Arrays.asList;
 import static org.fest.assertions.Assertions.assertThat;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
@@ -45,25 +47,35 @@ import static org.fest.assertions.Assertions.assertThat;
                    @ContextConfiguration(classes = WroConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class AttachmentServiceImplTest {
+public class QuestionServiceImplTest {
 
     @Autowired
     private AttachmentRepository attachmentRepository;
 
     @Autowired
-    private AttachmentService subject;
+    private QuestionRepository questionRepository;
+
+    @Autowired
+    private QuestionService subject;
 
     @Test
-    public void testCreateAttachment() throws Exception {
-        final Attachment result = subject.createAttachment(new MockMultipartFile("test.txt",
-                                                                                 "test.txt",
-                                                                                 "text/plain",
-                                                                                 "this is a text file".getBytes()));
+    public void testCreateQuestion() throws Exception {
+        final Question question = subject.createQuestion("this is a question",
+                                                         "tag1, tag2 , ,, tag3,tag4",
+                                                         asList(new MockMultipartFile("test.txt",
+                                                                                      "test.txt",
+                                                                                      "text/plain",
+                                                                                      "this is a text file".getBytes())));
 
+        assertThat(questionRepository.count()).isEqualTo(1L);
         assertThat(attachmentRepository.count()).isEqualTo(1L);
-        assertThat(result.getContent()).isEqualTo("this is a text file".getBytes());
-        assertThat(result.getContentType()).isEqualTo("text/plain");
-        assertThat(result.getTitle()).isEqualTo("test.txt");
+        assertThat(question.getQuestion()).isEqualTo("this is a question");
+        assertThat(question.getTags()).containsOnly("tag1","tag2","tag3","tag4");
+        assertThat(question.getAttachments()).hasSize(1);
+        assertThat(question.getAttachments().get(0).getContent()).isEqualTo("this is a text file".getBytes());
+        assertThat(question.getAttachments().get(0).getContentType()).isEqualTo("text/plain");
+        assertThat(question.getAttachments().get(0).getTitle()).isEqualTo("test.txt");
+
     }
 
 }
