@@ -52,8 +52,8 @@
 
         <div class="collapse navbar-collapse main-navbar-collapse">
             <ul class="nav navbar-nav">
-                <spring:message code="navigation.today" var="today"/>
-                <tags:navbar-link href="/today" title="${today}" />
+                <spring:message code="navigation.questions" var="questions"/>
+                <tags:navbar-link href="/questions" title="${questions}" />
 
                 <spring:message code="navigation.account" var="account"/>
                 <tags:navbar-link href="/account" title="${account}" />

@@ -43,9 +43,9 @@
     </p>
 
     <p>
-        <spring:url value="/today" var="today" />
-        <a href="${today}" class="btn btn-block btn-lg btn-default">
-            <spring:message code="about.link.today" />
+        <spring:url value="/questions" var="questions" />
+        <a href="${questions}" class="btn btn-block btn-lg btn-default">
+            <spring:message code="about.link.questions" />
         </a>
     </p>
 

@@ -26,13 +26,8 @@
           xmlns:spring="http://www.springframework.org/tags"
           version="2.0">
 
-    <jsp:directive.tag display-name="input"
-                       body-content="empty" />
-
-    <jsp:directive.attribute name="type"
-                             description="the input type"
-                             rtexprvalue="true"
-                             type="java.lang.String" />
+    <jsp:directive.tag display-name="textarea"
+                       body-content="empty"/>
 
     <jsp:directive.attribute name="path"
                              description="the spring model path"
@@ -48,14 +43,20 @@
 
     <jsp:directive.attribute name="placeholder"
                              description="the form placeholder content"
-                             required="false"
+                             required="true"
                              rtexprvalue="true"
                              type="java.lang.String" />
+
+    <jsp:directive.attribute name="rows"
+                             description="the text area rows"
+                             required="true"
+                             rtexprvalue="true"
+                             type="java.lang.Integer" />
 
     <spring:bind path="${path}">
         <div class="form-group ${status.error ? 'has-error' : ''}">
             <form:label path="${path}" cssClass="sr-only">${label}</form:label>
-            <form:input type="${type}" path="${path}" placeholder="${placeholder}" cssClass="form-control" />
+            <form:textarea path="${path}" placeholder="${placeholder}" cssClass="form-control" rows="${rows}" />
             <c:if test="${status.error}">
                 <span id="${path}_validation" class="help-block">
                     <strong>
@@ -65,6 +66,5 @@
             </c:if>
         </div>
     </spring:bind>
-
 
 </jsp:root>
