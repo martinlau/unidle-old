@@ -46,6 +46,8 @@ public class AccountUpdateController {
     @RequestMapping(value = "/account/update",
                     method = GET)
     public String update(final User user) {
+
+        // TODO Put the following snippet somewhere reusable or use spring-security for protection
         if (user == null) {
             return "redirect:/signin";
         }
@@ -59,6 +61,7 @@ public class AccountUpdateController {
                          final User user,
                          final ModelMap modelMap) {
 
+        // TODO Put the following snippet somewhere reusable or use spring-security for protection
         if (user == null) {
             return "redirect:/signin";
         }

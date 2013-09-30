@@ -43,9 +43,6 @@ import org.unidle.config.WroConfiguration;
 import org.unidle.domain.User;
 import org.unidle.repository.UserRepository;
 
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -98,10 +95,7 @@ public class AccountControllerTest {
 
         subject.perform(get("/account"))
                .andExpect(status().isOk())
-               .andExpect(view().name(".account"))
-               .andExpect(model().attribute("user", allOf(hasProperty("email", equalTo("email@example.com")),
-                                                          hasProperty("firstName", equalTo("first name")),
-                                                          hasProperty("lastName", equalTo("last name")))));
+               .andExpect(view().name(".account"));
     }
 
     @Test

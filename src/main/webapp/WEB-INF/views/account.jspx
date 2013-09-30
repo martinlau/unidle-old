@@ -48,12 +48,12 @@
     <address>
         <spring:message code="account.details.name" />
         <strong>
-            ${user.firstName}
-            ${user.lastName}
+            ${currentUser.firstName}
+            ${currentUser.lastName}
         </strong>
         <br />
         <spring:message code="account.details.email" />
-        ${user.email}
+        ${currentUser.email}
     </address>
 
     <hr />
@@ -69,7 +69,7 @@
     <c:set var="hasTwitter" value="${false}" />
     <c:set var="hasFacebook" value="${false}" />
 
-    <c:forEach items="${user.connections}" var="connection" varStatus="status">
+    <c:forEach items="${currentUser.connections}" var="connection" varStatus="status">
 
         <c:if test="${connection.providerId eq 'facebook'}">
             <c:set var="hasFacebook" value="${true}" />
@@ -85,7 +85,7 @@
                 <img class="media-object" src="${connection.imageUrl}" alt="${connection.displayName}" />
             </p>
 
-            <c:if test="${user.connections.size() gt 1}">
+            <c:if test="${currentUser.connections.size() gt 1}">
                 <p class="pull-right">
                     <a href="#unlink${status.index}" data-toggle="modal" class="btn btn-danger" id="remove_${connection.providerId}_${status.index}">Remove</a>
                 </p>

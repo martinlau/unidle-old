@@ -21,7 +21,6 @@
 package org.unidle.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.unidle.domain.User;
@@ -36,11 +35,6 @@ public class AccountController {
             return "redirect:/signin";
         }
         return ".account";
-    }
-
-    @ModelAttribute("user")
-    public User user(final User user) {
-        return user;
     }
 
 }

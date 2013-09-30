@@ -34,25 +34,24 @@
     <html>
         <body>
 
-                <div class="modal-content">
+            <div class="modal-content">
 
-                    <tags:modal-header>
-                        <spring:message code="account.details.update.title" />
-                    </tags:modal-header>
+                <tags:modal-header>
+                    <spring:message code="account.details.update.title" />
+                </tags:modal-header>
 
-                    <tags:modal-body>
+                <tags:modal-body>
+                    <!-- TODO i18n -->
+                    <p class="success">Your details have been updated</p>
+                </tags:modal-body>
+
+                <tags:modal-footer>
+                    <spring:url var="account" value="/account" />
+                    <a href="${account}" class="btn btn-lg btn-default pull-left" id="close">
                         <!-- TODO i18n -->
-                        <p class="success">Your details have been updated</p>
-                    </tags:modal-body>
-
-                    <tags:modal-footer>
-                        <!-- TODO Reload on close -->
-                        <spring:url var="account" value="/account" />
-                        <a href="${account}" class="btn btn-lg btn-default pull-left" id="close">
-                            <!-- TODO i18n -->
-                            Close
-                        </a>
-                    </tags:modal-footer>
+                        Close
+                    </a>
+                </tags:modal-footer>
 
             </div>
 
