@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  unidle
+  %%
+  Copyright (C) 2013 Martin Lau
+  %%
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  #L%
+  -->
+
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:spring="http://www.springframework.org/tags"
+          xmlns:tags="urn:jsptagdir:/WEB-INF/tags"
+          version="2.0">
+
+    <c:choose>
+        <c:when test="${not empty currentUser}">
+            <tags:navbar />
+        </c:when>
+        <c:otherwise>
+            <h1 class="text-center">
+                <spring:message code="questions.title" />
+            </h1>
+        </c:otherwise>
+    </c:choose>
+
+    <c:forEach var="question" items="${questions.content}">
+        <div class="media">
+            <div class="media-object pull-left thumbnail">
+                <c:choose>
+                    <c:when test="${not empty question.createdBy}">
+                        <!-- TODO UserController -->
+                        <spring:url var="user" value="/user/${question.createdBy.uuid}" />
+                        <a href="${user}">
+                            <spring:url var="avatar" value="/user/${question.createdBy.uuid}/avatar" />
+                            <img src="${question.createdBy.connections[0].imageUrl}" alt="${question.createdBy.firstName} ${question.createdBy.lastName}" />
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <spring:url var="unknown" value="/image/unknown.png" />
+                        <!-- TODO i18n -->
+                        <img src="${unknown}" alt="Unknown user" />
+                    </c:otherwise>
+                </c:choose>
+            </div>
+
+            <c:if test="${not empty question.responses}">
+                <p class="text-muted pull-right">
+                    <!-- TODO i18n -->
+                    ${fn:length(question.responses)} responses
+                </p>
+            </c:if>
+
+            <div class="media-body">
+                <h5 class="media-heading">
+                    <c:choose>
+                        <c:when test="${not empty question.createdBy}">
+                            ${question.createdBy.firstName} ${question.createdBy.lastName}
+                        </c:when>
+                        <c:otherwise>
+                            <!-- TODO i18n -->
+                            [redacted]
+                        </c:otherwise>
+                    </c:choose>
+                </h5>
+
+                <p>
+                    <spring:url var="view" value="/question/${question.uuid}" />
+                    <a href="${view}">
+                        ${question.question}
+                    </a>
+                </p>
+
+                <div>
+                    <c:forEach var="tag" items="${question.tags}">
+                        <span class="label label-default">${tag}</span>
+                        <!-- Force whitespace between labels -->
+                        <c:out value=" " />
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+    </c:forEach>
+
+    <c:if test="${not questions.lastPage}">
+        <!-- TODO Implement load more -->
+        <p>
+            <a href="#" class="btn btn-default btn-lg btn-block">
+                <!-- TODO i18n -->
+                Load more...
+            </a>
+        </p>
+    </c:if>
+
+    <c:if test="${not empty currentUser}">
+        <p>
+            <spring:url var="newQuestion" value="/question/create" />
+            <a href="${newQuestion}" class="btn btn-primary btn-lg btn-block">
+                <!-- TODO i18n -->
+                Ask a question
+            </a>
+        </p>
+    </c:if>
+
+</jsp:root>
