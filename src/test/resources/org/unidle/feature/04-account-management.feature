@@ -29,8 +29,8 @@ Feature: Account management
         Given a user
         And I have previously registered via "Facebook"
         When I log in with "Facebook"
-        Then I should see the "Account" page
-        And the page should contain "John Smith"
+        And I access the "Account" page
+        Then the page should contain "John Smith"
         And the page should contain "john@example.com"
         And the page should contain "Facebook"
 
@@ -38,6 +38,7 @@ Feature: Account management
         Given a user
         And I have previously registered via "Facebook"
         When I log in with "Facebook"
+        And I access the "Account" page
         And I click the "update" element
         And I fill in the "Account" form with:
             | Field Name | Value                 |
@@ -63,6 +64,7 @@ Feature: Account management
         Given a user
         And I have previously registered via "Facebook"
         When I log in with "Facebook"
+        And I access the "Account" page
         And I click the "add_twitter" element
         And I provide my "Twitter" credentials
         Then the page should contain "Facebook"

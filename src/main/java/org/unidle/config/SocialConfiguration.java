@@ -148,7 +148,7 @@ public class SocialConfiguration {
                                                                                                usersConnectionRepository,
                                                                                                signInAdapter);
 
-        providerSignInController.setPostSignInUrl("/account");
+        providerSignInController.setPostSignInUrl("/questions");
 
         return providerSignInController;
     }

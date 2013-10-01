@@ -46,7 +46,7 @@ Feature: Social authentication
             | First Name | John             |
             | Last Name  | Smith            |
             | Email      | john@example.com |
-        Then I should see the "Account" page
+        Then I should see the "Questions" page
 
     Scenario: New user registration via Twitter
         Given a user
@@ -77,7 +77,7 @@ Feature: Social authentication
             | First Name | Johnathon             |
             | Last Name  | Smithers              |
             | Email      | johnathon@example.com |
-        Then I should see the "Account" page
+        Then I should see the "Questions" page
 
     Scenario: Existing user login via Facebook
         Given a user
@@ -85,7 +85,7 @@ Feature: Social authentication
         When I access the "Sign in" page
         And I choose to sign in with "Facebook"
         And I provide my "Facebook" credentials
-        Then I should see the "Account" page
+        Then I should see the "Questions" page
 
     Scenario: Existing user login via Twitter
         Given a user
@@ -93,4 +93,4 @@ Feature: Social authentication
         When I access the "Sign in" page
         And I choose to sign in with "Twitter"
         And I provide my "Twitter" credentials
-        Then I should see the "Account" page
+        Then I should see the "Questions" page

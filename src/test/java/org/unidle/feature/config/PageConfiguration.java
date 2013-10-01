@@ -30,6 +30,7 @@ import org.unidle.feature.page.AccountPage;
 import org.unidle.feature.page.FacebookAuthenticationPage;
 import org.unidle.feature.page.GenericPage;
 import org.unidle.feature.page.HomePage;
+import org.unidle.feature.page.QuestionsPage;
 import org.unidle.feature.page.SignInPage;
 import org.unidle.feature.page.SignUpPage;
 import org.unidle.feature.page.TwitterAuthenticationPage;
@@ -63,6 +64,11 @@ public class PageConfiguration {
     @Bean
     public HomePage homePage() {
         return PageFactory.initElements(webDriver, HomePage.class);
+    }
+
+    @Bean
+    public QuestionsPage questionsPage() {
+        return PageFactory.initElements(webDriver, QuestionsPage.class);
     }
 
     @Bean
