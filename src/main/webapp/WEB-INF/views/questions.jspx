@@ -88,7 +88,7 @@
 
                 <div>
                     <c:forEach var="tag" items="${question.tags}">
-                        <span class="label label-default">${tag}</span>
+                        <span class="label label-default">#${tag}</span>
                         <!-- Force whitespace between labels -->
                         <c:out value=" " />
                     </c:forEach>
