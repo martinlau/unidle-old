@@ -29,18 +29,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.unidle.domain.Question;
 import org.unidle.repository.QuestionRepository;
+import org.unidle.service.QuestionService;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Controller
 public class QuestionsController {
 
-    // TODO Replace with QuestionService
-    private final QuestionRepository questionRepository;
+    private final QuestionService questionService;
 
     @Autowired
-    public QuestionsController(final QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
+    public QuestionsController(final QuestionService questionService) {
+        this.questionService = questionService;
     }
 
     @RequestMapping("/questions")
@@ -50,7 +50,7 @@ public class QuestionsController {
 
     @ModelAttribute("questions")
     public Page<Question> questions(@PageableDefault(size = 5, sort = "createdDate", direction = DESC) final Pageable pageable) {
-        return questionRepository.findAll(pageable);
+        return questionService.findAll(pageable);
     }
 
 }

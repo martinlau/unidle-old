@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.unidle.repository.QuestionRepository;
+import org.unidle.service.QuestionService;
 
 import java.util.UUID;
 
@@ -36,20 +37,22 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Controller
 public class QuestionController {
 
-    // TODO Replace with QuestionService
+    private final QuestionService questionService;
+
     @Autowired
-    private QuestionRepository questionRepository;
+    public QuestionController(final QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @RequestMapping("/question/{uuid:.*}")
-    @Transactional(readOnly = true)
     public String question(@PathVariable("uuid") final UUID uuid,
                            final ModelMap modelMap) {
 
-        if (!questionRepository.exists(uuid)) {
+        if (!questionService.exists(uuid)) {
             throw new NoSuchQuestionException();
         }
 
-        modelMap.put("question", questionRepository.findOne(uuid));
+        modelMap.put("question", questionService.findOne(uuid));
 
         return ".question";
     }

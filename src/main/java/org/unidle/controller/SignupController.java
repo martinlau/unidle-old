@@ -29,7 +29,6 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,8 +48,12 @@ import static org.unidle.support.EventKeys.SIGN_UP;
 @Controller
 public class SignupController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public SignupController(final UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(method = GET,
                     value = "/signup")
@@ -67,7 +70,6 @@ public class SignupController {
 
     @RequestMapping(method = POST,
                     value = "/signup")
-    @Transactional
     public String submit(@Valid final UserForm userForm,
                          final Errors errors,
                          final WebRequest webRequest) {

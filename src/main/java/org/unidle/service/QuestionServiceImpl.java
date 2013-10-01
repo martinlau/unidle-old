@@ -24,6 +24,8 @@ import com.google.common.base.Splitter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +35,7 @@ import org.unidle.repository.QuestionRepository;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -89,5 +92,22 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.save(questionEntity);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public boolean exists(final UUID uuid) {
+        return questionRepository.exists(uuid);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Question> findAll(final Pageable pageable) {
+        return questionRepository.findAll(pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Question findOne(final UUID uuid) {
+        return questionRepository.findOne(uuid);
+    }
 
 }

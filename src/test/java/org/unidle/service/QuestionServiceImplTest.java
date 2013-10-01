@@ -20,9 +20,12 @@
  */
 package org.unidle.service;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
@@ -52,11 +55,22 @@ public class QuestionServiceImplTest {
     @Autowired
     private AttachmentRepository attachmentRepository;
 
+    private Question question;
+
     @Autowired
     private QuestionRepository questionRepository;
 
     @Autowired
     private QuestionService subject;
+
+    @Before
+    public void setUp() throws Exception {
+        question = new Question();
+
+        question.setQuestion("A test question");
+
+        question = questionRepository.save(question);
+    }
 
     @Test
     public void testCreateQuestion() throws Exception {
@@ -67,7 +81,7 @@ public class QuestionServiceImplTest {
                                                                                       "text/plain",
                                                                                       "this is a text file".getBytes())));
 
-        assertThat(questionRepository.count()).isEqualTo(1L);
+        assertThat(questionRepository.count()).isEqualTo(2L); // 1 in setUp()
         assertThat(attachmentRepository.count()).isEqualTo(1L);
         assertThat(question.getQuestion()).isEqualTo("this is a question");
         assertThat(question.getTags()).containsOnly("tag1", "tag2", "tag3", "tag4");
@@ -83,11 +97,32 @@ public class QuestionServiceImplTest {
                                                          "tag1, tag2 , ,, tag3,tag4",
                                                          null);
 
-        assertThat(questionRepository.count()).isEqualTo(1L);
+        assertThat(questionRepository.count()).isEqualTo(2L); // 1 in setUp()
         assertThat(attachmentRepository.count()).isZero();
         assertThat(question.getQuestion()).isEqualTo("this is a question");
         assertThat(question.getTags()).containsOnly("tag1", "tag2", "tag3", "tag4");
         assertThat(question.getAttachments()).isEmpty();
+    }
+
+    @Test
+    public void testExists() throws Exception {
+        final boolean result = subject.exists(question.getUuid());
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    public void testFindAll() throws Exception {
+        final Page<Question> result = subject.findAll(new PageRequest(0, 10));
+
+        assertThat(result.getContent()).containsOnly(question);
+    }
+
+    @Test
+    public void testFindOne() throws Exception {
+        final Question result = subject.findOne(question.getUuid());
+
+        assertThat(result).isEqualTo(question);
     }
 
 }

@@ -20,15 +20,24 @@
  */
 package org.unidle.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 import org.unidle.domain.Question;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface QuestionService {
 
     Question createQuestion(final String question,
                             final String tags,
                             final List<? extends MultipartFile> attachments);
+
+    boolean exists(UUID uuid);
+
+    Page<Question> findAll(Pageable pageable);
+
+    Question findOne(UUID uuid);
 
 }
