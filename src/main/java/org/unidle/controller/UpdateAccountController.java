@@ -38,7 +38,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-public class AccountUpdateController {
+public class UpdateAccountController {
 
     @Autowired
     private UserService userService;
@@ -51,7 +51,7 @@ public class AccountUpdateController {
         if (user == null) {
             return "redirect:/signin";
         }
-        return ".ajax.account-update";
+        return ".ajax.update-account";
     }
 
     @RequestMapping(value = "/account/update",
@@ -71,7 +71,7 @@ public class AccountUpdateController {
         }
 
         if (errors.hasErrors()) {
-            return ".ajax.account-update";
+            return ".ajax.update-account";
         }
 
         final User updatedUser = userService.updateUser(user.getUuid(),
@@ -86,7 +86,7 @@ public class AccountUpdateController {
                              .put("firstName", updatedUser.getFirstName())
                              .put("lastName", updatedUser.getLastName()));
 
-        return ".ajax.account-updated";
+        return ".ajax.updated-account";
     }
 
     @ModelAttribute("userForm")

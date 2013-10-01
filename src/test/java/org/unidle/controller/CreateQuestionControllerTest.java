@@ -25,6 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
@@ -39,36 +40,38 @@ import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
 import org.unidle.config.MvcConfiguration;
 import org.unidle.config.ServiceConfiguration;
-import org.unidle.config.SocialConfiguration;
 import org.unidle.config.WroConfiguration;
 import org.unidle.domain.User;
+import org.unidle.repository.AttachmentRepository;
+import org.unidle.repository.QuestionRepository;
 import org.unidle.repository.UserRepository;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.startsWith;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-import static org.unidle.test.Conditions.hasEmail;
-import static org.unidle.test.Conditions.hasFirstName;
-import static org.unidle.test.Conditions.hasLastName;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = I18NConfiguration.class),
                    @ContextConfiguration(classes = ServiceConfiguration.class),
-                   @ContextConfiguration(classes = SocialConfiguration.class),
                    @ContextConfiguration(classes = WroConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @WebAppConfiguration
-public class AccountUpdateControllerTest {
+public class CreateQuestionControllerTest {
+
+    @Autowired
+    private AttachmentRepository attachmentRepository;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
     private MockMvc subject;
 
@@ -86,14 +89,6 @@ public class AccountUpdateControllerTest {
 
         user = new User();
 
-        user.setEmail("another@example.com");
-        user.setFirstName("another first name");
-        user.setLastName("another last name");
-
-        user = userRepository.save(user);
-
-        user = new User();
-
         user.setEmail("email@example.com");
         user.setFirstName("first name");
         user.setLastName("last name");
@@ -107,79 +102,55 @@ public class AccountUpdateControllerTest {
     }
 
     @Test
-    public void testAccount() throws Exception {
+    public void testQuestion() throws Exception {
         SecurityContextHolder.getContext()
                              .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
 
-        subject.perform(get("/account/update"))
+        subject.perform(get("/question/create"))
                .andExpect(status().isOk())
-               .andExpect(view().name(".ajax.account-update"))
-               .andExpect(model().attribute("userForm", allOf(hasProperty("email", equalTo("email@example.com")),
-                                                              hasProperty("firstName", equalTo("first name")),
-                                                              hasProperty("lastName", equalTo("last name")))));
+               .andExpect(model().attributeExists("questionForm"));
     }
 
     @Test
-    public void testAccountWithoutAuthentication() throws Exception {
-        subject.perform(get("/account/update"))
-               .andExpect(view().name("redirect:/signin"))
-               .andExpect(model().attributeDoesNotExist("userForm"));
-    }
-
-    @Test
-    public void testUpdate() throws Exception {
-        SecurityContextHolder.getContext()
-                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
-
-        subject.perform(post("/account/update")
-                                .param("email", "new@example.com")
-                                .param("firstName", "new first name")
-                                .param("lastName", "new last name"))
-               .andExpect(view().name(".ajax.account-updated"))
-               .andExpect(model().attribute("user", allOf(hasProperty("email", equalTo("new@example.com")),
-                                                          hasProperty("firstName", equalTo("new first name")),
-                                                          hasProperty("lastName", equalTo("new last name")))));
-
-        assertThat(userRepository.findOne(user.getUuid()))
-                .satisfies(hasEmail("new@example.com"))
-                .satisfies(hasFirstName("new first name"))
-                .satisfies(hasLastName("new last name"));
-    }
-
-    @Test
-    public void testUpdateWithSameEmail() throws Exception {
-        SecurityContextHolder.getContext()
-                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
-
-        subject.perform(post("/account/update")
-                                .param("email", "email@example.com")
-                                .param("firstName", "new first name")
-                                .param("lastName", "new last name"))
-               .andExpect(view().name(".ajax.account-updated"));
-
-        assertThat(userRepository.findOne(user.getUuid()))
-                .satisfies(hasEmail("email@example.com"))
-                .satisfies(hasFirstName("new first name"))
-                .satisfies(hasLastName("new last name"));
-    }
-
-    @Test
-    public void testUpdateWithoutAuthentication() throws Exception {
-        subject.perform(post("/account/update"))
+    public void testQuestionWithoutAuthentication() throws Exception {
+        subject.perform(get("/question/create"))
                .andExpect(view().name("redirect:/signin"));
     }
 
     @Test
-    public void testUpdateWithoutAuthenticationWithExistingEmail() throws Exception {
+    public void testQuestionPost() throws Exception {
         SecurityContextHolder.getContext()
                              .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
 
-        subject.perform(post("/account/update")
-                                .param("email", "another@example.com")
-                                .param("firstName", "new first name")
-                                .param("lastName", "new last name"))
-               .andExpect(view().name(".ajax.account-update"))
-               .andExpect(model().attributeHasFieldErrors("userForm", "email"));
+        subject.perform(fileUpload("/question/create")
+                                .file(new MockMultipartFile("attachments",
+                                                            "test.txt",
+                                                            "text/plain",
+                                                            "this is a text file".getBytes()))
+                                .param("question", "this is a test question")
+                                .param("tags", "tag1, tag2, tag3"))
+               .andExpect(view().name(startsWith("redirect:/question/")));
+
+        assertThat(questionRepository.count()).isEqualTo(1L);
+        assertThat(attachmentRepository.count()).isEqualTo(1L);
+    }
+
+    @Test
+    public void testQuestionPostWithErrors() throws Exception {
+        SecurityContextHolder.getContext()
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
+
+        subject.perform(post("/question/create"))
+               .andExpect(view().name(".create-question"))
+               .andExpect(model().attributeExists("questionForm"));
+
+    }
+
+    @Test
+    public void testQuestionPostWithoutAuthentication() throws Exception {
+        subject.perform(post("/question/create")
+                                .param("question", "this is a test question"))
+               .andExpect(view().name("redirect:/signin"));
     }
 
 }

@@ -37,7 +37,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-public class QuestionCreateController {
+public class CreateQuestionController {
 
     @Autowired
     private QuestionService questionService;
@@ -50,7 +50,7 @@ public class QuestionCreateController {
         if (user == null) {
             return "redirect:/signin";
         }
-        return ".question-create";
+        return ".create-question";
     }
 
     @RequestMapping(value = "/question/create",
@@ -65,7 +65,7 @@ public class QuestionCreateController {
         }
 
         if (errors.hasErrors()) {
-            return ".question-create";
+            return ".create-question";
         }
 
         final Question question = questionService.createQuestion(questionForm.getQuestion(),
