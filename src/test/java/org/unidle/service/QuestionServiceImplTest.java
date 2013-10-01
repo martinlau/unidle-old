@@ -75,7 +75,7 @@ public class QuestionServiceImplTest {
     @Test
     public void testCreateQuestion() throws Exception {
         final Question question = subject.createQuestion("this is a question",
-                                                         "tag1, tag2 , ,, tag3,tag4",
+                                                         "#tag1, #tag2 , ,, tag3,#tag4",
                                                          asList(new MockMultipartFile("test.txt",
                                                                                       "test.txt",
                                                                                       "text/plain",
