@@ -43,7 +43,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
 
     private static final String LOCATION = "";
 
-    private static final long MAX_FILE_SIZE = 1024L * 1024L * 3L; // 3mb
+    private static final long MAX_FILE_SIZE = 1024L * 1024L * 1L; // 1mb
 
     private static final long MAX_REQUEST_SIZE = 1024L * 1024L * 1L; // 1mb
 
@@ -59,7 +59,8 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     @Override
     protected Class<?>[] getServletConfigClasses() {
         return new Class<?>[]{MvcConfiguration.class,
-                              SocialConfiguration.class};
+                              SocialConfiguration.class,
+                              AnalyticsConfiguration.class};
     }
 
     @Override

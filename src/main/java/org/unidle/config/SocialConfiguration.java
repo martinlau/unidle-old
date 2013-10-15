@@ -37,7 +37,6 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.support.ConnectionFactoryRegistry;
 import org.springframework.social.connect.web.ConnectController;
-import org.springframework.social.connect.web.ConnectInterceptor;
 import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
@@ -47,9 +46,6 @@ import org.unidle.controller.RedirectingConnectController;
 import org.unidle.service.UserService;
 import org.unidle.social.AnalyticTrackingConnectInterceptor;
 
-import javax.annotation.PostConstruct;
-
-import static com.github.segmentio.Analytics.initialize;
 import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 
 @Configuration
@@ -58,14 +54,14 @@ import static org.springframework.context.annotation.ScopedProxyMode.INTERFACES;
 @PropertySource("classpath:unidle.properties")
 public class SocialConfiguration {
 
+    @Autowired
+    private AnalyticTrackingConnectInterceptor analyticTrackingConnectInterceptor;
+
     @Value("${unidle.facebook.clientId}")
     private String facebookClientId;
 
     @Value("${unidle.facebook.secret}")
     private String facebookSecret;
-
-    @Value("${unidle.segment.io.secret}")
-    private String segmentIoSecret;
 
     @Autowired
     private SignInAdapter signInAdapter;
@@ -98,14 +94,21 @@ public class SocialConfiguration {
         final RedirectingConnectController connectController = new RedirectingConnectController(connectionFactoryLocator(),
                                                                                                 connectionRepository());
 
-        connectController.addInterceptor(analyticTrackingConnectInterceptor());
+        connectController.addInterceptor(analyticTrackingConnectInterceptor);
 
         return connectController;
     }
 
     @Bean
-    public ConnectInterceptor<?> analyticTrackingConnectInterceptor() {
-        return new AnalyticTrackingConnectInterceptor<>(userService);
+    public ConnectionFactoryLocator connectionFactoryLocator() {
+        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
+
+        registry.addConnectionFactory(new FacebookConnectionFactory(facebookClientId,
+                                                                    facebookSecret));
+        registry.addConnectionFactory(new TwitterConnectionFactory(twitterConsumerKey,
+                                                                   twitterConsumerSecret));
+
+        return registry;
     }
 
     @Bean
@@ -122,24 +125,6 @@ public class SocialConfiguration {
         final String uuid = authentication.getName();
 
         return usersConnectionRepository.createConnectionRepository(uuid);
-    }
-
-    @Bean
-    public ConnectionFactoryLocator connectionFactoryLocator() {
-        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-
-        registry.addConnectionFactory(new FacebookConnectionFactory(facebookClientId,
-                                                                    facebookSecret));
-        registry.addConnectionFactory(new TwitterConnectionFactory(twitterConsumerKey,
-                                                                   twitterConsumerSecret));
-
-        return registry;
-    }
-
-    @PostConstruct
-    public void initializeAnalytics() {
-        // TODO Wrap this in an interface and allow a dummy configuration for testing
-        initialize(segmentIoSecret);
     }
 
     @Bean

@@ -20,28 +20,35 @@
  */
 package org.unidle.controller;
 
-import com.github.segmentio.models.Traits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.unidle.analytics.Analytics;
 import org.unidle.domain.User;
 import org.unidle.form.UserForm;
 import org.unidle.service.UserService;
 
 import javax.validation.Valid;
 
-import static com.github.segmentio.Analytics.identify;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class UpdateAccountController {
 
+    private final Analytics analytics;
+
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UpdateAccountController(final Analytics analytics,
+                                   final UserService userService) {
+        this.analytics = analytics;
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/account/update",
                     method = GET)
@@ -81,10 +88,10 @@ public class UpdateAccountController {
 
         modelMap.addAttribute("user", updatedUser);
 
-        identify(user.getUuid().toString(),
-                 new Traits().put("email", updatedUser.getEmail())
-                             .put("firstName", updatedUser.getFirstName())
-                             .put("lastName", updatedUser.getLastName()));
+        analytics.identify(user.getUuid(),
+                           "email", updatedUser.getEmail(),
+                           "firstName", updatedUser.getFirstName(),
+                           "lastName", updatedUser.getLastName());
 
         return ".ajax.updated-account";
     }

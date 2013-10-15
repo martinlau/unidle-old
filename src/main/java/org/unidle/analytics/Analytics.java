@@ -18,22 +18,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-package org.unidle.support;
+package org.unidle.analytics;
 
-public enum EventKeys {
+import java.util.Map;
+import java.util.UUID;
 
-    CONNECT("Connected an Account"),
+public interface Analytics {
 
-    SIGN_UP("Signed Up");
+    void identify(UUID userId,
+                  Object... traits);
 
-    private final String name;
-
-    private EventKeys(final String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
+    void track(UUID userId,
+               AnalyticsEvent event,
+               Object... properties);
 
 }

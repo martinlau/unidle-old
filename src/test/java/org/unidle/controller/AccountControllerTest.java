@@ -34,6 +34,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
+import org.unidle.config.AnalyticsConfiguration;
 import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
@@ -53,7 +54,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = I18NConfiguration.class),
                    @ContextConfiguration(classes = ServiceConfiguration.class),
-                   @ContextConfiguration(classes = WroConfiguration.class),
+                   @ContextConfiguration(classes = AnalyticsConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional

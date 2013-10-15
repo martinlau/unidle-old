@@ -215,6 +215,7 @@ public class GenericPage {
         ReflectionUtils.doWithFields(getClass(),
                                      new FieldCallback() {
                                          @Override
+                                         @SuppressWarnings("unchecked")
                                          public void doWith(final Field field) throws IllegalArgumentException, IllegalAccessException {
                                              final String name = lowerCase(join(splitByCharacterTypeCamelCase(field.getName()), ' '));
 

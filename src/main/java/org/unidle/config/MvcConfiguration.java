@@ -100,8 +100,17 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
-        return new CurrentUserMethodArgumentResolver(userService);
+    public PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver() {
+        final PageableHandlerMethodArgumentResolver argumentResolver = new PageableHandlerMethodArgumentResolver();
+
+        argumentResolver.setFallbackPageable(new PageRequest(0, 10));
+
+        return argumentResolver;
+    }
+
+    @Bean
+    public LocationMethodArgumentResolver locationMethodArgumentResolver() {
+        return new LocationMethodArgumentResolver(locationService);
     }
 
     @Override
@@ -109,21 +118,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addInterceptor(buildTimestampInterceptor());
         registry.addInterceptor(currentUserInterceptor());
         registry.addInterceptor(segmentIoApiKeyInterceptor());
-    }
-
-    @Bean
-    public HandlerInterceptor buildTimestampInterceptor() {
-        return new BuildTimestampInterceptor(buildTimestamp);
-    }
-
-    @Bean
-    public HandlerInterceptor segmentIoApiKeyInterceptor() {
-        return new SegmentIoApiKeyInterceptor(segmentIoApiKey);
-    }
-
-    @Bean
-    public HandlerInterceptor currentUserInterceptor() {
-        return new CurrentUserInterceptor(userService);
     }
 
     @Override
@@ -146,17 +140,23 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public LocationMethodArgumentResolver locationMethodArgumentResolver() {
-        return new LocationMethodArgumentResolver(locationService);
+    public HandlerInterceptor currentUserInterceptor() {
+        return new CurrentUserInterceptor(userService);
     }
 
     @Bean
-    public PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver() {
-        final PageableHandlerMethodArgumentResolver argumentResolver = new PageableHandlerMethodArgumentResolver();
+    public HandlerInterceptor segmentIoApiKeyInterceptor() {
+        return new SegmentIoApiKeyInterceptor(segmentIoApiKey);
+    }
 
-        argumentResolver.setFallbackPageable(new PageRequest(0, 10));
+    @Bean
+    public HandlerInterceptor buildTimestampInterceptor() {
+        return new BuildTimestampInterceptor(buildTimestamp);
+    }
 
-        return argumentResolver;
+    @Bean
+    public CurrentUserMethodArgumentResolver currentUserMethodArgumentResolver() {
+        return new CurrentUserMethodArgumentResolver(userService);
     }
 
     @Bean

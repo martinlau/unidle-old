@@ -39,12 +39,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.unidle.config.AnalyticsConfiguration;
 import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
 import org.unidle.config.ServiceConfiguration;
 import org.unidle.config.SocialConfiguration;
-import org.unidle.config.WroConfiguration;
 import org.unidle.domain.User;
 import org.unidle.domain.UserConnection;
 import org.unidle.repository.UserConnectionRepository;
@@ -65,7 +65,7 @@ import static org.unidle.test.Conditions.hasProviderUserId;
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = I18NConfiguration.class),
                    @ContextConfiguration(classes = ServiceConfiguration.class),
-                   @ContextConfiguration(classes = WroConfiguration.class),
+                   @ContextConfiguration(classes = AnalyticsConfiguration.class),
                    @ContextConfiguration(classes = SocialConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
@@ -114,23 +114,6 @@ public class ConnectionRepositoryImplTest {
         subject = connectionRepositoryFactory.getConnectionRepository(user.getId().toString());
     }
 
-    @Test(expected = DuplicateConnectionException.class)
-    public void testAddConnectionWithDuplicate() throws Exception {
-        final ConnectionData connectionData = new ConnectionData("twitter",
-                                                                 "provider user id 3",
-                                                                 "display name",
-                                                                 "profile url",
-                                                                 "image url",
-                                                                 "access token",
-                                                                 "secret",
-                                                                 "refresh token",
-                                                                 1234L);
-        final Connection<?> connection = new ConnectionStub<>(connectionData);
-
-        subject.addConnection(connection);
-        subject.addConnection(connection);
-    }
-
     @Test
     public void testAddConnection() throws Exception {
         final ConnectionData connectionData = new ConnectionData("twitter",
@@ -147,6 +130,23 @@ public class ConnectionRepositoryImplTest {
         subject.addConnection(connection);
 
         assertThat(userConnectionRepository.findAll(user, "twitter")).hasSize(3);
+    }
+
+    @Test(expected = DuplicateConnectionException.class)
+    public void testAddConnectionWithDuplicate() throws Exception {
+        final ConnectionData connectionData = new ConnectionData("twitter",
+                                                                 "provider user id 3",
+                                                                 "display name",
+                                                                 "profile url",
+                                                                 "image url",
+                                                                 "access token",
+                                                                 "secret",
+                                                                 "refresh token",
+                                                                 1234L);
+        final Connection<?> connection = new ConnectionStub<>(connectionData);
+
+        subject.addConnection(connection);
+        subject.addConnection(connection);
     }
 
     @Test

@@ -20,24 +20,27 @@
  */
 package org.unidle.social;
 
-import com.github.segmentio.models.EventProperties;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.ConnectionFactory;
 import org.springframework.social.connect.web.ConnectInterceptor;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.request.WebRequest;
+import org.unidle.analytics.Analytics;
 import org.unidle.domain.User;
 import org.unidle.service.UserService;
 
-import static com.github.segmentio.Analytics.track;
-import static org.unidle.support.EventKeys.CONNECT;
+import static org.unidle.analytics.AnalyticsEvent.CONNECT;
 
 public class AnalyticTrackingConnectInterceptor<S> implements ConnectInterceptor<S> {
 
+    private final Analytics analytics;
+
     private final UserService userService;
 
-    public AnalyticTrackingConnectInterceptor(final UserService userService) {
+    public AnalyticTrackingConnectInterceptor(final Analytics analytics,
+                                              final UserService userService) {
+        this.analytics = analytics;
         this.userService = userService;
     }
 
@@ -58,11 +61,12 @@ public class AnalyticTrackingConnectInterceptor<S> implements ConnectInterceptor
 
         final ConnectionData data = connection.createData();
 
-        track(user.getUuid().toString(),
-              CONNECT.getName(),
-              new EventProperties().put("display-name", data.getDisplayName())
-                                   .put("provider-id", data.getProviderId())
-                                   .put("provider-user-id", data.getProviderUserId()));
+
+        analytics.track(user.getUuid(),
+                        CONNECT,
+                        "display-name", data.getDisplayName(),
+                        "provider-id", data.getProviderId(),
+                        "provider-user-id", data.getProviderUserId());
     }
 
 }

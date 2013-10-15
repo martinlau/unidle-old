@@ -20,7 +20,6 @@
  */
 package org.unidle.controller;
 
-import com.github.segmentio.models.Traits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,25 +32,28 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
+import org.unidle.analytics.Analytics;
 import org.unidle.domain.User;
 import org.unidle.form.UserForm;
 import org.unidle.service.UserService;
 
 import javax.validation.Valid;
 
-import static com.github.segmentio.Analytics.identify;
-import static com.github.segmentio.Analytics.track;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.unidle.support.EventKeys.SIGN_UP;
+import static org.unidle.analytics.AnalyticsEvent.SIGN_UP;
 
 @Controller
 public class SignupController {
 
+    private final Analytics analytics;
+
     private final UserService userService;
 
     @Autowired
-    public SignupController(final UserService userService) {
+    public SignupController(final Analytics analytics,
+                            final UserService userService) {
+        this.analytics = analytics;
         this.userService = userService;
     }
 
@@ -102,14 +104,13 @@ public class SignupController {
         SecurityContextHolder.getContext()
                              .setAuthentication(authentication);
 
-        identify(user.getUuid().toString(),
-                 new Traits().put("created", user.getCreatedDate().toDate())
-                             .put("email", user.getEmail())
-                             .put("firstName", user.getFirstName())
-                             .put("lastName", user.getLastName()));
+        analytics.identify(user.getUuid(),
+                           "created", user.getCreatedDate().toDate(),
+                           "email", user.getEmail(),
+                           "firstName", user.getFirstName(),
+                           "lastName", user.getLastName());
 
-        track(user.getUuid().toString(),
-              SIGN_UP.getName());
+        analytics.track(user.getUuid(), SIGN_UP);
 
         return "redirect:/account";
     }

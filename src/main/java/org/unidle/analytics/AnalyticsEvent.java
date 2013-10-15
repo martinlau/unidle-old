@@ -18,31 +18,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-package org.unidle.support;
+package org.unidle.analytics;
 
-import org.junit.Test;
+public enum AnalyticsEvent {
 
-import static org.fest.assertions.Assertions.assertThat;
-import static org.unidle.support.EventKeys.CONNECT;
-import static org.unidle.support.EventKeys.SIGN_UP;
+    CONNECT("Connected an Account"),
 
-public class EventKeysTest {
+    SIGN_UP("Signed Up");
 
-    @Test
-    public void testGetName() throws Exception {
-        assertThat(CONNECT.getName()).isEqualTo("Connected an Account");
-        assertThat(SIGN_UP.getName()).isEqualTo("Signed Up");
+    private final String name;
+
+    private AnalyticsEvent(final String name) {
+        this.name = name;
     }
 
-    @Test
-    public void testValueOf() throws Exception {
-        assertThat(EventKeys.valueOf("CONNECT")).isEqualTo(CONNECT);
-    }
-
-    @Test
-    public void testValues() throws Exception {
-        assertThat(EventKeys.values()).containsOnly(CONNECT,
-                                                    SIGN_UP);
+    public String getName() {
+        return name;
     }
 
 }

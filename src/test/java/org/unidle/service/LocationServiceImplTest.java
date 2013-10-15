@@ -31,10 +31,13 @@ import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
 import org.unidle.config.ServiceConfiguration;
-import org.unidle.config.WroConfiguration;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.unidle.service.Location.DEFAULT;
+import static org.unidle.test.Conditions.hasCity;
+import static org.unidle.test.Conditions.hasContinent;
+import static org.unidle.test.Conditions.hasCountry;
+import static org.unidle.test.Conditions.hasSubdivision;
 import static org.unidle.test.KnownLocation.ADELAIDE;
 import static org.unidle.test.KnownLocation.BRISBANE;
 import static org.unidle.test.KnownLocation.CANBERRA;
@@ -43,16 +46,11 @@ import static org.unidle.test.KnownLocation.HOBART;
 import static org.unidle.test.KnownLocation.MELBOURNE;
 import static org.unidle.test.KnownLocation.PERTH;
 import static org.unidle.test.KnownLocation.SYDNEY;
-import static org.unidle.test.Conditions.hasCity;
-import static org.unidle.test.Conditions.hasContinent;
-import static org.unidle.test.Conditions.hasCountry;
-import static org.unidle.test.Conditions.hasSubdivision;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = I18NConfiguration.class),
-                   @ContextConfiguration(classes = ServiceConfiguration.class),
-                   @ContextConfiguration(classes = WroConfiguration.class)})
+                   @ContextConfiguration(classes = ServiceConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 public class LocationServiceImplTest {

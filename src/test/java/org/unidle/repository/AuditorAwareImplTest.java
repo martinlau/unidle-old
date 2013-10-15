@@ -37,7 +37,6 @@ import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
 import org.unidle.config.ServiceConfiguration;
-import org.unidle.config.WroConfiguration;
 import org.unidle.domain.User;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -45,8 +44,7 @@ import static org.fest.assertions.Assertions.assertThat;
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = I18NConfiguration.class),
-                   @ContextConfiguration(classes = ServiceConfiguration.class),
-                   @ContextConfiguration(classes = WroConfiguration.class)})
+                   @ContextConfiguration(classes = ServiceConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class AuditorAwareImplTest {
