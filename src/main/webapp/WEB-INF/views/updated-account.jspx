@@ -41,15 +41,15 @@
                 </tags:modal-header>
 
                 <tags:modal-body>
-                    <!-- TODO i18n -->
-                    <p class="success">Your details have been updated</p>
+                    <p class="success">
+                        <spring:message code="account.details.update.success" />
+                    </p>
                 </tags:modal-body>
 
                 <tags:modal-footer>
                     <spring:url var="account" value="/account" />
                     <a href="${account}" class="btn btn-lg btn-default pull-left" id="close">
-                        <!-- TODO i18n -->
-                        Close
+                        <spring:message code="account.details.close" />
                     </a>
                 </tags:modal-footer>
 

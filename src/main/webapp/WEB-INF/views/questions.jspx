@@ -54,16 +54,23 @@
                         </c:when>
                         <c:otherwise>
                             <spring:url var="unknown" value="/image/unknown.png" />
-                            <!-- TODO i18n -->
-                            <img src="${unknown}" alt="Unknown user" />
+                            <spring:message code="questions.user.unknown" var="unknownUser" />
+                            <img src="${unknown}" alt="${unknownUser}" />
                         </c:otherwise>
                     </c:choose>
                 </div>
 
                 <c:if test="${not empty question.responses}">
                     <p class="text-muted pull-right">
-                        <!-- TODO i18n -->
-                        ${fn:length(question.responses)} responses
+                        ${fn:length(question.responses)}
+                        <c:choose>
+                            <c:when test="${fn:length(question.responses) eq 0}">
+                                <spring:message code="questions.response" />
+                            </c:when>
+                            <c:otherwise>
+                                <spring:message code="questions.responses" />
+                            </c:otherwise>
+                        </c:choose>
                     </p>
                 </c:if>
 
@@ -108,8 +115,7 @@
                     <spring:param name="size" value="${questions.size + 5}" />
                 </spring:url>
                 <a href="${ajaxQuestions}" class="btn btn-default btn-lg btn-block load-more" id="load_more" data-load-more-target=".questions">
-                    <!-- TODO i18n -->
-                    Load more...
+                    <spring:message code="questions.load.more" />
                 </a>
             </p>
         </c:if>
@@ -120,8 +126,7 @@
             <p>
                 <spring:url var="newQuestion" value="/question/create" />
                 <a href="${newQuestion}" class="btn btn-primary btn-lg btn-block" id="ask_a_question">
-                    <!-- TODO i18n -->
-                    Ask a question
+                    <spring:message code="questions.ask" />
                 </a>
             </p>
         </c:when>
