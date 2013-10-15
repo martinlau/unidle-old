@@ -20,6 +20,7 @@
  */
 package org.unidle.feature.step;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -29,6 +30,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
+import org.unidle.domain.Question;
 import org.unidle.domain.UserConnection;
 import org.unidle.feature.config.PageConfiguration;
 import org.unidle.feature.config.SocialCredentialsConfiguration;
@@ -37,6 +39,7 @@ import org.unidle.feature.page.FacebookAuthenticationPage;
 import org.unidle.feature.page.GenericPage;
 import org.unidle.feature.page.SignInPage;
 import org.unidle.feature.page.TwitterAuthenticationPage;
+import org.unidle.repository.QuestionRepository;
 import org.unidle.repository.UserConnectionRepository;
 import org.unidle.test.KnownLocation;
 
@@ -48,6 +51,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.common.collect.Sets.newHashSet;
+import static java.lang.String.format;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.fail;
 import static org.unidle.domain.UserConnection_.providerId;
@@ -58,6 +63,8 @@ import static org.unidle.domain.UserConnection_.providerId;
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = SocialCredentialsConfiguration.class)})
 public class StepDefs {
+
+    public static final int QUESTION_COUNT = 50;
 
     @Autowired
     private URL baseUrl;
@@ -73,6 +80,9 @@ public class StepDefs {
 
     @Autowired
     private List<GenericPage> genericPages;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @Autowired
     private SignInPage signInPage;
@@ -109,9 +119,16 @@ public class StepDefs {
         }
     }
 
-    @When("^I click the \"([^\"]*)\" element")
-    public void I_click_the_element(final String element) {
-        genericPage().clickElement(element);
+    @When("^I click the \"([^\"]*)\" \"([^\"]*)\" element")
+    public void I_click_the_nth_element(final String index,
+                                        final String element) {
+        switch (index) {
+            case "first":
+                genericPage().clickElement(0, element);
+                break;
+            default:
+                fail("Unknown index: " + index);
+        }
     }
 
     protected GenericPage genericPage() {
@@ -128,16 +145,10 @@ public class StepDefs {
         return null;
     }
 
-    @When("^I click the \"([^\"]*)\" \"([^\"]*)\" element")
-    public void I_click_the_nth_element(final String index,
-                                        final String element) {
-        switch (index) {
-            case "first":
-                genericPage().clickElement(0, element);
-                break;
-            default:
-                fail("Unknown index: " + index);
-        }
+    @When("^I click the \"([^\"]*)\" page \"([^\"]*)\" element$")
+    public void I_click_the_page_element(final String page,
+                                         final String element) {
+        findPage(page).clickElement(element);
     }
 
     @When("^I fill in the \"([^\"]*)\" form with:$")
@@ -281,6 +292,20 @@ public class StepDefs {
         genericPage().addCookie("address", KnownLocation.byDisplay(location).address);
     }
 
+    @And("^other people have previously asked questions$")
+    public void other_people_have_previously_asked_questions() throws Throwable {
+        if (questionRepository.count() < QUESTION_COUNT) {
+            for (int i = 1; i <= QUESTION_COUNT; i++) {
+                final Question question = new Question();
+
+                question.setQuestion(format("This is cucumber dummy question %d", i));
+                question.setTags(newHashSet("cucumber", "question"));
+
+                questionRepository.save(question);
+            }
+        }
+    }
+
     @Then("^the \"([^\"]*)\" element should contain the text \"([^\"]*)\"$")
     public void the_element_should_contain_the_text(final String element,
                                                     final String text) {
@@ -298,6 +323,13 @@ public class StepDefs {
     @Then("^the page should contain \"([^\"]*)\"$")
     public void the_page_should_contain(final String content) {
         assertThat(genericPage().getText()).contains(content);
+    }
+
+    @Then("^the \"([^\"]*)\" page should contain \"([^\"]*)\" \"([^\"]*)\" elements$")
+    public void the_page_should_contain(final String page,
+                                        final int count,
+                                        final String element) {
+        assertThat(findPage(page).countElements(element)).isEqualTo(count);
     }
 
     @Then("^the page should not contain \"([^\"]*)\"$")

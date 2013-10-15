@@ -39,7 +39,7 @@ Feature: Account management
         And I have previously registered via "Facebook"
         When I log in with "Facebook"
         And I access the "Account" page
-        And I click the "update" element
+        And I click the "Account" page "Update" element
         And I fill in the "Account" form with:
             | Field Name | Value                 |
             | First Name | Johnathon             |
@@ -54,7 +54,7 @@ Feature: Account management
             | Last Name  | Smithers                       |
             | Email      | johnathon.smithers@example.com |
         Then the page should contain "Your details have been updated"
-        When I click the "close" element
+        When I click the "Account" page "Close" element
         Then I should see the "Account" page
         And the page should contain "Johnathon Smithers"
         And the page should contain "johnathon.smithers@example.com"
@@ -65,8 +65,9 @@ Feature: Account management
         And I have previously registered via "Facebook"
         When I log in with "Facebook"
         And I access the "Account" page
-        And I click the "add_twitter" element
+        And I click the "Account" page "Add Twitter" element
         And I provide my "Twitter" credentials
+        And I access the "Account" page
         Then the page should contain "Facebook"
         And the page should contain "Twitter"
 

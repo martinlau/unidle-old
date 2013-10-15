@@ -18,27 +18,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-package org.unidle.feature.page;
+$(function () {
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+    "use strict";
 
-import java.util.List;
+    $(document).on("click", ".load-more", function (ev) {
 
-public class QuestionsPage extends GenericPage {
+        ev.preventDefault();
 
-    @FindBy(id = "ask_a_question")
-    private WebElement askAQuestion;
+        var $link = $(this),
+            href = $link.attr("href"),
+            target = $link.data("load-more-target");
 
-    @FindBy(id = "load_more")
-    private WebElement loadMore;
+        $.ajax(href, {dataType: "html"}).done(function (data) {
+            var $newContent = $(target, $("<div></div>").html(data));
+            // TODO use proper pagination and selectively append to questions and replace load more
+            $(target).html($newContent.length ? $newContent.html() : data);
+        });
 
-    @FindBy(css = ".question")
-    private List<WebElement> questions;
-
-    public QuestionsPage(final WebDriver driver) {
-        super(driver, "Questions", "/questions");
-    }
-
-}
+    });
+});

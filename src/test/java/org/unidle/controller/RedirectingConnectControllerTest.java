@@ -39,14 +39,14 @@ public class RedirectingConnectControllerTest {
     public void testConnectedView() throws Exception {
         final String result = subject.connectedView("provider id");
 
-        assertThat(result).isEqualTo("redirect:/account");
+        assertThat(result).isEqualTo("redirect:/questions");
     }
 
     @Test
     public void testConnectionStatusRedirect() throws Exception {
         final RedirectView result = subject.connectionStatusRedirect("provider id", null);
 
-        assertThat(result.getUrl()).isEqualTo("/account");
+        assertThat(result.getUrl()).isEqualTo("/questions");
     }
 
 }

@@ -40,12 +40,10 @@ import org.unidle.config.WroConfiguration;
 import org.unidle.domain.Question;
 import org.unidle.repository.QuestionRepository;
 
-import java.util.UUID;
-
-import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
@@ -78,9 +76,18 @@ public class QuestionsControllerTest {
     }
 
     @Test
+    public void testAjaxQuestions() throws Exception {
+        subject.perform(get("/questions?ajax=true"))
+               .andExpect(status().isOk())
+               .andExpect(view().name(".ajax.questions"))
+               .andExpect(model().attributeExists("questions"));
+    }
+
+    @Test
     public void testQuestions() throws Exception {
         subject.perform(get("/questions"))
                .andExpect(status().isOk())
+               .andExpect(view().name(".questions"))
                .andExpect(model().attributeExists("questions"));
     }
 

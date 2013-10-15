@@ -41,7 +41,7 @@ public class RedirectingConnectController extends ConnectController {
     protected String connectedView(final String providerId) {
 
         return REDIRECT_URL_PREFIX + UriComponentsBuilder.newInstance()
-                                                         .path("/account")
+                                                         .path("/questions")
                                                          .build()
                                                          .encode()
                                                          .toUriString();
@@ -51,7 +51,7 @@ public class RedirectingConnectController extends ConnectController {
     protected RedirectView connectionStatusRedirect(final String providerId, final NativeWebRequest request) {
 
         final String url = UriComponentsBuilder.newInstance()
-                                               .path("/account")
+                                               .path("/questions")
                                                .build()
                                                .encode()
                                                .toUriString();

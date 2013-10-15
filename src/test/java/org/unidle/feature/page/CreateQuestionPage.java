@@ -24,21 +24,27 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
+public class CreateQuestionPage extends GenericPage {
 
-public class QuestionsPage extends GenericPage {
+    @FindBy(id = "question")
+    private WebElement question;
 
-    @FindBy(id = "ask_a_question")
-    private WebElement askAQuestion;
+    @FindBy(id = "attachments")
+    private WebElement attachments;
 
-    @FindBy(id = "load_more")
-    private WebElement loadMore;
+    @FindBy(id = "tags")
+    private WebElement tags;
 
-    @FindBy(css = ".question")
-    private List<WebElement> questions;
+    @FindBy(id = "submit")
+    private WebElement submit;
 
-    public QuestionsPage(final WebDriver driver) {
-        super(driver, "Questions", "/questions");
+    public CreateQuestionPage(final WebDriver driver) {
+        super(driver, "Create Question", "/question/create");
+    }
+
+    @Override
+    public void submit() {
+        submit.click();
     }
 
 }

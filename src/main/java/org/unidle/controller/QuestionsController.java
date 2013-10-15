@@ -28,7 +28,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.unidle.domain.Question;
-import org.unidle.repository.QuestionRepository;
 import org.unidle.service.QuestionService;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
@@ -43,14 +42,20 @@ public class QuestionsController {
         this.questionService = questionService;
     }
 
-    @RequestMapping("/questions")
-    public String questions() {
-        return ".questions";
+    @RequestMapping(value = "/questions",
+                    params = "ajax=true")
+    public String ajaxQuestions() {
+        return ".ajax.questions";
     }
 
     @ModelAttribute("questions")
     public Page<Question> questions(@PageableDefault(size = 5, sort = "createdDate", direction = DESC) final Pageable pageable) {
         return questionService.findAll(pageable);
+    }
+
+    @RequestMapping("/questions")
+    public String questions() {
+        return ".questions";
     }
 
 }

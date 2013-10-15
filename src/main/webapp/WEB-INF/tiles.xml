@@ -24,7 +24,10 @@
 
 <tiles-definitions>
 
-    <definition name=".ajax.*" template="/WEB-INF/views/{1}.jspx" />
+    <definition name=".ajax.*" template="/WEB-INF/views/{1}.jspx">
+        <put-attribute name="titleCode" type="string" cascade="true" value="base.title"/>
+        <put-attribute name="subTitleCode" type="string" cascade="true" value="{1}.sub-title"/>
+    </definition>
 
     <definition name=".base" template="/WEB-INF/views/_base.jspx">
         <put-attribute name="content" type="template" cascade="true"/>

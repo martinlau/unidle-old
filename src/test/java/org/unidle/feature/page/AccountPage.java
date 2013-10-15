@@ -26,6 +26,12 @@ import org.openqa.selenium.support.FindBy;
 
 public class AccountPage extends GenericPage {
 
+    @FindBy(id = "add_twitter")
+    private WebElement addTwitter;
+
+    @FindBy(id = "close")
+    private WebElement close;
+
     @FindBy(id = "email")
     private WebElement email;
 
@@ -46,6 +52,9 @@ public class AccountPage extends GenericPage {
 
     @FindBy(id = "submit")
     private WebElement submit;
+
+    @FindBy(id = "update")
+    private WebElement update;
 
     public AccountPage(final WebDriver driver) {
         super(driver, "Account", "/account");

@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.unidle.feature.page.AboutPage;
 import org.unidle.feature.page.AccountPage;
+import org.unidle.feature.page.CreateQuestionPage;
 import org.unidle.feature.page.FacebookAuthenticationPage;
 import org.unidle.feature.page.GenericPage;
 import org.unidle.feature.page.HomePage;
@@ -49,6 +50,11 @@ public class PageConfiguration {
     @Bean
     public AccountPage accountPage() {
         return PageFactory.initElements(webDriver, AccountPage.class);
+    }
+
+    @Bean
+    public CreateQuestionPage createQuestionPage() {
+        return PageFactory.initElements(webDriver, CreateQuestionPage.class);
     }
 
     @Bean

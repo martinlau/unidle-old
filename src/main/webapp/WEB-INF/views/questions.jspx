@@ -39,85 +39,95 @@
         </c:otherwise>
     </c:choose>
 
-    <c:forEach var="question" items="${questions.content}">
-        <div class="media">
-            <div class="media-object pull-left thumbnail">
-                <c:choose>
-                    <c:when test="${not empty question.createdBy}">
-                        <!-- TODO UserController -->
-                        <spring:url var="user" value="/user/${question.createdBy.uuid}" />
-                        <a href="${user}">
-                            <spring:url var="avatar" value="/user/${question.createdBy.uuid}/avatar" />
-                            <img src="${question.createdBy.connections[0].imageUrl}" alt="${question.createdBy.firstName} ${question.createdBy.lastName}" />
-                        </a>
-                    </c:when>
-                    <c:otherwise>
-                        <spring:url var="unknown" value="/image/unknown.png" />
-                        <!-- TODO i18n -->
-                        <img src="${unknown}" alt="Unknown user" />
-                    </c:otherwise>
-                </c:choose>
-            </div>
-
-            <c:if test="${not empty question.responses}">
-                <p class="text-muted pull-right">
-                    <!-- TODO i18n -->
-                    ${fn:length(question.responses)} responses
-                </p>
-            </c:if>
-
-            <div class="media-body">
-                <h5 class="media-heading">
+    <div class="questions">
+        <c:forEach var="question" items="${questions.content}">
+            <div class="media question">
+                <div class="media-object pull-left thumbnail">
                     <c:choose>
                         <c:when test="${not empty question.createdBy}">
-                            ${question.createdBy.firstName} ${question.createdBy.lastName}
+                            <!-- TODO UserController -->
+                            <spring:url var="user" value="/user/${question.createdBy.uuid}" />
+                            <a href="${user}">
+                                <spring:url var="avatar" value="/user/${question.createdBy.uuid}/avatar" />
+                                <img src="${question.createdBy.connections[0].imageUrl}" alt="${question.createdBy.firstName} ${question.createdBy.lastName}" />
+                            </a>
                         </c:when>
                         <c:otherwise>
+                            <spring:url var="unknown" value="/image/unknown.png" />
                             <!-- TODO i18n -->
-                            [redacted]
+                            <img src="${unknown}" alt="Unknown user" />
                         </c:otherwise>
                     </c:choose>
-                </h5>
+                </div>
 
-                <p>
-                    <spring:url var="view" value="/question/${question.uuid}" />
-                    <a href="${view}">
-                        ${question.question}
-                    </a>
-                </p>
+                <c:if test="${not empty question.responses}">
+                    <p class="text-muted pull-right">
+                        <!-- TODO i18n -->
+                        ${fn:length(question.responses)} responses
+                    </p>
+                </c:if>
 
-                <div>
-                    <c:forEach var="tag" items="${question.tags}">
-                        <span class="label label-default">#${tag}</span>
-                        <!-- Force whitespace between labels -->
-                        <c:out value=" " />
-                    </c:forEach>
+                <div class="media-body">
+                    <h5 class="media-heading">
+                        <c:choose>
+                            <c:when test="${not empty question.createdBy}">
+                                ${question.createdBy.firstName} ${question.createdBy.lastName}
+                            </c:when>
+                            <c:otherwise>
+                                <!-- TODO i18n -->
+                                [redacted]
+                            </c:otherwise>
+                        </c:choose>
+                    </h5>
+
+                    <p>
+                        <spring:url var="view" value="/question/${question.uuid}" />
+                        <a href="${view}">
+                            ${question.question}
+                        </a>
+                    </p>
+
+                    <div>
+                        <c:forEach var="tag" items="${question.tags}">
+                            <span class="label label-default">#${tag}</span>
+                            <!-- Force whitespace between labels -->
+                            <c:out value=" " />
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <hr />
+            <hr />
 
-    </c:forEach>
+        </c:forEach>
 
-    <c:if test="${not questions.lastPage}">
-        <!-- TODO Implement load more -->
-        <p>
-            <a href="#" class="btn btn-default btn-lg btn-block">
-                <!-- TODO i18n -->
-                Load more...
-            </a>
-        </p>
-    </c:if>
+        <c:if test="${not questions.lastPage}">
+            <p>
+                <spring:url value="/questions" var="ajaxQuestions">
+                    <spring:param name="ajax" value="true" />
+                    <spring:param name="size" value="${questions.size + 5}" />
+                </spring:url>
+                <a href="${ajaxQuestions}" class="btn btn-default btn-lg btn-block load-more" id="load_more" data-load-more-target=".questions">
+                    <!-- TODO i18n -->
+                    Load more...
+                </a>
+            </p>
+        </c:if>
+    </div>
 
-    <c:if test="${not empty currentUser}">
-        <p>
-            <spring:url var="newQuestion" value="/question/create" />
-            <a href="${newQuestion}" class="btn btn-primary btn-lg btn-block">
-                <!-- TODO i18n -->
-                Ask a question
-            </a>
-        </p>
-    </c:if>
+    <c:choose>
+        <c:when test="${not empty currentUser}">
+            <p>
+                <spring:url var="newQuestion" value="/question/create" />
+                <a href="${newQuestion}" class="btn btn-primary btn-lg btn-block" id="ask_a_question">
+                    <!-- TODO i18n -->
+                    Ask a question
+                </a>
+            </p>
+        </c:when>
+        <c:otherwise>
+            <tags:signin-buttons />
+        </c:otherwise>
+    </c:choose>
 
 </jsp:root>

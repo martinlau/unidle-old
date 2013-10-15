@@ -33,17 +33,22 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.data.util.ReflectionUtils.AnnotationFieldFilter;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.ReflectionUtils.FieldCallback;
+import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.String.format;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.apache.commons.lang3.StringUtils.join;
+import static org.apache.commons.lang3.StringUtils.lowerCase;
 import static org.apache.commons.lang3.StringUtils.splitByCharacterTypeCamelCase;
-import static org.apache.commons.lang3.text.WordUtils.capitalizeFully;
 import static org.junit.Assert.fail;
 
 public class GenericPage {
@@ -57,7 +62,7 @@ public class GenericPage {
     @FindBy(tagName = "body")
     private WebElement bodyElement;
 
-    private Map<String, WebElement> knownElements;
+    private Map<String, List<WebElement>> knownElements;
 
     public GenericPage(final WebDriver webDriver) {
         this(webDriver, "Generic Page", null);
@@ -92,7 +97,7 @@ public class GenericPage {
     }
 
     public void clickElement(final String element) {
-        webDriver.findElement(By.id(element)).click();
+        findElement(element).click();
         waitForLoad();
     }
 
@@ -117,9 +122,27 @@ public class GenericPage {
                                         });
     }
 
+    protected WebElement findElement(final String element) {
+        if (!knownElements.containsKey(lowerCase(element))) {
+            fail(format("Unknown element: %s", lowerCase(element)));
+        }
+
+        return knownElements.get(lowerCase(element)).get(0);
+    }
+
     public void clickElement(final int index,
                              final String element) {
         webDriver.findElement(By.id(element + "_" + index)).click();
+    }
+
+    public int countElements(final String element) {
+        return findElements(element).size();
+    }
+
+    protected List<WebElement> findElements(final String element) {
+        return knownElements.containsKey(lowerCase(element))
+               ? knownElements.get(lowerCase(element))
+               : Collections.<WebElement>emptyList();
     }
 
     public String currentUrl() {
@@ -139,22 +162,25 @@ public class GenericPage {
         waitForLoad();
     }
 
-    protected WebElement findElement(final String element) {
-        if (!knownElements.containsKey(element)) {
-            fail("Unknown element: " + element);
+    protected void setField(final WebElement webElement,
+                            final String value) {
+        if (value.startsWith("classpath:")) {
+            try {
+                final File file = ResourceUtils.getFile(value);
+                webElement.sendKeys(file.getAbsolutePath());
+            }
+            catch (FileNotFoundException e) {
+                throw new RuntimeException(format("Error loading file: %s", value), e);
+            }
         }
-
-        return knownElements.get(element);
+        else {
+            webElement.clear();
+            webElement.sendKeys(value);
+        }
     }
 
     public void submit() {
         throw new UnsupportedOperationException();
-    }
-
-    protected void setField(final WebElement webElement,
-                            final String value) {
-        webElement.clear();
-        webElement.sendKeys(value);
     }
 
     public String getName() {
@@ -184,18 +210,23 @@ public class GenericPage {
     @PostConstruct
     protected void initializeKnownElements() {
 
-        final Builder<String, WebElement> builder = ImmutableMap.builder();
+        final Builder<String, List<WebElement>> builder = ImmutableMap.builder();
 
         ReflectionUtils.doWithFields(getClass(),
                                      new FieldCallback() {
                                          @Override
                                          public void doWith(final Field field) throws IllegalArgumentException, IllegalAccessException {
-                                             final String name = capitalizeFully(join(splitByCharacterTypeCamelCase(field.getName()), ' '));
+                                             final String name = lowerCase(join(splitByCharacterTypeCamelCase(field.getName()), ' '));
 
                                              field.setAccessible(true);
-                                             final WebElement value = (WebElement) ReflectionUtils.getField(field, GenericPage.this);
+                                             final Object value = ReflectionUtils.getField(field, GenericPage.this);
 
-                                             builder.put(name, value);
+                                             if (value instanceof List) {
+                                                 builder.put(name, (List<WebElement>) value);
+                                             }
+                                             else if (value instanceof WebElement) {
+                                                 builder.put(name, Collections.singletonList((WebElement) value));
+                                             }
                                          }
                                      },
                                      new AnnotationFieldFilter(FindBy.class));
