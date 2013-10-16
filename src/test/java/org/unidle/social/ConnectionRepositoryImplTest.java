@@ -39,7 +39,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.unidle.config.AnalyticsConfiguration;
+import org.unidle.analytics.config.AnalyticsTestConfiguration;
 import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
@@ -65,7 +65,7 @@ import static org.unidle.test.Conditions.hasProviderUserId;
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = I18NConfiguration.class),
                    @ContextConfiguration(classes = ServiceConfiguration.class),
-                   @ContextConfiguration(classes = AnalyticsConfiguration.class),
+                   @ContextConfiguration(classes = AnalyticsTestConfiguration.class),
                    @ContextConfiguration(classes = SocialConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional

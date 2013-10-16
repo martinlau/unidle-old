@@ -30,13 +30,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-import org.unidle.config.AnalyticsConfiguration;
+import org.unidle.analytics.config.AnalyticsTestConfiguration;
 import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
 import org.unidle.config.MvcConfiguration;
 import org.unidle.config.ServiceConfiguration;
-import org.unidle.config.WroConfiguration;
 
 import static java.util.Locale.ENGLISH;
 import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
@@ -53,7 +52,7 @@ import static org.unidle.test.RequestProcessors.remoteAddr;
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = I18NConfiguration.class),
                    @ContextConfiguration(classes = ServiceConfiguration.class),
-                   @ContextConfiguration(classes = AnalyticsConfiguration.class),
+                   @ContextConfiguration(classes = AnalyticsTestConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

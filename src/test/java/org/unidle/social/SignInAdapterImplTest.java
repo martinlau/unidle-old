@@ -34,7 +34,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.context.request.ServletWebRequest;
-import org.unidle.config.AnalyticsConfiguration;
+import org.unidle.analytics.config.AnalyticsTestConfiguration;
 import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
@@ -49,7 +49,7 @@ import static org.unidle.support.CookieKeys.LAST_LOGIN_SOURCE;
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = I18NConfiguration.class),
                    @ContextConfiguration(classes = ServiceConfiguration.class),
-                   @ContextConfiguration(classes = AnalyticsConfiguration.class),
+                   @ContextConfiguration(classes = AnalyticsTestConfiguration.class),
                    @ContextConfiguration(classes = SocialConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SignInAdapterImplTest {

@@ -61,7 +61,6 @@ public class AnalyticTrackingConnectInterceptor<S> implements ConnectInterceptor
 
         final ConnectionData data = connection.createData();
 
-
         analytics.track(user.getUuid(),
                         CONNECT,
                         "display-name", data.getDisplayName(),

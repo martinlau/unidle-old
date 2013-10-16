@@ -33,13 +33,12 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.view.RedirectView;
-import org.unidle.config.AnalyticsConfiguration;
+import org.unidle.analytics.config.AnalyticsTestConfiguration;
 import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
 import org.unidle.config.MvcConfiguration;
 import org.unidle.config.ServiceConfiguration;
-import org.unidle.config.WroConfiguration;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.unidle.support.RequestKeys.SEGMENT_IO_API_KEY;
@@ -49,7 +48,7 @@ import static org.unidle.test.Conditions.containsKey;
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = I18NConfiguration.class),
                    @ContextConfiguration(classes = ServiceConfiguration.class),
-                   @ContextConfiguration(classes = AnalyticsConfiguration.class),
+                   @ContextConfiguration(classes = AnalyticsTestConfiguration.class),
                    @ContextConfiguration(classes = MvcConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

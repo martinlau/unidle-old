@@ -18,40 +18,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * #L%
  */
-package org.unidle.config;
+package org.unidle.analytics.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.social.connect.web.ConnectInterceptor;
 import org.unidle.analytics.Analytics;
-import org.unidle.analytics.AnalyticsImpl;
+import org.unidle.analytics.AnalyticsStubImpl;
 import org.unidle.service.UserService;
 import org.unidle.social.AnalyticTrackingConnectInterceptor;
 
 @Configuration
-@PropertySource("classpath:unidle.properties")
-public class AnalyticsConfiguration {
-
-    @Value("${unidle.segment.io.apiKey}")
-    private String segmentIoApiKey;
-
-    @Value("${unidle.segment.io.secret}")
-    private String segmentIoSecret;
+public class AnalyticsTestConfiguration {
 
     @Autowired
     private UserService userService;
 
     @Bean
-    public AnalyticTrackingConnectInterceptor<?> analyticTrackingConnectInterceptor() {
+    public ConnectInterceptor<?> analyticTrackingConnectInterceptor() {
         return new AnalyticTrackingConnectInterceptor<>(analytics(), userService);
     }
 
     @Bean
-    public Analytics analytics() {
-        return new AnalyticsImpl(segmentIoApiKey);
+    public AnalyticsStubImpl analytics() {
+        return new AnalyticsStubImpl();
     }
 
 }

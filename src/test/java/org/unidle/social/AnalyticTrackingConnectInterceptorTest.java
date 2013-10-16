@@ -20,7 +20,6 @@
  */
 package org.unidle.social;
 
-import com.github.segmentio.Analytics;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +32,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.unidle.config.AnalyticsConfiguration;
+import org.unidle.analytics.AnalyticsStubImpl;
+import org.unidle.analytics.config.AnalyticsTestConfiguration;
 import org.unidle.config.CacheConfiguration;
 import org.unidle.config.DataConfiguration;
 import org.unidle.config.I18NConfiguration;
@@ -44,18 +44,20 @@ import org.unidle.repository.UserRepository;
 import org.unidle.social.test.ConnectionStub;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.unidle.analytics.AnalyticsEvent.CONNECT;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
                    @ContextConfiguration(classes = DataConfiguration.class),
                    @ContextConfiguration(classes = I18NConfiguration.class),
                    @ContextConfiguration(classes = ServiceConfiguration.class),
-                   @ContextConfiguration(classes = AnalyticsConfiguration.class),
+                   @ContextConfiguration(classes = AnalyticsTestConfiguration.class),
                    @ContextConfiguration(classes = SocialConfiguration.class)})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class AnalyticTrackingConnectInterceptorTest {
 
-    private String oldHost;
+    @Autowired
+    private AnalyticsStubImpl analytics;
 
     @Autowired
     private AnalyticTrackingConnectInterceptor<Object> subject;
@@ -75,15 +77,12 @@ public class AnalyticTrackingConnectInterceptorTest {
 
         user = userRepository.save(user);
 
-        oldHost = Analytics.getDefaultClient().getOptions().getHost();
-        Analytics.getDefaultClient().getOptions().setHost("http://rubbish");
-        Analytics.getStatistics().clear();
+        analytics.reset();
     }
 
     @After
     public void tearDown() throws Exception {
-        Analytics.getStatistics().clear();
-        Analytics.getDefaultClient().getOptions().setHost(oldHost);
+        analytics.reset();
     }
 
     @Test
@@ -101,7 +100,12 @@ public class AnalyticTrackingConnectInterceptorTest {
                                                                     "refresh token",
                                                                     1234L)), null);
 
-        assertThat(Analytics.getStatistics().getInserted().getCount()).isEqualTo(1);
+        assertThat(analytics.trackings.size()).isEqualTo(1);
+        assertThat(analytics.trackings.containsKey(user.getUuid())).isTrue();
+        assertThat(analytics.trackings.getFirst(user.getUuid()).getLeft()).isEqualTo(CONNECT);
+        assertThat(analytics.trackings.getFirst(user.getUuid()).getRight()).contains("display-name", "display name",
+                                                                                     "provider-id", "provider id",
+                                                                                     "provider-user-id", "provider user id");
     }
 
     @SuppressWarnings("unchecked")
