@@ -21,7 +21,6 @@
 package org.unidle.service;
 
 import com.google.common.base.Splitter;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +36,8 @@ import org.unidle.repository.QuestionRepository;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
+
+import static org.apache.commons.lang3.StringUtils.removeStart;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -64,13 +65,15 @@ public class QuestionServiceImpl implements QuestionService {
         final Question questionEntity = new Question();
 
         questionEntity.setQuestion(question);
-        for (final String tag : Splitter.on(",")
-                                        .trimResults()
-                                        .omitEmptyStrings()
-                                        .split(tags)) {
 
-            questionEntity.getTags()
-                          .add(StringUtils.removeStart(tag, "#"));
+        if (tags != null) {
+            for (final String tag : Splitter.on(",")
+                                            .trimResults()
+                                            .omitEmptyStrings()
+                                            .split(tags)) {
+
+                questionEntity.getTags().add(removeStart(tag, "#"));
+            }
         }
 
         if (attachments != null) {

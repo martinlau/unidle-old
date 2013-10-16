@@ -112,27 +112,16 @@ public class CreateQuestionControllerTest {
     }
 
     @Test
-    public void testQuestionWithoutAuthentication() throws Exception {
-        subject.perform(get("/question/create"))
-               .andExpect(view().name("redirect:/signin"));
-    }
-
-    @Test
     public void testQuestionPost() throws Exception {
         SecurityContextHolder.getContext()
                              .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
 
         subject.perform(fileUpload("/question/create")
-                                .file(new MockMultipartFile("attachments",
-                                                            "test.txt",
-                                                            "text/plain",
-                                                            "this is a text file".getBytes()))
-                                .param("question", "this is a test question")
-                                .param("tags", "tag1, tag2, tag3"))
+                                .param("question", "this is a test question"))
                .andExpect(view().name(startsWith("redirect:/question/")));
 
         assertThat(questionRepository.count()).isEqualTo(1L);
-        assertThat(attachmentRepository.count()).isEqualTo(1L);
+        assertThat(questionRepository.findAll().get(0).getTags()).isEmpty();
     }
 
     @Test
@@ -147,9 +136,48 @@ public class CreateQuestionControllerTest {
     }
 
     @Test
+    public void testQuestionPostWithTags() throws Exception {
+        SecurityContextHolder.getContext()
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
+
+        subject.perform(fileUpload("/question/create")
+                                .param("question", "this is a test question")
+                                .param("tags", "tag1, tag2, tag3"))
+               .andExpect(view().name(startsWith("redirect:/question/")));
+
+        assertThat(questionRepository.count()).isEqualTo(1L);
+        assertThat(questionRepository.findAll().get(0).getTags()).containsOnly("tag1", "tag2", "tag3");
+    }
+
+    @Test
+    public void testQuestionPostWithTagsAndAttachments() throws Exception {
+        SecurityContextHolder.getContext()
+                             .setAuthentication(new UsernamePasswordAuthenticationToken(user.getUuid(), null));
+
+        subject.perform(fileUpload("/question/create")
+                                .file(new MockMultipartFile("attachments",
+                                                            "test.txt",
+                                                            "text/plain",
+                                                            "this is a text file".getBytes()))
+                                .param("question", "this is a test question")
+                                .param("tags", "tag1, tag2, tag3"))
+               .andExpect(view().name(startsWith("redirect:/question/")));
+
+        assertThat(questionRepository.count()).isEqualTo(1L);
+        assertThat(questionRepository.findAll().get(0).getTags()).containsOnly("tag1", "tag2", "tag3");
+        assertThat(attachmentRepository.count()).isEqualTo(1L);
+    }
+
+    @Test
     public void testQuestionPostWithoutAuthentication() throws Exception {
         subject.perform(post("/question/create")
                                 .param("question", "this is a test question"))
+               .andExpect(view().name("redirect:/signin"));
+    }
+
+    @Test
+    public void testQuestionWithoutAuthentication() throws Exception {
+        subject.perform(get("/question/create"))
                .andExpect(view().name("redirect:/signin"));
     }
 

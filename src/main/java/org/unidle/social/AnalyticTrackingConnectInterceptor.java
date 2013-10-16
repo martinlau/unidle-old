@@ -31,6 +31,9 @@ import org.unidle.domain.User;
 import org.unidle.service.UserService;
 
 import static org.unidle.analytics.AnalyticsEvent.CONNECT;
+import static org.unidle.analytics.AnalyticsEvent.PROPERTY_DISPLAY_NAME;
+import static org.unidle.analytics.AnalyticsEvent.PROPERTY_PROVIDER_ID;
+import static org.unidle.analytics.AnalyticsEvent.PROPERTY_PROVIDER_USER_ID;
 
 public class AnalyticTrackingConnectInterceptor<S> implements ConnectInterceptor<S> {
 
@@ -63,9 +66,9 @@ public class AnalyticTrackingConnectInterceptor<S> implements ConnectInterceptor
 
         analytics.track(user.getUuid(),
                         CONNECT,
-                        "display-name", data.getDisplayName(),
-                        "provider-id", data.getProviderId(),
-                        "provider-user-id", data.getProviderUserId());
+                        PROPERTY_DISPLAY_NAME, data.getDisplayName(),
+                        PROPERTY_PROVIDER_ID, data.getProviderId(),
+                        PROPERTY_PROVIDER_USER_ID, data.getProviderUserId());
     }
 
 }

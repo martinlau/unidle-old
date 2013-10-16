@@ -42,6 +42,10 @@ import javax.validation.Valid;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.unidle.analytics.AnalyticsEvent.SIGN_UP;
+import static org.unidle.analytics.AnalyticsEvent.TRAIT_CREATED;
+import static org.unidle.analytics.AnalyticsEvent.TRAIT_EMAIL;
+import static org.unidle.analytics.AnalyticsEvent.TRAIT_FIRST_NAME;
+import static org.unidle.analytics.AnalyticsEvent.TRAIT_LAST_NAME;
 
 @Controller
 public class SignupController {
@@ -105,10 +109,10 @@ public class SignupController {
                              .setAuthentication(authentication);
 
         analytics.identify(user.getUuid(),
-                           "created", user.getCreatedDate().toDate(),
-                           "email", user.getEmail(),
-                           "firstName", user.getFirstName(),
-                           "lastName", user.getLastName());
+                           TRAIT_CREATED, user.getCreatedDate().toDate(),
+                           TRAIT_EMAIL, user.getEmail(),
+                           TRAIT_FIRST_NAME, user.getFirstName(),
+                           TRAIT_LAST_NAME, user.getLastName());
 
         analytics.track(user.getUuid(), SIGN_UP);
 

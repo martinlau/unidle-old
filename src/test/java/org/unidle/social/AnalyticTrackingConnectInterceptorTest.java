@@ -45,6 +45,9 @@ import org.unidle.social.test.ConnectionStub;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.unidle.analytics.AnalyticsEvent.CONNECT;
+import static org.unidle.analytics.AnalyticsEvent.PROPERTY_DISPLAY_NAME;
+import static org.unidle.analytics.AnalyticsEvent.PROPERTY_PROVIDER_ID;
+import static org.unidle.analytics.AnalyticsEvent.PROPERTY_PROVIDER_USER_ID;
 
 @ContextHierarchy({@ContextConfiguration(classes = CacheConfiguration.class),
                    @ContextConfiguration(classes = DataConfiguration.class),
@@ -103,9 +106,9 @@ public class AnalyticTrackingConnectInterceptorTest {
         assertThat(analytics.trackings.size()).isEqualTo(1);
         assertThat(analytics.trackings.containsKey(user.getUuid())).isTrue();
         assertThat(analytics.trackings.getFirst(user.getUuid()).getLeft()).isEqualTo(CONNECT);
-        assertThat(analytics.trackings.getFirst(user.getUuid()).getRight()).contains("display-name", "display name",
-                                                                                     "provider-id", "provider id",
-                                                                                     "provider-user-id", "provider user id");
+        assertThat(analytics.trackings.getFirst(user.getUuid()).getRight()).contains(PROPERTY_DISPLAY_NAME, "display name",
+                                                                                     PROPERTY_PROVIDER_ID, "provider id",
+                                                                                     PROPERTY_PROVIDER_USER_ID, "provider user id");
     }
 
     @SuppressWarnings("unchecked")

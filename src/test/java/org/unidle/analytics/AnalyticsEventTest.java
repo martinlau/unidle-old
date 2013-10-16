@@ -23,6 +23,9 @@ package org.unidle.analytics;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.unidle.analytics.AnalyticsEvent.ADD_A_TAG;
+import static org.unidle.analytics.AnalyticsEvent.ASK_A_QUESTION;
+import static org.unidle.analytics.AnalyticsEvent.ATTACH_A_FILE;
 import static org.unidle.analytics.AnalyticsEvent.CONNECT;
 import static org.unidle.analytics.AnalyticsEvent.SIGN_UP;
 
@@ -30,8 +33,7 @@ public class AnalyticsEventTest {
 
     @Test
     public void testGetName() throws Exception {
-        assertThat(CONNECT.getName()).isEqualTo("Connected an Account");
-        assertThat(SIGN_UP.getName()).isEqualTo("Signed Up");
+        assertThat(CONNECT.getName()).isEqualTo("Connect an Account");
     }
 
     @Test
@@ -41,7 +43,10 @@ public class AnalyticsEventTest {
 
     @Test
     public void testValues() throws Exception {
-        assertThat(AnalyticsEvent.values()).containsOnly(CONNECT,
+        assertThat(AnalyticsEvent.values()).containsOnly(ADD_A_TAG,
+                                                         ASK_A_QUESTION,
+                                                         ATTACH_A_FILE,
+                                                         CONNECT,
                                                          SIGN_UP);
     }
 

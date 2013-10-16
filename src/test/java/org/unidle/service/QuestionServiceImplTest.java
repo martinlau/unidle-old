@@ -103,6 +103,19 @@ public class QuestionServiceImplTest {
     }
 
     @Test
+    public void testCreateQuestionWithoutTags() throws Exception {
+        final Question question = subject.createQuestion("this is a question",
+                                                         null,
+                                                         null);
+
+        assertThat(questionRepository.count()).isEqualTo(2L); // 1 in setUp()
+        assertThat(attachmentRepository.count()).isZero();
+        assertThat(question.getQuestion()).isEqualTo("this is a question");
+        assertThat(question.getTags()).isEmpty();
+        assertThat(question.getAttachments()).isEmpty();
+    }
+
+    @Test
     public void testExists() throws Exception {
         final boolean result = subject.exists(question.getUuid());
 

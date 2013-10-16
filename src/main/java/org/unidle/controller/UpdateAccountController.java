@@ -46,6 +46,7 @@ public class UpdateAccountController {
     @Autowired
     public UpdateAccountController(final Analytics analytics,
                                    final UserService userService) {
+
         this.analytics = analytics;
         this.userService = userService;
     }

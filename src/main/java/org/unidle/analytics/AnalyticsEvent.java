@@ -22,9 +22,39 @@ package org.unidle.analytics;
 
 public enum AnalyticsEvent {
 
-    CONNECT("Connected an Account"),
+    ADD_A_TAG("Add a Tag"),
 
-    SIGN_UP("Signed Up");
+    ASK_A_QUESTION("Ask a Question"),
+
+    ATTACH_A_FILE("Attach a File"),
+
+    CONNECT("Connect an Account"),
+
+    SIGN_UP("Sign Up");
+
+    public static final String PROPERTY_ATTACHMENT_UUID = "uuid";
+
+    public static final String PROPERTY_DISPLAY_NAME = "displayName";
+
+    public static final String PROPERTY_PROVIDER_ID = "providerId";
+
+    public static final String PROPERTY_PROVIDER_USER_ID = "providerUserId";
+
+    public static final String PROPERTY_QUESTION = "question";
+
+    public static final String PROPERTY_QUESTION_UUID = "uuid";
+
+    public static final String PROPERTY_TAG = "tag";
+
+    public static final String PROPERTY_TITLE = "title";
+
+    public static final String TRAIT_CREATED = "created";
+
+    public static final String TRAIT_EMAIL = "email";
+
+    public static final String TRAIT_FIRST_NAME = "firstName";
+
+    public static final String TRAIT_LAST_NAME = "lastName";
 
     private final String name;
 
@@ -35,5 +65,4 @@ public enum AnalyticsEvent {
     public String getName() {
         return name;
     }
-
 }

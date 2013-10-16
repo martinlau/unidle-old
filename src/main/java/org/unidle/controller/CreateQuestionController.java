@@ -25,6 +25,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.unidle.analytics.Analytics;
+import org.unidle.domain.Attachment;
 import org.unidle.domain.Question;
 import org.unidle.domain.User;
 import org.unidle.form.QuestionForm;
@@ -35,12 +37,29 @@ import javax.validation.Valid;
 import static java.lang.String.format;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.unidle.analytics.AnalyticsEvent.ADD_A_TAG;
+import static org.unidle.analytics.AnalyticsEvent.ASK_A_QUESTION;
+import static org.unidle.analytics.AnalyticsEvent.ATTACH_A_FILE;
+import static org.unidle.analytics.AnalyticsEvent.PROPERTY_ATTACHMENT_UUID;
+import static org.unidle.analytics.AnalyticsEvent.PROPERTY_QUESTION;
+import static org.unidle.analytics.AnalyticsEvent.PROPERTY_QUESTION_UUID;
+import static org.unidle.analytics.AnalyticsEvent.PROPERTY_TAG;
+import static org.unidle.analytics.AnalyticsEvent.PROPERTY_TITLE;
 
 @Controller
 public class CreateQuestionController {
 
+    private final Analytics analytics;
+
+    private final QuestionService questionService;
+
+
     @Autowired
-    private QuestionService questionService;
+    public CreateQuestionController(final Analytics analytics,
+                                    final QuestionService questionService) {
+        this.analytics = analytics;
+        this.questionService = questionService;
+    }
 
     @RequestMapping(value = "/question/create",
                     method = GET)
@@ -71,6 +90,27 @@ public class CreateQuestionController {
         final Question question = questionService.createQuestion(questionForm.getQuestion(),
                                                                  questionForm.getTags(),
                                                                  questionForm.getAttachments());
+
+        // TODO Move this to an AOP interceptor around createQuestion() above
+        analytics.track(user.getUuid(),
+                        ASK_A_QUESTION,
+                        PROPERTY_QUESTION_UUID, question.getUuid(),
+                        PROPERTY_QUESTION, question.getQuestion());
+
+        for (String tag : question.getTags()) {
+            analytics.track(user.getUuid(),
+                            ADD_A_TAG,
+                            PROPERTY_QUESTION_UUID, question.getUuid(),
+                            PROPERTY_TAG, tag);
+        }
+
+        for (Attachment attachment : question.getAttachments()) {
+            analytics.track(user.getUuid(),
+                            ATTACH_A_FILE,
+                            PROPERTY_QUESTION_UUID, question.getUuid(),
+                            PROPERTY_ATTACHMENT_UUID, attachment.getUuid(),
+                            PROPERTY_TITLE, attachment.getTitle());
+        }
 
         return format("redirect:/question/%s", question.getUuid());
     }
